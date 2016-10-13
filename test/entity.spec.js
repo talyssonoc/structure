@@ -96,6 +96,25 @@ describe('entity', () => {
     });
   });
 
+  describe('using class static methods and properties', () => {
+    class RawUser {
+      static staticMethod() {
+        return 'I am on a static method';
+      }
+    }
+
+    RawUser.staticProperty = 'I am a static property';
+
+    const User = entity({
+      name: String
+    })(RawUser);
+
+    it('has access to static methods and properties', () => {
+      expect(User.staticMethod()).to.equal('I am on a static method');
+      expect(User.staticProperty).to.equal('I am a static property');
+    });
+  });
+
   describe('subclassing an entity', () => {
     const User = entity({
       name: String
@@ -140,7 +159,7 @@ describe('entity', () => {
         expect(admin.adminMethod()).to.equal('I am an admin');
       });
 
-      it('has access to class and superclass attributes', () => {
+      it('has access to class and superclass properties', () => {
         const admin = new Admin({
           name: 'Me'
         }, 'User Value', 'Admin Value');
@@ -206,6 +225,35 @@ describe('entity', () => {
         admin.attributes.name = 'New name';
 
         expect(admin.name).to.equal('New name');
+      });
+    });
+
+    describe('using subclass static methods and properties', () => {
+      class RawUser {
+        static staticMethod() {
+          return 'I am on a static method';
+        }
+      }
+
+      RawUser.staticProperty = 'I am a static property';
+
+      const UserEntity = entity({
+        name: String
+      })(RawUser);
+
+      class AdminEntity extends UserEntity {
+        static staticAdminMethod() {
+          return 'I am also on a static method';
+        }
+      }
+
+      AdminEntity.staticAdminProperty = 'I am also a static property';
+
+      it('has access to static methods and properties', () => {
+        expect(AdminEntity.staticMethod()).to.equal('I am on a static method');
+        expect(AdminEntity.staticProperty).to.equal('I am a static property');
+        expect(AdminEntity.staticAdminMethod()).to.equal('I am also on a static method');
+        expect(AdminEntity.staticAdminProperty).to.equal('I am also a static property');
       });
     });
   });
