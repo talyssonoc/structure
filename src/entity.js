@@ -1,12 +1,29 @@
 const define = Object.defineProperty;
 const createAttrs = () => Object.create(null);
+const assignEachFromSchema = (schema, { src, dest }) => {
+  Object.keys(schema).forEach((attr) => {
+    dest[attr] = src[attr];
+  });
+};
 
-function entity(schema) {
+function entity(declaredSchema, ErroneousPassedClass) {
+  if(ErroneousPassedClass) {
+    const errorMessage = `You passed the entity class as the second parameter of entity(). The expected usage is \`entity(schema)(${ ErroneousPassedClass.name || 'EntityClass' })\`.`;
+
+    throw new Error(errorMessage);
+  }
+
   return function decorator(Class) {
-    return new Proxy(Class, {
-      construct(target, argumentsList, newTarget) {
-        const instance = Reflect.construct(target, argumentsList, newTarget);
-        const [ passedAttributes ] = argumentsList;
+    const WrapperClass = new Proxy(Class, {
+      construct(target, constructorArgs, newTarget) {
+        const instance = Reflect.construct(target, constructorArgs, newTarget);
+        const passedAttributes = constructorArgs[0];
+        const schema = newTarget.__schema;
+
+        if('attributes' in instance) {
+          return instance;
+        }
+
         let attributes = createAttrs();
 
         define(instance, 'attributes', {
@@ -17,29 +34,41 @@ function entity(schema) {
           set(newAttributes) {
             attributes = createAttrs();
 
-            Object.keys(schema).forEach((attr) => {
-              attributes[attr] = newAttributes[attr];
-            });
+            assignEachFromSchema(schema, { src: newAttributes, dest: attributes });
           }
         });
 
-        Object.keys(schema).forEach((attr) => {
-          instance.attributes[attr] = passedAttributes[attr];
-
-          define(instance, attr, {
-            get() {
-              return this.attributes[attr];
-            },
-
-            set(value) {
-              this.attributes[attr] = value;
-            }
-          });
-        });
+        assignEachFromSchema(schema, { src: passedAttributes, dest: instance.attributes });
 
         return instance;
       }
     });
+
+    Object.keys(declaredSchema).forEach((attr) => {
+      define(WrapperClass.prototype, attr, {
+        get() {
+          return this.attributes[attr];
+        },
+
+        set(value) {
+          this.attributes[attr] = value;
+        }
+      });
+    });
+
+    define(WrapperClass, '__isEntity', {
+      value: true
+    });
+
+    if('__schema' in WrapperClass) {
+      declaredSchema = Object.assign({}, WrapperClass.__schema, declaredSchema);
+    }
+
+    define(WrapperClass, '__schema', {
+      value: declaredSchema
+    });
+
+    return WrapperClass;
   };
 }
 
