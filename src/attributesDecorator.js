@@ -1,10 +1,12 @@
+const coerce = require('./typeCoercion');
+
 const define = Object.defineProperty;
 
 const createAttrs = () => Object.create(null);
 
 const assignEachFromSchema = (schema, src, dest) => {
   Object.keys(schema).forEach((attr) => {
-    dest[attr] = src[attr];
+    dest[attr] = coerce(schema[attr], src[attr]);
   });
 };
 
