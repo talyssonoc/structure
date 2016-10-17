@@ -1,8 +1,8 @@
 const { expect } = require('chai');
-const { entity } = require('../src');
+const { attributes } = require('../src');
 
 describe('instantiating an entity', () => {
-  const User = entity({
+  const User = attributes({
     name: String
   })(class User {
     constructor() {
@@ -57,7 +57,7 @@ describe('instantiating an entity', () => {
   });
 
   context('when entity constructor writes to some attribute', () => {
-    const UserEntity = entity({
+    const UserEntity = attributes({
       name: String
     })(class User {
       constructor() {
@@ -81,7 +81,7 @@ describe('instantiating an entity', () => {
 });
 
 describe('updating an instance', () => {
-  const User = entity({
+  const User = attributes({
     name: String
   })(class User {
 

@@ -1,10 +1,10 @@
 const { expect } = require('chai');
-const { entity } = require('../src');
+const { attributes } = require('../src');
 
 describe('creating an entity class', () => {
   it('adds __schema to the entity', () => {
     const schema = { name: String };
-    const User = entity(schema)(class User{});
+    const User = attributes(schema)(class User{});
 
     expect(User.__schema).to.equal(schema);
   });
@@ -13,7 +13,7 @@ describe('creating an entity class', () => {
     context('when entity class has a name', () => {
       it('throws with a message with entity class name', () => {
         expect(() => {
-          entity({}, class User {});
+          attributes({}, class User {});
         }).to.throw(Error, /^You passed the entity class.*\(User\)`\./);
       });
     });
@@ -21,7 +21,7 @@ describe('creating an entity class', () => {
     context('when entity class is anonymous', () => {
       it('throws with a message with generic entity name', () => {
         expect(() => {
-          entity({}, class {});
+          attributes({}, class {});
         }).to.throw(Error, /^You passed the entity class.*\(EntityClass\)`\./);
       });
     });
@@ -37,7 +37,7 @@ describe('creating an entity class', () => {
 
     RawUser.staticProperty = 'I am a static property';
 
-    const User = entity({
+    const User = attributes({
       name: String
     })(RawUser);
 

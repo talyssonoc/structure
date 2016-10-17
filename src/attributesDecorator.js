@@ -36,7 +36,7 @@ const attributesDescriptor = {
   }
 };
 
-function entity(declaredSchema, ErroneousPassedClass) {
+function attributesDecorator(declaredSchema, ErroneousPassedClass) {
   if(ErroneousPassedClass) {
     const errorMessage = `You passed the entity class as the second parameter of entity(). The expected usage is \`entity(schema)(${ ErroneousPassedClass.name || 'EntityClass' })\`.`;
 
@@ -82,4 +82,4 @@ function entity(declaredSchema, ErroneousPassedClass) {
   };
 }
 
-module.exports = entity;
+module.exports = attributesDecorator;

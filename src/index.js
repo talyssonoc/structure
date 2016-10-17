@@ -1,3 +1,3 @@
 module.exports = {
-  entity: require('./entity')
+  attributes: require('./attributesDecorator')
 };

@@ -1,8 +1,8 @@
 const { expect } = require('chai');
-const { entity } = require('../src');
+const { attributes } = require('../src');
 
 describe('subclassing an entity with a POJO class', () => {
-  const User = entity({
+  const User = attributes({
     name: String
   })(class User {
     constructor(attrs, userValue) {
@@ -123,7 +123,7 @@ describe('subclassing an entity with a POJO class', () => {
 
     RawUser.staticProperty = 'I am a static property';
 
-    const UserEntity = entity({
+    const UserEntity = attributes({
       name: String
     })(RawUser);
 
@@ -145,11 +145,11 @@ describe('subclassing an entity with a POJO class', () => {
 });
 
 describe('subclassing an entity with another entity', () => {
-  const User = entity({
+  const User = attributes({
     name: String
   })(class User {});
 
-  const Admin = entity({
+  const Admin = attributes({
     level: Number
   })(class Admin extends User {});
 
