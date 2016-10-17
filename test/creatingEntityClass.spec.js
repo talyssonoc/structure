@@ -2,14 +2,6 @@ const { expect } = require('chai');
 const { entity } = require('../src');
 
 describe('creating an entity class', () => {
-  it('adds __isEntity flag to the entity', () => {
-    class RawUser {}
-    const User = entity({})(RawUser);
-
-    expect(RawUser.__isEntity).to.be.true;
-    expect(User.__isEntity).to.be.true;
-  });
-
   it('adds __schema to the entity', () => {
     const schema = { name: String };
     const User = entity(schema)(class User{});

@@ -55,6 +55,29 @@ describe('instantiating an entity', () => {
     expect(user.name).to.equal('Self');
     expect(user.attributes.name).to.equal('Self');
   });
+
+  context('when entity constructor writes to some attribute', () => {
+    const UserEntity = entity({
+      name: String
+    })(class User {
+      constructor() {
+        this.name = 'Old name';
+        this.userInstanceStuff = 'Stuff value';
+      }
+
+      userMethod() {
+        return 'I am a user';
+      }
+    });
+
+    it('overrides value set on the constructor', () => {
+      const user = new UserEntity({
+        name: 'New name'
+      });
+
+      expect(user.name).to.equal('New name');
+    });
+  });
 });
 
 describe('updating an instance', () => {
