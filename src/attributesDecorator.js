@@ -60,20 +60,6 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
       }
     });
 
-    define(WrapperClass.prototype, 'attributes', attributesDescriptor);
-
-    Object.keys(declaredSchema).forEach((attr) => {
-      define(WrapperClass.prototype, attr, {
-        get() {
-          return this.attributes[attr];
-        },
-
-        set(value) {
-          this.attributes[attr] = value;
-        }
-      });
-    });
-
     if(SCHEMA in WrapperClass) {
       declaredSchema = Object.assign({}, WrapperClass[SCHEMA], declaredSchema);
     }
@@ -86,6 +72,20 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
 
     define(WrapperClass.prototype, SCHEMA, {
       value: declaredSchema
+    });
+
+    define(WrapperClass.prototype, 'attributes', attributesDescriptor);
+
+    Object.keys(declaredSchema).forEach((attr) => {
+      define(WrapperClass.prototype, attr, {
+        get() {
+          return this.attributes[attr];
+        },
+
+        set(value) {
+          this.attributes[attr] = value;
+        }
+      });
     });
 
     return WrapperClass;
