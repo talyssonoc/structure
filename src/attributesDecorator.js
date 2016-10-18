@@ -3,7 +3,6 @@ const normalizeSchema = require('./normalizeSchema');
 const define = Object.defineProperty;
 const createAttrs = () => Object.create(null);
 
-
 const SCHEMA = Symbol('schema');
 const ATTRIBUTES = Symbol('attributes');
 

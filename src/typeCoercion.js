@@ -23,6 +23,13 @@ const types = [
 
       return Number(value);
     }
+  },
+
+  {
+    type: Boolean,
+    coerce(value) {
+      return Boolean(value);
+    }
   }
 ];
 
@@ -53,7 +60,7 @@ module.exports = {
         return;
       }
 
-      if(coercion.test(value)) {
+      if(coercion.test && coercion.test(value)) {
         return value;
       }
 

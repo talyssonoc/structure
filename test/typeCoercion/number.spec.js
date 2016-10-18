@@ -76,7 +76,7 @@ describe('type coercion', () => {
             age: objectWithoutValueOf
           });
 
-          expect(Number.isNaN(user.age)).to.be.ok;
+          expect(Number.isNaN(user.age)).to.be.true;
         });
       });
 
