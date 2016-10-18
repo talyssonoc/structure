@@ -31,7 +31,7 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalizeSchema(schema)
-        }).to.throw(Error, /^Missing type for attribute: name$/);
+        }).to.throw(Error, /^Missing type for attribute: name\.$/);
       });
     });
   });
@@ -42,7 +42,7 @@ describe('schema normalization', () => {
 
       expect(() => {
         normalizeSchema(schema)
-      }).to.throw(Error, /^Invalid type for attribute: name$/);
+      }).to.throw(Error, /^Invalid type for attribute: name\.$/);
     });
   });
 });

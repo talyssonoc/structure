@@ -4,7 +4,7 @@ function normalizeAttribute(attribute, attributeName) {
   switch(typeof attribute) {
     case 'object':
       if(!attribute.type) {
-        throw new Error(`Missing type for attribute: ${ attributeName }`);
+        throw new Error(`Missing type for attribute: ${ attributeName }.`);
       }
 
       return Object.assign({}, attribute, {
@@ -18,7 +18,7 @@ function normalizeAttribute(attribute, attributeName) {
       };
 
     default:
-      throw new Error(`Invalid type for attribute: ${ attributeName }`);
+      throw new Error(`Invalid type for attribute: ${ attributeName }.`);
   }
 };
 
