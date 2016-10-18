@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { attributes } = require('../src');
+const { attributes } = require('../../src');
 
 describe('type coercion', () => {
   describe('String', () => {
@@ -10,13 +10,19 @@ describe('type coercion', () => {
     it('does not coerce if value is already a string', () => {
       const name = new String('Some name');
 
-      const user = new User({
-        name: name
-      });
+      const user = new User({ name });
 
       expect(user.name).to.not.equal('Some name');
       expect(user.name).to.not.equal(new String('Some name'));
       expect(user.name).to.eql(name);
+    });
+
+    it('does not coerces undefined', () => {
+      const user = new User({
+        name: undefined
+      });
+
+      expect(user.name).to.be.undefined;
     });
 
     it('coerces integer to string', () => {
@@ -43,14 +49,6 @@ describe('type coercion', () => {
       expect(user.name).to.equal('');
     });
 
-    it('coerces undefined to empty string', () => {
-      const user = new User({
-        name: undefined
-      });
-
-      expect(user.name).to.equal('');
-    });
-
     it('coerces boolean to string', () => {
       const user = new User({
         name: false
@@ -71,7 +69,7 @@ describe('type coercion', () => {
 
     describe('coercing an object to string', () => {
       context('when the object does not implement #toString()', () => {
-        it('coerces objects to object tag string', () => {
+        it('coerces object to object tag string', () => {
           const objectWithoutToString = { data: 42 };
 
           const user = new User({
@@ -83,10 +81,10 @@ describe('type coercion', () => {
       });
 
       context('when the object implements #toString()', () => {
-        it('coerces objects to object tag string', () => {
+        it('coerces object to value returned from #toString()', () => {
           const objectWithToString = {
             data: 42,
-            toString() { return this.data }
+            toString() { return this.data; }
           };
 
           const user = new User({

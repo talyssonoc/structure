@@ -1,11 +1,11 @@
-const coerce = require('./typeCoercion');
+const normalizeSchema = require('./normalizeSchema');
 
 const define = Object.defineProperty;
 const createAttrs = () => Object.create(null);
 
 const assignEachFromSchema = (schema, src, dest) => {
   Object.keys(schema).forEach((attr) => {
-    dest[attr] = coerce(schema[attr], src[attr]);
+    dest[attr] = schema[attr].coerce(src[attr]);
   });
 };
 
@@ -77,6 +77,8 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
     if(SCHEMA in WrapperClass) {
       declaredSchema = Object.assign({}, WrapperClass[SCHEMA], declaredSchema);
     }
+
+    declaredSchema = normalizeSchema(declaredSchema);
 
     define(WrapperClass, SCHEMA, {
       value: declaredSchema
