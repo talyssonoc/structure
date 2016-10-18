@@ -3,11 +3,6 @@ const normalizeSchema = require('./normalizeSchema');
 const define = Object.defineProperty;
 const createAttrs = () => Object.create(null);
 
-const assignEachFromSchema = (schema, src, dest) => {
-  Object.keys(schema).forEach((attr) => {
-    dest[attr] = schema[attr].coerce(src[attr]);
-  });
-};
 
 const SCHEMA = Symbol('schema');
 const ATTRIBUTES = Symbol('attributes');
@@ -30,8 +25,11 @@ const attributesDescriptor = {
   set(newAttributes) {
     const attributes = createAttrs();
     const schema = this[SCHEMA];
+    const attrNames = Object.keys(schema);
 
-    assignEachFromSchema(schema, newAttributes, attributes);
+    for(let i = 0; i < attrNames.length; i++) {
+      attributes[attrNames[i]] = schema[attrNames[i]].coerce(newAttributes[attrNames[i]]);
+    }
 
     define(this, ATTRIBUTES, {
       configurable: true,
@@ -54,7 +52,7 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
         const passedAttributes = constructorArgs[0];
         const schema = newTarget[SCHEMA];
 
-        assignEachFromSchema(schema, passedAttributes, instance.attributes);
+        instance.attributes = passedAttributes;
 
         return instance;
       }
