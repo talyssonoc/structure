@@ -2,13 +2,6 @@ const { expect } = require('chai');
 const { attributes } = require('../src');
 
 describe('creating an entity class', () => {
-  it('adds __schema to the entity', () => {
-    const schema = { name: String };
-    const User = attributes(schema)(class User{});
-
-    expect(User.__schema).to.equal(schema);
-  });
-
   describe('entity class is passed as the second parameter', () => {
     context('when entity class has a name', () => {
       it('throws with a message with entity class name', () => {

@@ -68,5 +68,34 @@ describe('type coercion', () => {
 
       expect(user.name).to.equal(date.toString());
     });
+
+    describe('coercing an object to string', () => {
+      context('when the object does not implement #toString()', () => {
+        it('coerces objects to object tag string', () => {
+          const objectWithoutToString = { data: 42 };
+
+          const user = new User({
+            name: objectWithoutToString
+          });
+
+          expect(user.name).to.equal('[object Object]');
+        });
+      });
+
+      context('when the object implements #toString()', () => {
+        it('coerces objects to object tag string', () => {
+          const objectWithToString = {
+            data: 42,
+            toString() { return this.data }
+          };
+
+          const user = new User({
+            name: objectWithToString
+          });
+
+          expect(user.name).to.equal('42');
+        });
+      });
+    });
   });
 });

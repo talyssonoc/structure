@@ -1,7 +1,6 @@
 const coerce = require('./typeCoercion');
 
 const define = Object.defineProperty;
-
 const createAttrs = () => Object.create(null);
 
 const assignEachFromSchema = (schema, src, dest) => {
@@ -10,28 +9,31 @@ const assignEachFromSchema = (schema, src, dest) => {
   });
 };
 
+const SCHEMA = Symbol('schema');
+const ATTRIBUTES = Symbol('attributes');
+
 const attributesDescriptor = {
   get() {
 
-    if(!this.__attributes) {
+    if(!this[ATTRIBUTES]) {
       const attributes = createAttrs();
 
-      define(this, '__attributes', {
+      define(this, ATTRIBUTES, {
         configurable: true,
         value: attributes
       });
     }
 
-    return this.__attributes;
+    return this[ATTRIBUTES];
   },
 
   set(newAttributes) {
     const attributes = createAttrs();
-    const schema = this.constructor.__schema;
+    const schema = this[SCHEMA];
 
     assignEachFromSchema(schema, newAttributes, attributes);
 
-    define(this, '__attributes', {
+    define(this, ATTRIBUTES, {
       configurable: true,
       value: attributes
     });
@@ -50,7 +52,7 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
       construct(target, constructorArgs, newTarget) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
         const passedAttributes = constructorArgs[0];
-        const schema = newTarget.__schema;
+        const schema = newTarget[SCHEMA];
 
         assignEachFromSchema(schema, passedAttributes, instance.attributes);
 
@@ -72,11 +74,15 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
       });
     });
 
-    if('__schema' in WrapperClass) {
-      declaredSchema = Object.assign({}, WrapperClass.__schema, declaredSchema);
+    if(SCHEMA in WrapperClass) {
+      declaredSchema = Object.assign({}, WrapperClass[SCHEMA], declaredSchema);
     }
 
-    define(WrapperClass, '__schema', {
+    define(WrapperClass, SCHEMA, {
+      value: declaredSchema
+    });
+
+    define(WrapperClass.prototype, SCHEMA, {
       value: declaredSchema
     });
 

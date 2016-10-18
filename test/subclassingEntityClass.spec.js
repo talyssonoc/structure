@@ -153,13 +153,6 @@ describe('subclassing an entity with another entity', () => {
     level: Number
   })(class Admin extends User {});
 
-  it('extends __schema', () => {
-    expect(Admin.__schema).to.eql({
-      name: String,
-      level: Number
-    });
-  });
-
   it('uses the extended schema', () => {
     const admin = new Admin({
       name: 'The admin',
