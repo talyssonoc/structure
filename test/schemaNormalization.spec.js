@@ -30,7 +30,7 @@ describe('schema normalization', () => {
         };
 
         expect(() => {
-          normalizeSchema(schema)
+          normalizeSchema(schema);
         }).to.throw(Error, /^Missing type for attribute: name\.$/);
       });
     });
@@ -41,7 +41,7 @@ describe('schema normalization', () => {
       const schema = { name: 'invalid attribute' };
 
       expect(() => {
-        normalizeSchema(schema)
+        normalizeSchema(schema);
       }).to.throw(Error, /^Invalid type for attribute: name\.$/);
     });
   });
