@@ -50,7 +50,6 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
       construct(target, constructorArgs, newTarget) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
         const passedAttributes = constructorArgs[0];
-        const schema = newTarget[SCHEMA];
 
         instance.attributes = passedAttributes;
 
