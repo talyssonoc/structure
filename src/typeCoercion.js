@@ -54,7 +54,7 @@ function arrayCoercionFor(typeDescriptor, itemsTypeDescriptor) {
     }
 
     if(value === null || (value.length === undefined && !value[Symbol.iterator])) {
-      throw new Error('Value must be an iterable.');
+      throw new Error('Value must be iterable or array-like.');
     }
 
     if(value[Symbol.iterator]) {

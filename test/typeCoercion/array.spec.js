@@ -110,7 +110,7 @@ describe('type coercion', () => {
           new User({
             books: 123
           });
-        }).to.throw(Error, /^Value must be an iterable\.$/);
+        }).to.throw(Error, /^Value must be iterable or array-like\.$/);
       });
     });
   });
