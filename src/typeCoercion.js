@@ -47,24 +47,54 @@ function genericCoercionFor(Type) {
   };
 }
 
-module.exports = {
-  coercionFor(Type) {
-    const coercion = types.find((c) => c.type === Type);
+function arrayCoercionFor(Type, ItemsType) {
+  const itemsCoercion = coercionFor(ItemsType);
 
-    if(!coercion) {
-      return genericCoercionFor(Type);
+  return function coerceArray(value) {
+    if(value === undefined) {
+      return;
     }
 
-    return function coerce(value) {
-      if(value === undefined) {
-        return;
-      }
+    if(value === null || (value.length === undefined && !value[Symbol.iterator])) {
+      throw new Error('Value must be an iterable.');
+    }
 
-      if(coercion.test && coercion.test(value)) {
-        return value;
-      }
+    if(value[Symbol.iterator]) {
+      value = Array(...value);
+    }
 
-      return coercion.coerce(value);
-    };
+    const coercedValue = new Type();
+
+    for(let i = 0; i < value.length; i++) {
+      coercedValue.push(itemsCoercion(value[i]));
+    }
+
+    return coercedValue;
+  };
+}
+
+function coercionFor(Type, ItemsType) {
+  if(ItemsType) {
+    return arrayCoercionFor(Type, ItemsType.type);
   }
-};
+
+  const coercion = types.find((c) => c.type === Type);
+
+  if(!coercion) {
+    return genericCoercionFor(Type);
+  }
+
+  return function coerce(value) {
+    if(value === undefined) {
+      return;
+    }
+
+    if(coercion.test && coercion.test(value)) {
+      return value;
+    }
+
+    return coercion.coerce(value);
+  };
+}
+
+exports.coercionFor = coercionFor;

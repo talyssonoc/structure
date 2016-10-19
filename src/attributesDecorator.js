@@ -22,6 +22,10 @@ const attributesDescriptor = {
   },
 
   set(newAttributes) {
+    if(!newAttributes || typeof newAttributes !== 'object') {
+      throw new Error('#attributes can\'t be set to a non-object.');
+    }
+
     const attributes = createAttrs();
     const schema = this[SCHEMA];
     const attrNames = Object.keys(schema);
@@ -48,7 +52,11 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
     const WrapperClass = new Proxy(Class, {
       construct(target, constructorArgs, newTarget) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
-        const passedAttributes = constructorArgs[0];
+        var passedAttributes = constructorArgs[0];
+
+        if(passedAttributes === undefined) {
+          passedAttributes = {};
+        }
 
         instance.attributes = passedAttributes;
 
@@ -79,7 +87,7 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
         },
 
         set(value) {
-          this.attributes[attr] = value;
+          this.attributes[attr] = declaredSchema[attr].coerce(value);
         }
       });
     });

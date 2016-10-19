@@ -118,4 +118,20 @@ describe('updating an instance', () => {
 
     expect(user.name).to.equal('New name');
   });
+
+  it('does not throw if no attributes are passed when instantiating', () => {
+    expect(() => {
+      new User();
+    }).to.not.throw(Error);
+  });
+
+  it('throws if value assigned to #attributes is not an object', () => {
+    const user = new User({
+      name: 'My name'
+    });
+
+    expect(() => {
+      user.attributes = null;
+    }).to.throw(Error, /^#attributes can't be set to a non-object\.$/);
+  });
 });
