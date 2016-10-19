@@ -61,4 +61,32 @@ describe('schema normalization', () => {
       });
     });
   });
+
+  context('when attribute has items type', () => {
+    context('when items type is an object with type attribute', () => {
+      it('does not change the items type object', () => {
+        const schema = {
+          name: {
+            type: Array,
+            items: { type: String }
+          }
+        };
+
+        expect(normalizeSchema(schema).name.items.type).to.eql(String);
+      });
+    });
+
+    context('when items type is an constructor', () => {
+      it('normalizes items type to an object with type field being equal to passed constructor', () => {
+        const schema = {
+          name: {
+            type: Array,
+            items: String
+          }
+        };
+
+        expect(normalizeSchema(schema).name.items.type).to.eql(String);
+      });
+    });
+  });
 });

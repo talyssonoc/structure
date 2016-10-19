@@ -33,23 +33,21 @@ const types = [
   }
 ];
 
-function genericCoercionFor(Type) {
+function genericCoercionFor(typeDescriptor) {
   return function coerce(value) {
     if(value === undefined) {
       return;
     }
 
-    if(value instanceof Type) {
+    if(value instanceof typeDescriptor.type) {
       return value;
     }
 
-    return new Type(value);
+    return new typeDescriptor.type(value);
   };
 }
 
-function arrayCoercionFor(Type, ItemsType) {
-  const itemsCoercion = coercionFor(ItemsType);
-
+function arrayCoercionFor(typeDescriptor, itemsTypeDescriptor) {
   return function coerceArray(value) {
     if(value === undefined) {
       return;
@@ -63,25 +61,25 @@ function arrayCoercionFor(Type, ItemsType) {
       value = Array(...value);
     }
 
-    const coercedValue = new Type();
+    const coercedValue = new typeDescriptor.type();
 
     for(let i = 0; i < value.length; i++) {
-      coercedValue.push(itemsCoercion(value[i]));
+      coercedValue.push(itemsTypeDescriptor.coerce(value[i]));
     }
 
     return coercedValue;
   };
 }
 
-function coercionFor(Type, ItemsType) {
-  if(ItemsType) {
-    return arrayCoercionFor(Type, ItemsType.type);
+function coercionFor(typeDescriptor, itemsTypeDescriptor) {
+  if(itemsTypeDescriptor) {
+    return arrayCoercionFor(typeDescriptor, itemsTypeDescriptor);
   }
 
-  const coercion = types.find((c) => c.type === Type);
+  const coercion = types.find((c) => c.type === typeDescriptor.type);
 
   if(!coercion) {
-    return genericCoercionFor(Type);
+    return genericCoercionFor(typeDescriptor);
   }
 
   return function coerce(value) {

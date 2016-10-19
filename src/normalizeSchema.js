@@ -11,20 +11,18 @@ function normalizeAttribute(attribute, attributeName) {
       throw new Error(`Attribute type must be a constructor: ${ attributeName }.`);
     }
 
-    if(attribute.items && typeof attribute.items === 'function') {
-      attribute.items = {
-        type: attribute.items
-      };
+    if(attribute.items) {
+      attribute.items = normalizeAttribute(attribute.items, 'items');
     }
 
     return Object.assign({}, attribute, {
-      coerce: typeCoercion.coercionFor(attribute.type, attribute.items)
+      coerce: typeCoercion.coercionFor(attribute, attribute.items)
     });
 
   case 'function':
     return {
       type: attribute,
-      coerce: typeCoercion.coercionFor(attribute)
+      coerce: typeCoercion.coercionFor({ type: attribute })
     };
 
   default:
