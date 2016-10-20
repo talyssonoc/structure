@@ -1,4 +1,4 @@
-const normalizeSchema = require('./normalizeSchema');
+const { normalizeSchema, VALIDATE } = require('./normalizeSchema');
 
 const define = Object.defineProperty;
 const createAttrs = () => Object.create(null);
@@ -38,6 +38,30 @@ const attributesDescriptor = {
       configurable: true,
       value: attributes
     });
+  }
+};
+
+const validationDescriptor = {
+  value() {
+    const validate = this[SCHEMA][VALIDATE];
+
+    const errors = validate(this.attributes);
+
+    if(errors) {
+      define(this, 'errors', {
+        value: errors,
+        configurable: true
+      });
+
+      return false;
+    }
+
+    define(this, 'errors', {
+      value: undefined,
+      configurable: true
+    });
+
+    return true;
   }
 };
 
@@ -91,6 +115,8 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
         }
       });
     });
+
+    define(WrapperClass.prototype, 'isValid', validationDescriptor);
 
     return WrapperClass;
   };

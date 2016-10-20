@@ -1,4 +1,6 @@
-const typeCoercion = require('./typeCoercion');
+const { coercionFor } = require('./typeCoercion');
+const { validationForAttribute, validationForSchema } = require('./validation');
+const VALIDATE = Symbol('validate');
 
 function normalizeAttribute(attribute, attributeName) {
   switch(typeof attribute) {
@@ -16,13 +18,17 @@ function normalizeAttribute(attribute, attributeName) {
     }
 
     return Object.assign({}, attribute, {
-      coerce: typeCoercion.coercionFor(attribute, attribute.items)
+      coerce: coercionFor(attribute, attribute.items),
+      validation: validationForAttribute(attribute)
     });
 
   case 'function':
+    var normalizedType = { type: attribute };
+
     return {
       type: attribute,
-      coerce: typeCoercion.coercionFor({ type: attribute })
+      coerce: coercionFor(normalizedType),
+      validation: validationForAttribute(normalizedType)
     };
 
   default:
@@ -30,12 +36,19 @@ function normalizeAttribute(attribute, attributeName) {
   }
 }
 
-module.exports = function normalizeSchema(rawSchema) {
+function normalizeSchema(rawSchema) {
   const schema = Object.create(null);
 
   Object.keys(rawSchema).forEach((attributeName) => {
     schema[attributeName] = normalizeAttribute(rawSchema[attributeName], attributeName);
   });
 
+  Object.defineProperty(schema, VALIDATE, {
+    value: validationForSchema(schema)
+  });
+
   return schema;
-};
+}
+
+exports.normalizeSchema = normalizeSchema;
+exports.VALIDATE = VALIDATE;
