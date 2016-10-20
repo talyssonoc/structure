@@ -1,4 +1,4 @@
-const { normalizeSchema, VALIDATE } = require('./normalizeSchema');
+const { normalizeSchema, VALIDATE } = require('./schemaNormalization');
 
 const define = Object.defineProperty;
 const createAttrs = () => Object.create(null);

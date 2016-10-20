@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { normalizeSchema } = require('../src/normalizeSchema');
+const { normalizeSchema } = require('../src/schemaNormalization');
 
 describe('schema normalization', () => {
   context('when passed attribute is the type itself', () => {
