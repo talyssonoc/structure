@@ -1,36 +1,7 @@
-const _ = require('lodash');
-
 const types = [
-  {
-    type: String,
-    test: _.isString,
-    coerce(value) {
-      if(value === null) {
-        return '';
-      }
-
-      return String(value);
-    }
-  },
-
-  {
-    type: Number,
-    test: _.isNumber,
-    coerce(value) {
-      if(value === null) {
-        return 0;
-      }
-
-      return Number(value);
-    }
-  },
-
-  {
-    type: Boolean,
-    coerce(value) {
-      return Boolean(value);
-    }
-  }
+  require('./string'),
+  require('./number'),
+  require('./boolean')
 ];
 
 function genericCoercionFor(typeDescriptor) {
