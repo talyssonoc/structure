@@ -1,5 +1,8 @@
-exports.mapToJoi = function mapToJoi (typeDescriptor, initialJoiSchema, joiMappings) {
-  return joiMappings.reduce((joiSchema, [optionName, joiMethod, passValueToJoi]) => {
+const joi = require('joi');
+const { isPlainObject } = require('lodash');
+
+exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
+  return mappings.reduce((joiSchema, [optionName, joiMethod, passValueToJoi]) => {
     if(typeDescriptor[optionName] === undefined) {
       return joiSchema;
     }
@@ -9,5 +12,21 @@ exports.mapToJoi = function mapToJoi (typeDescriptor, initialJoiSchema, joiMappi
     }
 
     return joiSchema[joiMethod]();
-  }, initialJoiSchema);
+  }, initial);
+};
+
+exports.mapToJoiWithReference = function mapToJoiWithReference(typeDescriptor, { initial, mappings }) {
+  return mappings.reduce((joiSchema, [optionName, joiMethod]) => {
+    var optionValue = typeDescriptor[optionName];
+
+    if(optionValue === undefined) {
+      return joiSchema;
+    }
+
+    if(isPlainObject(optionValue)) {
+      optionValue = joi.ref(optionValue.attr);
+    }
+
+    return joiSchema[joiMethod](optionValue);
+  }, initial);
 };

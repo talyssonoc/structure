@@ -24,12 +24,10 @@ function normalizeAttribute(attribute, attributeName) {
 
   case 'function':
     var normalizedType = { type: attribute };
+    normalizedType.coerce = coercionFor(normalizedType);
+    normalizedType.validation = validationForAttribute(normalizedType);
 
-    return {
-      type: attribute,
-      coerce: coercionFor(normalizedType),
-      validation: validationForAttribute(normalizedType)
-    };
+    return normalizedType;
 
   default:
     throw new Error(`Invalid type for attribute: ${ attributeName }.`);

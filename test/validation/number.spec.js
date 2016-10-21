@@ -100,45 +100,97 @@ describe('validation', () => {
     });
 
     describe('min', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          min: 2
-        }
-      })(class User {});
+      describe('when using a number', () => {
+        const User = attributes({
+          age: {
+            type: Number,
+            min: 2
+          }
+        })(class User {});
 
-      context('when value is equal to min', () => {
-        it('is valid', () => {
-          const user = new User({
-            age: 2
+        context('when value is equal to min', () => {
+          it('is valid', () => {
+            const user = new User({
+              age: 2
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
           });
+        });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+        context('when value is greater than min', () => {
+          it('is valid', () => {
+            const user = new User({
+              age: 3
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
+        });
+
+        context('when value is less than min', () => {
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              age: 1
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('age');
+          });
         });
       });
 
-      context('when value is greater than min', () => {
-        it('is valid', () => {
-          const user = new User({
-            age: 3
-          });
+      describe('when using a reference to another attribute', () => {
+        const User = attributes({
+          startAge: {
+            type: Number
+          },
+          currentAge: {
+            type: Number,
+            min: { attr: 'startAge' }
+          }
+        })(class User {});
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+        context('when value is equal to referenced attribute', () => {
+          it('is valid', () => {
+            const user = new User({
+              startAge: 2,
+              currentAge: 2
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
         });
-      });
 
-      context('when value is less than min', () => {
-        it('is not valid and has errors set', () => {
-          const user = new User({
-            age: 1
+        context('when value is greater than referenced attribute', () => {
+          it('is valid', () => {
+            const user = new User({
+              startAge: 2,
+              currentAge: 3
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
           });
+        });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+        context('when value is less than referenced attribute', () => {
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              startAge: 3,
+              currentAge: 2
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('currentAge');
+          });
         });
       });
     });

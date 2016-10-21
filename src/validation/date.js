@@ -6,10 +6,10 @@ module.exports = {
   joiMappings: [
     ['min', 'min', true],
     ['max', 'max', true],
-    ['equal', 'valid', true],
+    ['equal', 'only', true],
     ['required', 'required']
   ],
   createJoiSchema(typeDescriptor) {
-    return mapToJoi(typeDescriptor, joi.date(), this.joiMappings);
+    return mapToJoi(typeDescriptor, { initial: joi.date(), mappings: this.joiMappings });
   }
 };

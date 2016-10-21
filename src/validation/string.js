@@ -22,6 +22,6 @@ module.exports = {
       joiSchema = joiSchema.allow('');
     }
 
-    return mapToJoi(typeDescriptor, joiSchema, this.joiMappings);
+    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
   }
 };
