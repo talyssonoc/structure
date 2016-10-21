@@ -2,18 +2,18 @@ const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('validation', () => {
-  describe('String', () => {
+  describe('Number', () => {
     describe('no validation', () => {
       const User = attributes({
-        name: {
-          type: String
+        age: {
+          type: Number
         }
       })(class User {});
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some name'
+            age: 42
           });
 
           expect(user.isValid()).to.be.true;
@@ -24,7 +24,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
-            name: undefined
+            age: undefined
           });
 
           expect(user.isValid()).to.be.true;
@@ -35,8 +35,8 @@ describe('validation', () => {
 
     describe('required', () => {
       const User = attributes({
-        name: {
-          type: String,
+        age: {
+          type: Number,
           required: true
         }
       })(class User {});
@@ -44,7 +44,7 @@ describe('validation', () => {
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some name'
+            age: 42
           });
 
           expect(user.isValid()).to.be.true;
@@ -55,96 +55,29 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: undefined
+            age: undefined
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          expect(user.errors[0].path).to.equal('age');
         });
       });
     });
 
-    describe('empty', () => {
-      describe('empty: true', () => {
-        const User = attributes({
-          name: {
-            type: String,
-            empty: true
-          }
-        })(class User {});
-
-        context('when value is not empty', () => {
-          it('is valid', () => {
-            const user = new User({
-              name: 'Some name'
-            });
-
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
-          });
-        });
-
-        context('when value is empty', () => {
-          it('is valid', () => {
-            const user = new User({
-              name: ''
-            });
-
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
-          });
-        });
-      });
-
-      describe('empty: false', () => {
-        const User = attributes({
-          name: {
-            type: String,
-            empty: false
-          }
-        })(class User {});
-
-        context('when value is not empty', () => {
-          it('is valid', () => {
-            const user = new User({
-              name: 'Some name'
-            });
-
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
-          });
-        });
-
-        context('when value is empty', () => {
-          it('is not valid and has errors set', () => {
-            const user = new User({
-              name: ''
-            });
-
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('name');
-          });
-        });
-      });
-
-    });
-
-    describe('minLength', () => {
+    describe('min', () => {
       const User = attributes({
-        name: {
-          type: String,
-          minLength: 3
+        age: {
+          type: Number,
+          min: 2
         }
       })(class User {});
 
-      context('when value has minimum length', () => {
+      context('when value is equal to min', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some name'
+            age: 2
           });
 
           expect(user.isValid()).to.be.true;
@@ -152,32 +85,10 @@ describe('validation', () => {
         });
       });
 
-      context('when value is shorter than minimum length', () => {
-        it('is not valid and has errors set', () => {
-          const user = new User({
-            name: 'Hi'
-          });
-
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
-        });
-      });
-    });
-
-    describe('maxLength', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          maxLength: 4
-        }
-      })(class User {});
-
-      context('when value has maximum length', () => {
+      context('when value is greater than min', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some'
+            age: 3
           });
 
           expect(user.isValid()).to.be.true;
@@ -185,32 +96,45 @@ describe('validation', () => {
         });
       });
 
-      context('when value is longer than maximum length', () => {
+      context('when value is less than min', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Some name'
+            age: 1
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          expect(user.errors[0].path).to.equal('age');
         });
       });
     });
 
-    describe('exactLength', () => {
+    describe('greater', () => {
       const User = attributes({
-        name: {
-          type: String,
-          exactLength: 4
+        age: {
+          type: Number,
+          greater: 2
         }
       })(class User {});
 
-      context('when value has exact length', () => {
+      context('when value is equal to greater', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: 2
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+
+      context('when value is greater than greater', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some'
+            age: 3
           });
 
           expect(user.isValid()).to.be.true;
@@ -218,45 +142,32 @@ describe('validation', () => {
         });
       });
 
-      context('when value is longer than exact length', () => {
+      context('when value is less than greater', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Some name'
+            age: 1
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
-        });
-      });
-
-      context('when value is shorter than exact length', () => {
-        it('is not valid and has errors set', () => {
-          const user = new User({
-            name: 'Hi'
-          });
-
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          expect(user.errors[0].path).to.equal('age');
         });
       });
     });
 
-    describe('regex', () => {
+    describe('max', () => {
       const User = attributes({
-        name: {
-          type: String,
-          regex: /\w\d/
+        age: {
+          type: Number,
+          max: 2
         }
       })(class User {});
 
-      context('when value matches the regex', () => {
+      context('when value is equal to max', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'A1'
+            age: 2
           });
 
           expect(user.isValid()).to.be.true;
@@ -264,32 +175,10 @@ describe('validation', () => {
         });
       });
 
-      context('when value does not match the regex', () => {
-        it('is not valid and has errors set', () => {
-          const user = new User({
-            name: 'Something'
-          });
-
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
-        });
-      });
-    });
-
-    describe('alphanumeric', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          alphanumeric: true
-        }
-      })(class User {});
-
-      context('when value is alphanumeric', () => {
+      context('when value is less than max', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'A1B2'
+            age: 1
           });
 
           expect(user.isValid()).to.be.true;
@@ -297,32 +186,45 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not alphanumeric', () => {
+      context('when value is greater than max', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'No alphanumeric $ string'
+            age: 3
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          expect(user.errors[0].path).to.equal('age');
         });
       });
     });
 
-    describe('lowerCase', () => {
+    describe('less', () => {
       const User = attributes({
-        name: {
-          type: String,
-          lowerCase: true
+        age: {
+          type: Number,
+          less: 2
         }
       })(class User {});
 
-      context('when value is lower cased', () => {
+      context('when value is equal to less', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: 2
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+
+      context('when value is less than less', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'abc'
+            age: 1
           });
 
           expect(user.isValid()).to.be.true;
@@ -330,32 +232,32 @@ describe('validation', () => {
         });
       });
 
-      context('when value has some upper case character', () => {
+      context('when value is greater than less', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Abc'
+            age: 3
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          expect(user.errors[0].path).to.equal('age');
         });
       });
     });
 
-    describe('upperCase', () => {
+    describe('integer', () => {
       const User = attributes({
-        name: {
-          type: String,
-          upperCase: true
+        age: {
+          type: Number,
+          integer: true
         }
       })(class User {});
 
-      context('when value is upper cased', () => {
+      context('when value is an integer', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'ABC'
+            age: 42
           });
 
           expect(user.isValid()).to.be.true;
@@ -363,32 +265,32 @@ describe('validation', () => {
         });
       });
 
-      context('when value has some lower case character', () => {
+      context('when value is not an integer', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Abc'
+            age: 4.2
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          expect(user.errors[0].path).to.equal('age');
         });
       });
     });
 
-    describe('email', () => {
+    describe('precision', () => {
       const User = attributes({
-        name: {
-          type: String,
-          email: true
+        age: {
+          type: Number,
+          precision: 2
         }
       })(class User {});
 
-      context('when value is a valid email', () => {
+      context('when value has less than precision decimal places', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'name@host.com'
+            age: 4.20
           });
 
           expect(user.isValid()).to.be.true;
@@ -396,16 +298,141 @@ describe('validation', () => {
         });
       });
 
-      context('when value is shorter than minimum length', () => {
+      context('when value has more than precision decimal places', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Not a valid email'
+            age: 0.042
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+    });
+
+    describe('multiple', () => {
+      const User = attributes({
+        age: {
+          type: Number,
+          multiple: 3
+        }
+      })(class User {});
+
+      context('when value is multiple of given value', () => {
+        it('is valid', () => {
+          const user = new User({
+            age: 6
+          });
+
+          expect(user.isValid()).to.be.true;
+          expect(user.errors).to.be.undefined;
+        });
+      });
+
+      context('when value is not multiple of given value', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: 7
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+    });
+
+    describe('positive', () => {
+      const User = attributes({
+        age: {
+          type: Number,
+          positive: true
+        }
+      })(class User {});
+
+      context('when value is positive', () => {
+        it('is valid', () => {
+          const user = new User({
+            age: 1
+          });
+
+          expect(user.isValid()).to.be.true;
+          expect(user.errors).to.be.undefined;
+        });
+      });
+
+      context('when value is zero', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: 0
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+
+      context('when value is negative', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: -1
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+    });
+
+    describe('negative', () => {
+      const User = attributes({
+        age: {
+          type: Number,
+          negative: true
+        }
+      })(class User {});
+
+      context('when value is negative', () => {
+        it('is valid', () => {
+          const user = new User({
+            age: -1
+          });
+
+          expect(user.isValid()).to.be.true;
+          expect(user.errors).to.be.undefined;
+        });
+      });
+
+      context('when value is zero', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: 0
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+
+      context('when value is positive', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: 1
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
         });
       });
     });
