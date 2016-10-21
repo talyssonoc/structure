@@ -66,6 +66,39 @@ describe('validation', () => {
       });
     });
 
+    describe('equal', () => {
+      const User = attributes({
+        age: {
+          type: Number,
+          equal: 2
+        }
+      })(class User {});
+
+      context('when value is equal', () => {
+        it('is valid', () => {
+          const user = new User({
+            age: 2
+          });
+
+          expect(user.isValid()).to.be.true;
+          expect(user.errors).to.be.undefined;
+        });
+      });
+
+      context('when value is different', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            age: 1
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('age');
+        });
+      });
+    });
+
     describe('min', () => {
       const User = attributes({
         age: {

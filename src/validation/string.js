@@ -4,6 +4,7 @@ const { mapToJoi } = require('./utils');
 module.exports = {
   type: String,
   joiMappings: [
+    ['equal', 'only', true],
     ['minLength', 'min', true],
     ['maxLength', 'max', true],
     ['exactLength', 'length', true],
@@ -12,7 +13,7 @@ module.exports = {
     ['lowerCase', 'lowercase'],
     ['upperCase', 'uppercase'],
     ['email', 'email'],
-    ['required', 'required'],
+    ['required', 'required']
   ],
   createJoiSchema(typeDescriptor) {
     var joiSchema = joi.string();

@@ -66,6 +66,39 @@ describe('validation', () => {
       });
     });
 
+    describe('equal', () => {
+      const User = attributes({
+        name: {
+          type: String,
+          equal: 'Something'
+        }
+      })(class User {});
+
+      context('when value is equal', () => {
+        it('is valid', () => {
+          const user = new User({
+            name: 'Something'
+          });
+
+          expect(user.isValid()).to.be.true;
+          expect(user.errors).to.be.undefined;
+        });
+      });
+
+      context('when value is different', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            name: 'Another thing'
+          });
+
+          expect(user.isValid()).to.be.false;
+          expect(user.errors).to.be.instanceOf(Array);
+          expect(user.errors).to.have.lengthOf(1);
+          expect(user.errors[0].path).to.equal('name');
+        });
+      });
+    });
+
     describe('empty', () => {
       describe('empty: true', () => {
         const User = attributes({

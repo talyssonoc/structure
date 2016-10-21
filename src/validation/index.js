@@ -2,7 +2,8 @@ const joi = require('joi');
 
 const validations = [
   require('./string'),
-  require('./number')
+  require('./number'),
+  require('./boolean')
 ];
 
 function validationForAttribute(typeDescriptor) {
