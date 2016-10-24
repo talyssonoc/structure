@@ -106,40 +106,86 @@ describe('validation', () => {
     });
 
     describe('max', () => {
-      const now = new Date();
+      describe('when using a value', () => {
+        const now = new Date();
 
-      const User = attributes({
-        birth: {
-          type: Date,
-          max: now
-        }
-      })(class User {});
+        const User = attributes({
+          birth: {
+            type: Date,
+            max: now
+          }
+        })(class User {});
 
-      context('when date is before max', () => {
-        it('is valid', () => {
-          const before = new Date(10);
+        context('when date is before max', () => {
+          it('is valid', () => {
+            const before = new Date(10);
 
-          const user = new User({
-            birth: before
+            const user = new User({
+              birth: before
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
           });
+        });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+        context('when date is after max', () => {
+          it('is not valid and has errors set', () => {
+            const after = new Date();
+
+            const user = new User({
+              birth: after
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('birth');
+          });
         });
       });
 
-      context('when date is after max', () => {
-        it('is not valid and has errors set', () => {
-          const after = new Date();
+      describe('when using a reference', () => {
+        const now = new Date();
 
-          const user = new User({
-            birth: after
+        const User = attributes({
+          createdAt: {
+            type: Date,
+            max: { attr: 'updatedAt' }
+          },
+          updatedAt: {
+            type: Date
+          }
+        })(class User {});
+
+        context('when date is before max', () => {
+          it('is valid', () => {
+            const before = new Date(10);
+
+            const user = new User({
+              createdAt: before,
+              updatedAt: now
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
           });
+        });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('birth');
+        context('when date is after max', () => {
+          it('is not valid and has errors set', () => {
+            const after = new Date();
+
+            const user = new User({
+              createdAt: after,
+              updatedAt: now
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('createdAt');
+          });
         });
       });
     });

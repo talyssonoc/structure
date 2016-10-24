@@ -1,5 +1,5 @@
 const joi = require('joi');
-const { mapToJoi, mapToJoiWithReference } = require('./utils');
+const { mapToJoi, mapToJoiWithReference, equalOption } = require('./utils');
 
 module.exports = {
   type: Number,
@@ -9,17 +9,21 @@ module.exports = {
     ['multiple', 'multiple', true],
     ['positive', 'positive', true],
     ['negative', 'negative', true],
-    ['equal', 'only', true],
     ['required', 'required']
   ],
-  numberOrRefOptions: [
+  valueOrRefOptions: [
     ['min', 'min'],
     ['greater', 'greater'],
     ['max', 'max'],
     ['less', 'less']
   ],
   createJoiSchema(typeDescriptor) {
-    const joiSchema = mapToJoiWithReference(typeDescriptor, { initial: joi.number(), mappings: this.numberOrRefOptions });
+    var joiSchema = mapToJoiWithReference(typeDescriptor, {
+      initial: joi.number(),
+      mappings: this.valueOrRefOptions
+    });
+
+    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
     return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
   }

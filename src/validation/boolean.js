@@ -1,18 +1,16 @@
 const joi = require('joi');
+const { mapToJoi, equalOption } = require('./utils');
 
 module.exports = {
   type: Boolean,
+  joiMappings: [
+    ['required', 'required']
+  ],
   createJoiSchema(typeDescriptor) {
     var joiSchema = joi.boolean();
 
-    if(typeDescriptor.equal !== undefined) {
-      joiSchema = joiSchema.only(typeDescriptor.equal);
-    }
+    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
-    if(typeDescriptor.required) {
-      joiSchema = joiSchema.required();
-    }
-
-    return joiSchema;
+    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
   }
 };

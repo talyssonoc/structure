@@ -7,11 +7,13 @@ const validations = [
   require('./date'),
 ];
 
+const otherValidation = require('./other');
+
 function validationForAttribute(typeDescriptor) {
   const validation = validations.find((v) => v.type === typeDescriptor.type);
 
   if(!validation) {
-    return joi.any();
+    return otherValidation(typeDescriptor);
   }
 
   return validation.createJoiSchema(typeDescriptor);
@@ -34,16 +36,19 @@ function validationForSchema(schema) {
 
   const joiValidation = joi.object().keys(schemaValidation);
 
-  return function validate(entity) {
-    var validationErrors;
+  return {
+      joiValidation,
+      validate(entity) {
+      var validationErrors;
 
-    const { error } = joiValidation.validate(entity, validatorOptions);
+      const { error } = joiValidation.validate(entity, validatorOptions);
 
-    if(error) {
-      validationErrors = error.details.map(mapDetail);
+      if(error) {
+        validationErrors = error.details.map(mapDetail);
+      }
+
+      return validationErrors;
     }
-
-    return validationErrors;
   };
 }
 

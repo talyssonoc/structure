@@ -1,10 +1,9 @@
 const joi = require('joi');
-const { mapToJoi } = require('./utils');
+const { mapToJoi, equalOption } = require('./utils');
 
 module.exports = {
   type: String,
   joiMappings: [
-    ['equal', 'only', true],
     ['minLength', 'min', true],
     ['maxLength', 'max', true],
     ['exactLength', 'length', true],
@@ -21,6 +20,8 @@ module.exports = {
     if(typeDescriptor.empty) {
       joiSchema = joiSchema.allow('');
     }
+
+    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
     return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
   }

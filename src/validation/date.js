@@ -1,15 +1,23 @@
 const joi = require('joi');
-const { mapToJoi } = require('./utils');
+const { mapToJoi, mapToJoiWithReference, equalOption } = require('./utils');
 
 module.exports = {
   type: Date,
   joiMappings: [
-    ['min', 'min', true],
-    ['max', 'max', true],
-    ['equal', 'only', true],
     ['required', 'required']
   ],
+  valueOrRefOptions: [
+    ['min', 'min'],
+    ['max', 'max'],
+  ],
   createJoiSchema(typeDescriptor) {
-    return mapToJoi(typeDescriptor, { initial: joi.date(), mappings: this.joiMappings });
+    var joiSchema = mapToJoiWithReference(typeDescriptor, {
+      initial: joi.date(),
+      mappings: this.valueOrRefOptions
+    });
+
+    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
+
+    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
   }
 };
