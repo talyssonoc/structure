@@ -7,13 +7,18 @@ const validations = [
   require('./date'),
 ];
 
-const otherValidation = require('./other');
+const nestedValidation = require('./nested');
+const arrayValidation = require('./array');
 
 function validationForAttribute(typeDescriptor) {
+  if(typeDescriptor.items !== undefined) {
+    return arrayValidation(typeDescriptor, typeDescriptor.items);
+  }
+
   const validation = validations.find((v) => v.type === typeDescriptor.type);
 
   if(!validation) {
-    return otherValidation(typeDescriptor);
+    return nestedValidation(typeDescriptor);
   }
 
   return validation.createJoiSchema(typeDescriptor);
@@ -37,8 +42,8 @@ function validationForSchema(schema) {
   const joiValidation = joi.object().keys(schemaValidation);
 
   return {
-      joiValidation,
-      validate(entity) {
+    joiValidation,
+    validate(entity) {
       var validationErrors;
 
       const { error } = joiValidation.validate(entity, validatorOptions);

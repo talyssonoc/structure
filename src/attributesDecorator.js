@@ -1,4 +1,5 @@
 const { normalizeSchema } = require('./schemaNormalization');
+const { serialize } = require('./serialization');
 const { SCHEMA, ATTRIBUTES, VALIDATE } = require('./symbols');
 
 const define = Object.defineProperty;
@@ -100,8 +101,9 @@ const attributesDescriptor = {
 const validationDescriptor = {
   value() {
     const validation = this[SCHEMA][VALIDATE];
+    const serializedEntity = serialize(this);
 
-    const errors = validation.validate(this.attributes);
+    const errors = validation.validate(serializedEntity);
 
     if(errors) {
       define(this, 'errors', {

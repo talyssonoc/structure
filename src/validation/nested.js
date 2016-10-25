@@ -1,8 +1,8 @@
 const joi = require('joi');
-const { SCHEMA, VALIDATE } = require('../symbols');
+const { SCHEMA } = require('../symbols');
 
-module.exports = function otherValidation(typeDescriptor) {
-  var joiSchema = joi.object().type(typeDescriptor.type);
+module.exports = function nestedValidation(typeDescriptor) {
+  var joiSchema = joi.object();
   var typeSchema = typeDescriptor.type[SCHEMA];
 
   if(typeSchema !== undefined) {
@@ -21,4 +21,4 @@ module.exports = function otherValidation(typeDescriptor) {
   }
 
   return joiSchema;
-}
+};

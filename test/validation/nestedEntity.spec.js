@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { attributes } = require('../../src');
 
-describe.only('validation', () => {
+describe('validation', () => {
   describe('Nested with entity class', () => {
     describe('no validation', () => {
       const Location = attributes({
@@ -71,7 +71,7 @@ describe.only('validation', () => {
       });
 
       context('when value is not present', () => {
-        it('is valid', () => {
+        it('is not valid and has errors set', () => {
           const user = new User({
             lastLocation: undefined
           });
@@ -103,13 +103,12 @@ describe.only('validation', () => {
         }
       })(class User {});
 
-      context.skip('when nested value is present', () => {
+      context('when nested value is present', () => {
         it('is valid', () => {
           const user = new User({
             lastLocation: new Location({ x: 1, y: 2 })
           });
 
-          // console.log((user.isValid(), user.lastLocation.x))
           expect(user.isValid()).to.be.true;
           expect(user.errors).to.be.undefined;
         });
@@ -121,7 +120,6 @@ describe.only('validation', () => {
             lastLocation: new Location({ x: 1, y: undefined})
           });
 
-          console.log((user.isValid(), user.errors))
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);

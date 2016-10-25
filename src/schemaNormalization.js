@@ -41,11 +41,6 @@ function normalizeSchema(rawSchema) {
     schema[attributeName] = normalizeAttribute(rawSchema[attributeName], attributeName);
   });
 
-  if(schema.lastLocation) {
-    // console.log(schema)
-    // console.log(schemaValidation)
-  }
-
   const schemaValidation = validationForSchema(schema);
 
   Object.defineProperty(schema, VALIDATE, {
