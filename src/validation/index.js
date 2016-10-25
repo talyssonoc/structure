@@ -42,7 +42,6 @@ function validationForSchema(schema) {
   const joiValidation = joi.object().keys(schemaValidation);
 
   return {
-    joiValidation,
     validate(entity) {
       var validationErrors;
 
