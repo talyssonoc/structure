@@ -15,6 +15,14 @@ exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
   }, initial);
 };
 
+function mapValueOrReference(valueOrReference) {
+  if(isPlainObject(valueOrReference)) {
+    return joi.ref(valueOrReference.attr);
+  }
+
+  return valueOrReference;
+}
+
 exports.mapToJoiWithReference = function mapToJoiWithReference(typeDescriptor, { initial, mappings }) {
   return mappings.reduce((joiSchema, [optionName, joiMethod]) => {
     var optionValue = typeDescriptor[optionName];
@@ -23,10 +31,24 @@ exports.mapToJoiWithReference = function mapToJoiWithReference(typeDescriptor, {
       return joiSchema;
     }
 
-    if(isPlainObject(optionValue)) {
-      optionValue = joi.ref(optionValue.attr);
-    }
+    optionValue = mapValueOrReference(optionValue);
 
     return joiSchema[joiMethod](optionValue);
   }, initial);
+};
+
+exports.equalOption = function equalOption(typeDescriptor, { initial }) {
+  var possibilities = typeDescriptor.equal;
+
+  if(possibilities === undefined) {
+    return initial;
+  }
+
+  if(Array.isArray(possibilities)) {
+    possibilities = possibilities.map(mapValueOrReference);
+  } else {
+    possibilities = mapValueOrReference(possibilities);
+  }
+
+  return initial.equal(possibilities);
 };

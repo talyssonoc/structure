@@ -1,10 +1,9 @@
-const { normalizeSchema, VALIDATE } = require('./schemaNormalization');
+const { normalizeSchema } = require('./schemaNormalization');
+const { serialize } = require('./serialization');
+const { SCHEMA, ATTRIBUTES, VALIDATE } = require('./symbols');
 
 const define = Object.defineProperty;
 const createAttrs = () => Object.create(null);
-
-const SCHEMA = Symbol('schema');
-const ATTRIBUTES = Symbol('attributes');
 
 function attributesDecorator(declaredSchema, ErroneousPassedClass) {
   if(ErroneousPassedClass) {
@@ -47,6 +46,7 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
 
     Object.keys(declaredSchema).forEach((attr) => {
       define(WrapperClass.prototype, attr, {
+        enumerable: true,
         get() {
           return this.attributes[attr];
         },
@@ -100,9 +100,10 @@ const attributesDescriptor = {
 
 const validationDescriptor = {
   value() {
-    const validate = this[SCHEMA][VALIDATE];
+    const validation = this[SCHEMA][VALIDATE];
+    const serializedEntity = serialize(this);
 
-    const errors = validate(this.attributes);
+    const errors = validation.validate(serializedEntity);
 
     if(errors) {
       define(this, 'errors', {

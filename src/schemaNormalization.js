@@ -1,6 +1,6 @@
 const { coercionFor } = require('./typeCoercion');
 const { validationForAttribute, validationForSchema } = require('./validation');
-const VALIDATE = Symbol('validate');
+const { VALIDATE } = require('./symbols');
 
 function normalizeAttribute(attribute, attributeName) {
   switch(typeof attribute) {
@@ -41,9 +41,12 @@ function normalizeSchema(rawSchema) {
     schema[attributeName] = normalizeAttribute(rawSchema[attributeName], attributeName);
   });
 
+  const schemaValidation = validationForSchema(schema);
+
   Object.defineProperty(schema, VALIDATE, {
-    value: validationForSchema(schema)
+    value: schemaValidation
   });
+
 
   return schema;
 }

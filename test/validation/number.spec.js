@@ -67,34 +67,124 @@ describe('validation', () => {
     });
 
     describe('equal', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          equal: 2
-        }
-      })(class User {});
+      describe('when using a value', () => {
+        const User = attributes({
+          age: {
+            type: Number,
+            equal: 2
+          }
+        })(class User {});
 
-      context('when value is equal', () => {
-        it('is valid', () => {
-          const user = new User({
-            age: 2
+        context('when value is equal', () => {
+          it('is valid', () => {
+            const user = new User({
+              age: 2
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
           });
+        });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+        context('when value is different', () => {
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              age: 1
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('age');
+          });
         });
       });
 
-      context('when value is different', () => {
-        it('is not valid and has errors set', () => {
-          const user = new User({
-            age: 1
-          });
+      describe('when using a mixed array os possibilities', () => {
+        const User = attributes({
+          startAge: {
+            type: Number
+          },
+          currentAge: {
+            type: Number,
+            equal: [{ attr: 'startAge' }, 3]
+          }
+        })(class User {});
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+        context('when value is equal to referenced attribute', () => {
+          it('is valid', () => {
+            const user = new User({
+              startAge: 2,
+              currentAge: 2
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
+        });
+
+        context('when value is equal to one of the value possibilities', () => {
+          it('is valid', () => {
+            const user = new User({
+              startAge: 2,
+              currentAge: 3
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
+        });
+
+        context('when value is different from all possibilities', () => {
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              startAge: 1,
+              currentAge: 2
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('currentAge');
+          });
+        });
+      });
+
+      describe('when using a reference', () => {
+        const User = attributes({
+          startAge: {
+            type: Number
+          },
+          currentAge: {
+            type: Number,
+            equal: { attr: 'startAge' }
+          }
+        })(class User {});
+
+        context('when value is equal to referenced attribute', () => {
+          it('is valid', () => {
+            const user = new User({
+              startAge: 2,
+              currentAge: 2
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
+        });
+
+        context('when value is different', () => {
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              startAge: 1,
+              currentAge: 2
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('currentAge');
+          });
         });
       });
     });
