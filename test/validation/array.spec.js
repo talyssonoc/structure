@@ -68,6 +68,75 @@ describe('validation', () => {
       });
     });
 
+    describe('sparse array', () => {
+      context('when array can not be sparse', () => {
+        const User = attributes({
+          books: {
+            type: Array,
+            items: String,
+            sparse: false
+          }
+        })(class User {});
+
+        context('when all items are defined', () => {
+          it('is valid', () => {
+            const user = new User({
+              books: ['Poetic Edda', 'Prose Edda']
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
+        });
+
+        context('when some item is undefined', () => {
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              books: ['The Lusiads', undefined]
+            });
+
+            expect(user.isValid()).to.be.false;
+            expect(user.errors).to.be.instanceOf(Array);
+            expect(user.errors).to.have.lengthOf(1);
+            expect(user.errors[0].path).to.equal('books.1');
+          });
+        });
+      });
+
+      context('when array can be sparse', () => {
+        const User = attributes({
+          books: {
+            type: Array,
+            items: String,
+            sparse: true
+          }
+        })(class User {});
+
+        context('when all items are defined', () => {
+          it('is valid', () => {
+            const user = new User({
+              books: ['Poetic Edda', 'Prose Edda']
+            });
+
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
+        });
+
+        context('when some item is undefined', () => {
+          it('is valid', () => {
+            const user = new User({
+              books: ['The Lusiads', undefined]
+            });
+
+            console.log((user.isValid(), user.errors));
+            expect(user.isValid()).to.be.true;
+            expect(user.errors).to.be.undefined;
+          });
+        });
+      });
+    });
+
     describe('nested validation', () => {
       const Book = attributes({
         name: {

@@ -10,6 +10,9 @@ const joiMappings = [
 
 module.exports = function arrayValidation(typeDescriptor, itemsTypeDescriptor) {
   var joiSchema = joi.array().items(itemsTypeDescriptor.validation);
+  const canBeSparse = typeDescriptor.sparse === undefined || typeDescriptor.sparse;
+
+  joiSchema = joiSchema.sparse(canBeSparse);
 
   joiSchema = mapToJoi(typeDescriptor, { initial: joiSchema, mappings: joiMappings });
 
