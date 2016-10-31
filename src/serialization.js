@@ -1,6 +1,10 @@
 const { SCHEMA } = require('./symbols');
 
 function serialize(entity) {
+  if(entity === undefined) {
+    return;
+  }
+
   const schema = entity[SCHEMA];
 
   const attrNames = Object.keys(schema);
