@@ -39,4 +39,21 @@ describe('creating an entity class', () => {
       expect(User.staticProperty).to.equal('I am a static property');
     });
   });
+
+  describe('using default values for attributes', () => {
+    const defaultName = 'Foo';
+    const defaultAge = () => 18;
+
+    const User = attributes({
+      name: { type: String, default: defaultName },
+      age: { type: Number, default: defaultAge }
+    })(class User {});
+
+    it('should define the attributes with the default values', () => {
+      const user = new User();
+
+      expect(user.name).to.equal(defaultName);
+      expect(user.age).to.equal(defaultAge());
+    });
+  });
 });
