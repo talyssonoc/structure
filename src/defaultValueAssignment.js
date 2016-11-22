@@ -1,4 +1,4 @@
-exports.retrieveDefaultValues = (schema, instance) => Object.keys(schema).reduce((values, prop) => {
+exports.assignDefaultValue = (schema, instance) => Object.keys(schema).reduce((values, prop) => {
   const defaultDecl = schema[prop].default;
 
   if (defaultDecl) {
