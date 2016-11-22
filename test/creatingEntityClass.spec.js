@@ -41,19 +41,28 @@ describe('creating an entity class', () => {
   });
 
   describe('using default values for attributes', () => {
-    const defaultName = 'Foo';
-    const defaultAge = () => 18;
+    context('when the provided default value is a function', () => {
+      const User = attributes({
+        age: { type: Number, default: () => 18 }
+      })(class User {});
 
-    const User = attributes({
-      name: { type: String, default: defaultName },
-      age: { type: Number, default: defaultAge }
-    })(class User {});
+      it('defines the attribute with the default value executing the function', () => {
+        const user = new User();
 
-    it('should define the attributes with the default values', () => {
-      const user = new User();
+        expect(user.age).to.equal(18);
+      });
+    });
 
-      expect(user.name).to.equal(defaultName);
-      expect(user.age).to.equal(defaultAge());
+    context('when the provided default value is a property', () => {
+      const User = attributes({
+        age: { type: Number, default: 18 }
+      })(class User {});
+
+      it('defines the attribute with the default value of the property', () => {
+        const user = new User();
+
+        expect(user.age).to.equal(18);
+      });
     });
   });
 });
