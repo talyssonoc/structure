@@ -6,8 +6,7 @@ function getValue(value, instance) {
   return value;
 }
 
-exports.assignAttributesValues = (passedAttributes, schema, instance) => {
-  const attributes = passedAttributes;
+exports.assignAttributesValues = (attributes, schema, instance) => {
 
   for(let attr in schema) {
     attributes[attr] = (attributes[attr] === undefined ? getValue(schema[attr].default, instance) : attributes[attr]);
