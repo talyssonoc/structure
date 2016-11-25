@@ -1,5 +1,6 @@
 const { normalizeSchema } = require('./schemaNormalization');
 const { serialize } = require('./serialization');
+const { assignAttributesValues } = require('./attributesValuesAssignment');
 const { SCHEMA, ATTRIBUTES, VALIDATE } = require('./symbols');
 
 const define = Object.defineProperty;
@@ -22,7 +23,7 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
           passedAttributes = {};
         }
 
-        instance.attributes = passedAttributes;
+        instance.attributes = assignAttributesValues(passedAttributes, declaredSchema, instance);
 
         return instance;
       }
