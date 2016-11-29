@@ -55,29 +55,6 @@ describe('instantiating an structure', () => {
     expect(user.name).to.equal('Self');
     expect(user.attributes.name).to.equal('Self');
   });
-
-  context('when structure constructor writes to some attribute', () => {
-    const UserStructure = attributes({
-      name: String
-    })(class User {
-      constructor() {
-        this.name = 'Old name';
-        this.userInstanceStuff = 'Stuff value';
-      }
-
-      userMethod() {
-        return 'I am a user';
-      }
-    });
-
-    it('overrides value set on the constructor', () => {
-      const user = new UserStructure({
-        name: 'New name'
-      });
-
-      expect(user.name).to.equal('New name');
-    });
-  });
 });
 
 describe('updating an instance', () => {
