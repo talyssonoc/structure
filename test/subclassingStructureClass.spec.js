@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { attributes } = require('../src');
 
-describe('subclassing an entity with a POJO class', () => {
+describe('subclassing an structure with a POJO class', () => {
   const User = attributes({
     name: String
   })(class User {
@@ -26,7 +26,7 @@ describe('subclassing an entity with a POJO class', () => {
     }
   }
 
-  describe('instantiating an entity subclass', () => {
+  describe('instantiating an structure subclass', () => {
     it('is instance of class and superclass', () => {
       const admin = new Admin({
         name: 'The Admin'
@@ -82,7 +82,7 @@ describe('subclassing an entity with a POJO class', () => {
     });
   });
 
-  describe('updating an instance of entity subclass', () => {
+  describe('updating an instance of structure subclass', () => {
     it('updates instance attribute value when assigned a new value', () => {
       const admin = new Admin({
         name: 'My name'
@@ -123,28 +123,28 @@ describe('subclassing an entity with a POJO class', () => {
 
     RawUser.staticProperty = 'I am a static property';
 
-    const UserEntity = attributes({
+    const UserStructure = attributes({
       name: String
     })(RawUser);
 
-    class AdminEntity extends UserEntity {
+    class AdminStructure extends UserStructure {
       static staticAdminMethod() {
         return 'I am also on a static method';
       }
     }
 
-    AdminEntity.staticAdminProperty = 'I am also a static property';
+    AdminStructure.staticAdminProperty = 'I am also a static property';
 
     it('has access to static methods and properties', () => {
-      expect(AdminEntity.staticMethod()).to.equal('I am on a static method');
-      expect(AdminEntity.staticProperty).to.equal('I am a static property');
-      expect(AdminEntity.staticAdminMethod()).to.equal('I am also on a static method');
-      expect(AdminEntity.staticAdminProperty).to.equal('I am also a static property');
+      expect(AdminStructure.staticMethod()).to.equal('I am on a static method');
+      expect(AdminStructure.staticProperty).to.equal('I am a static property');
+      expect(AdminStructure.staticAdminMethod()).to.equal('I am also on a static method');
+      expect(AdminStructure.staticAdminProperty).to.equal('I am also a static property');
     });
   });
 });
 
-describe('subclassing an entity with another entity', () => {
+describe('subclassing an structure with another structure', () => {
   const User = attributes({
     name: String
   })(class User {});

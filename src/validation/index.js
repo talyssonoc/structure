@@ -42,10 +42,10 @@ function validationForSchema(schema) {
   const joiValidation = joi.object().keys(schemaValidation);
 
   return {
-    validate(entity) {
+    validate(structure) {
       var validationErrors;
 
-      const { error } = joiValidation.validate(entity, validatorOptions);
+      const { error } = joiValidation.validate(structure, validatorOptions);
 
       if(error) {
         validationErrors = error.details.map(mapDetail);

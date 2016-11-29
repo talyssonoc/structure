@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { attributes } = require('../src');
 
-describe('instantiating an entity', () => {
+describe('instantiating an structure', () => {
   const User = attributes({
     name: String
   })(class User {
@@ -56,8 +56,8 @@ describe('instantiating an entity', () => {
     expect(user.attributes.name).to.equal('Self');
   });
 
-  context('when entity constructor writes to some attribute', () => {
-    const UserEntity = attributes({
+  context('when structure constructor writes to some attribute', () => {
+    const UserStructure = attributes({
       name: String
     })(class User {
       constructor() {
@@ -71,7 +71,7 @@ describe('instantiating an entity', () => {
     });
 
     it('overrides value set on the constructor', () => {
-      const user = new UserEntity({
+      const user = new UserStructure({
         name: 'New name'
       });
 

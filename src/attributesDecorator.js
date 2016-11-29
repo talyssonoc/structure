@@ -8,7 +8,7 @@ const createAttrs = () => Object.create(null);
 
 function attributesDecorator(declaredSchema, ErroneousPassedClass) {
   if(ErroneousPassedClass) {
-    const errorMessage = `You passed the entity class as the second parameter of entity(). The expected usage is \`entity(schema)(${ ErroneousPassedClass.name || 'EntityClass' })\`.`;
+    const errorMessage = `You passed the structure class as the second parameter of attributes(). The expected usage is \`attributes(schema)(${ ErroneousPassedClass.name || 'StructureClass' })\`.`;
 
     throw new Error(errorMessage);
   }
@@ -102,9 +102,9 @@ const attributesDescriptor = {
 const validationDescriptor = {
   value() {
     const validation = this[SCHEMA][VALIDATE];
-    const serializedEntity = serialize(this);
+    const serializedStructure = serialize(this);
 
-    const errors = validation.validate(serializedEntity);
+    const errors = validation.validate(serializedStructure);
 
     if(errors) {
       define(this, 'errors', {

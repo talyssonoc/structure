@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('validation', () => {
-  describe('Nested with entity class', () => {
+  describe('Nested with structure class', () => {
     describe('no validation', () => {
       const Location = attributes({
         x: {
