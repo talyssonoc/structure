@@ -6,12 +6,9 @@ function serialize(structure) {
   }
 
   const schema = structure[SCHEMA];
-
-  const attrNames = Object.keys(schema);
   const serializedStructure = Object.create(null);
 
-  for(let i = 0; i < attrNames.length; i++) {
-    let attrName = attrNames[i];
+  for(let attrName in schema) {
     let attribute = structure[attrName];
 
     if(attribute == null) {

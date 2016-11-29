@@ -129,7 +129,6 @@ describe('validation', () => {
               books: ['The Lusiads', undefined]
             });
 
-            console.log((user.isValid(), user.errors));
             expect(user.isValid()).to.be.true;
             expect(user.errors).to.be.undefined;
           });

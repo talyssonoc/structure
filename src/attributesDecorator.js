@@ -1,10 +1,9 @@
 const { normalizeSchema } = require('./schemaNormalization');
-const { serialize } = require('./serialization');
-const { assignAttributesValues } = require('./attributesValuesAssignment');
-const { SCHEMA, ATTRIBUTES, VALIDATE } = require('./symbols');
+const { getInitialValues } = require('./initialValueCreation');
+const { SCHEMA } = require('./symbols');
+const { attributesDescriptor, validationDescriptor } = require('./propertyDescriptors');
 
 const define = Object.defineProperty;
-const createAttrs = () => Object.create(null);
 
 function attributesDecorator(declaredSchema, ErroneousPassedClass) {
   if(ErroneousPassedClass) {
@@ -17,23 +16,19 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
     const WrapperClass = new Proxy(Class, {
       construct(target, constructorArgs, newTarget) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
-        var passedAttributes = constructorArgs[0];
+        const passedAttributes = constructorArgs[0] || {};
 
-        if(passedAttributes === undefined) {
-          passedAttributes = {};
-        }
-
-        instance.attributes = assignAttributesValues(passedAttributes, declaredSchema, instance);
+        instance.attributes = getInitialValues(passedAttributes, declaredSchema, instance);
 
         return instance;
       }
     });
 
-    if(SCHEMA in WrapperClass) {
+    declaredSchema = normalizeSchema(declaredSchema);
+
+    if(WrapperClass[SCHEMA]) {
       declaredSchema = Object.assign({}, WrapperClass[SCHEMA], declaredSchema);
     }
-
-    declaredSchema = normalizeSchema(declaredSchema);
 
     define(WrapperClass, SCHEMA, {
       value: declaredSchema
@@ -63,65 +58,5 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
     return WrapperClass;
   };
 }
-
-const attributesDescriptor = {
-  get() {
-
-    if(!this[ATTRIBUTES]) {
-      const attributes = createAttrs();
-
-      define(this, ATTRIBUTES, {
-        configurable: true,
-        value: attributes
-      });
-    }
-
-    return this[ATTRIBUTES];
-  },
-
-  set(newAttributes) {
-    if(!newAttributes || typeof newAttributes !== 'object') {
-      throw new Error('#attributes can\'t be set to a non-object.');
-    }
-
-    const attributes = createAttrs();
-    const schema = this[SCHEMA];
-    const attrNames = Object.keys(schema);
-
-    for(let i = 0; i < attrNames.length; i++) {
-      attributes[attrNames[i]] = schema[attrNames[i]].coerce(newAttributes[attrNames[i]]);
-    }
-
-    define(this, ATTRIBUTES, {
-      configurable: true,
-      value: attributes
-    });
-  }
-};
-
-const validationDescriptor = {
-  value() {
-    const validation = this[SCHEMA][VALIDATE];
-    const serializedStructure = serialize(this);
-
-    const errors = validation.validate(serializedStructure);
-
-    if(errors) {
-      define(this, 'errors', {
-        value: errors,
-        configurable: true
-      });
-
-      return false;
-    }
-
-    define(this, 'errors', {
-      value: undefined,
-      configurable: true
-    });
-
-    return true;
-  }
-};
 
 module.exports = attributesDecorator;

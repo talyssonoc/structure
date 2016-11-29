@@ -7,9 +7,8 @@ module.exports = function nestedValidation(typeDescriptor) {
 
   if(typeSchema !== undefined) {
     var nestedValidations = {};
-    var nestedValuesNames = Object.keys(typeSchema);
 
-    nestedValuesNames.forEach((v) => {
+    Object.keys(typeSchema).forEach((v) => {
       nestedValidations[v] = typeSchema[v].validation;
     });
 
