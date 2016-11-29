@@ -1,18 +1,18 @@
 const { SCHEMA } = require('./symbols');
 
-function serialize(entity) {
-  if(entity === undefined) {
+function serialize(structure) {
+  if(structure === undefined) {
     return;
   }
 
-  const schema = entity[SCHEMA];
+  const schema = structure[SCHEMA];
 
   const attrNames = Object.keys(schema);
-  const serializedEntity = Object.create(null);
+  const serializedStructure = Object.create(null);
 
   for(let i = 0; i < attrNames.length; i++) {
     let attrName = attrNames[i];
-    let attribute = entity[attrName];
+    let attribute = structure[attrName];
 
     if(attribute == null) {
       continue;
@@ -28,10 +28,10 @@ function serialize(entity) {
       serializedValue = attribute;
     }
 
-    serializedEntity[attrName] = serializedValue;
+    serializedStructure[attrName] = serializedValue;
   }
 
-  return serializedEntity;
+  return serializedStructure;
 }
 
 exports.serialize = serialize;

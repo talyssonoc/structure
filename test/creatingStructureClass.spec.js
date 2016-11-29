@@ -1,21 +1,21 @@
 const { expect } = require('chai');
 const { attributes } = require('../src');
 
-describe('creating an entity class', () => {
-  describe('entity class is passed as the second parameter', () => {
-    context('when entity class has a name', () => {
-      it('throws with a message with entity class name', () => {
+describe('creating an structure class', () => {
+  describe('structure class is passed as the second parameter', () => {
+    context('when structure class has a name', () => {
+      it('throws with a message with structure class name', () => {
         expect(() => {
           attributes({}, class User {});
-        }).to.throw(Error, /^You passed the entity class.*\(User\)`\./);
+        }).to.throw(Error, /^You passed the structure class.*\(User\)`\./);
       });
     });
 
-    context('when entity class is anonymous', () => {
-      it('throws with a message with generic entity name', () => {
+    context('when structure class is anonymous', () => {
+      it('throws with a message with generic structure name', () => {
         expect(() => {
           attributes({}, class {});
-        }).to.throw(Error, /^You passed the entity class.*\(EntityClass\)`\./);
+        }).to.throw(Error, /^You passed the structure class.*\(StructureClass\)`\./);
       });
     });
   });

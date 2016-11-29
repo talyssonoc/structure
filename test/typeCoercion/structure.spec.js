@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('type coercion', () => {
-  describe('Entity class', () => {
+  describe('Structure class', () => {
     const Location = attributes({
       x: Number,
       y: Number

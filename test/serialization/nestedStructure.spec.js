@@ -3,7 +3,7 @@ const { attributes } = require('../../src');
 const { serialize } = require('../../src/serialization');
 
 describe('serialization', () => {
-  describe('Nested entity', () => {
+  describe('Nested structure', () => {
     const Location = attributes({
       longitude: Number,
       latitude: Number
@@ -36,8 +36,8 @@ describe('serialization', () => {
       });
     });
 
-    context('when nested entity is missing', () => {
-      it('does not set a key for missing entity', () => {
+    context('when nested structure is missing', () => {
+      it('does not set a key for missing structure', () => {
         const user = new User({
           name: 'Some name'
         });
@@ -52,7 +52,7 @@ describe('serialization', () => {
       });
     });
 
-    context('when some attribute on nested entity is missing', () => {
+    context('when some attribute on nested structure is missing', () => {
       it('does not set a key for missing nested attribute', () => {
         const location = new Location({
           longitude: 123

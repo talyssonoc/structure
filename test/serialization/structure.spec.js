@@ -3,7 +3,7 @@ const { attributes } = require('../../src');
 const { serialize } = require('../../src/serialization');
 
 describe('serialization', () => {
-  describe('Entity', () => {
+  describe('Structure', () => {
     const User = attributes({
       name: String,
       age: Number
