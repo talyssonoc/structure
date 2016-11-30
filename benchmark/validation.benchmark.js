@@ -1,7 +1,4 @@
-const Benchmark = require('benchmark');
 const { attributes } = require('../src');
-
-const suite = new Benchmark.Suite('Validation');
 
 const User = attributes({
   name: {
@@ -14,22 +11,29 @@ const User = attributes({
   }
 })(class User {});
 
+exports.name = 'Validation';
 
-module.exports = suite
-  .add('when is valid', () => {
-    const user = new User({
-      name: 'Something',
-      age: 10
-    });
+exports.cases = [
+  {
+    name: 'when is valid',
+    fn() {
+      const user = new User({
+        name: 'Something',
+        age: 10
+      });
 
-    user.isValid();
-  })
+      user.isValid();
+    }
+  },
+  {
+    name: 'when is invalid',
+    fn() {
+      const user = new User({
+        name: 'AB',
+        age: -1
+      });
 
-  .add('when is invalid', () => {
-    const user = new User({
-      name: 'AB',
-      age: -1
-    });
-
-    user.isValid();
-  });
+      user.isValid();
+    }
+  }
+];

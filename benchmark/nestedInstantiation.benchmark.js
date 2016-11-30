@@ -1,7 +1,4 @@
-const Benchmark = require('benchmark');
 const { attributes } = require('../src');
-
-const suite = new Benchmark.Suite('Nested instantiation');
 
 const Location = attributes({
   x: Number,
@@ -14,33 +11,43 @@ const User = attributes({
 })(class User {});
 
 
-module.exports = suite
-  .add('without coercion', () => {
-    const user = new User({
-      name: 'Something',
-      location: new Location({
-        x: 1,
-        y: 2
-      })
-    });
-  })
+exports.name = 'Nested instantiation';
 
-  .add('with normal coercion', () => {
-    const user = new User({
-      name: 'Something else',
-      location: {
-        x: 1,
-        y: 2
-      }
-    });
-  })
-
-  .add('with nested coercion', () => {
-    const user = new User({
-      name: 'Something else',
-      location: {
-        x: '1',
-        y: '2'
-      }
-    });
-  });
+exports.cases = [
+  {
+    name: 'without coercion',
+    fn() {
+      const user = new User({
+        name: 'Something',
+        location: new Location({
+          x: 1,
+          y: 2
+        })
+      });
+    }
+  },
+  {
+    name: 'with normal coercion',
+    fn() {
+      const user = new User({
+        name: 'Something else',
+        location: {
+          x: 1,
+          y: 2
+        }
+      });
+    }
+  },
+  {
+    name: 'with nested coercion',
+    fn() {
+      const user = new User({
+        name: 'Something else',
+        location: {
+          x: '1',
+          y: '2'
+        }
+      });
+    }
+  }
+];
