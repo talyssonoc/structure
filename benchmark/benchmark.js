@@ -1,11 +1,7 @@
 const Benchmark = require('benchmark');
-const suites = require('require-dir')();
+const suites = require('./suites');
 
-Object.keys(suites).forEach((suiteFile) => {
-  const suiteData = suites[suiteFile];
-
-  if(!suiteData.cases) { return; }
-
+suites.forEach((suiteData) => {
   var suite = new Benchmark.Suite(suiteData.name);
 
   suite = suiteData.cases.reduce((s, c) => {

@@ -5,14 +5,14 @@ const User = attributes({
   age: Number
 })(class User {});
 
-const user = new User();
-
 exports.name = 'Updating';
 
 exports.cases = [
   {
     name: 'without coercion',
     fn() {
+      const user = new User();
+
       user.name = 'Something';
       user.age = 42;
     }
@@ -20,6 +20,8 @@ exports.cases = [
   {
     name: 'with coercion',
     fn() {
+      const user = new User();
+
       user.name = 1337;
       user.age = '50';
     }
@@ -27,6 +29,8 @@ exports.cases = [
   {
     name: 'assign to attributes without coercion',
     fn() {
+      const user = new User();
+
       user.attributes = {
         name: 'Something',
         age: 42
@@ -36,6 +40,8 @@ exports.cases = [
   {
     name: 'assign to attributes with coercion',
     fn() {
+      const user = new User();
+
       user.attributes = {
         name: 1337,
         age: '50'

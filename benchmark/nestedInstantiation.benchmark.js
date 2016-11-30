@@ -10,7 +10,6 @@ const User = attributes({
   location: Location
 })(class User {});
 
-
 exports.name = 'Nested instantiation';
 
 exports.cases = [

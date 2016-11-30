@@ -7,7 +7,7 @@
     "test": "mocha",
     "coverage": "istanbul cover --report html node_modules/mocha/bin/_mocha",
     "lint": "eslint {src,test}/**/*.js",
-    "benchmark": "node benchmark/index.js"
+    "benchmark": "node benchmark/benchmark.js"
   },
   "keywords": [
     "entity",
