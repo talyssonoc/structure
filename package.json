@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "coverage": "istanbul cover --report html node_modules/mocha/bin/_mocha",
-    "lint": "eslint {src,test}/**/*.js"
+    "lint": "eslint {src,test}/**/*.js",
+    "benchmark": "node benchmark/index.js"
   },
   "keywords": [
     "entity",
@@ -16,10 +17,12 @@
   "author": "Talysson <talyssonoc@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "benchmark": "^2.1.2",
     "chai": "^3.5.0",
     "eslint": "^3.8.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.1.0"
+    "mocha": "^3.1.0",
+    "require-dir": "^0.3.1"
   },
   "dependencies": {
     "joi": "^9.2.0",
