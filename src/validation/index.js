@@ -1,4 +1,5 @@
 const joi = require('joi');
+const { find } = require('lodash');
 
 const validations = [
   require('./string'),
@@ -15,7 +16,7 @@ function validationForAttribute(typeDescriptor) {
     return arrayValidation(typeDescriptor, typeDescriptor.items);
   }
 
-  const validation = validations.find((v) => v.type === typeDescriptor.type);
+  const validation = find(validations, (v) => v.type === typeDescriptor.type);
 
   if(!validation) {
     return nestedValidation(typeDescriptor);

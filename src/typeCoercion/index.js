@@ -1,5 +1,6 @@
 const arrayCoercionFor = require('./array');
 const genericCoercionFor = require('./generic');
+const { find } = require('lodash');
 
 const types = [
   require('./string'),
@@ -12,7 +13,9 @@ function coercionFor(typeDescriptor, itemsTypeDescriptor) {
     return arrayCoercionFor(typeDescriptor, itemsTypeDescriptor);
   }
 
-  const coercion = types.find((c) => c.type === typeDescriptor.type);
+  const coercion = find(types, (c) => {
+    return c.type === typeDescriptor.type
+  });
 
   if(!coercion) {
     return genericCoercionFor(typeDescriptor);
