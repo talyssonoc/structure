@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { attributes } = require('../src');
+const { attributes } = require('../../src');
 
 describe('creating an structure class', () => {
   describe('structure class is passed as the second parameter', () => {
