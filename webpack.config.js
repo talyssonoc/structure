@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: [path.join(__dirname, 'src/index.js')],
   output: {
-    filename: path.join(__dirname, 'build/structure.js'),
+    filename: path.join(__dirname, 'dist/structure.js'),
     library: 'Structure',
     libraryTarget: 'umd',
     umdNamedDefine: true

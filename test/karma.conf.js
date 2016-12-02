@@ -1,22 +1,20 @@
-const webpack = require('webpack');
 const webpackConfig = require('../webpack.config');
 
 Object.assign(webpackConfig, {
   externals: {},
-  plugins: [
-    new webpack.NormalModuleReplacementPlugin(/(dns|net)/, 'util')
-  ],
+  resolve: {
+    alias: {
+      joi: 'joi-browser'
+    }
+  },
   devtool: 'inline-source-map'
-});
-
-webpackConfig.module.loaders.push({
-  test: /\.js$/, include: /(joi|hoek|isemail|topo|proxy-polyfill)/, loader: 'babel'
 });
 
 module.exports = function(config) {
   config.set({
     frameworks: ['mocha'],
-    browsers: ['Chrome'/*, 'Firefox', 'PhantomJS'*/],
+    browsers: ['Chrome'],
+    // browsers: ['Firefox'],
     reporters: ['mocha'],
     singleRun: true,
 
