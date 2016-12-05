@@ -9,7 +9,7 @@
     "test:browser": "karma start test/karma.conf.js",
     "build": "webpack",
     "coverage": "istanbul cover --report html node_modules/mocha/bin/_mocha",
-    "lint": "eslint {src,test}/**/*.js",
+    "lint": "eslint {src,test,benchmark}/**/*.js",
     "benchmark": "node benchmark/benchmark.js",
     "prepublish": "npm run build"
   },

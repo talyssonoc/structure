@@ -11,7 +11,7 @@ exports.cases = [
   {
     name: 'without coercion',
     fn() {
-      const user = new User({
+      new User({
         name: 'Something',
         age: 42
       });
@@ -20,7 +20,7 @@ exports.cases = [
   {
     name: 'with coercion',
     fn() {
-      const user = new User({
+      new User({
         name: 'Something else',
         age: '50'
       });

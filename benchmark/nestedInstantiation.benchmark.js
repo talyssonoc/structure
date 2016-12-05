@@ -16,7 +16,7 @@ exports.cases = [
   {
     name: 'without coercion',
     fn() {
-      const user = new User({
+      new User({
         name: 'Something',
         location: new Location({
           x: 1,
@@ -28,7 +28,7 @@ exports.cases = [
   {
     name: 'with normal coercion',
     fn() {
-      const user = new User({
+      new User({
         name: 'Something else',
         location: {
           x: 1,
@@ -40,7 +40,7 @@ exports.cases = [
   {
     name: 'with nested coercion',
     fn() {
-      const user = new User({
+      new User({
         name: 'Something else',
         location: {
           x: '1',
