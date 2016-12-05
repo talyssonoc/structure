@@ -1,6 +1,6 @@
 const { expect } = require('chai');
-const { attributes } = require('../../src');
-const { serialize } = require('../../src/serialization');
+const { attributes } = require('../../../src');
+const { serialize } = require('../../../src/serialization');
 
 describe('serialization', () => {
   describe('Nested structure', () => {

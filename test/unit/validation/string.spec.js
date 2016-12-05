@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { attributes } = require('../../src');
+const { attributes } = require('../../../src');
 
 describe('validation', () => {
   describe('String', () => {

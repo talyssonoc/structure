@@ -1,19 +1,21 @@
 const { expect } = require('chai');
-const { attributes } = require('../../src');
+const { attributes } = require('../../../src');
 
 describe('validation', () => {
-  describe('Boolean', () => {
+  describe('Nested with POJO class', () => {
     describe('no validation', () => {
+      class Location {}
+
       const User = attributes({
-        isAdmin: {
-          type: Boolean
+        lastLocation: {
+          type: Location
         }
       })(class User {});
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            isAdmin: true
+            lastLocation: new Location()
           });
 
           expect(user.isValid()).to.be.true;
@@ -24,7 +26,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
-            isAdmin: undefined
+            lastLocation: undefined
           });
 
           expect(user.isValid()).to.be.true;
@@ -34,9 +36,11 @@ describe('validation', () => {
     });
 
     describe('required', () => {
+      class Location {}
+
       const User = attributes({
-        isAdmin: {
-          type: Boolean,
+        lastLocation: {
+          type: Location,
           required: true
         }
       })(class User {});
@@ -44,7 +48,7 @@ describe('validation', () => {
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            isAdmin: true
+            lastLocation: new Location()
           });
 
           expect(user.isValid()).to.be.true;
@@ -55,46 +59,13 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            isAdmin: undefined
+            lastLocation: undefined
           });
 
           expect(user.isValid()).to.be.false;
           expect(user.errors).to.be.instanceOf(Array);
           expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('isAdmin');
-        });
-      });
-    });
-
-    describe('equal', () => {
-      const User = attributes({
-        isAdmin: {
-          type: Boolean,
-          equal: true
-        }
-      })(class User {});
-
-      context('when value is equal', () => {
-        it('is valid', () => {
-          const user = new User({
-            isAdmin: true
-          });
-
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
-        });
-      });
-
-      context('when value is different', () => {
-        it('is not valid and has errors set', () => {
-          const user = new User({
-            isAdmin: false
-          });
-
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('isAdmin');
+          expect(user.errors[0].path).to.equal('lastLocation');
         });
       });
     });

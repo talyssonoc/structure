@@ -1,13 +1,11 @@
 const { expect } = require('chai');
-const { attributes } = require('../../src');
+const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
-  describe('Array subclass', () => {
-    class Collection extends Array {}
-
+  describe('Array', () => {
     const User = attributes({
       books: {
-        type: Collection,
+        type: Array,
         items: String
       }
     })(class User {});
@@ -31,14 +29,6 @@ describe('type coercion', () => {
           '1984',
           'true'
         ]);
-      });
-
-      it('coerces value to instance of array subclass', () => {
-        const user = new User({
-          books: ['The Lord of The Rings', 1984, true]
-        });
-
-        expect(user.books).to.be.instanceOf(Collection);
       });
 
       it('does not coerce items that are of the expected type', () => {
@@ -86,14 +76,6 @@ describe('type coercion', () => {
 
         expect(library.bookIds).to.eql([1, 2, 3]);
       });
-
-      it('coerces value to instance of array subclass', () => {
-        const user = new User({
-          books: 'ABC'
-        });
-
-        expect(user.books).to.be.instanceOf(Collection);
-      });
     });
 
     context('when raw value is an array-like', () => {
@@ -104,36 +86,21 @@ describe('type coercion', () => {
 
         expect(user.books).to.eql(['Stonehenge', '1984']);
       });
-
-      it('coerces value to instance of array subclass', () => {
-        const user = new User({
-          books: { 0: 'Stonehenge', 1: 1984, length: 2 }
-        });
-
-        expect(user.books).to.be.instanceOf(Collection);
-      });
     });
 
     context('when raw value implements Symbol.iterator', () => {
-      const books = {
-        [Symbol.iterator]: function*() {
-          for(let i = 0; i < 3; i++) {
-            yield i;
-          }
-        }
-      };
-
       it('converts to array then uses each index', () => {
+        const books = {
+          [Symbol.iterator]: function*() {
+            for(let i = 0; i < 3; i++) {
+              yield i;
+            }
+          }
+        };
 
         const user = new User({ books });
 
         expect(user.books).to.eql(['0', '1', '2']);
-      });
-
-      it('coerces value to instance of array subclass', () => {
-        const user = new User({ books });
-
-        expect(user.books).to.be.instanceOf(Collection);
       });
     });
 

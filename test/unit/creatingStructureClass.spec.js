@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { attributes } = require('../src');
+const { attributes } = require('../../src');
 
 describe('creating an structure class', () => {
   describe('structure class is passed as the second parameter', () => {
@@ -13,8 +13,13 @@ describe('creating an structure class', () => {
 
     context('when structure class is anonymous', () => {
       it('throws with a message with generic structure name', () => {
+        // It's like this because Babel gives the name _class
+        // to anonymous classes and do function auto-naming,
+        // breaking browser tests
+        const anonymousClass = (() => function() {})();
+
         expect(() => {
-          attributes({}, class {});
+          attributes({}, anonymousClass);
         }).to.throw(Error, /^You passed the structure class.*\(StructureClass\)`\./);
       });
     });
