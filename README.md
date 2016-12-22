@@ -1,9 +1,8 @@
 <img src="structure.jpg" width="300">
 
-### A simple validation/coercion library built on top of modern JavaScript
-
+### A simple schema/attributes library built on top of modern JavaScript
 ---
-The library provides a helper which should be used as wrapper to the instances you would like. 
+Structure provides a simple interface which allows you to add schemas to your ES6 classes.
 
 ## Getting started 
 
@@ -14,5 +13,5 @@ The library provides a helper which should be used as wrapper to the instances y
 ```js
 import { attributes } from 'structure';
 
-const User = attributes({}, class User {});
+const User = attributes({})(class User {});
 ```
