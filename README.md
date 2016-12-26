@@ -37,9 +37,14 @@ const user = new User({
 });
 
 user.greet(); // Hello John Foo
-
-/* Structure will also add an isValid() method that validates the attributes based on the schema */
 ```
 
+## Schema Concept
+
+## Coercion
+
+## Validation
+
+## Browser Support
  
 
