@@ -23,8 +23,8 @@ const userAttributes = {
 };
 
 class UserClass {
- static greet() {
-  return `Hello ${this.user}`;
+ greet() {
+  return `Hello ${this.name}`;
  }
 }
 
@@ -38,9 +38,7 @@ const user = new User({
 
 user.greet(); // Hello John Foo
 
-/* Structure also provides an isValid() method, which validates the attributes of the schema based on its configuration: */
-
-user.isValid(); // false
+/* Structure will also add an isValid() method that validates the attributes based on the schema */
 ```
 
  
