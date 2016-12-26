@@ -2,6 +2,9 @@
 
 ### A simple schema/attributes library built on top of modern JavaScript
 ---
+
+<img src="https://img.shields.io/travis/talyssonoc/structure.svg"> <img src="https://img.shields.io/coveralls/talyssonoc/structure.svg">
+---
 Structure provides a simple interface which allows you to add schemas to your ES6 classes.
 
 ## Getting started 
