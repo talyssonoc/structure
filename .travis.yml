@@ -3,4 +3,6 @@ node_js:
   - "node"
   - "6.1"
   - "6.0"
-script: "npm test"
+script:
+  - npm test
+  - npm run coveralls

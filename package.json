@@ -23,12 +23,14 @@
     "test": "mocha",
     "test:browser": "karma start test/karma.conf.js",
     "build": "webpack",
-    "coverage": "istanbul cover --report html node_modules/mocha/bin/_mocha",
+    "coverage": "istanbul cover --report html --report lcov node_modules/mocha/bin/_mocha",
     "lint": "eslint {src,test,benchmark}/**/*.js",
     "benchmark": "node benchmark/benchmark.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
+    "coveralls": "^2.11.15",
     "joi": "^9.2.0",
     "lodash": "^4.16.4"
   },
