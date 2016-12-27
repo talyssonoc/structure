@@ -474,7 +474,7 @@ user.errors; /*
 
 ## Support and compatibility
 
-Structure is built on top of modern JavaScript, using new features like Proxy, Reflect and Symbol. Being so there are some compatibility concerns when using Structure on Node or on the browser.
+Structure is built on top of modern JavaScript, using new features like [Proxy](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy), [Reflect](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect) and [Symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol). Being so there are some compatibility concerns when using Structure on Node or on the browser.
 
 ### Node
 
@@ -482,7 +482,7 @@ Node only implemented all the used features on version 6, so for using Structure
 
 ### Browser
 
-Not all major browsers implemented the used features so you'll need to transpile the code for using it. For browser usage we have the UMD version bundled with Webpack. We don't bundle Structure with its dependencies so you'll have to provide it with your module bundler. It's recommended to replace joi with joi-browser when using it on the front-end, here's how we run our test suite on the browser regarding bundling and polyfill of features.
+Not all major browsers implemented the used features so you'll need to transpile the code for using it. For browser usage we have the [UMD version](/dist/structure.js) bundled with Webpack. We don't bundle Structure with its dependencies so you'll have to provide it with your module bundler. It's recommended to replace joi with [joi-browser](https://www.npmjs.com/package/joi-browser) when using it on the front-end, here's how we run our test suite on the browser regarding [bundling](/test/karma.conf.js#L3-L11) and [polyfill of features](/test/browserSetup.js#L1-L2).
 
 Be aware that not the whole test suite will pass on browsers, there are some cases that can't be simulated through polyfilling, like extending Array or having a non-structure class extending a structure class. You can setup the project on your computer and run npm run test:browser to see how it'll work.
 
