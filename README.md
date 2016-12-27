@@ -2,7 +2,7 @@
 
 ### A simple schema/attributes library built on top of modern JavaScript
 
-<img src="https://img.shields.io/travis/talyssonoc/structure.svg"> <img src="https://img.shields.io/coveralls/talyssonoc/structure.svg">
+[![Build Status](https://travis-ci.org/talyssonoc/structure.svg?branch=master)](https://travis-ci.org/talyssonoc/structure) [![Coverage Status](https://coveralls.io/repos/github/talyssonoc/structure/badge.svg?branch=master)](https://coveralls.io/github/talyssonoc/structure?branch=master)
 ---
 Structure provides a simple interface which allows you to add schemas to your ES6 classes.
 
