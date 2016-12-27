@@ -15,7 +15,7 @@ Structure provides a simple interface which allows you to add schemas to your ES
 ```js
 import { attributes } from 'structure';
 
-const userAttributes = {
+const userSchema = {
   name: String,
   age: {
     type: Number,
@@ -42,10 +42,55 @@ user.greet(); // Hello John Foo
 ```
 
 ## Schema Concept
+The schema is an object responsible to map the atrributes Structure should handle:
+
+```js
+const userSchema = {
+  name: String,
+  age: Number
+};
+
+attributes(userSchema)(class User {});
+```
+
+You can use the __shorthand type descriptor__ or __complete type descriptor__ individually for each attribute.
+
+#### Shorthand type descriptor
+The shorthand is a pair of `propertyName: Type` key/value like: `age: Number`.
+
+#### Complete type descriptor
+The complete descriptor allows you to declare additional info for the attribute:
+
+```js
+const userSchema = {
+  name: {
+   type: String,
+   defaultValue: 'John Foo'
+  },
+  cars: {
+   type: Array,
+   items: String,
+   defaultValue: ['Golf', 'Polo']
+  }
+};
+```
+
+##### defaultValue
+The __defaultValue__ of a type will be used if no value was provided for the specific attribute on construction time. Please note that removing the value of the attribute will not fallback to the defaultValue.
+
+##### items
+The __items__ of a type is used to validate each item's Type of the attribute's collection.
+
+#### Type concept
+Each attribute needs a __Type__ definition, that's how Structure validates the attribute's value. It can be divided into three categories (as in right now):
+
+- Primitives (Number, String, Boolean)
+- Classes (Date, Object, regular Classes and Structure classes also)
+- Array/Array-like (Array, extended Array)
 
 ## Coercion
 
-Structure does type coercion based on the declared [schema](#schema). It's important to note that it __never__ coerces `undefined` and it also won't coerce if the value is already of the declared type (except for arrays, we'll talk more about this soon). Let's break the coercion into 3 categories:
+Structure does type coercion based on the declared [schema](Schema). It's important to note that it __never__ coerces `undefined` and it also won't coerce if the value is already of the declared type (except for arrays, we'll talk more about this soon). Let's break the coercion into 3 categories:
 
 ### Primitive type coercion
 
@@ -53,7 +98,7 @@ It'll do primitive type coercion when it tries to coerce values to `String`, `Nu
 
 For those types we basically use the type as a function (without using `new`), with a subtle difference: When coercing `null` to `String`, it'll coerce to empty string instead of the string `'null'`. For example:
 
-```javascript
+```js
 const User = attributes({
   name: String,
   age: Number,
