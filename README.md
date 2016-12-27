@@ -267,7 +267,7 @@ library.books; // ['1984', 42] => new item was not coerced
 
 An `isValid()` method will be added to the prototype of structures, this method will validate the structure based on its schema. If `isValid()` returns `false`, a property called `errors` will be added to the structure instance, an array of validation errors.
 
-Validations require you to use the object type descriptor:
+Validations require you to use the complete type descriptor:
 
 ```javascript
 const User = attributes({
