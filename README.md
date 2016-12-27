@@ -11,7 +11,9 @@ Structure provides a simple interface which allows you to add schemas to your ES
 - [Schema Concept](#schema-concept)
 - [Coercion](#coercion)
 - [Validation](#validation)
-- [Support](#support) 
+- [Support and compability](#support-and-compability) 
+- [Contributing](contributing.md)
+- [License](license.md)
 
 ## Getting started 
 
@@ -20,7 +22,7 @@ Structure provides a simple interface which allows you to add schemas to your ES
 ## Usage
 
 ```js
-import { attributes } from 'structure';
+const { attributes } = require('structure');
 
 const userSchema = {
   name: String,
@@ -94,14 +96,14 @@ const User {
 ```
 
 ##### defaultValue
-The __defaultValue__ of a type will be used if no value was provided for the specific attribute at construction time.
+The __defaultValue__ of an attribute will be used if no value was provided for the specific attribute at construction time.
 
 You can also use a function which receives the instance as a parameter in order to provide the defaultValue. The operation must be synchronous.
 
 Please note that removing the value of the attribute will not fallback to the defaultValue.
 
 ##### items
-The __items__ of a type is used to validate each item's Type of the attribute's collection.
+The __items__ of an attribute is used to validate and coerce each item's Type of the attribute's collection.
 
 * Please refer to [Validation](#validation) in order to check a bit more on validation properties.
 
@@ -470,6 +472,25 @@ user.errors; /*
 */
 ```
 
-## Browser Support
+## Support and compatibility
+
+Structure is built on top of modern JavaScript, using new features like Proxy, Reflect and Symbol. Being so there are some compatibility concerns when using Structure on Node or on the browser.
+
+### Node
+
+Node only implemented all the used features on version 6, so for using Structure for a backend application you'll need Node 6 or later.
+
+### Browser
+
+Not all major browsers implemented the used features so you'll need to transpile the code for using it. For browser usage we have the UMD version bundled with Webpack. We don't bundle Structure with its dependencies so you'll have to provide it with your module bundler. It's recommended to replace joi with joi-browser when using it on the front-end, here's how we run our test suite on the browser regarding bundling and polyfill of features.
+
+Be aware that not the whole test suite will pass on browsers, there are some cases that can't be simulated through polyfilling, like extending Array or having a non-structure class extending a structure class. You can setup the project on your computer and run npm run test:browser to see how it'll work.
+
+Right now 95.5% of the tests will pass on Chrome 55, and 95% will pass on Firefox 45. We intend to make it support older versions using polyfills in the next releases.
+
+
+## [Contributing](contributing.md)
+
+## [LICENSE](license.md)
  
 
