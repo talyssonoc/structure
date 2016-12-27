@@ -4,22 +4,36 @@
   "description": "",
   "main": "src/index.js",
   "browser": "dist/structure.js",
-  "scripts": {
-    "test": "mocha",
-    "test:browser": "karma start test/karma.conf.js",
-    "build": "webpack",
-    "coverage": "istanbul cover --report html node_modules/mocha/bin/_mocha",
-    "lint": "eslint {src,test,benchmark}/**/*.js",
-    "benchmark": "node benchmark/benchmark.js",
-    "prepublish": "npm run build"
+  "engines": {
+    "node": ">=6"
   },
+  "repository": "https://github.com/talyssonoc/structure",
+  "bugs": "https://github.com/talyssonoc/structure/issues",
+  "author": "Talysson <talyssonoc@gmail.com>",
+  "contributors": [
+    "Fernando <me@fleury.io>"
+  ],
+  "license": "MIT",
   "keywords": [
     "entity",
     "model",
     "domain"
   ],
-  "author": "Talysson <talyssonoc@gmail.com>",
-  "license": "MIT",
+  "scripts": {
+    "test": "mocha",
+    "test:browser": "karma start test/karma.conf.js",
+    "build": "webpack",
+    "coverage": "istanbul cover --report html --report lcov node_modules/mocha/bin/_mocha",
+    "lint": "eslint {src,test,benchmark}/**/*.js",
+    "benchmark": "node benchmark/benchmark.js",
+    "prepublish": "npm run build",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+  },
+  "dependencies": {
+    "coveralls": "^2.11.15",
+    "joi": "^9.2.0",
+    "lodash": "^4.16.4"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.18.2",
@@ -41,9 +55,5 @@
     "mocha": "^3.1.0",
     "proxy-polyfill": "^0.1.6",
     "webpack": "^1.13.3"
-  },
-  "dependencies": {
-    "joi": "^9.2.0",
-    "lodash": "^4.16.4"
   }
 }
