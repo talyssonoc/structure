@@ -6,12 +6,12 @@
 ---
 Structure provides a simple interface which allows you to add schemas to your ES6 classes.
 
-- [Getting started](Getting started)
-- [Usage](Usage)
-- [Schema Concept](Schema Concept)
-- [Coercion](Coercion)
-- [Validation](Validation)
-- [Support](Support) 
+- [Getting started](#getting-started)
+- [Usage](#usage)
+- [Schema Concept](#schema-concept)
+- [Coercion](#coercion)
+- [Validation](#validation)
+- [Support](#support) 
 
 ## Getting started 
 
@@ -72,14 +72,15 @@ The complete descriptor allows you to declare additional info for the attribute:
 const userSchema = {
   name: {
    type: String,
-   defaultValue: 'John Foo'
+   defaultValue: 'John Foo',
+   minlength: 8
   },
   cars: {
    type: Array,
    items: String,
    defaultValue: ['Golf', 'Polo']
   },
-  books: {
+  book: {
    type: String,
    defaultValue: (instance) => instance.generateRandomBook()
   }
@@ -102,6 +103,8 @@ Please note that removing the value of the attribute will not fallback to the de
 ##### items
 The __items__ of a type is used to validate each item's Type of the attribute's collection.
 
+* Please refer to [Validation](#validation) in order to check a bit more on validation properties.
+
 #### Type concept
 Each attribute needs a __Type__ definition, that's how Structure validates and coerces the attribute's value. It can be divided into three categories (as in right now):
 
@@ -111,7 +114,7 @@ Each attribute needs a __Type__ definition, that's how Structure validates and c
 
 ## Coercion
 
-Structure does type coercion based on the declared [schema](Schema). It's important to note that it __never__ coerces `undefined` and it also won't coerce if the value is already of the declared type (except for arrays, we'll talk more about this soon). Let's break the coercion into 3 categories:
+Structure does type coercion based on the declared [schema](#schema). It's important to note that it __never__ coerces `undefined` and it also won't coerce if the value is already of the declared type (except for arrays, we'll talk more about this soon). Let's break the coercion into 3 categories:
 
 ### Primitive type coercion
 
