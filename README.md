@@ -39,7 +39,7 @@ class UserClass {
  }
 }
 
-const User = attributes(userAttributes)(UserClass);
+const User = attributes(userSchema)(UserClass);
 
 /* The attributes "wraps" the Class, still providing access to its methods: */
 
