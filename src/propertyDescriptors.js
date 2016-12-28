@@ -12,7 +12,7 @@ exports.attributesDescriptor = {
 
   set(newAttributes) {
     if(!newAttributes || typeof newAttributes !== OBJECT_TYPE) {
-      throw new Error('#attributes can\'t be set to a non-object.');
+      throw new TypeError('#attributes can\'t be set to a non-object.');
     }
 
     const attributes = createAttrs();
