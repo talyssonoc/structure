@@ -7,7 +7,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String
+          itemType: String
         }
       })(class User {});
 
@@ -38,7 +38,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           required: true
         }
       })(class User {});
@@ -73,7 +73,7 @@ describe('validation', () => {
         const User = attributes({
           books: {
             type: Array,
-            items: String,
+            itemType: String,
             sparse: false
           }
         })(class User {});
@@ -107,7 +107,7 @@ describe('validation', () => {
         const User = attributes({
           books: {
             type: Array,
-            items: String,
+            itemType: String,
             sparse: true
           }
         })(class User {});
@@ -147,7 +147,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: Book,
+          itemType: Book,
           required: true
         }
       })(class User {});
@@ -187,7 +187,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           minLength: 2
         }
       })(class User {});
@@ -226,7 +226,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           maxLength: 2
         }
       })(class User {});
@@ -266,7 +266,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           exactLength: 2
         }
       })(class User {});

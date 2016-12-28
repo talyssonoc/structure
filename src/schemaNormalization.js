@@ -13,12 +13,12 @@ function normalizeAttribute(attribute, attributeName) {
       throw new Error(`Attribute type must be a constructor: ${ attributeName }.`);
     }
 
-    if(attribute.items) {
-      attribute.items = normalizeAttribute(attribute.items, 'items');
+    if(attribute.itemType) {
+      attribute.itemType = normalizeAttribute(attribute.itemType, 'itemType');
     }
 
     return Object.assign({}, attribute, {
-      coerce: coercionFor(attribute, attribute.items),
+      coerce: coercionFor(attribute, attribute.itemType),
       validation: validationForAttribute(attribute)
     });
 

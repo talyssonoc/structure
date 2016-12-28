@@ -7,9 +7,9 @@ const types = [
   require('./boolean')
 ];
 
-function coercionFor(typeDescriptor, itemsTypeDescriptor) {
-  if(itemsTypeDescriptor) {
-    return arrayCoercionFor(typeDescriptor, itemsTypeDescriptor);
+function coercionFor(typeDescriptor, itemTypeDescriptor) {
+  if(itemTypeDescriptor) {
+    return arrayCoercionFor(typeDescriptor, itemTypeDescriptor);
   }
 
   const coercion = types.find((c) => c.type === typeDescriptor.type);

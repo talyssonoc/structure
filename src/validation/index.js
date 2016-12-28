@@ -11,8 +11,8 @@ const nestedValidation = require('./nested');
 const arrayValidation = require('./array');
 
 function validationForAttribute(typeDescriptor) {
-  if(typeDescriptor.items !== undefined) {
-    return arrayValidation(typeDescriptor, typeDescriptor.items);
+  if(typeDescriptor.itemType !== undefined) {
+    return arrayValidation(typeDescriptor, typeDescriptor.itemType);
   }
 
   const validation = validations.find((v) => v.type === typeDescriptor.type);
