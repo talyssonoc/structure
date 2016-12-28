@@ -12,7 +12,7 @@ Structure provides a simple interface which allows you to add schemas to your ES
 - [Schema Concept](#schema-concept)
 - [Coercion](#coercion)
 - [Validation](#validation)
-- [Support and compability](#support-and-compability) 
+- [Support and compatibility](#support-and-compatibility) 
 - [Contributing](contributing.md)
 - [License](license.md)
 
@@ -92,7 +92,7 @@ const userSchema = {
   },
   cars: {
    type: Array,
-   items: String,
+   itemType: String,
    defaultValue: ['Golf', 'Polo']
   },
   book: {
@@ -110,6 +110,8 @@ const UserClass {
 const User = attributes(userSchema)(UserClass);
 ```
 
+__Please note in order to declare with Arrays, the complete descriptor is required__
+
 ##### defaultValue
 The __defaultValue__ of an attribute will be used if no value was provided for the specific attribute at construction time.
 
@@ -117,7 +119,7 @@ You can also use a function which receives the instance as a parameter in order 
 
 Please note that removing the value of the attribute will not fallback to the defaultValue.
 
-##### items
+##### itemType
 The __items__ of an attribute is used to validate and coerce each item's Type of the attribute's collection.
 
 * Please refer to [Validation](#validation) in order to check a bit more on validation properties.
