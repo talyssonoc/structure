@@ -1,3 +1,5 @@
+const { ARRAY_OR_ITERABLE } = require('../errorMessages');
+
 module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
   return function coerceArray(value) {
     if(value === undefined) {
@@ -5,7 +7,7 @@ module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
     }
 
     if(value === null || (value.length === undefined && !value[Symbol.iterator])) {
-      throw new TypeError('Value must be iterable or array-like.');
+      throw new TypeError(ARRAY_OR_ITERABLE);
     }
 
     if(value[Symbol.iterator]) {
