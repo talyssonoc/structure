@@ -12,7 +12,7 @@ describe('serialization', () => {
       name: String,
       books: {
         type: Array,
-        items: Book
+        itemType: Book
       }
     })(class User {});
 

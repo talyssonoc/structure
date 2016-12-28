@@ -8,8 +8,8 @@ const joiMappings = [
   ['exactLength', 'length', true]
 ];
 
-module.exports = function arrayValidation(typeDescriptor, itemsTypeDescriptor) {
-  var joiSchema = joi.array().items(itemsTypeDescriptor.validation);
+module.exports = function arrayValidation(typeDescriptor, itemTypeDescriptor) {
+  var joiSchema = joi.array().items(itemTypeDescriptor.validation);
   const canBeSparse = typeDescriptor.sparse === undefined || typeDescriptor.sparse;
 
   joiSchema = joiSchema.sparse(canBeSparse);

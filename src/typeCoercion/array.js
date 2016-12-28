@@ -1,4 +1,4 @@
-module.exports = function arrayCoercionFor(typeDescriptor, itemsTypeDescriptor) {
+module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
   return function coerceArray(value) {
     if(value === undefined) {
       return;
@@ -15,7 +15,7 @@ module.exports = function arrayCoercionFor(typeDescriptor, itemsTypeDescriptor) 
     const coercedValue = new typeDescriptor.type();
 
     for(let i = 0; i < value.length; i++) {
-      coercedValue.push(itemsTypeDescriptor.coerce(value[i]));
+      coercedValue.push(itemTypeDescriptor.coerce(value[i]));
     }
 
     return coercedValue;
