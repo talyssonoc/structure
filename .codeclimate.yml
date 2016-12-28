@@ -6,3 +6,8 @@ engines:
 ratings:
   paths:
   - src/**
+
+exclude_paths:
+- benchmark/**/*
+- dist/**/*
+- test/**/*
