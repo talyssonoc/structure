@@ -7,6 +7,7 @@
 Structure provides a simple interface which allows you to add schemas to your ES6 classes.
 
 - [Getting started](#getting-started)
+- [Use Cases](#use-cases)
 - [Usage](#usage)
 - [Schema Concept](#schema-concept)
 - [Coercion](#coercion)
@@ -17,7 +18,19 @@ Structure provides a simple interface which allows you to add schemas to your ES
 
 ## Getting started 
 
-`npm install structure`
+`npm install --save structure`
+
+## Use cases
+
+You can use Structure for a lot of different cases, including:
+
+- Domain entities and value objects
+- Model business rules
+- Validation and coercion of request data
+- Map pure objects and JSON to your application classes
+- Add attributes to classes that you can't change the class hierarchy
+
+Structure was inspired by Ruby's [Virtus](https://github.com/solnic/virtus).
 
 ## Usage
 
@@ -88,11 +101,13 @@ const userSchema = {
   }
 };
 
-const User {
+const UserClass {
  generateRandomBook() {
   return '...';
  }
 }
+
+const User = attributes(userSchema)(UserClass);
 ```
 
 ##### defaultValue
@@ -116,7 +131,7 @@ Each attribute needs a __Type__ definition, that's how Structure validates and c
 
 ## Coercion
 
-Structure does type coercion based on the declared [schema](#schema). It's important to note that it __never__ coerces `undefined` and it also won't coerce if the value is already of the declared type (except for arrays, we'll talk more about this soon). Let's break the coercion into 3 categories:
+Structure does type coercion based on the declared [schema](#schema-concept). It's important to note that it __never__ coerces `undefined` and it also won't coerce if the value is already of the declared type (except for arrays, we'll talk more about this soon). Let's break the coercion into 3 categories:
 
 ### Primitive type coercion
 
