@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const { attributes } = require('../../../src');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Date', () => {
@@ -16,10 +17,7 @@ describe('validation', () => {
             birth: new Date()
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -29,10 +27,7 @@ describe('validation', () => {
             birth: undefined
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
     });
@@ -51,10 +46,7 @@ describe('validation', () => {
             birth: new Date()
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -64,12 +56,7 @@ describe('validation', () => {
             birth: undefined
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.false;
-          expect(errors).to.be.instanceOf(Array);
-          expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('birth');
+          assertInvalid(user, 'birth');
         });
       });
     });
@@ -92,10 +79,7 @@ describe('validation', () => {
             birth: nowCopy
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -107,12 +91,7 @@ describe('validation', () => {
             birth: otherTime
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.false;
-          expect(errors).to.be.instanceOf(Array);
-          expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('birth');
+          assertInvalid(user, 'birth');
         });
       });
     });
@@ -136,10 +115,7 @@ describe('validation', () => {
               birth: before
             });
 
-            const { valid, errors } = user.validate();
-
-            expect(valid).to.be.true;
-            expect(errors).to.be.undefined;
+            assertValid(user);
           });
         });
 
@@ -151,12 +127,7 @@ describe('validation', () => {
               birth: after
             });
 
-            const { valid, errors } = user.validate();
-
-            expect(valid).to.be.false;
-            expect(errors).to.be.instanceOf(Array);
-            expect(errors).to.have.lengthOf(1);
-            expect(errors[0].path).to.equal('birth');
+            assertInvalid(user, 'birth');
           });
         });
       });
@@ -183,10 +154,7 @@ describe('validation', () => {
               updatedAt: now
             });
 
-            const { valid, errors } = user.validate();
-
-            expect(valid).to.be.true;
-            expect(errors).to.be.undefined;
+            assertValid(user);
           });
         });
 
@@ -199,12 +167,7 @@ describe('validation', () => {
               updatedAt: now
             });
 
-            const { valid, errors } = user.validate();
-
-            expect(valid).to.be.false;
-            expect(errors).to.be.instanceOf(Array);
-            expect(errors).to.have.lengthOf(1);
-            expect(errors[0].path).to.equal('createdAt');
+            assertInvalid(user, 'createdAt');
           });
         });
       });
@@ -228,10 +191,7 @@ describe('validation', () => {
             birth: after
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -243,12 +203,7 @@ describe('validation', () => {
             birth: before
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.false;
-          expect(errors).to.be.instanceOf(Array);
-          expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('birth');
+          assertInvalid(user, 'birth');
         });
       });
     });

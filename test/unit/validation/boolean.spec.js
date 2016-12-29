@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const { attributes } = require('../../../src');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Boolean', () => {
@@ -16,10 +17,7 @@ describe('validation', () => {
             isAdmin: true
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -29,10 +27,7 @@ describe('validation', () => {
             isAdmin: undefined
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
     });
@@ -51,10 +46,7 @@ describe('validation', () => {
             isAdmin: true
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -64,12 +56,7 @@ describe('validation', () => {
             isAdmin: undefined
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.false;
-          expect(errors).to.be.instanceOf(Array);
-          expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('isAdmin');
+          assertInvalid(user, 'isAdmin');
         });
       });
     });
@@ -88,10 +75,7 @@ describe('validation', () => {
             isAdmin: true
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.true;
-          expect(errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -101,12 +85,7 @@ describe('validation', () => {
             isAdmin: false
           });
 
-          const { valid, errors } = user.validate();
-
-          expect(valid).to.be.false;
-          expect(errors).to.be.instanceOf(Array);
-          expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('isAdmin');
+          assertInvalid(user, 'isAdmin');
         });
       });
     });
