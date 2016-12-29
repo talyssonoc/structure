@@ -30,26 +30,19 @@ exports.attributesDescriptor = {
 };
 
 exports.validationDescriptor = {
-  value() {
+  value: function validate() {
     const validation = this[SCHEMA][VALIDATE];
     const serializedStructure = serialize(this);
 
     const errors = validation.validate(serializedStructure);
 
     if(errors) {
-      define(this, 'errors', {
-        value: errors,
-        configurable: true
-      });
-
-      return false;
+      return {
+        valid: false,
+        errors
+      };
     }
 
-    define(this, 'errors', {
-      value: undefined,
-      configurable: true
-    });
-
-    return true;
+    return { valid: true };
   }
 };

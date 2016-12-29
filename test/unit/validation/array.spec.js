@@ -17,8 +17,10 @@ describe('validation', () => {
             books: []
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -28,8 +30,10 @@ describe('validation', () => {
             books: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
     });
@@ -49,8 +53,10 @@ describe('validation', () => {
             books: []
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -60,10 +66,12 @@ describe('validation', () => {
             books: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('books');
         });
       });
     });
@@ -84,8 +92,10 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda']
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -95,10 +105,12 @@ describe('validation', () => {
               books: ['The Lusiads', undefined]
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('books.1');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('books.1');
           });
         });
       });
@@ -118,8 +130,10 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda']
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -129,8 +143,10 @@ describe('validation', () => {
               books: ['The Lusiads', undefined]
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
       });
@@ -161,8 +177,10 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -175,10 +193,12 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books.1.name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('books.1.name');
         });
       });
     });
@@ -201,8 +221,10 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -214,10 +236,12 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('books');
         });
       });
     });
@@ -239,8 +263,10 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -254,10 +280,12 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('books');
         });
       });
     });
@@ -280,8 +308,10 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -293,10 +323,12 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('books');
         });
       });
 
@@ -310,10 +342,12 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('books');
         });
       });
     });

@@ -18,8 +18,10 @@ describe('validation', () => {
             lastLocation: new Location()
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -29,8 +31,10 @@ describe('validation', () => {
             lastLocation: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
     });
@@ -51,8 +55,10 @@ describe('validation', () => {
             lastLocation: new Location()
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -62,10 +68,12 @@ describe('validation', () => {
             lastLocation: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('lastLocation');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('lastLocation');
         });
       });
     });

@@ -16,8 +16,10 @@ describe('validation', () => {
             name: 'Some name'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -27,8 +29,10 @@ describe('validation', () => {
             name: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
     });
@@ -47,8 +51,10 @@ describe('validation', () => {
             name: 'Some name'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -58,10 +64,12 @@ describe('validation', () => {
             name: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -80,8 +88,10 @@ describe('validation', () => {
             name: 'Something'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -91,10 +101,12 @@ describe('validation', () => {
             name: 'Another thing'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -114,8 +126,10 @@ describe('validation', () => {
               name: 'Some name'
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -125,8 +139,10 @@ describe('validation', () => {
               name: ''
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
       });
@@ -145,8 +161,10 @@ describe('validation', () => {
               name: 'Some name'
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -156,10 +174,12 @@ describe('validation', () => {
               name: ''
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('name');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('name');
           });
         });
       });
@@ -180,8 +200,10 @@ describe('validation', () => {
             name: 'Some name'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -191,10 +213,12 @@ describe('validation', () => {
             name: 'Hi'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -213,8 +237,10 @@ describe('validation', () => {
             name: 'Some'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -224,10 +250,12 @@ describe('validation', () => {
             name: 'Some name'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -246,8 +274,10 @@ describe('validation', () => {
             name: 'Some'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -257,10 +287,12 @@ describe('validation', () => {
             name: 'Some name'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
 
@@ -270,10 +302,12 @@ describe('validation', () => {
             name: 'Hi'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -292,8 +326,10 @@ describe('validation', () => {
             name: 'A1'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -303,10 +339,12 @@ describe('validation', () => {
             name: 'Something'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -325,8 +363,10 @@ describe('validation', () => {
             name: 'A1B2'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -336,10 +376,12 @@ describe('validation', () => {
             name: 'No alphanumeric $ string'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -358,8 +400,10 @@ describe('validation', () => {
             name: 'abc'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -369,10 +413,12 @@ describe('validation', () => {
             name: 'Abc'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -391,8 +437,10 @@ describe('validation', () => {
             name: 'ABC'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -402,10 +450,12 @@ describe('validation', () => {
             name: 'Abc'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });
@@ -424,8 +474,10 @@ describe('validation', () => {
             name: 'name@host.com'
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -435,10 +487,12 @@ describe('validation', () => {
             name: 'Not a valid email'
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('name');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
         });
       });
     });

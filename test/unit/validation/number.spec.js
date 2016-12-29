@@ -16,8 +16,10 @@ describe('validation', () => {
             age: 42
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -27,8 +29,10 @@ describe('validation', () => {
             age: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
     });
@@ -47,8 +51,10 @@ describe('validation', () => {
             age: 42
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -58,10 +64,12 @@ describe('validation', () => {
             age: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -81,8 +89,10 @@ describe('validation', () => {
               age: 2
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -92,10 +102,12 @@ describe('validation', () => {
               age: 1
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('age');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('age');
           });
         });
       });
@@ -118,8 +130,10 @@ describe('validation', () => {
               currentAge: 2
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -130,8 +144,10 @@ describe('validation', () => {
               currentAge: 3
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -142,10 +158,12 @@ describe('validation', () => {
               currentAge: 2
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('currentAge');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('currentAge');
           });
         });
       });
@@ -168,8 +186,10 @@ describe('validation', () => {
               currentAge: 2
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -180,10 +200,12 @@ describe('validation', () => {
               currentAge: 2
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('currentAge');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('currentAge');
           });
         });
       });
@@ -204,8 +226,10 @@ describe('validation', () => {
               age: 2
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -215,8 +239,10 @@ describe('validation', () => {
               age: 3
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -226,10 +252,12 @@ describe('validation', () => {
               age: 1
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('age');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('age');
           });
         });
       });
@@ -252,8 +280,10 @@ describe('validation', () => {
               currentAge: 2
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -264,8 +294,10 @@ describe('validation', () => {
               currentAge: 3
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -276,10 +308,12 @@ describe('validation', () => {
               currentAge: 2
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('currentAge');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('currentAge');
           });
         });
       });
@@ -299,10 +333,12 @@ describe('validation', () => {
             age: 2
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
 
@@ -312,8 +348,10 @@ describe('validation', () => {
             age: 3
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -323,10 +361,12 @@ describe('validation', () => {
             age: 1
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -345,8 +385,10 @@ describe('validation', () => {
             age: 2
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -356,8 +398,10 @@ describe('validation', () => {
             age: 1
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -367,10 +411,12 @@ describe('validation', () => {
             age: 3
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -389,10 +435,12 @@ describe('validation', () => {
             age: 2
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
 
@@ -402,8 +450,10 @@ describe('validation', () => {
             age: 1
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -413,10 +463,12 @@ describe('validation', () => {
             age: 3
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -435,8 +487,10 @@ describe('validation', () => {
             age: 42
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -446,10 +500,12 @@ describe('validation', () => {
             age: 4.2
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -468,8 +524,10 @@ describe('validation', () => {
             age: 4.20
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -479,10 +537,12 @@ describe('validation', () => {
             age: 0.042
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -501,8 +561,10 @@ describe('validation', () => {
             age: 6
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -512,10 +574,12 @@ describe('validation', () => {
             age: 7
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -534,8 +598,10 @@ describe('validation', () => {
             age: 1
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -545,10 +611,12 @@ describe('validation', () => {
             age: 0
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
 
@@ -558,10 +626,12 @@ describe('validation', () => {
             age: -1
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });
@@ -580,8 +650,10 @@ describe('validation', () => {
             age: -1
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -591,10 +663,12 @@ describe('validation', () => {
             age: 0
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
 
@@ -604,10 +678,12 @@ describe('validation', () => {
             age: 1
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('age');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('age');
         });
       });
     });

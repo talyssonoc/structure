@@ -16,8 +16,10 @@ describe('validation', () => {
             birth: new Date()
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -27,8 +29,10 @@ describe('validation', () => {
             birth: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
     });
@@ -47,8 +51,10 @@ describe('validation', () => {
             birth: new Date()
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -58,10 +64,12 @@ describe('validation', () => {
             birth: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('birth');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('birth');
         });
       });
     });
@@ -84,8 +92,10 @@ describe('validation', () => {
             birth: nowCopy
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -97,10 +107,12 @@ describe('validation', () => {
             birth: otherTime
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('birth');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('birth');
         });
       });
     });
@@ -124,8 +136,10 @@ describe('validation', () => {
               birth: before
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -137,10 +151,12 @@ describe('validation', () => {
               birth: after
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('birth');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('birth');
           });
         });
       });
@@ -167,8 +183,10 @@ describe('validation', () => {
               updatedAt: now
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.true;
+            expect(errors).to.be.undefined;
           });
         });
 
@@ -181,10 +199,12 @@ describe('validation', () => {
               updatedAt: now
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('createdAt');
+            const { valid, errors } = user.validate();
+
+            expect(valid).to.be.false;
+            expect(errors).to.be.instanceOf(Array);
+            expect(errors).to.have.lengthOf(1);
+            expect(errors[0].path).to.equal('createdAt');
           });
         });
       });
@@ -208,8 +228,10 @@ describe('validation', () => {
             birth: after
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
@@ -221,10 +243,12 @@ describe('validation', () => {
             birth: before
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('birth');
+          const { valid, errors } = user.validate();
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('birth');
         });
       });
     });
