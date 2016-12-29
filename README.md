@@ -4,10 +4,10 @@
 
 [![Build Status](https://travis-ci.org/talyssonoc/structure.svg?branch=master)](https://travis-ci.org/talyssonoc/structure) [![Coverage Status](https://coveralls.io/repos/github/talyssonoc/structure/badge.svg?branch=master)](https://coveralls.io/github/talyssonoc/structure?branch=master) [![Code Climate](https://codeclimate.com/github/talyssonoc/structure/badges/gpa.svg)](https://codeclimate.com/github/talyssonoc/structure)
 ---
-Structure provides a simple interface which allows you to add schemas to your ES6 classes.
+Structure provides a simple interface which allows you to add attributes to your ES6 classes based on a schema, with validations and type coercion.
 
-- [Getting started](#getting-started)
 - [Use Cases](#use-cases)
+- [Getting started](#getting-started)
 - [Usage](#usage)
 - [Schema Concept](#schema-concept)
 - [Coercion](#coercion)
@@ -15,10 +15,6 @@ Structure provides a simple interface which allows you to add schemas to your ES
 - [Support and compatibility](#support-and-compatibility) 
 - [Contributing](contributing.md)
 - [License](license.md)
-
-## Getting started 
-
-`npm install --save structure`
 
 ## Use cases
 
@@ -32,27 +28,29 @@ You can use Structure for a lot of different cases, including:
 
 Structure was inspired by Ruby's [Virtus](https://github.com/solnic/virtus).
 
+## Getting started 
+
+`npm install --save structure`
+
 ## Usage
+
+For each attribute of your schema it will be created a setter and a getter on the instances of the given class. It'll also auto-assign the attributes passed to the constructor.
 
 ```js
 const { attributes } = require('structure');
 
-const userSchema = {
+const User = attributes({
   name: String,
   age: {
     type: Number,
     defaultValue: 18
   },
   birthday: Date
-};
-
-class UserClass {
- greet() {
-  return `Hello ${this.name}`;
- }
-}
-
-const User = attributes(userSchema)(UserClass);
+})(class User {
+  greet() {
+    return `Hello ${this.name}`;
+  }
+});
 
 /* The attributes "wraps" the Class, still providing access to its methods: */
 
@@ -60,67 +58,56 @@ const user = new User({
   name: 'John Foo'
 });
 
-user.greet(); // Hello John Foo
+user.name; // 'John Foo'
+user.greet(); // 'Hello John Foo'
 ```
 
 ## Schema Concept
-The schema is an object responsible to map the atrributes Structure should handle:
+The schema is an object responsible to map the atrributes Structure should handle, it is the parameter of the `attributes` function.
 
 ```js
-const userSchema = {
+attributes({
   name: String,
   age: Number
-};
-
-attributes(userSchema)(class User {});
+})(class User { });
 ```
 
-You can use the __shorthand type descriptor__ or __complete type descriptor__ individually for each attribute.
+There are two ways to declare an attribute of the schema, the __shorthand type descriptor__ and __complete type descriptor__.
 
 #### Shorthand type descriptor
 The shorthand is a pair of `propertyName: Type` key/value like: `age: Number`.
 
 #### Complete type descriptor
-The complete descriptor allows you to declare additional info for the attribute:
+The complete descriptor allows you to declare additional info for the attribute. __For Array types it's required to use the complete type descriptor because you must specify the itemType__.
 
 ```js
-const userSchema = {
-  name: {
-   type: String,
-   defaultValue: 'John Foo',
-   minlength: 8
-  },
-  cars: {
-   type: Array,
-   itemType: String,
-   defaultValue: ['Golf', 'Polo']
+const User = attributes({
+  name: String, // shorthand type descriptor
+  cars: { // complete type descriptor
+    type: Array,
+    itemType: String,
+    defaultValue: ['Golf', 'Polo']
   },
   book: {
-   type: String,
-   defaultValue: (instance) => instance.generateRandomBook()
+    type: String,
+    defaultValue: (instance) => instance.generateRandomBook()
   }
-};
-
-const UserClass {
- generateRandomBook() {
-  return '...';
- }
-}
-
-const User = attributes(userSchema)(UserClass);
+})(class User {
+  generateRandomBook() {
+    return '...';
+  }
+});
 ```
-
-__Please note in order to declare with Arrays, the complete descriptor is required__
 
 ##### defaultValue
 The __defaultValue__ of an attribute will be used if no value was provided for the specific attribute at construction time.
 
-You can also use a function which receives the instance as a parameter in order to provide the defaultValue. The operation must be synchronous.
+You can also use a function which receives the instance as a parameter in order to provide the defaultValue. The operation must be synchronous and the function will called after all the other attributes are already assigned.
 
-Please note that removing the value of the attribute will not fallback to the defaultValue.
+Please note that removing the value of an attribute will not make it fallback to the default value.
 
 ##### itemType
-The __items__ of an attribute is used to validate and coerce each item's Type of the attribute's collection.
+The __itemType__ of an attribute is used to validate and coerce the type of each item from the attribute, like when the attribute type is `Array` or some class that extends `Array`.
 
 * Please refer to [Validation](#validation) in order to check a bit more on validation properties.
 
@@ -146,7 +133,7 @@ const User = attributes({
   name: String,
   age: Number,
   isAdmin: Boolean
-})(class User {});
+})(class User { });
 
 const userOne = new User({
   name: 'Foo Bar',
@@ -232,7 +219,7 @@ Coercion to `Date` type enters in this same category, so if you have an attribut
 
 #### Recursive coercion
 
-Structure also does recursive coercion, so if your declared type is Array or other structure the items/attributes of the raw value will be coerced as well:
+Structure also does recursive coercion so, if your declared type is Array or other Structure, the items/attributes of the raw value will be coerced as well:
 
 ```javascript
 class BooksCollection extends Array { }
@@ -260,7 +247,7 @@ user.favoriteBook; // Book { name: 'The Silmarillion' } => coerced plain object 
 user.books; // BooksCollection [ Book { name: '1984' } ] => coerced array to BooksCollection and plain object to Book
 ```
 
-Remember that Structure only does coercion during object creation, so mutating an array (using push, for example) won't coerce the new item:
+__Important: Structure only does coercion during object creation, so mutating an array (using push, for example) won't coerce the new item:__
 
 ```javascript
 const Library = attributes({
@@ -354,7 +341,11 @@ const User = attributes({
     equal: ['Mr', 'Ms', 'Mrs', 'Miss', { attr: 'greetDesc' }]
   },
   greetDesc: String
-})(class User { });
+})(class User {
+  getFullGreet() {
+    return `${this.greet} ${this.initials}`;
+  }
+});
 ```
 
 ### Number validations
@@ -365,10 +356,10 @@ const User = attributes({
 - `precision`: maximum number of decimal places
 - `positive`: must be positive (default: `false`)
 - `negative`: must be negative (default: `false`)
-- `min`: __**__ minimum value
-- `greater`: __**__ must be greater than passed value
-- `max`: __**__ maximum value
-- `less`: __**__ must be smaller than passed value
+- `min`: __**__ minimum valid value (works like the `>=` operator)
+- `greater`: __**__ must be greater than passed value (works like the `>` operator)
+- `max`: __**__ maximum valid value (works like the `<=` operator)
+- `less`: __**__ must be smaller than passed value (works like the `<` operator)
 
 ```javascript
 const Pool = attributes({
@@ -384,7 +375,11 @@ const Pool = attributes({
     type: Number,
     greater: { attr: 'width' }
   }
-})(class Pool { });
+})(class Pool {
+  getVolume() {
+    return this.depth * this.width * this.length;
+  }
+});
 ```
 
 ### Boolean validations
