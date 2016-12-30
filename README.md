@@ -271,7 +271,7 @@ library.books; // ['1984', 42] => new item was not coerced
 
 ## Validation
 
-An `isValid()` method will be added to the prototype of structures, this method will validate the structure based on its schema. If `isValid()` returns `false`, a property called `errors` will be added to the structure instance, an array of validation errors.
+An `validate()` method will be added to the prototype of structures, this method will validate the structure based on its schema. The method will return an object with the property `valid` (with the value `true` if it's valid, and `false` if invalid). If `valid` is `false` the returned object will also have a property `errors`, with an array of validation errors.
 
 Validations require you to use the complete type descriptor:
 
@@ -291,14 +291,25 @@ const user = new User({
   name: 'John'
 });
 
-user.isValid(); // false
+const { valid, errors } = user.validate();
 
-user.errors; /*
+valid; // false
+errors; /*
 [
   { message: '"name" length must be at least 10 characters long', path: 'name' },
   { message: '"age" is required', path: 'age' }
 ]
 */
+
+const validUser = new User({
+  name: 'This is my name',
+  age: 25
+});
+
+const validation = validUser.validate();
+
+validation.valid; // true
+validation.errors; // undefined, because `valid` is true
 ```
 
 Structure has a set of built-in validations built on top of the awesome [joi](https://www.npmjs.com/package/joi) package:
@@ -473,9 +484,10 @@ const user = new User({
   books: [new Book()]
 });
 
-user.isValid(); // false
+const { valid, errors } = user.validate();
 
-user.errors; /*
+valid; // false
+errors; /*
 [
   { message: '"initials" length must be at least 2 characters long', path: 'initials' },
   { message: '"name" is required', path: 'favoriteBook.name' },
