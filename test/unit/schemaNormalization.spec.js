@@ -43,7 +43,7 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalizeSchema(schema);
-        }).to.throw(Error, /^Invalid type for attribute: name\.$/);
+        }).to.throw(TypeError, /^Invalid type for attribute: name\.$/);
       });
     });
 
@@ -57,7 +57,7 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalizeSchema(schema);
-        }).to.throw(Error, /^Attribute type must be a constructor: name\.$/);
+        }).to.throw(TypeError, /^Attribute type must be a constructor: name\.$/);
       });
     });
   });

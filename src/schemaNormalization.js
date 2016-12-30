@@ -10,7 +10,7 @@ function normalizeAttribute(attribute, attributeName) {
     }
 
     if(typeof attribute.type !== 'function') {
-      throw new Error(`Attribute type must be a constructor: ${ attributeName }.`);
+      throw new TypeError(`Attribute type must be a constructor: ${ attributeName }.`);
     }
 
     if(attribute.itemType) {
@@ -30,7 +30,7 @@ function normalizeAttribute(attribute, attributeName) {
     return normalizedType;
 
   default:
-    throw new Error(`Invalid type for attribute: ${ attributeName }.`);
+    throw new TypeError(`Invalid type for attribute: ${ attributeName }.`);
   }
 }
 

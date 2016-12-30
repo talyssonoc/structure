@@ -109,6 +109,6 @@ describe('updating an instance', () => {
 
     expect(() => {
       user.attributes = null;
-    }).to.throw(Error, /^#attributes can't be set to a non-object\.$/);
+    }).to.throw(TypeError, /^#attributes can't be set to a non-object\.$/);
   });
 });

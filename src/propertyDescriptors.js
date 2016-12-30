@@ -1,4 +1,5 @@
 const { SCHEMA, ATTRIBUTES, VALIDATE } = require('./symbols');
+const { NON_OBJECT_ATTRIBUTES } = require('./errorMessages');
 const { serialize } = require('./serialization');
 
 const createAttrs = () => Object.create(null);
@@ -12,7 +13,7 @@ exports.attributesDescriptor = {
 
   set(newAttributes) {
     if(!newAttributes || typeof newAttributes !== OBJECT_TYPE) {
-      throw new Error('#attributes can\'t be set to a non-object.');
+      throw new TypeError(NON_OBJECT_ATTRIBUTES);
     }
 
     const attributes = createAttrs();
