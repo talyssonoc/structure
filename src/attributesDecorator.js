@@ -1,7 +1,11 @@
 const { normalizeSchema } = require('./schemaNormalization');
 const { getInitialValues } = require('./initialValueCreation');
 const { SCHEMA } = require('./symbols');
-const { attributesDescriptor, validationDescriptor } = require('./propertyDescriptors');
+const {
+  attributesDescriptor,
+  validationDescriptor,
+  serializationDescriptor
+} = require('./propertyDescriptors');
 
 const define = Object.defineProperty;
 
@@ -54,6 +58,8 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
     });
 
     define(WrapperClass.prototype, 'validate', validationDescriptor);
+
+    define(WrapperClass.prototype, 'toJSON', serializationDescriptor);
 
     return WrapperClass;
   };

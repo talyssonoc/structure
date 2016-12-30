@@ -33,7 +33,7 @@ exports.attributesDescriptor = {
 exports.validationDescriptor = {
   value: function validate() {
     const validation = this[SCHEMA][VALIDATE];
-    const serializedStructure = serialize(this);
+    const serializedStructure = this.toJSON();
 
     const errors = validation.validate(serializedStructure);
 
@@ -45,5 +45,11 @@ exports.validationDescriptor = {
     }
 
     return { valid: true };
+  }
+};
+
+exports.serializationDescriptor = {
+  value: function toJSON() {
+    return serialize(this);
   }
 };
