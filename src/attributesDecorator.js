@@ -53,7 +53,7 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
       });
     });
 
-    define(WrapperClass.prototype, 'isValid', validationDescriptor);
+    define(WrapperClass.prototype, 'validate', validationDescriptor);
 
     return WrapperClass;
   };
