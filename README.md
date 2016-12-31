@@ -43,7 +43,7 @@ const User = attributes({
   name: String,
   age: {
     type: Number,
-    defaultValue: 18
+    default: 18
   },
   birthday: Date
 })(class User {
@@ -86,11 +86,11 @@ const User = attributes({
   cars: { // complete type descriptor
     type: Array,
     itemType: String,
-    defaultValue: ['Golf', 'Polo']
+    default: ['Golf', 'Polo']
   },
   book: {
     type: String,
-    defaultValue: (instance) => instance.generateRandomBook()
+    default: (instance) => instance.generateRandomBook()
   }
 })(class User {
   generateRandomBook() {
@@ -99,10 +99,10 @@ const User = attributes({
 });
 ```
 
-##### defaultValue
-The __defaultValue__ of an attribute will be used if no value was provided for the specific attribute at construction time.
+##### default
+The __default__ of an attribute will be used if no value was provided for the specific attribute at construction time.
 
-You can also use a function which receives the instance as a parameter in order to provide the defaultValue. The operation must be synchronous and the function will called after all the other attributes are already assigned.
+You can also use a function which receives the instance as a parameter in order to provide the default. The operation must be synchronous and the function will called after all the other attributes are already assigned.
 
 Please note that removing the value of an attribute will not make it fallback to the default value.
 
@@ -418,7 +418,7 @@ const User = attributes({
 const Product = attributes({
   fabricationDate: {
     type: Date,
-    defaultValue: () => Date.now()
+    default: () => Date.now()
   },
   expirationDate: {
     type: Date,
