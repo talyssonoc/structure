@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const { attributes } = require('../../../src');
-const { serialize } = require('../../../src/serialization');
 
 describe('serialization', () => {
   describe('Structure', () => {
@@ -16,7 +15,7 @@ describe('serialization', () => {
           age: 42
         });
 
-        expect(serialize(user)).to.eql({
+        expect(user.toJSON()).to.eql({
           name: 'Something',
           age: 42
         });
@@ -30,7 +29,7 @@ describe('serialization', () => {
           age: undefined
         });
 
-        const serializedUser = serialize(user);
+        const serializedUser = user.toJSON();
 
         expect(serializedUser).to.eql({
           name: 'Some name',
