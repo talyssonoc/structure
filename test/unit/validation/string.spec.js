@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
