@@ -9,8 +9,10 @@ const {
 
 const define = Object.defineProperty;
 
-function attributesDecorator(declaredSchema, ErroneousPassedClass) {
-  if(ErroneousPassedClass) {
+function attributesDecorator(declaredSchema) {
+  if(arguments.length > 1) {
+    const ErroneousPassedClass = arguments[1];
+
     const errorMessage = `You passed the structure class as the second parameter of attributes(). The expected usage is \`attributes(schema)(${ ErroneousPassedClass.name || 'StructureClass' })\`.`;
 
     throw new Error(errorMessage);
