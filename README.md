@@ -12,6 +12,7 @@ Structure provides a simple interface which allows you to add attributes to your
 - [Schema Concept](#schema-concept)
 - [Coercion](#coercion)
 - [Validation](#validation)
+- [Serialization](#serialization)
 - [Support and compatibility](#support-and-compatibility) 
 - [Contributing](contributing.md)
 - [License](license.md)
@@ -27,6 +28,12 @@ You can use Structure for a lot of different cases, including:
 - Add attributes to classes that you can't change the class hierarchy
 
 Structure was inspired by Ruby's [Virtus](https://github.com/solnic/virtus).
+
+What Structure is __not__:
+
+- It's not an abstraction of the database
+- It's not a MVC framework (but it can be used to domain entities)
+- It's not an atempt to simulate classic inheritance in JavaScript
 
 ## Getting started 
 
@@ -494,6 +501,46 @@ errors; /*
   { message: '"name" is required', path: 'books.0.name' }
 ]
 */
+```
+
+## Serialization
+
+It's possible to obtain a serialized object of a Structure using the method `toJSON()`. This method is also compliant with the [`JSON.stringify()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON()_behavior) specification, so you can use it to serialize your object too. __Be aware that `toJSON()` will return an object, not the JSON in form of a string like `JSON.stringify()` does.__ Refer to the [Date#toJSON](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON) specification to see how dates will be serialized by `JSON.stringify`.
+
+```javascript
+const Book = attributes({
+  name: String
+})(class Book { });
+
+const User = attributes({
+  name: String,
+  birth: Date,
+  books: {
+    type: Array,
+    items: Book
+  }
+})(class User { });
+
+const user = new User({
+  name: 'John Something',
+  birth: new Date('10/10/1990'),
+  books: [
+    new Book({ name: 'The name of the wind' }),
+    new Book({ name: 'Stonehenge' })
+  ]
+});
+
+user.toJSON(); /* {
+  name: 'John Something',
+  birth: new Date('10/10/1990'),
+  books: [
+    { name: 'The name of the wind' },
+    { name: 'Stonehenge' }
+  ]
+}
+*/
+
+JSON.stringify(user)); // {"name":"John Something","birth":"1990-10-10T03:00:00.000Z","books":[{"name":"The name of the wind"},{"name":"Stonehenge"}]}
 ```
 
 ## Support and compatibility
