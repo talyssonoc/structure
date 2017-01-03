@@ -76,3 +76,7 @@ Not all major browsers implemented the used features so you'll need to transpile
 Be aware that not the whole test suite will pass on browsers, there are some cases that can't be simulated through polyfilling, like extending Array or having a non-structure class extending a structure class. You can setup the project on your computer and run npm run test:browser to see how it'll work.
 
 Right now 95.5% of the tests will pass on Chrome 55, and 95% will pass on Firefox 45. We intend to make it support older versions using polyfills in the next releases.
+
+## [Contributing](contributing.md)
+
+## [LICENSE](license.md)
