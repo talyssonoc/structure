@@ -38,22 +38,22 @@ For each attribute on your schema, a getter and a setter will be created into th
 const { attributes } = require('structure');
 
 const User = attributes({
-name: String,
-age: {
-type: Number,
-default: 18
-},
-birthday: Date
+  name: String,
+  age: {
+    type: Number,
+    default: 18
+  },
+  birthday: Date
 })(class User {
-greet() {
-return `Hello ${this.name}`;
-}
+  greet() {
+    return `Hello ${this.name}`;
+  }
 });
 
 /* The attributes "wraps" the Class, still providing access to its methods: */
 
 const user = new User({
-name: 'John Foo'
+  name: 'John Foo'
 });
 
 user.name; // 'John Foo'
