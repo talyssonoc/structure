@@ -10,15 +10,15 @@ function normalizeAttribute(attribute, attributeName) {
     }
 
     if(typeof attribute.type !== 'function') {
-      throw new Error(`Attribute type must be a constructor: ${ attributeName }.`);
+      throw new TypeError(`Attribute type must be a constructor: ${ attributeName }.`);
     }
 
-    if(attribute.items) {
-      attribute.items = normalizeAttribute(attribute.items, 'items');
+    if(attribute.itemType) {
+      attribute.itemType = normalizeAttribute(attribute.itemType, 'itemType');
     }
 
     return Object.assign({}, attribute, {
-      coerce: coercionFor(attribute, attribute.items),
+      coerce: coercionFor(attribute, attribute.itemType),
       validation: validationForAttribute(attribute)
     });
 
@@ -30,7 +30,7 @@ function normalizeAttribute(attribute, attributeName) {
     return normalizedType;
 
   default:
-    throw new Error(`Invalid type for attribute: ${ attributeName }.`);
+    throw new TypeError(`Invalid type for attribute: ${ attributeName }.`);
   }
 }
 

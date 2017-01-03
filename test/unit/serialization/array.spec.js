@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const { attributes } = require('../../../src');
-const { serialize } = require('../../../src/serialization');
 
 describe('serialization', () => {
   describe('Array', () => {
@@ -12,7 +11,7 @@ describe('serialization', () => {
       name: String,
       books: {
         type: Array,
-        items: Book
+        itemType: Book
       }
     })(class User {});
 
@@ -25,7 +24,7 @@ describe('serialization', () => {
           ]
         });
 
-        expect(serialize(user)).to.eql({
+        expect(user.toJSON()).to.eql({
           name: 'Something',
           books: [
             { name: 'The Hobbit' }
@@ -45,7 +44,7 @@ describe('serialization', () => {
           ]
         });
 
-        const serializedUser = serialize(user);
+        const serializedUser = user.toJSON();
 
         expect(serializedUser).to.eql({
           name: 'Some name',

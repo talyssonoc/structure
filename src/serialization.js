@@ -17,7 +17,7 @@ function serialize(structure) {
 
     let serializedValue;
 
-    if(schema[attrName].items && schema[attrName].items.type[SCHEMA] !== undefined) {
+    if(schema[attrName].itemType && schema[attrName].itemType.type[SCHEMA] !== undefined) {
       serializedValue = attribute.map(serialize);
     } else if(schema[attrName].type[SCHEMA] !== undefined) {
       serializedValue = serialize(attribute);

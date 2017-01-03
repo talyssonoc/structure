@@ -22,7 +22,7 @@ exports.cases = [
         age: 10
       });
 
-      user.isValid();
+      user.validate();
     }
   },
   {
@@ -33,7 +33,7 @@ exports.cases = [
         age: -1
       });
 
-      user.isValid();
+      user.validate();
     }
   }
 ];

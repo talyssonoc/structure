@@ -1,5 +1,5 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Boolean', () => {
@@ -16,8 +16,7 @@ describe('validation', () => {
             isAdmin: true
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -27,8 +26,7 @@ describe('validation', () => {
             isAdmin: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
     });
@@ -47,8 +45,7 @@ describe('validation', () => {
             isAdmin: true
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -58,10 +55,7 @@ describe('validation', () => {
             isAdmin: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('isAdmin');
+          assertInvalid(user, 'isAdmin');
         });
       });
     });
@@ -80,8 +74,7 @@ describe('validation', () => {
             isAdmin: true
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -91,10 +84,7 @@ describe('validation', () => {
             isAdmin: false
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('isAdmin');
+          assertInvalid(user, 'isAdmin');
         });
       });
     });

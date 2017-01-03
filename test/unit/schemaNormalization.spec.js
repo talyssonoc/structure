@@ -43,7 +43,7 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalizeSchema(schema);
-        }).to.throw(Error, /^Invalid type for attribute: name\.$/);
+        }).to.throw(TypeError, /^Invalid type for attribute: name\.$/);
       });
     });
 
@@ -57,35 +57,35 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalizeSchema(schema);
-        }).to.throw(Error, /^Attribute type must be a constructor: name\.$/);
+        }).to.throw(TypeError, /^Attribute type must be a constructor: name\.$/);
       });
     });
   });
 
-  context('when attribute has items type', () => {
-    context('when items type is an object with type attribute', () => {
-      it('does not change the items type object', () => {
+  context('when attribute has itemType', () => {
+    context('when itemType is an object with type attribute', () => {
+      it('does not change the itemType object', () => {
         const schema = {
           name: {
             type: Array,
-            items: { type: String }
+            itemType: { type: String }
           }
         };
 
-        expect(normalizeSchema(schema).name.items.type).to.eql(String);
+        expect(normalizeSchema(schema).name.itemType.type).to.eql(String);
       });
     });
 
-    context('when items type is an constructor', () => {
-      it('normalizes items type to an object with type field being equal to passed constructor', () => {
+    context('when itemType is an constructor', () => {
+      it('normalizes itemType to an object with type field being equal to passed constructor', () => {
         const schema = {
           name: {
             type: Array,
-            items: String
+            itemType: String
           }
         };
 
-        expect(normalizeSchema(schema).name.items.type).to.eql(String);
+        expect(normalizeSchema(schema).name.itemType.type).to.eql(String);
       });
     });
   });

@@ -1,5 +1,5 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Array', () => {
@@ -7,7 +7,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String
+          itemType: String
         }
       })(class User {});
 
@@ -17,8 +17,7 @@ describe('validation', () => {
             books: []
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -28,8 +27,7 @@ describe('validation', () => {
             books: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
     });
@@ -38,7 +36,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           required: true
         }
       })(class User {});
@@ -49,8 +47,7 @@ describe('validation', () => {
             books: []
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -60,10 +57,7 @@ describe('validation', () => {
             books: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          assertInvalid(user, 'books');
         });
       });
     });
@@ -73,7 +67,7 @@ describe('validation', () => {
         const User = attributes({
           books: {
             type: Array,
-            items: String,
+            itemType: String,
             sparse: false
           }
         })(class User {});
@@ -84,8 +78,7 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda']
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            assertValid(user);
           });
         });
 
@@ -95,10 +88,7 @@ describe('validation', () => {
               books: ['The Lusiads', undefined]
             });
 
-            expect(user.isValid()).to.be.false;
-            expect(user.errors).to.be.instanceOf(Array);
-            expect(user.errors).to.have.lengthOf(1);
-            expect(user.errors[0].path).to.equal('books.1');
+            assertInvalid(user, 'books.1');
           });
         });
       });
@@ -107,7 +97,7 @@ describe('validation', () => {
         const User = attributes({
           books: {
             type: Array,
-            items: String,
+            itemType: String,
             sparse: true
           }
         })(class User {});
@@ -118,8 +108,7 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda']
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            assertValid(user);
           });
         });
 
@@ -129,8 +118,7 @@ describe('validation', () => {
               books: ['The Lusiads', undefined]
             });
 
-            expect(user.isValid()).to.be.true;
-            expect(user.errors).to.be.undefined;
+            assertValid(user);
           });
         });
       });
@@ -147,7 +135,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: Book,
+          itemType: Book,
           required: true
         }
       })(class User {});
@@ -161,8 +149,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -175,10 +162,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books.1.name');
+          assertInvalid(user, 'books.1.name');
         });
       });
     });
@@ -187,7 +171,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           minLength: 2
         }
       })(class User {});
@@ -201,8 +185,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -214,10 +197,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          assertInvalid(user, 'books');
         });
       });
     });
@@ -226,7 +206,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           maxLength: 2
         }
       })(class User {});
@@ -239,8 +219,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -254,10 +233,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          assertInvalid(user, 'books');
         });
       });
     });
@@ -266,7 +242,7 @@ describe('validation', () => {
       const User = attributes({
         books: {
           type: Array,
-          items: String,
+          itemType: String,
           exactLength: 2
         }
       })(class User {});
@@ -280,8 +256,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -293,10 +268,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          assertInvalid(user, 'books');
         });
       });
 
@@ -310,10 +282,7 @@ describe('validation', () => {
             ]
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('books');
+          assertInvalid(user, 'books');
         });
       });
     });

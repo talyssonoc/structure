@@ -8,7 +8,7 @@ describe('type coercion', () => {
     const User = attributes({
       books: {
         type: Collection,
-        items: String
+        itemType: String
       }
     })(class User {});
 
@@ -76,7 +76,7 @@ describe('type coercion', () => {
         const Library = attributes({
           bookIds: {
             type: Array,
-            items: Number
+            itemType: Number
           }
         })(class Library {});
 
@@ -143,7 +143,7 @@ describe('type coercion', () => {
           new User({
             books: 123
           });
-        }).to.throw(Error, /^Value must be iterable or array-like\.$/);
+        }).to.throw(TypeError, /^Value must be iterable or array-like\.$/);
       });
     });
   });

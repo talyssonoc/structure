@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const { attributes } = require('../../../src');
-const { serialize } = require('../../../src/serialization');
 
 describe('serialization', () => {
   describe('Nested structure', () => {
@@ -26,7 +25,7 @@ describe('serialization', () => {
           location
         });
 
-        expect(serialize(user)).to.eql({
+        expect(user.toJSON()).to.eql({
           name: 'Something',
           location: {
             longitude: 123,
@@ -42,7 +41,7 @@ describe('serialization', () => {
           name: 'Some name'
         });
 
-        const serializedUser = serialize(user);
+        const serializedUser = user.toJSON();
 
         expect(serializedUser).to.eql({
           name: 'Some name',
@@ -63,7 +62,7 @@ describe('serialization', () => {
           location
         });
 
-        const serializedUser = serialize(user);
+        const serializedUser = user.toJSON();
 
         expect(serializedUser).to.eql({
           name: 'Name',

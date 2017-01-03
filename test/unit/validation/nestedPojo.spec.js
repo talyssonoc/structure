@@ -1,5 +1,5 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with POJO class', () => {
@@ -18,8 +18,7 @@ describe('validation', () => {
             lastLocation: new Location()
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -29,8 +28,7 @@ describe('validation', () => {
             lastLocation: undefined
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
     });
@@ -51,8 +49,7 @@ describe('validation', () => {
             lastLocation: new Location()
           });
 
-          expect(user.isValid()).to.be.true;
-          expect(user.errors).to.be.undefined;
+          assertValid(user);
         });
       });
 
@@ -62,10 +59,7 @@ describe('validation', () => {
             lastLocation: undefined
           });
 
-          expect(user.isValid()).to.be.false;
-          expect(user.errors).to.be.instanceOf(Array);
-          expect(user.errors).to.have.lengthOf(1);
-          expect(user.errors[0].path).to.equal('lastLocation');
+          assertInvalid(user, 'lastLocation');
         });
       });
     });

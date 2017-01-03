@@ -1,12 +1,18 @@
 const { normalizeSchema } = require('./schemaNormalization');
 const { getInitialValues } = require('./initialValueCreation');
 const { SCHEMA } = require('./symbols');
-const { attributesDescriptor, validationDescriptor } = require('./propertyDescriptors');
+const {
+  attributesDescriptor,
+  validationDescriptor,
+  serializationDescriptor
+} = require('./propertyDescriptors');
 
 const define = Object.defineProperty;
 
-function attributesDecorator(declaredSchema, ErroneousPassedClass) {
-  if(ErroneousPassedClass) {
+function attributesDecorator(declaredSchema) {
+  if(arguments.length > 1) {
+    const ErroneousPassedClass = arguments[1];
+
     const errorMessage = `You passed the structure class as the second parameter of attributes(). The expected usage is \`attributes(schema)(${ ErroneousPassedClass.name || 'StructureClass' })\`.`;
 
     throw new Error(errorMessage);
@@ -53,7 +59,9 @@ function attributesDecorator(declaredSchema, ErroneousPassedClass) {
       });
     });
 
-    define(WrapperClass.prototype, 'isValid', validationDescriptor);
+    define(WrapperClass.prototype, 'validate', validationDescriptor);
+
+    define(WrapperClass.prototype, 'toJSON', serializationDescriptor);
 
     return WrapperClass;
   };

@@ -1,4 +1,5 @@
 const { SCHEMA, ATTRIBUTES, VALIDATE } = require('./symbols');
+const { NON_OBJECT_ATTRIBUTES } = require('./errorMessages');
 const { serialize } = require('./serialization');
 
 const createAttrs = () => Object.create(null);
@@ -12,7 +13,7 @@ exports.attributesDescriptor = {
 
   set(newAttributes) {
     if(!newAttributes || typeof newAttributes !== OBJECT_TYPE) {
-      throw new Error('#attributes can\'t be set to a non-object.');
+      throw new TypeError(NON_OBJECT_ATTRIBUTES);
     }
 
     const attributes = createAttrs();
@@ -30,26 +31,25 @@ exports.attributesDescriptor = {
 };
 
 exports.validationDescriptor = {
-  value() {
+  value: function validate() {
     const validation = this[SCHEMA][VALIDATE];
-    const serializedStructure = serialize(this);
+    const serializedStructure = this.toJSON();
 
     const errors = validation.validate(serializedStructure);
 
     if(errors) {
-      define(this, 'errors', {
-        value: errors,
-        configurable: true
-      });
-
-      return false;
+      return {
+        valid: false,
+        errors
+      };
     }
 
-    define(this, 'errors', {
-      value: undefined,
-      configurable: true
-    });
+    return { valid: true };
+  }
+};
 
-    return true;
+exports.serializationDescriptor = {
+  value: function toJSON() {
+    return serialize(this);
   }
 };
