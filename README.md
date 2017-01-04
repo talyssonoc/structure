@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300">
+# <a href="https://talyssonoc.gitbooks.io/structure/content/"><img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300"></a>
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
