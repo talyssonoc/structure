@@ -1,4 +1,4 @@
-![](/structure.jpg =300x)
+<img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300">
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
