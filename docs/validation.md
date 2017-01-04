@@ -45,9 +45,9 @@ Structure has a set of built-in validations built on top of the awesome [joi](ht
 
 **Observations**
 
-Validations marked with __*__ accept a value, an attribute reference, or an array of values and attribute references mixed.
+Validations marked with __*__ accept a value, an [attribute reference](#attribute-reference), or an array of values and attribute references mixed.
 
-Validations marked with __**__ accept a value or an attribute reference.
+Validations marked with __**__ accept a value or an [attribute reference](#attribute-reference).
 
 ### String validations
 
@@ -179,6 +179,39 @@ const Group = attributes({
     maxLength: { attr: 'members' }
   }
 })
+```
+
+### Attribute reference
+
+You can reference attributes for some validations so the value of the referenced attribute will be used for the comparison:
+
+```javascript
+const User = attributes({
+  name: String,
+  password: String,
+  passwordConfirmation: {
+    type: String,
+    equal: { attr: 'password' }
+  }
+})(class User { });
+
+const user = new User({
+  name: 'Gandalf',
+  password: 'safestpasswordever',
+  passwordConfirmation: 'notthatsafetho'
+});
+
+const { valid, errors } = user.validate();
+
+valid; // false
+errors; /* [
+  {
+    message: '"passwordConfirmation" must be one of [ref:password]',
+    path: 'passwordConfirmation'
+  }
+]
+*/
+
 ```
 
 ### Nested validations
