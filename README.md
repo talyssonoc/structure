@@ -1,4 +1,4 @@
-<img src="structure.jpg" width="300">
+![](/structure.jpg =300x)
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
