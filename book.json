@@ -1,0 +1,11 @@
+{
+  "structure": {
+    "summary": "docs/README.md"
+  },
+  "plugins": ["github", "prism", "-highlight"],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/talyssonoc/structure/"
+    }
+  }
+}
