@@ -1,8 +1,4 @@
 {
-  "root": "docs",
-  "structure": {
-    "summary": "README.md"
-  },
   "plugins": ["github", "prism", "-highlight"],
   "pluginsConfig": {
     "github": {
