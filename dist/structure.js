@@ -7,7 +7,7 @@
 		exports["Structure"] = factory(require("lodash"), require("joi"));
 	else
 		root["Structure"] = factory(root["_"], root["joi"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_12__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_13__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -76,20 +76,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _require = __webpack_require__(3),
 	    normalizeSchema = _require.normalizeSchema;
 
-	var _require2 = __webpack_require__(21),
+	var _require2 = __webpack_require__(22),
 	    getInitialValues = _require2.getInitialValues;
 
-	var _require3 = __webpack_require__(19),
+	var _require3 = __webpack_require__(20),
 	    SCHEMA = _require3.SCHEMA;
 
-	var _require4 = __webpack_require__(22),
+	var _require4 = __webpack_require__(23),
 	    attributesDescriptor = _require4.attributesDescriptor,
-	    validationDescriptor = _require4.validationDescriptor;
+	    validationDescriptor = _require4.validationDescriptor,
+	    serializationDescriptor = _require4.serializationDescriptor;
 
 	var define = Object.defineProperty;
 
-	function attributesDecorator(declaredSchema, ErroneousPassedClass) {
-	  if (ErroneousPassedClass) {
+	function attributesDecorator(declaredSchema) {
+	  if (arguments.length > 1) {
+	    var ErroneousPassedClass = arguments[1];
+
 	    var errorMessage = 'You passed the structure class as the second parameter of attributes(). The expected usage is `attributes(schema)(' + (ErroneousPassedClass.name || 'StructureClass') + ')`.';
 
 	    throw new Error(errorMessage);
@@ -135,7 +138,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    });
 
-	    define(WrapperClass.prototype, 'isValid', validationDescriptor);
+	    define(WrapperClass.prototype, 'validate', validationDescriptor);
+
+	    define(WrapperClass.prototype, 'toJSON', serializationDescriptor);
 
 	    return WrapperClass;
 	  };
@@ -154,11 +159,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _require = __webpack_require__(4),
 	    coercionFor = _require.coercionFor;
 
-	var _require2 = __webpack_require__(11),
+	var _require2 = __webpack_require__(12),
 	    validationForAttribute = _require2.validationForAttribute,
 	    validationForSchema = _require2.validationForSchema;
 
-	var _require3 = __webpack_require__(19),
+	var _require3 = __webpack_require__(20),
 	    VALIDATE = _require3.VALIDATE;
 
 	function normalizeAttribute(attribute, attributeName) {
@@ -169,15 +174,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (typeof attribute.type !== 'function') {
-	        throw new Error('Attribute type must be a constructor: ' + attributeName + '.');
+	        throw new TypeError('Attribute type must be a constructor: ' + attributeName + '.');
 	      }
 
-	      if (attribute.items) {
-	        attribute.items = normalizeAttribute(attribute.items, 'items');
+	      if (attribute.itemType) {
+	        attribute.itemType = normalizeAttribute(attribute.itemType, 'itemType');
 	      }
 
 	      return Object.assign({}, attribute, {
-	        coerce: coercionFor(attribute, attribute.items),
+	        coerce: coercionFor(attribute, attribute.itemType),
 	        validation: validationForAttribute(attribute)
 	      });
 
@@ -189,7 +194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return normalizedType;
 
 	    default:
-	      throw new Error('Invalid type for attribute: ' + attributeName + '.');
+	      throw new TypeError('Invalid type for attribute: ' + attributeName + '.');
 	  }
 	}
 
@@ -219,13 +224,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var arrayCoercionFor = __webpack_require__(5);
-	var genericCoercionFor = __webpack_require__(6);
+	var genericCoercionFor = __webpack_require__(7);
 
-	var types = [__webpack_require__(7), __webpack_require__(9), __webpack_require__(10)];
+	var types = [__webpack_require__(8), __webpack_require__(10), __webpack_require__(11)];
 
-	function coercionFor(typeDescriptor, itemsTypeDescriptor) {
-	  if (itemsTypeDescriptor) {
-	    return arrayCoercionFor(typeDescriptor, itemsTypeDescriptor);
+	function coercionFor(typeDescriptor, itemTypeDescriptor) {
+	  if (itemTypeDescriptor) {
+	    return arrayCoercionFor(typeDescriptor, itemTypeDescriptor);
 	  }
 
 	  var coercion = types.find(function (c) {
@@ -253,20 +258,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	module.exports = function arrayCoercionFor(typeDescriptor, itemsTypeDescriptor) {
+	var _require = __webpack_require__(6),
+	    ARRAY_OR_ITERABLE = _require.ARRAY_OR_ITERABLE;
+
+	module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
 	  return function coerceArray(value) {
 	    if (value === undefined) {
 	      return;
 	    }
 
 	    if (value === null || value.length === undefined && !value[Symbol.iterator]) {
-	      throw new Error('Value must be iterable or array-like.');
+	      throw new TypeError(ARRAY_OR_ITERABLE);
 	    }
 
 	    if (value[Symbol.iterator]) {
@@ -276,7 +284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var coercedValue = new typeDescriptor.type();
 
 	    for (var i = 0; i < value.length; i++) {
-	      coercedValue.push(itemsTypeDescriptor.coerce(value[i]));
+	      coercedValue.push(itemTypeDescriptor.coerce(value[i]));
 	    }
 
 	    return coercedValue;
@@ -285,6 +293,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  NON_OBJECT_ATTRIBUTES: '#attributes can\'t be set to a non-object.',
+	  ARRAY_OR_ITERABLE: 'Value must be iterable or array-like.'
+	};
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -304,12 +323,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(8),
+	var _require = __webpack_require__(9),
 	    isString = _require.isString;
 
 	module.exports = {
@@ -325,18 +344,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_8__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(8),
+	var _require = __webpack_require__(9),
 	    isNumber = _require.isNumber;
 
 	module.exports = {
@@ -352,7 +371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -365,21 +384,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var validations = [__webpack_require__(13), __webpack_require__(15), __webpack_require__(16), __webpack_require__(17)];
+	var validations = [__webpack_require__(14), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18)];
 
-	var nestedValidation = __webpack_require__(18);
-	var arrayValidation = __webpack_require__(20);
+	var nestedValidation = __webpack_require__(19);
+	var arrayValidation = __webpack_require__(21);
 
 	function validationForAttribute(typeDescriptor) {
-	  if (typeDescriptor.items !== undefined) {
-	    return arrayValidation(typeDescriptor, typeDescriptor.items);
+	  if (typeDescriptor.itemType !== undefined) {
+	    return arrayValidation(typeDescriptor, typeDescriptor.itemType);
 	  }
 
 	  var validation = validations.find(function (v) {
@@ -434,20 +453,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.validationForSchema = validationForSchema;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_12__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    mapToJoi = _require.mapToJoi,
 	    equalOption = _require.equalOption;
 
@@ -468,16 +487,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(8),
+	var _require = __webpack_require__(9),
 	    isPlainObject = _require.isPlainObject;
 
 	exports.mapToJoi = function mapToJoi(typeDescriptor, _ref) {
@@ -550,14 +569,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    mapToJoi = _require.mapToJoi,
 	    mapToJoiWithReference = _require.mapToJoiWithReference,
 	    equalOption = _require.equalOption;
@@ -579,14 +598,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    mapToJoi = _require.mapToJoi,
 	    equalOption = _require.equalOption;
 
@@ -603,14 +622,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    mapToJoi = _require.mapToJoi,
 	    mapToJoiWithReference = _require.mapToJoiWithReference,
 	    equalOption = _require.equalOption;
@@ -632,14 +651,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(19),
+	var _require = __webpack_require__(20),
 	    SCHEMA = _require.SCHEMA;
 
 	module.exports = function nestedValidation(typeDescriptor) {
@@ -664,7 +683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -676,20 +695,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(12);
+	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    mapToJoi = _require.mapToJoi;
 
 	var joiMappings = [['required', 'required'], ['minLength', 'min', true], ['maxLength', 'max', true], ['exactLength', 'length', true]];
 
-	module.exports = function arrayValidation(typeDescriptor, itemsTypeDescriptor) {
-	  var joiSchema = joi.array().items(itemsTypeDescriptor.validation);
+	module.exports = function arrayValidation(typeDescriptor, itemTypeDescriptor) {
+	  var joiSchema = joi.array().items(itemTypeDescriptor.validation);
 	  var canBeSparse = typeDescriptor.sparse === undefined || typeDescriptor.sparse;
 
 	  joiSchema = joiSchema.sparse(canBeSparse);
@@ -700,7 +719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -724,20 +743,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getInitialValues = getInitialValues;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _require = __webpack_require__(19),
+	var _require = __webpack_require__(20),
 	    SCHEMA = _require.SCHEMA,
 	    ATTRIBUTES = _require.ATTRIBUTES,
 	    VALIDATE = _require.VALIDATE;
 
-	var _require2 = __webpack_require__(23),
-	    serialize = _require2.serialize;
+	var _require2 = __webpack_require__(6),
+	    NON_OBJECT_ATTRIBUTES = _require2.NON_OBJECT_ATTRIBUTES;
+
+	var _require3 = __webpack_require__(24),
+	    serialize = _require3.serialize;
 
 	var createAttrs = function createAttrs() {
 	  return Object.create(null);
@@ -751,7 +773,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  set: function set(newAttributes) {
 	    if (!newAttributes || (typeof newAttributes === 'undefined' ? 'undefined' : _typeof(newAttributes)) !== OBJECT_TYPE) {
-	      throw new Error('#attributes can\'t be set to a non-object.');
+	      throw new TypeError(NON_OBJECT_ATTRIBUTES);
 	    }
 
 	    var attributes = createAttrs();
@@ -769,37 +791,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	exports.validationDescriptor = {
-	  value: function value() {
+	  value: function validate() {
 	    var validation = this[SCHEMA][VALIDATE];
-	    var serializedStructure = serialize(this);
+	    var serializedStructure = this.toJSON();
 
 	    var errors = validation.validate(serializedStructure);
 
 	    if (errors) {
-	      define(this, 'errors', {
-	        value: errors,
-	        configurable: true
-	      });
-
-	      return false;
+	      return {
+	        valid: false,
+	        errors: errors
+	      };
 	    }
 
-	    define(this, 'errors', {
-	      value: undefined,
-	      configurable: true
-	    });
+	    return { valid: true };
+	  }
+	};
 
-	    return true;
+	exports.serializationDescriptor = {
+	  value: function toJSON() {
+	    return serialize(this);
 	  }
 	};
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(19),
+	var _require = __webpack_require__(20),
 	    SCHEMA = _require.SCHEMA;
 
 	function serialize(structure) {
@@ -819,7 +840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var serializedValue = void 0;
 
-	    if (schema[attrName].items && schema[attrName].items.type[SCHEMA] !== undefined) {
+	    if (schema[attrName].itemType && schema[attrName].itemType.type[SCHEMA] !== undefined) {
 	      serializedValue = attribute.map(serialize);
 	    } else if (schema[attrName].type[SCHEMA] !== undefined) {
 	      serializedValue = serialize(attribute);
