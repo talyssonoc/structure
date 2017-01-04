@@ -1,6 +1,6 @@
 # Validation
 
-An `validate()` method will be added to the prototype of structures, this method will validate the structure based on its schema. The method will return an object with the property `valid` (with the value `true` if it's valid, and `false` if invalid). If `valid` is `false` the returned object will also have a property `errors`, with an array of validation errors.
+A `validate()` method will be added to the prototype of structures, this method will validate the structure based on its schema. The method will return an object with the property `valid` (with the value `true` if it's valid, and `false` if invalid). If `valid` is `false` the returned object will also have a property `errors`, with an array of validation errors.
 
 Validations require you to use the complete type descriptor:
 
