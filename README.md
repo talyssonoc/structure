@@ -6,8 +6,6 @@
 ---
 Structure provides a simple interface which allows you to add attributes to your ES6 classes based on a schema, with validations and type coercion.
 
-Be sure to check out the docs at https://talyssonoc.gitbooks.io/structure/content/
-
 ## Use cases
 
 You can use Structure for a lot of different cases, including:
@@ -76,6 +74,6 @@ Be aware that not the whole test suite will pass on browsers, there are some cas
 
 Right now 95.5% of the tests will pass on Chrome 55, and 95% will pass on Firefox 45. We intend to make it support older versions using polyfills in the next releases.
 
-## [Contributing](contributing.md)
+## [Contributing](/contributing.md)
 
-## [LICENSE](license.md)
+## [LICENSE](/license.md)
