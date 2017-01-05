@@ -1,9 +1,13 @@
 {
   "name": "structure",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple schema/attributes library built on top of modern JavaScript",
   "main": "src/index.js",
   "browser": "dist/structure.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "engines": {
     "node": ">=6"
   },
