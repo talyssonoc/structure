@@ -1,6 +1,6 @@
 module.exports = [
-  require('./instantiation.benchmark'),
-  require('./nestedInstantiation.benchmark'),
-  require('./updating.benchmark'),
-  require('./validation.benchmark'),
+  require('./coercion.bm'),
+  require('./instantiation.bm'),
+  require('./updating.bm'),
+  require('./validation.bm')
 ];

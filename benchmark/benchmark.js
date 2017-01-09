@@ -10,17 +10,17 @@ suites.forEach((suiteData) => {
 
   suite
     .on('start', function() {
-      /* eslint no-console: "off" */
+      // eslint-disable-next-line no-console
       console.log(`# ${this.name}:`);
     })
 
     .on('cycle', (event) => {
-      /* eslint no-console: "off" */
+      // eslint-disable-next-line no-console
       console.log(String(event.target));
     })
 
     .on('complete', () => {
-      /* eslint no-console: "off" */
+      // eslint-disable-next-line no-console
       console.log('\n=========\n');
     })
 

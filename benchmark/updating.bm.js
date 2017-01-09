@@ -1,15 +1,20 @@
 const { attributes } = require('../src');
 
+const Book = attributes({
+  name: String
+})(class Book { });
+
 const User = attributes({
   name: String,
-  age: Number
+  age: Number,
+  favoriteBook: Book
 })(class User {});
 
 exports.name = 'Updating';
 
 exports.cases = [
   {
-    name: 'without coercion',
+    name: 'Updating without coercion',
     fn() {
       const user = new User();
 
@@ -18,7 +23,7 @@ exports.cases = [
     }
   },
   {
-    name: 'with coercion',
+    name: 'Updating with simple coercion',
     fn() {
       const user = new User();
 
@@ -27,7 +32,7 @@ exports.cases = [
     }
   },
   {
-    name: 'assign to attributes without coercion',
+    name: 'Updating assigning to attributes without coercion',
     fn() {
       const user = new User();
 
@@ -38,7 +43,7 @@ exports.cases = [
     }
   },
   {
-    name: 'assign to attributes with coercion',
+    name: 'Updating assigning to attributes with coercion',
     fn() {
       const user = new User();
 
@@ -46,6 +51,14 @@ exports.cases = [
         name: 1337,
         age: '50'
       };
+    }
+  },
+  {
+    name: 'Updating with nested coercion',
+    fn() {
+      const user = new User();
+
+      user.favoriteBook = { name: 'The Silmarillion' };
     }
   }
 ];
