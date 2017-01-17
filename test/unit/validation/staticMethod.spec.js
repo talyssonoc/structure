@@ -4,8 +4,16 @@ const { expect } = require('chai');
 describe('validation', () => {
   describe('Using structure static method', () => {
     var User;
+    var Book;
 
     before(() => {
+      Book = attributes({
+        name: {
+          type: String,
+          required: true
+        }
+      })(class Book { });
+
       User = attributes({
         name: {
           type: String,
@@ -14,7 +22,8 @@ describe('validation', () => {
         age: {
           type: Number,
           min: 21
-        }
+        },
+        favoriteBook: Book
       })(class User { });
     });
 
@@ -41,6 +50,38 @@ describe('validation', () => {
         expect(errors).to.have.lengthOf(2);
         expect(errors[0].path).to.equal('name');
         expect(errors[1].path).to.equal('age');
+      });
+    });
+
+    context('when there is nested validation', () => {
+      context('when data is invalid', () => {
+        it('returns valid as false and an array of errors', () => {
+          const { valid, errors } = User.validate({
+            name: 'some name',
+            age: 25,
+            favoriteBook: {}
+          });
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('favoriteBook.name');
+        });
+      });
+
+      context('when data is valid', () => {
+        it('returns valid as true and no errors', () => {
+          const { valid, errors } = User.validate({
+            name: 'some name',
+            age: 25,
+            favoriteBook: {
+              name: 'The Lord of the Rings'
+            }
+          });
+
+          expect(valid).to.be.trye;
+          expect(errors).to.be.undefined;
+        });
       });
     });
 
