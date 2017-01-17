@@ -1,5 +1,7 @@
 const joi = require('joi');
 
+const { SCHEMA, VALIDATE } = require('../symbols');
+
 const validations = [
   require('./string'),
   require('./number'),
@@ -10,7 +12,7 @@ const validations = [
 const nestedValidation = require('./nested');
 const arrayValidation = require('./array');
 
-function validationForAttribute(typeDescriptor) {
+exports.validationForAttribute = function validationForAttribute(typeDescriptor) {
   if(typeDescriptor.itemType !== undefined) {
     return arrayValidation(typeDescriptor, typeDescriptor.itemType);
   }
@@ -22,7 +24,7 @@ function validationForAttribute(typeDescriptor) {
   }
 
   return validation.createJoiSchema(typeDescriptor);
-}
+};
 
 const mapDetail = ({ message, path }) => ({ message, path });
 
@@ -32,7 +34,7 @@ const validatorOptions = {
   allowUnknown: false
 };
 
-function validationForSchema(schema) {
+exports.validationForSchema = function validationForSchema(schema) {
   const schemaValidation = {};
 
   Object.keys(schema).forEach((attributeName) => {
@@ -54,7 +56,38 @@ function validationForSchema(schema) {
       return validationErrors;
     }
   };
-}
+};
 
-exports.validationForAttribute = validationForAttribute;
-exports.validationForSchema = validationForSchema;
+exports.validationDescriptor = {
+  value: function validate() {
+    const validation = this[SCHEMA][VALIDATE];
+    const serializedStructure = this.toJSON();
+
+    return validateData(validation, serializedStructure);
+  }
+};
+
+exports.staticValidationDescriptor = {
+  value: function validate(data) {
+    if(data[SCHEMA]) {
+      data = data.toJSON();
+    }
+
+    const validation = this[SCHEMA][VALIDATE];
+
+    return validateData(validation, data);
+  }
+};
+
+function validateData(validation, data) {
+  const errors = validation.validate(data);
+
+  if(errors) {
+    return {
+      valid: false,
+      errors
+    };
+  }
+
+  return { valid: true };
+}

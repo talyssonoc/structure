@@ -1,4 +1,4 @@
-const { SCHEMA, ATTRIBUTES, VALIDATE } = require('./symbols');
+const { SCHEMA, ATTRIBUTES } = require('./symbols');
 const { NON_OBJECT_ATTRIBUTES } = require('./errorMessages');
 const { serialize } = require('./serialization');
 
@@ -27,24 +27,6 @@ exports.attributesDescriptor = {
       configurable: true,
       value: attributes
     });
-  }
-};
-
-exports.validationDescriptor = {
-  value: function validate() {
-    const validation = this[SCHEMA][VALIDATE];
-    const serializedStructure = this.toJSON();
-
-    const errors = validation.validate(serializedStructure);
-
-    if(errors) {
-      return {
-        valid: false,
-        errors
-      };
-    }
-
-    return { valid: true };
   }
 };
 

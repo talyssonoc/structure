@@ -3,9 +3,13 @@ const { getInitialValues } = require('./initialValueCreation');
 const { SCHEMA } = require('./symbols');
 const {
   attributesDescriptor,
-  validationDescriptor,
   serializationDescriptor
 } = require('./propertyDescriptors');
+
+const {
+  validationDescriptor,
+  staticValidationDescriptor
+} = require('./validation');
 
 const define = Object.defineProperty;
 
@@ -39,6 +43,8 @@ function attributesDecorator(declaredSchema) {
     define(WrapperClass, SCHEMA, {
       value: declaredSchema
     });
+
+    define(WrapperClass, 'validate', staticValidationDescriptor);
 
     define(WrapperClass.prototype, SCHEMA, {
       value: declaredSchema
