@@ -79,13 +79,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _require2 = __webpack_require__(22),
 	    getInitialValues = _require2.getInitialValues;
 
-	var _require3 = __webpack_require__(20),
+	var _require3 = __webpack_require__(14),
 	    SCHEMA = _require3.SCHEMA;
 
 	var _require4 = __webpack_require__(23),
 	    attributesDescriptor = _require4.attributesDescriptor,
-	    validationDescriptor = _require4.validationDescriptor,
 	    serializationDescriptor = _require4.serializationDescriptor;
+
+	var _require5 = __webpack_require__(12),
+	    validationDescriptor = _require5.validationDescriptor,
+	    staticValidationDescriptor = _require5.staticValidationDescriptor;
 
 	var define = Object.defineProperty;
 
@@ -119,6 +122,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    define(WrapperClass, SCHEMA, {
 	      value: declaredSchema
 	    });
+
+	    define(WrapperClass, 'validate', staticValidationDescriptor);
 
 	    define(WrapperClass.prototype, SCHEMA, {
 	      value: declaredSchema
@@ -163,7 +168,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    validationForAttribute = _require2.validationForAttribute,
 	    validationForSchema = _require2.validationForSchema;
 
-	var _require3 = __webpack_require__(20),
+	var _require3 = __webpack_require__(14),
 	    VALIDATE = _require3.VALIDATE;
 
 	function normalizeAttribute(attribute, attributeName) {
@@ -391,12 +396,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var joi = __webpack_require__(13);
 
-	var validations = [__webpack_require__(14), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18)];
+	var _require = __webpack_require__(14),
+	    SCHEMA = _require.SCHEMA,
+	    VALIDATE = _require.VALIDATE;
 
-	var nestedValidation = __webpack_require__(19);
+	var validations = [__webpack_require__(15), __webpack_require__(17), __webpack_require__(18), __webpack_require__(19)];
+
+	var nestedValidation = __webpack_require__(20);
 	var arrayValidation = __webpack_require__(21);
 
-	function validationForAttribute(typeDescriptor) {
+	exports.validationForAttribute = function validationForAttribute(typeDescriptor) {
 	  if (typeDescriptor.itemType !== undefined) {
 	    return arrayValidation(typeDescriptor, typeDescriptor.itemType);
 	  }
@@ -410,7 +419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  return validation.createJoiSchema(typeDescriptor);
-	}
+	};
 
 	var mapDetail = function mapDetail(_ref) {
 	  var message = _ref.message,
@@ -424,7 +433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  allowUnknown: false
 	};
 
-	function validationForSchema(schema) {
+	exports.validationForSchema = function validationForSchema(schema) {
 	  var schemaValidation = {};
 
 	  Object.keys(schema).forEach(function (attributeName) {
@@ -447,10 +456,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return validationErrors;
 	    }
 	  };
-	}
+	};
 
-	exports.validationForAttribute = validationForAttribute;
-	exports.validationForSchema = validationForSchema;
+	exports.validationDescriptor = {
+	  value: function validate() {
+	    var validation = this[SCHEMA][VALIDATE];
+	    var serializedStructure = this.toJSON();
+
+	    return validateData(validation, serializedStructure);
+	  }
+	};
+
+	exports.staticValidationDescriptor = {
+	  value: function validate(data) {
+	    if (data[SCHEMA]) {
+	      data = data.toJSON();
+	    }
+
+	    var validation = this[SCHEMA][VALIDATE];
+
+	    return validateData(validation, data);
+	  }
+	};
+
+	function validateData(validation, data) {
+	  var errors = validation.validate(data);
+
+	  if (errors) {
+	    return {
+	      valid: false,
+	      errors: errors
+	    };
+	  }
+
+	  return { valid: true };
+	}
 
 /***/ },
 /* 13 */
@@ -460,13 +500,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  SCHEMA: Symbol('schema'),
+	  ATTRIBUTES: Symbol('attributes'),
+	  VALIDATE: Symbol('validate')
+	};
+
+/***/ },
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(15),
+	var _require = __webpack_require__(16),
 	    mapToJoi = _require.mapToJoi,
 	    equalOption = _require.equalOption;
 
@@ -487,7 +539,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -569,14 +621,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(15),
+	var _require = __webpack_require__(16),
 	    mapToJoi = _require.mapToJoi,
 	    mapToJoiWithReference = _require.mapToJoiWithReference,
 	    equalOption = _require.equalOption;
@@ -598,14 +650,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(15),
+	var _require = __webpack_require__(16),
 	    mapToJoi = _require.mapToJoi,
 	    equalOption = _require.equalOption;
 
@@ -622,14 +674,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(15),
+	var _require = __webpack_require__(16),
 	    mapToJoi = _require.mapToJoi,
 	    mapToJoiWithReference = _require.mapToJoiWithReference,
 	    equalOption = _require.equalOption;
@@ -651,14 +703,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(20),
+	var _require = __webpack_require__(14),
 	    SCHEMA = _require.SCHEMA;
 
 	module.exports = function nestedValidation(typeDescriptor) {
@@ -683,18 +735,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = {
-	  SCHEMA: Symbol('schema'),
-	  ATTRIBUTES: Symbol('attributes'),
-	  VALIDATE: Symbol('validate')
-	};
-
-/***/ },
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -702,7 +742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var joi = __webpack_require__(13);
 
-	var _require = __webpack_require__(15),
+	var _require = __webpack_require__(16),
 	    mapToJoi = _require.mapToJoi;
 
 	var joiMappings = [['required', 'required'], ['minLength', 'min', true], ['maxLength', 'max', true], ['exactLength', 'length', true]];
@@ -750,10 +790,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _require = __webpack_require__(20),
+	var _require = __webpack_require__(14),
 	    SCHEMA = _require.SCHEMA,
-	    ATTRIBUTES = _require.ATTRIBUTES,
-	    VALIDATE = _require.VALIDATE;
+	    ATTRIBUTES = _require.ATTRIBUTES;
 
 	var _require2 = __webpack_require__(6),
 	    NON_OBJECT_ATTRIBUTES = _require2.NON_OBJECT_ATTRIBUTES;
@@ -790,24 +829,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	exports.validationDescriptor = {
-	  value: function validate() {
-	    var validation = this[SCHEMA][VALIDATE];
-	    var serializedStructure = this.toJSON();
-
-	    var errors = validation.validate(serializedStructure);
-
-	    if (errors) {
-	      return {
-	        valid: false,
-	        errors: errors
-	      };
-	    }
-
-	    return { valid: true };
-	  }
-	};
-
 	exports.serializationDescriptor = {
 	  value: function toJSON() {
 	    return serialize(this);
@@ -820,7 +841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _require = __webpack_require__(20),
+	var _require = __webpack_require__(14),
 	    SCHEMA = _require.SCHEMA;
 
 	function serialize(structure) {
