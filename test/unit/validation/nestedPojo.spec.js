@@ -4,13 +4,18 @@ const { assertValid, assertInvalid } = require('../../support/validationMatchers
 describe('validation', () => {
   describe('Nested with POJO class', () => {
     describe('no validation', () => {
-      class Location {}
+      var Location;
+      var User;
 
-      const User = attributes({
-        lastLocation: {
-          type: Location
-        }
-      })(class User {});
+      beforeEach(() => {
+        Location = class Location {}
+
+        User = attributes({
+          lastLocation: {
+            type: Location
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -34,14 +39,19 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      class Location {}
+      var Location;
+      var User;
 
-      const User = attributes({
-        lastLocation: {
-          type: Location,
-          required: true
-        }
-      })(class User {});
+      beforeEach(() => {
+        Location = class Location {}
+
+        User = attributes({
+          lastLocation: {
+            type: Location,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {

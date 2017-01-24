@@ -2,9 +2,13 @@ const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
-  const User = attributes({
-    name: String
-  })(class User {});
+  var User;
+
+  beforeEach(() => {
+    User = attributes({
+      name: String
+    })(class User {});
+  });
 
   it('coerces when assigning value', () => {
     const user = new User();

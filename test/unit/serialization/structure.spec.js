@@ -3,10 +3,14 @@ const { attributes } = require('../../../src');
 
 describe('serialization', () => {
   describe('Structure', () => {
-    const User = attributes({
-      name: String,
-      age: Number
-    })(class User {});
+    var User;
+
+    beforeEach(() => {
+      User = attributes({
+        name: String,
+        age: Number
+      })(class User {});
+    });
 
     context('when all data is present', () => {
       it('include all data defined on schema', () => {

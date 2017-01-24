@@ -3,9 +3,13 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('String', () => {
-    const User = attributes({
-      name: String
-    })(class User {});
+    var User;
+
+    beforeEach(() => {
+      User = attributes({
+        name: String
+      })(class User {});
+    });
 
     it('does not coerce if value is already a string', () => {
       const name = new String('Some name');

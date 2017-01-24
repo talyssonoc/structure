@@ -3,9 +3,13 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Boolean', () => {
-    const User = attributes({
-      isAdmin: Boolean
-    })(class User {});
+    var User;
+
+    beforeEach(() => {
+      User = attributes({
+        isAdmin: Boolean
+      })(class User {});
+    });
 
     it('does not coerces undefined', () => {
       const user = new User({

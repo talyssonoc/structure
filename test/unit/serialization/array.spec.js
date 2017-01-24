@@ -3,17 +3,22 @@ const { attributes } = require('../../../src');
 
 describe('serialization', () => {
   describe('Array', () => {
-    const Book = attributes({
-      name: String
-    })(class Book {});
+    var Book;
+    var User;
 
-    const User = attributes({
-      name: String,
-      books: {
-        type: Array,
-        itemType: Book
-      }
-    })(class User {});
+    beforeEach(() => {
+      Book = attributes({
+        name: String
+      })(class Book {});
+
+      User = attributes({
+        name: String,
+        books: {
+          type: Array,
+          itemType: Book
+        }
+      })(class User {});
+    });
 
     context('when all data is present', () => {
       it('include all data defined on schema', () => {

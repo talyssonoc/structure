@@ -27,17 +27,21 @@ describe('creating an structure class', () => {
 
 
   describe('using class static methods and properties', () => {
-    class RawUser {
-      static staticMethod() {
-        return 'I am on a static method';
+    var User;
+
+    beforeEach(() => {
+      class RawUser {
+        static staticMethod() {
+          return 'I am on a static method';
+        }
       }
-    }
 
-    RawUser.staticProperty = 'I am a static property';
+      RawUser.staticProperty = 'I am a static property';
 
-    const User = attributes({
-      name: String
-    })(RawUser);
+      User = attributes({
+        name: String
+      })(RawUser);
+    });
 
     it('has access to static methods and properties', () => {
       expect(User.staticMethod()).to.equal('I am on a static method');
@@ -47,9 +51,13 @@ describe('creating an structure class', () => {
 
   describe('using default values for attributes', () => {
     context('when the provided default value is a function', () => {
-      const User = attributes({
-        age: { type: Number, default: () => 18 }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: { type: Number, default: () => 18 }
+        })(class User {});
+      });
 
       it('defines the attribute with the default value executing the function', () => {
         const user = new User();
@@ -59,9 +67,13 @@ describe('creating an structure class', () => {
     });
 
     context('when the provided default value is a property', () => {
-      const User = attributes({
-        age: { type: Number, default: 18 }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: { type: Number, default: 18 }
+        })(class User {});
+      });
 
       it('defines the attribute with the default value of the property', () => {
         const user = new User();
