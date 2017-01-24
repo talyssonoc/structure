@@ -3,9 +3,13 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Number', () => {
-    const User = attributes({
-      age: Number
-    })(class User {});
+    var User;
+
+    beforeEach(() => {
+      User = attributes({
+        age: Number
+      })(class User {});
+    });
 
     it('does not coerce if value is already a number', () => {
       const age = new Number(42);

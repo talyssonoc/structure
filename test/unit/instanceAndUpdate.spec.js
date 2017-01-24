@@ -2,16 +2,20 @@ const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('instantiating an structure', () => {
-  const User = attributes({
-    name: String
-  })(class User {
-    constructor() {
-      this.userInstanceStuff = 'Stuff value';
-    }
+  var User;
 
-    userMethod() {
-      return 'I am a user';
-    }
+  beforeEach(() => {
+    User = attributes({
+      name: String
+    })(class User {
+      constructor() {
+        this.userInstanceStuff = 'Stuff value';
+      }
+
+      userMethod() {
+        return 'I am a user';
+      }
+    });
   });
 
   it('has access to instance methods', () => {
@@ -58,10 +62,14 @@ describe('instantiating an structure', () => {
 });
 
 describe('updating an instance', () => {
-  const User = attributes({
-    name: String
-  })(class User {
+  var User;
 
+  beforeEach(() => {
+    User = attributes({
+      name: String
+    })(class User {
+
+    });
   });
 
   it('updates instance attribute value when assigned a new value', () => {

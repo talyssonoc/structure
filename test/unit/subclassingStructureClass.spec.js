@@ -2,29 +2,34 @@ const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('subclassing an structure with a POJO class', () => {
-  const User = attributes({
-    name: String
-  })(class User {
-    constructor(attrs, userValue) {
-      this.userValue = userValue;
-      this.userStuff = 'User Stuff';
-    }
+  var User;
+  var Admin;
 
-    userMethod() {
-      return 'I am a user';
-    }
+  beforeEach(() => {
+    User = attributes({
+      name: String
+    })(class User {
+      constructor(attrs, userValue) {
+        this.userValue = userValue;
+        this.userStuff = 'User Stuff';
+      }
+
+      userMethod() {
+        return 'I am a user';
+      }
+    });
+
+    Admin = class Admin extends User {
+      constructor(attrs, userValue, otherValue) {
+        super(attrs, userValue);
+        this.adminValue = otherValue;
+      }
+
+      adminMethod() {
+        return 'I am an admin';
+      }
+    };
   });
-
-  class Admin extends User {
-    constructor(attrs, userValue, otherValue) {
-      super(attrs, userValue);
-      this.adminValue = otherValue;
-    }
-
-    adminMethod() {
-      return 'I am an admin';
-    }
-  }
 
   describe('instantiating an structure subclass', () => {
     it('is instance of class and superclass', () => {
@@ -115,25 +120,29 @@ describe('subclassing an structure with a POJO class', () => {
   });
 
   describe('using subclass static methods and properties', () => {
-    class RawUser {
-      static staticMethod() {
-        return 'I am on a static method';
+    var AdminStructure;
+
+    beforeEach(() => {
+      class RawUser {
+        static staticMethod() {
+          return 'I am on a static method';
+        }
       }
-    }
 
-    RawUser.staticProperty = 'I am a static property';
+      RawUser.staticProperty = 'I am a static property';
 
-    const UserStructure = attributes({
-      name: String
-    })(RawUser);
+      const UserStructure = attributes({
+        name: String
+      })(RawUser);
 
-    class AdminStructure extends UserStructure {
-      static staticAdminMethod() {
-        return 'I am also on a static method';
-      }
-    }
+      AdminStructure = class AdminStructure extends UserStructure {
+        static staticAdminMethod() {
+          return 'I am also on a static method';
+        }
+      };
 
-    AdminStructure.staticAdminProperty = 'I am also a static property';
+      AdminStructure.staticAdminProperty = 'I am also a static property';
+    });
 
     it('has access to static methods and properties', () => {
       expect(AdminStructure.staticMethod()).to.equal('I am on a static method');
@@ -145,13 +154,18 @@ describe('subclassing an structure with a POJO class', () => {
 });
 
 describe('subclassing an structure with another structure', () => {
-  const User = attributes({
-    name: String
-  })(class User {});
+  var Admin;
+  var User;
 
-  const Admin = attributes({
-    level: Number
-  })(class Admin extends User {});
+  beforeEach(() => {
+    User = attributes({
+      name: String
+    })(class User {});
+
+    Admin = attributes({
+      level: Number
+    })(class Admin extends User {});
+  });
 
   it('uses the extended schema', () => {
     const admin = new Admin({

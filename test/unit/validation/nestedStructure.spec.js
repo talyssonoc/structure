@@ -4,20 +4,25 @@ const { assertValid, assertInvalid } = require('../../support/validationMatchers
 describe('validation', () => {
   describe('Nested with structure class', () => {
     describe('no validation', () => {
-      const Location = attributes({
-        x: {
-          type: Number
-        },
-        y: {
-          type: Number
-        }
-      })(class Location {});
+      var Location;
+      var User;
 
-      const User = attributes({
-        lastLocation: {
-          type: Location
-        }
-      })(class User {});
+      beforeEach(() => {
+        Location = attributes({
+          x: {
+            type: Number
+          },
+          y: {
+            type: Number
+          }
+        })(class Location {});
+
+        User = attributes({
+          lastLocation: {
+            type: Location
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -41,21 +46,26 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      const Location = attributes({
-        x: {
-          type: Number
-        },
-        y: {
-          type: Number
-        }
-      })(class Location {});
+      var Location;
+      var User;
 
-      const User = attributes({
-        lastLocation: {
-          type: Location,
-          required: true
-        }
-      })(class User {});
+      beforeEach(() => {
+        Location = attributes({
+          x: {
+            type: Number
+          },
+          y: {
+            type: Number
+          }
+        })(class Location {});
+
+        User = attributes({
+          lastLocation: {
+            type: Location,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -79,23 +89,28 @@ describe('validation', () => {
     });
 
     describe('nested required', () => {
-      const Location = attributes({
-        x: {
-          type: Number,
-          required: true
-        },
-        y: {
-          type: Number,
-          required: true
-        }
-      })(class Location {});
+      var Location;
+      var User;
 
-      const User = attributes({
-        lastLocation: {
-          type: Location,
-          required: true
-        }
-      })(class User {});
+      beforeEach(() => {
+        Location = attributes({
+          x: {
+            type: Number,
+            required: true
+          },
+          y: {
+            type: Number,
+            required: true
+          }
+        })(class Location {});
+
+        User = attributes({
+          lastLocation: {
+            type: Location,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when nested value is present', () => {
         it('is valid', () => {

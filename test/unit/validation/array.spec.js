@@ -4,12 +4,16 @@ const { assertValid, assertInvalid } = require('../../support/validationMatchers
 describe('validation', () => {
   describe('Array', () => {
     describe('no validation', () => {
-      const User = attributes({
-        books: {
-          type: Array,
-          itemType: String
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: String
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -33,13 +37,17 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      const User = attributes({
-        books: {
-          type: Array,
-          itemType: String,
-          required: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: String,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -64,13 +72,17 @@ describe('validation', () => {
 
     describe('sparse array', () => {
       context('when array can not be sparse', () => {
-        const User = attributes({
-          books: {
-            type: Array,
-            itemType: String,
-            sparse: false
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            books: {
+              type: Array,
+              itemType: String,
+              sparse: false
+            }
+          })(class User {});
+        });
 
         context('when all items are defined', () => {
           it('is valid', () => {
@@ -94,13 +106,17 @@ describe('validation', () => {
       });
 
       context('when array can be sparse', () => {
-        const User = attributes({
-          books: {
-            type: Array,
-            itemType: String,
-            sparse: true
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            books: {
+              type: Array,
+              itemType: String,
+              sparse: true
+            }
+          })(class User {});
+        });
 
         context('when all items are defined', () => {
           it('is valid', () => {
@@ -125,20 +141,25 @@ describe('validation', () => {
     });
 
     describe('nested validation', () => {
-      const Book = attributes({
-        name: {
-          type: String,
-          required: true
-        }
-      })(class Book {});
+      var Book;
+      var User;
 
-      const User = attributes({
-        books: {
-          type: Array,
-          itemType: Book,
-          required: true
-        }
-      })(class User {});
+      beforeEach(() => {
+        Book = attributes({
+          name: {
+            type: String,
+            required: true
+          }
+        })(class Book {});
+
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: Book,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when nested value is present', () => {
         it('is valid', () => {
@@ -168,13 +189,17 @@ describe('validation', () => {
     });
 
     describe('minLength', () => {
-      const User = attributes({
-        books: {
-          type: Array,
-          itemType: String,
-          minLength: 2
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: String,
+            minLength: 2
+          }
+        })(class User {});
+      });
 
       context('when array has minimum length', () => {
         it('is valid', () => {
@@ -203,13 +228,17 @@ describe('validation', () => {
     });
 
     describe('maxLength', () => {
-      const User = attributes({
-        books: {
-          type: Array,
-          itemType: String,
-          maxLength: 2
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: String,
+            maxLength: 2
+          }
+        })(class User {});
+      });
 
       context('when array has less than maximum length', () => {
         it('is valid', () => {
@@ -239,13 +268,17 @@ describe('validation', () => {
     });
 
     describe('exactLength', () => {
-      const User = attributes({
-        books: {
-          type: Array,
-          itemType: String,
-          exactLength: 2
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: String,
+            exactLength: 2
+          }
+        })(class User {});
+      });
 
       context('when array has exactly the expected length', () => {
         it('is valid', () => {

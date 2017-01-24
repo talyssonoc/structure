@@ -4,11 +4,15 @@ const { assertValid, assertInvalid } = require('../../support/validationMatchers
 describe('validation', () => {
   describe('Number', () => {
     describe('no validation', () => {
-      const User = attributes({
-        age: {
-          type: Number
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -32,12 +36,16 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          required: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -62,12 +70,16 @@ describe('validation', () => {
 
     describe('equal', () => {
       describe('when using a value', () => {
-        const User = attributes({
-          age: {
-            type: Number,
-            equal: 2
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            age: {
+              type: Number,
+              equal: 2
+            }
+          })(class User {});
+        });
 
         context('when value is equal', () => {
           it('is valid', () => {
@@ -91,15 +103,19 @@ describe('validation', () => {
       });
 
       describe('when using a mixed array os possibilities', () => {
-        const User = attributes({
-          startAge: {
-            type: Number
-          },
-          currentAge: {
-            type: Number,
-            equal: [{ attr: 'startAge' }, 3]
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            startAge: {
+              type: Number
+            },
+            currentAge: {
+              type: Number,
+              equal: [{ attr: 'startAge' }, 3]
+            }
+          })(class User {});
+        });
 
         context('when value is equal to referenced attribute', () => {
           it('is valid', () => {
@@ -136,15 +152,19 @@ describe('validation', () => {
       });
 
       describe('when using a reference', () => {
-        const User = attributes({
-          startAge: {
-            type: Number
-          },
-          currentAge: {
-            type: Number,
-            equal: { attr: 'startAge' }
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            startAge: {
+              type: Number
+            },
+            currentAge: {
+              type: Number,
+              equal: { attr: 'startAge' }
+            }
+          })(class User {});
+        });
 
         context('when value is equal to referenced attribute', () => {
           it('is valid', () => {
@@ -172,12 +192,16 @@ describe('validation', () => {
 
     describe('min', () => {
       describe('when using a number', () => {
-        const User = attributes({
-          age: {
-            type: Number,
-            min: 2
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            age: {
+              type: Number,
+              min: 2
+            }
+          })(class User {});
+        });
 
         context('when value is equal to min', () => {
           it('is valid', () => {
@@ -211,15 +235,19 @@ describe('validation', () => {
       });
 
       describe('when using a reference to another attribute', () => {
-        const User = attributes({
-          startAge: {
-            type: Number
-          },
-          currentAge: {
-            type: Number,
-            min: { attr: 'startAge' }
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            startAge: {
+              type: Number
+            },
+            currentAge: {
+              type: Number,
+              min: { attr: 'startAge' }
+            }
+          })(class User {});
+        });
 
         context('when value is equal to referenced attribute', () => {
           it('is valid', () => {
@@ -257,12 +285,16 @@ describe('validation', () => {
     });
 
     describe('greater', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          greater: 2
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            greater: 2
+          }
+        })(class User {});
+      });
 
       context('when value is equal to greater', () => {
         it('is not valid and has errors set', () => {
@@ -296,12 +328,16 @@ describe('validation', () => {
     });
 
     describe('max', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          max: 2
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            max: 2
+          }
+        })(class User {});
+      });
 
       context('when value is equal to max', () => {
         it('is valid', () => {
@@ -335,12 +371,16 @@ describe('validation', () => {
     });
 
     describe('less', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          less: 2
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            less: 2
+          }
+        })(class User {});
+      });
 
       context('when value is equal to less', () => {
         it('is not valid and has errors set', () => {
@@ -374,12 +414,16 @@ describe('validation', () => {
     });
 
     describe('integer', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          integer: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            integer: true
+          }
+        })(class User {});
+      });
 
       context('when value is an integer', () => {
         it('is valid', () => {
@@ -403,12 +447,16 @@ describe('validation', () => {
     });
 
     describe('precision', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          precision: 2
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            precision: 2
+          }
+        })(class User {});
+      });
 
       context('when value has less than precision decimal places', () => {
         it('is valid', () => {
@@ -432,12 +480,16 @@ describe('validation', () => {
     });
 
     describe('multiple', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          multiple: 3
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            multiple: 3
+          }
+        })(class User {});
+      });
 
       context('when value is multiple of given value', () => {
         it('is valid', () => {
@@ -461,12 +513,16 @@ describe('validation', () => {
     });
 
     describe('positive', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          positive: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            positive: true
+          }
+        })(class User {});
+      });
 
       context('when value is positive', () => {
         it('is valid', () => {
@@ -500,12 +556,16 @@ describe('validation', () => {
     });
 
     describe('negative', () => {
-      const User = attributes({
-        age: {
-          type: Number,
-          negative: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: {
+            type: Number,
+            negative: true
+          }
+        })(class User {});
+      });
 
       context('when value is negative', () => {
         it('is valid', () => {

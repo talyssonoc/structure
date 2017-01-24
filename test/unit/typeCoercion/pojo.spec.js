@@ -3,16 +3,21 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('POJO class', () => {
-    class Location {
-      constructor({ x, y }) {
-        this.x = x;
-        this.y = y;
-      }
-    }
+    var User;
+    var Location;
 
-    const User = attributes({
-      location: Location
-    })(class User {});
+    beforeEach(() => {
+      Location = class Location {
+        constructor({ x, y }) {
+          this.x = x;
+          this.y = y;
+        }
+      }
+
+      User = attributes({
+        location: Location
+      })(class User {});
+    });
 
     it('does not coerce if raw value is an instance of class', () => {
       const location = new Location({ x: 1, y: 2});

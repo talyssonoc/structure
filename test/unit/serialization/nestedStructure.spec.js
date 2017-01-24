@@ -3,15 +3,20 @@ const { attributes } = require('../../../src');
 
 describe('serialization', () => {
   describe('Nested structure', () => {
-    const Location = attributes({
-      longitude: Number,
-      latitude: Number
-    })(class Location {});
+    var Location;
+    var User;
 
-    const User = attributes({
-      name: String,
-      location: Location
-    })(class User {});
+    beforeEach(() => {
+      Location = attributes({
+        longitude: Number,
+        latitude: Number
+      })(class Location {});
+
+      User = attributes({
+        name: String,
+        location: Location
+      })(class User {});
+    });
 
     context('when all data is present', () => {
       it('include all data defined on schema', () => {

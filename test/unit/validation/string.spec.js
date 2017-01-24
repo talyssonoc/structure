@@ -4,11 +4,15 @@ const { assertValid, assertInvalid } = require('../../support/validationMatchers
 describe('validation', () => {
   describe('String', () => {
     describe('no validation', () => {
-      const User = attributes({
-        name: {
-          type: String
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -32,12 +36,16 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          required: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -61,12 +69,16 @@ describe('validation', () => {
     });
 
     describe('equal', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          equal: 'Something'
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            equal: 'Something'
+          }
+        })(class User {});
+      });
 
       context('when value is equal', () => {
         it('is valid', () => {
@@ -91,12 +103,16 @@ describe('validation', () => {
 
     describe('empty', () => {
       describe('empty: true', () => {
-        const User = attributes({
-          name: {
-            type: String,
-            empty: true
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            name: {
+              type: String,
+              empty: true
+            }
+          })(class User {});
+        });
 
         context('when value is not empty', () => {
           it('is valid', () => {
@@ -120,12 +136,16 @@ describe('validation', () => {
       });
 
       describe('empty: false', () => {
-        const User = attributes({
-          name: {
-            type: String,
-            empty: false
-          }
-        })(class User {});
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            name: {
+              type: String,
+              empty: false
+            }
+          })(class User {});
+        });
 
         context('when value is not empty', () => {
           it('is valid', () => {
@@ -151,12 +171,16 @@ describe('validation', () => {
     });
 
     describe('minLength', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          minLength: 3
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            minLength: 3
+          }
+        })(class User {});
+      });
 
       context('when value has minimum length', () => {
         it('is valid', () => {
@@ -180,12 +204,16 @@ describe('validation', () => {
     });
 
     describe('maxLength', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          maxLength: 4
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            maxLength: 4
+          }
+        })(class User {});
+      });
 
       context('when value has maximum length', () => {
         it('is valid', () => {
@@ -209,12 +237,16 @@ describe('validation', () => {
     });
 
     describe('exactLength', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          exactLength: 4
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            exactLength: 4
+          }
+        })(class User {});
+      });
 
       context('when value has exact length', () => {
         it('is valid', () => {
@@ -248,12 +280,16 @@ describe('validation', () => {
     });
 
     describe('regex', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          regex: /\w\d/
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            regex: /\w\d/
+          }
+        })(class User {});
+      });
 
       context('when value matches the regex', () => {
         it('is valid', () => {
@@ -277,12 +313,16 @@ describe('validation', () => {
     });
 
     describe('alphanumeric', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          alphanumeric: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            alphanumeric: true
+          }
+        })(class User {});
+      });
 
       context('when value is alphanumeric', () => {
         it('is valid', () => {
@@ -306,12 +346,16 @@ describe('validation', () => {
     });
 
     describe('lowerCase', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          lowerCase: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            lowerCase: true
+          }
+        })(class User {});
+      });
 
       context('when value is lower cased', () => {
         it('is valid', () => {
@@ -335,12 +379,16 @@ describe('validation', () => {
     });
 
     describe('upperCase', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          upperCase: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            upperCase: true
+          }
+        })(class User {});
+      });
 
       context('when value is upper cased', () => {
         it('is valid', () => {
@@ -364,12 +412,16 @@ describe('validation', () => {
     });
 
     describe('email', () => {
-      const User = attributes({
-        name: {
-          type: String,
-          email: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            email: true
+          }
+        })(class User {});
+      });
 
       context('when value is a valid email', () => {
         it('is valid', () => {

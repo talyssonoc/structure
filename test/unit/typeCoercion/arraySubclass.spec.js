@@ -3,14 +3,19 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Array subclass', () => {
-    class Collection extends Array {}
+    var Collection;
+    var User;
 
-    const User = attributes({
-      books: {
-        type: Collection,
-        itemType: String
-      }
-    })(class User {});
+    beforeEach(() => {
+      Collection = class Collection extends Array {}
+
+      User = attributes({
+        books: {
+          type: Collection,
+          itemType: String
+        }
+      })(class User {});
+    });
 
     it('does not coerces undefined', () => {
       const user = new User({

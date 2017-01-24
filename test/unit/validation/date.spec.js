@@ -4,11 +4,15 @@ const { assertValid, assertInvalid } = require('../../support/validationMatchers
 describe('validation', () => {
   describe('Date', () => {
     describe('no validation', () => {
-      const User = attributes({
-        birth: {
-          type: Date
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          birth: {
+            type: Date
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -32,12 +36,16 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      const User = attributes({
-        birth: {
-          type: Date,
-          required: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          birth: {
+            type: Date,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -61,14 +69,19 @@ describe('validation', () => {
     });
 
     describe('equal', () => {
-      const now = new Date();
+      var now;
+      var User;
 
-      const User = attributes({
-        birth: {
-          type: Date,
-          equal: now
-        }
-      })(class User {});
+      beforeEach(() => {
+        now = new Date();
+
+        User = attributes({
+          birth: {
+            type: Date,
+            equal: now
+          }
+        })(class User {});
+      });
 
       context('when value is equal', () => {
         it('is valid', () => {
@@ -97,14 +110,21 @@ describe('validation', () => {
 
     describe('max', () => {
       describe('when using a value', () => {
-        const now = new Date();
+        var User;
+        var now;
 
-        const User = attributes({
-          birth: {
-            type: Date,
-            max: now
-          }
-        })(class User {});
+        before(() => {
+          now = new Date();
+        });
+
+        beforeEach(() => {
+          User = attributes({
+            birth: {
+              type: Date,
+              max: now
+            }
+          })(class User {});
+        });
 
         context('when date is before max', () => {
           it('is valid', () => {
@@ -132,17 +152,24 @@ describe('validation', () => {
       });
 
       describe('when using a reference', () => {
-        const now = new Date();
+        var now;
+        var User;
 
-        const User = attributes({
-          createdAt: {
-            type: Date,
-            max: { attr: 'updatedAt' }
-          },
-          updatedAt: {
-            type: Date
-          }
-        })(class User {});
+        before(() => {
+          now = new Date();
+        });
+
+        beforeEach(() => {
+          User = attributes({
+            createdAt: {
+              type: Date,
+              max: { attr: 'updatedAt' }
+            },
+            updatedAt: {
+              type: Date
+            }
+          })(class User {});
+        });
 
         context('when date is before max', () => {
           it('is valid', () => {
@@ -173,14 +200,18 @@ describe('validation', () => {
     });
 
     describe('min', () => {
-      const now = new Date();
+      var User;
 
-      const User = attributes({
-        birth: {
-          type: Date,
-          min: now
-        }
-      })(class User {});
+      beforeEach(() => {
+        const now = new Date();
+
+        User = attributes({
+          birth: {
+            type: Date,
+            min: now
+          }
+        })(class User {});
+      });
 
       context('when date is after min', () => {
         it('is valid', () => {

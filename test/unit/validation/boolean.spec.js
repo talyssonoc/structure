@@ -4,11 +4,15 @@ const { assertValid, assertInvalid } = require('../../support/validationMatchers
 describe('validation', () => {
   describe('Boolean', () => {
     describe('no validation', () => {
-      const User = attributes({
-        isAdmin: {
-          type: Boolean
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          isAdmin: {
+            type: Boolean
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -32,12 +36,16 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      const User = attributes({
-        isAdmin: {
-          type: Boolean,
-          required: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          isAdmin: {
+            type: Boolean,
+            required: true
+          }
+        })(class User {});
+      });
 
       context('when value is present', () => {
         it('is valid', () => {
@@ -61,12 +69,16 @@ describe('validation', () => {
     });
 
     describe('equal', () => {
-      const User = attributes({
-        isAdmin: {
-          type: Boolean,
-          equal: true
-        }
-      })(class User {});
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          isAdmin: {
+            type: Boolean,
+            equal: true
+          }
+        })(class User {});
+      });
 
       context('when value is equal', () => {
         it('is valid', () => {

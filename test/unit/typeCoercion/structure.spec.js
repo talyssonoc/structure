@@ -3,14 +3,19 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Structure class', () => {
-    const Location = attributes({
-      x: Number,
-      y: Number
-    })(class Location {});
+    var Location;
+    var User;
 
-    const User = attributes({
-      location: Location
-    })(class User {});
+    beforeEach(() => {
+      Location = attributes({
+        x: Number,
+        y: Number
+      })(class Location {});
+
+      User = attributes({
+        location: Location
+      })(class User {});
+    });
 
     it('does not coerce if raw value is an instance of class', () => {
       const location = new Location({ x: 1, y: 2});

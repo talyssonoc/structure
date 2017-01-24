@@ -3,12 +3,16 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Array', () => {
-    const User = attributes({
-      books: {
-        type: Array,
-        itemType: String
-      }
-    })(class User {});
+    var User;
+
+    beforeEach(() => {
+      User = attributes({
+        books: {
+          type: Array,
+          itemType: String
+        }
+      })(class User {});
+    });
 
     it('does not coerces undefined', () => {
       const user = new User({
