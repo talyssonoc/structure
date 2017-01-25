@@ -58,25 +58,30 @@ exports.validationForSchema = function validationForSchema(schema) {
   };
 };
 
-exports.validationDescriptor = {
-  value: function validate() {
-    const validation = this[SCHEMA][VALIDATE];
-    const serializedStructure = this.toJSON();
+exports.validationDescriptorForSchema = function validationDescriptorForSchema(schema) {
+  const validation = schema[VALIDATE];
 
-    return validateData(validation, serializedStructure);
-  }
+  return {
+    value: function validate() {
+      const serializedStructure = this.toJSON();
+
+      return validateData(validation, serializedStructure);
+    }
+  };
 };
 
-exports.staticValidationDescriptor = {
-  value: function validate(data) {
-    if(data[SCHEMA]) {
-      data = data.toJSON();
+exports.staticValidationDescriptorForSchema = function staticValidationDescriptorForSchema(schema) {
+  const validation = schema[VALIDATE];
+
+  return {
+    value: function validate(data) {
+      if(data[SCHEMA]) {
+        data = data.toJSON();
+      }
+
+      return validateData(validation, data);
     }
-
-    const validation = this[SCHEMA][VALIDATE];
-
-    return validateData(validation, data);
-  }
+  };
 };
 
 function validateData(validation, data) {

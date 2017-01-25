@@ -7,8 +7,8 @@ const {
 } = require('./propertyDescriptors');
 
 const {
-  validationDescriptor,
-  staticValidationDescriptor
+  validationDescriptorForSchema,
+  staticValidationDescriptorForSchema
 } = require('./validation');
 
 const define = Object.defineProperty;
@@ -44,7 +44,7 @@ function attributesDecorator(declaredSchema) {
       value: declaredSchema
     });
 
-    define(WrapperClass, 'validate', staticValidationDescriptor);
+    define(WrapperClass, 'validate', staticValidationDescriptorForSchema(declaredSchema));
 
     define(WrapperClass.prototype, SCHEMA, {
       value: declaredSchema
@@ -65,7 +65,7 @@ function attributesDecorator(declaredSchema) {
       });
     });
 
-    define(WrapperClass.prototype, 'validate', validationDescriptor);
+    define(WrapperClass.prototype, 'validate', validationDescriptorForSchema(declaredSchema));
 
     define(WrapperClass.prototype, 'toJSON', serializationDescriptor);
 
