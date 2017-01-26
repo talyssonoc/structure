@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { attributes } = require('../../src');
 
-describe('instantiating an structure', () => {
+describe('instantiating a structure', () => {
   var User;
 
   beforeEach(() => {
@@ -58,6 +58,38 @@ describe('instantiating an structure', () => {
 
     expect(user.name).to.equal('Self');
     expect(user.attributes.name).to.equal('Self');
+  });
+});
+
+describe.only('instantiating a structure with dynamic attribute types', () => {
+  var CircularUser;
+  var CircularBook;
+
+  beforeEach(() => {
+    CircularUser = require('../fixtures/CircularUser');
+    CircularBook = require('../fixtures/CircularBook');
+  });
+
+  it('creates instance properly', () => {
+    const userOne = new CircularUser({
+      name: 'Circular user one',
+      friends: [],
+      favoriteBook: new CircularBook({
+        name: 'Brave new world',
+        owner: new CircularUser()
+      })
+    });
+
+    const userTwo = new CircularUser({
+      name: 'Circular user two',
+      friends: [userOne]
+    });
+
+    expect(userOne).to.be.instanceOf(CircularUser);
+    expect(userOne.favoriteBook).to.be.instanceOf(CircularBook);
+    expect(userOne.favoriteBook.owner).to.be.instanceOf(CircularUser);
+    expect(userTwo).to.be.instanceOf(CircularUser);
+    expect(userTwo.friends[0]).to.be.instanceOf(CircularUser);
   });
 });
 
@@ -118,5 +150,33 @@ describe('updating an instance', () => {
     expect(() => {
       user.attributes = null;
     }).to.throw(TypeError, /^#attributes can't be set to a non-object\.$/);
+  });
+});
+
+describe.only('updating a structure with dynamic attribute types', () => {
+  var CircularUser;
+  var CircularBook;
+
+  beforeEach(() => {
+    CircularUser = require('../fixtures/CircularUser');
+    CircularBook = require('../fixtures/CircularBook');
+  });
+
+  it('updates instance attribute when assigned a new value', () => {
+    const user = new CircularUser({
+      favoriteBook: new CircularBook({
+        name: 'Brave new world',
+        owner: new CircularUser()
+      })
+    });
+
+    user.favoriteBook = new CircularBook({
+      name: '1984',
+      owner: user
+    });
+
+    expect(user.favoriteBook).to.be.instanceOf(CircularBook);
+    expect(user.favoriteBook.owner).to.be.instanceOf(CircularUser);
+    expect(user.favoriteBook.owner).to.equal(user);
   });
 });

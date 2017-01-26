@@ -133,4 +133,81 @@ describe('validation', () => {
       });
     });
   });
+
+  describe.only('Nested with structure class with dynamic attribute types', () => {
+    var CircularUser;
+    var CircularBook;
+
+    beforeEach(() => {
+      CircularUser = require('../../fixtures/CircularUser');
+      CircularBook = require('../../fixtures/CircularBook');
+    });
+
+    describe('no validation', () => {
+      context('when value is present', () => {
+        it('is valid', () => {
+          const user = new CircularUser({
+            friends: [],
+            favoriteBook: {}
+          });
+
+          assertValid(user);
+        });
+      });
+
+      context('when value is not present', () => {
+        it('is valid', () => {
+          const user = new CircularUser({
+            favoriteBook: {}
+          });
+
+          assertValid(user);
+        });
+      });
+    });
+
+    describe('required', () => {
+      context('when value is present', () => {
+        it('is valid', () => {
+          const user = new CircularUser({
+            favoriteBook: {}
+          });
+
+          assertValid(user);
+        });
+      });
+
+      context('when value is not present', () => {
+        it('is invalid', () => {
+          const user = new CircularUser();
+
+          assertInvalid(user, 'favoriteBook');
+        });
+      });
+    });
+
+    describe('nested required', () => {
+      context('when value is present', () => {
+        it('is valid', () => {
+          const book = new CircularBook({
+            owner: {
+              favoriteBook: new CircularBook()
+            }
+          });
+
+          assertValid(book);
+        });
+      });
+
+      context('when value is not present', () => {
+        it('is invalid', () => {
+          const book = new CircularBook({
+            owner: new CircularUser()
+          });
+
+          assertInvalid(book, 'favoriteBook');
+        });
+      });
+    });
+  });
 });

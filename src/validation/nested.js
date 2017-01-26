@@ -3,14 +3,17 @@ const { SCHEMA } = require('../symbols');
 
 module.exports = function nestedValidation(typeDescriptor) {
   var joiSchema = joi.object();
-  var typeSchema = typeDescriptor.type[SCHEMA];
 
-  if(typeSchema !== undefined) {
-    var nestedValidations = {};
+  if(typeDescriptor.dynamicType) {
 
-    Object.keys(typeSchema).forEach((v) => {
-      nestedValidations[v] = typeSchema[v].validation;
-    });
+  } else {
+    const typeSchema = typeDescriptor.type[SCHEMA];
+
+    const nestedValidations = Object.keys(typeSchema)
+      .reduce((validations, v) => {
+        validations[v] = typeSchema[v].validation;
+        return validations;
+      }, {});
 
     joiSchema = joiSchema.keys(nestedValidations);
   }

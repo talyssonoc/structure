@@ -4,10 +4,18 @@ module.exports = function genericCoercionFor(typeDescriptor) {
       return;
     }
 
-    if(value instanceof typeDescriptor.type) {
+    var type;
+
+    if(typeDescriptor.dynamicType) {
+      type = typeDescriptor.getType();
+    } else {
+      type = typeDescriptor.type;
+    }
+
+    if(value instanceof type) {
       return value;
     }
 
-    return new typeDescriptor.type(value);
+    return new type(value);
   };
 };

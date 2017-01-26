@@ -76,7 +76,7 @@ describe('schema normalization', () => {
       });
     });
 
-    context('when itemType is an constructor', () => {
+    context('when itemType is a constructor', () => {
       it('normalizes itemType to an object with type field being equal to passed constructor', () => {
         const schema = {
           name: {

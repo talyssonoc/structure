@@ -13,9 +13,9 @@ const {
 
 const define = Object.defineProperty;
 
-function attributesDecorator(declaredSchema) {
-  if(arguments.length > 1) {
-    const ErroneousPassedClass = arguments[1];
+function attributesDecorator(declaredSchema, schemaOptions = {}) {
+  if(typeof schemaOptions !== 'object') {
+    const ErroneousPassedClass = schemaOptions;
 
     const errorMessage = `You passed the structure class as the second parameter of attributes(). The expected usage is \`attributes(schema)(${ ErroneousPassedClass.name || 'StructureClass' })\`.`;
 
@@ -34,7 +34,7 @@ function attributesDecorator(declaredSchema) {
       }
     });
 
-    declaredSchema = normalizeSchema(declaredSchema);
+    declaredSchema = normalizeSchema(declaredSchema, schemaOptions);
 
     if(WrapperClass[SCHEMA]) {
       declaredSchema = Object.assign({}, WrapperClass[SCHEMA], declaredSchema);
