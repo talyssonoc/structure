@@ -134,7 +134,7 @@ describe('validation', () => {
     });
   });
 
-  describe.only('Nested with structure class with dynamic attribute types', () => {
+  describe('Nested with structure class with dynamic attribute types', () => {
     var CircularUser;
     var CircularBook;
 
@@ -205,7 +205,7 @@ describe('validation', () => {
             owner: new CircularUser()
           });
 
-          assertInvalid(book, 'favoriteBook');
+          assertInvalid(book, 'owner.favoriteBook');
         });
       });
     });

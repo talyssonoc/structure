@@ -188,6 +188,47 @@ describe('validation', () => {
       });
     });
 
+    describe('nested validation with dynamic attribute types', () => {
+      var CircularUser;
+      var CircularBook;
+
+      beforeEach(() => {
+        CircularUser = require('../../fixtures/CircularUser');
+        CircularBook = require('../../fixtures/CircularBook');
+      });
+
+      context('when nested value is present', () => {
+        it('is valid', () => {
+          const user = new CircularUser({
+            friends: [
+              new CircularUser({
+                favoriteBook: {}
+              })
+            ],
+            favoriteBook: {}
+          });
+
+          assertValid(user);
+        });
+      });
+
+      context('when nested value is not present', () => {
+        it('is not valid and has errors set', () => {
+          const user = new CircularUser({
+            friends: [
+              new CircularUser({
+                favoriteBook: {}
+              }),
+              new CircularUser()
+            ],
+            favoriteBook: {}
+          });
+
+          assertInvalid(user, 'friends.1.favoriteBook');
+        });
+      });
+    });
+
     describe('minLength', () => {
       var User;
 

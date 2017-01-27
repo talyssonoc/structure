@@ -61,7 +61,7 @@ describe('instantiating a structure', () => {
   });
 });
 
-describe.only('instantiating a structure with dynamic attribute types', () => {
+describe('instantiating a structure with dynamic attribute types', () => {
   var CircularUser;
   var CircularBook;
 
@@ -153,7 +153,7 @@ describe('updating an instance', () => {
   });
 });
 
-describe.only('updating a structure with dynamic attribute types', () => {
+describe('updating a structure with dynamic attribute types', () => {
   var CircularUser;
   var CircularBook;
 

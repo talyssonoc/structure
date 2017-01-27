@@ -26,7 +26,7 @@ function normalizeAttribute(schemaOptions, attribute, attributeName) {
     }
 
     if (typeof attribute.type === 'string') {
-      if(!schemaOptions.dynamics[attribute.type]) {
+      if(!schemaOptions.dynamics || !schemaOptions.dynamics[attribute.type]) {
         throw new Error(`There is no dynamic type for attribute: ${ attributeName }.`);
       }
 
