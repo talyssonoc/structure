@@ -38,7 +38,7 @@ userTwo.isAdmin; // undefined => it'll never coerce `undefined`
 
 ### Arrays and Array subclasses
 
-It's also possible to coerce values to `Array` or some other class that extends `Array`. On these circumstances Structure will use the `items` value of the type descriptor on the schema to coerce the items as well. Note that, when coercing arrays, it'll always create a new instance of the type and then push each item of the passed value to the new instance:
+It's also possible to coerce values to `Array` or some other class that extends `Array`. On these circumstances Structure will use the `itemType` value of the type descriptor on the schema to coerce the items as well. Note that, when coercing arrays, it'll always create a new instance of the type and then push each item of the passed value to the new instance:
 
 ```javascript
 class BooksCollection extends Array { }
@@ -46,11 +46,11 @@ class BooksCollection extends Array { }
 const Library = attributes({
   books: {
     type: BooksCollection,
-    items: String
+    itemType: String
   },
   users: {
     type: Array,
-    items: String
+    itemType: String
   }
 })(class Library { });
 
@@ -112,7 +112,7 @@ const User = attributes({
   favoriteBook: Book,
   books: {
     type: BooksCollection,
-    items: Book
+    itemType: Book
   }
 })(class User { });
 
@@ -133,7 +133,7 @@ __Important: Structure only does coercion during object creation, so mutating an
 const Library = attributes({
   books: {
     type: Array,
-    items: String
+    itemType: String
   }
 })(class Library { });
 

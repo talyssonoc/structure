@@ -12,7 +12,7 @@ const User = attributes({
   birth: Date,
   books: {
     type: Array,
-    items: Book
+    itemType: Book
   }
 })(class User { });
 

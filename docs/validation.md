@@ -167,14 +167,14 @@ const Product = attributes({
 const Group = attributes({
   members: {
     type: Array,
-    items: String,
+    itemType: String,
     minLength: 2
     maxLength: 5,
     sparse: false
   },
   leaders: {
     type: Array,
-    items: String,
+    itemType: String,
     minLength: 1
     maxLength: { attr: 'members' }
   }
@@ -234,7 +234,7 @@ const User = attributes({
   favoriteBook: Book,
   books: {
     type: Array,
-    items: Book
+    itemType: Book
   }
 })(class User { });
 
