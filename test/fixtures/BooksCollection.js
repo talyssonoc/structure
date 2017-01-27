@@ -1,1 +1,1 @@
-module.exports = class BooksCollection extends Array {}
+module.exports = class BooksCollection extends Array {};
