@@ -190,11 +190,9 @@ describe('validation', () => {
 
     describe('nested validation with dynamic attribute types', () => {
       var CircularUser;
-      var CircularBook;
 
       beforeEach(() => {
         CircularUser = require('../../fixtures/CircularUser');
-        CircularBook = require('../../fixtures/CircularBook');
       });
 
       context('when nested value is present', () => {

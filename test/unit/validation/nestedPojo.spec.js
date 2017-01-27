@@ -8,7 +8,7 @@ describe('validation', () => {
       var User;
 
       beforeEach(() => {
-        Location = class Location {}
+        Location = class Location {};
 
         User = attributes({
           lastLocation: {
@@ -43,7 +43,7 @@ describe('validation', () => {
       var User;
 
       beforeEach(() => {
-        Location = class Location {}
+        Location = class Location {};
 
         User = attributes({
           lastLocation: {

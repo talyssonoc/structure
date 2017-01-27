@@ -59,4 +59,4 @@ exports.requiredOption = function requiredOption(typeDescriptor, { initial }) {
   }
 
   return initial;
-}
+};
