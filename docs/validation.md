@@ -96,6 +96,7 @@ const User = attributes({
 - `precision`: maximum number of decimal places
 - `positive`: must be positive (default: `false`)
 - `negative`: must be negative (default: `false`)
+- `multiple`: must be a multiple of the passed value
 - `min`: __**__ minimum valid value (works like the `>=` operator)
 - `greater`: __**__ must be greater than passed value (works like the `>` operator)
 - `max`: __**__ maximum valid value (works like the `<=` operator)
