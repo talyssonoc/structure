@@ -17,6 +17,9 @@ const Product = attributes({
   }
 })(class Product { });
 
+const CircularUser = require('../test/fixtures/CircularUser');
+const CircularBook = require('../test/fixtures/CircularBook');
+
 exports.name = 'Instantiation';
 
 exports.cases = [
@@ -47,6 +50,44 @@ exports.cases = [
           new User(),
           new User()
         ]
+      });
+    }
+  },
+  {
+    name: 'Simple instantiation with dynamic types',
+    fn() {
+      new CircularUser({
+        name: 'A name'
+      });
+    }
+  },
+  {
+    name: 'Complex instantiation with dynamic types [x1]',
+    fn() {
+      new CircularUser({
+        name: 'A name',
+        favoriteBook: new CircularBook({
+          name: 'A book'
+        })
+      });
+    }
+  },
+  {
+    name: 'Complex instantiation with dynamic types [x2]',
+    fn() {
+      new CircularUser({
+        name: 'A name',
+        friends: [
+          new CircularUser({
+            name: 'A friend'
+          }),
+          new CircularUser({
+            name: 'Another friend'
+          })
+        ],
+        favoriteBook: new CircularBook({
+          name: 'A book'
+        })
       });
     }
   }
