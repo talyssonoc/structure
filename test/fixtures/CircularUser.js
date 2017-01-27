@@ -9,11 +9,16 @@ const User = attributes({
   favoriteBook: {
     type: 'Book',
     required: true
+  },
+  books: {
+    type: 'BooksCollection',
+    itemType: String
   }
 }, {
   dynamics: {
     User: () => User,
-    Book: () => require('./CircularBook')
+    Book: () => require('./CircularBook'),
+    BooksCollection: () => require('./BooksCollection')
   }
 })(class User { });
 

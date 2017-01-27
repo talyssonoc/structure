@@ -1,4 +1,5 @@
 const { ARRAY_OR_ITERABLE } = require('../errorMessages');
+const { getType } = require('../typeResolver');
 
 module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
   return function coerceArray(value) {
@@ -14,7 +15,8 @@ module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
       value = Array(...value);
     }
 
-    const coercedValue = new typeDescriptor.type();
+    const type = getType(typeDescriptor);
+    const coercedValue = new type();
 
     for(let i = 0; i < value.length; i++) {
       coercedValue.push(itemTypeDescriptor.coerce(value[i]));
