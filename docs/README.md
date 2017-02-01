@@ -4,7 +4,7 @@
 * [Schema concept](/docs/schema-concept.md)
   * [Shorthand type descriptor](/docs/schema-concept.md#shorthand-type-descriptor)
   * [Complete type descriptor](/docs/schema-concept.md#complete-type-descriptor)
-  * [Circular references and dynamic types](/docs/schema-concept.md#circular-references-and-dynamic-types)
+  * [Circular reference](/docs/schema-concept.md#circular-references-and-dynamic-types)
 * [Coercion](/docs/coercion.md)
   * [Primitive type coercion](/docs/coercion.md#primitive-type-coercion)
   * [Arrays coercion](/docs/coercion.md#arrays-and-array-subclasses)
