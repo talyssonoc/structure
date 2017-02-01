@@ -12,7 +12,7 @@ describe('type coercion', () => {
           this.x = x;
           this.y = y;
         }
-      }
+      };
 
       User = attributes({
         location: Location

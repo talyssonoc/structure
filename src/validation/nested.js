@@ -1,23 +1,49 @@
 const joi = require('joi');
 const { SCHEMA } = require('../symbols');
+const { requiredOption } = require('./utils');
 
 module.exports = function nestedValidation(typeDescriptor) {
+  if(typeDescriptor.dynamicType) {
+    return validationToDynamicType(typeDescriptor);
+  }
+
+  const typeSchema = typeDescriptor.type[SCHEMA];
+  var joiSchema = getNestedValidations(typeSchema);
+
+  joiSchema = requiredOption(typeDescriptor, {
+    initial: joiSchema
+  });
+
+  return joiSchema;
+};
+
+function validationToDynamicType(typeDescriptor) {
+  var joiSchema = joi.lazy(() => {
+    const typeSchema = typeDescriptor.getType()[SCHEMA];
+
+    return getNestedValidations(typeSchema);
+  });
+
+  joiSchema = requiredOption(typeDescriptor, {
+    initial: joiSchema
+  });
+
+  return joiSchema;
+}
+
+function getNestedValidations(typeSchema) {
   var joiSchema = joi.object();
-  var typeSchema = typeDescriptor.type[SCHEMA];
 
-  if(typeSchema !== undefined) {
-    var nestedValidations = {};
-
-    Object.keys(typeSchema).forEach((v) => {
-      nestedValidations[v] = typeSchema[v].validation;
-    });
+  if(typeSchema) {
+    const nestedValidations = Object.keys(typeSchema)
+      .reduce((validations, v) => {
+        validations[v] = typeSchema[v].validation;
+        return validations;
+      }, {});
 
     joiSchema = joiSchema.keys(nestedValidations);
   }
 
-  if(typeDescriptor.required) {
-    joiSchema = joiSchema.required();
-  }
 
   return joiSchema;
-};
+}

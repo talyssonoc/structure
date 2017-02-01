@@ -39,7 +39,7 @@ describe('schema normalization', () => {
   context('when it is not possible to normalize the attribute', () => {
     context('when attribute type is not an object nor a constructor', () => {
       it('throws an error', () => {
-        const schema = { name: 'invalid attribute' };
+        const schema = { name: true };
 
         expect(() => {
           normalizeSchema(schema);
@@ -51,7 +51,7 @@ describe('schema normalization', () => {
       it('throws an error', () => {
         const schema = {
           name: {
-            type: 'invalid attribute'
+            type: true
           }
         };
 
@@ -76,7 +76,7 @@ describe('schema normalization', () => {
       });
     });
 
-    context('when itemType is an constructor', () => {
+    context('when itemType is a constructor', () => {
       it('normalizes itemType to an object with type field being equal to passed constructor', () => {
         const schema = {
           name: {

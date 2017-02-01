@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { attributes } = require('../../src');
 
-describe('subclassing an structure with a POJO class', () => {
+describe('subclassing a structure with a POJO class', () => {
   var User;
   var Admin;
 
@@ -31,7 +31,7 @@ describe('subclassing an structure with a POJO class', () => {
     };
   });
 
-  describe('instantiating an structure subclass', () => {
+  describe('instantiating a structure subclass', () => {
     it('is instance of class and superclass', () => {
       const admin = new Admin({
         name: 'The Admin'
@@ -153,7 +153,7 @@ describe('subclassing an structure with a POJO class', () => {
   });
 });
 
-describe('subclassing an structure with another structure', () => {
+describe('subclassing a structure with another structure', () => {
   var Admin;
   var User;
 

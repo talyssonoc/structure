@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { attributes } = require('../../src');
 
-describe('creating an structure class', () => {
+describe('creating a structure class', () => {
   describe('structure class is passed as the second parameter', () => {
     context('when structure class has a name', () => {
       it('throws with a message with structure class name', () => {
@@ -24,7 +24,6 @@ describe('creating an structure class', () => {
       });
     });
   });
-
 
   describe('using class static methods and properties', () => {
     var User;
@@ -80,6 +79,19 @@ describe('creating an structure class', () => {
 
         expect(user.age).to.equal(18);
       });
+    });
+  });
+
+  describe('when using dynamic attribute types', () => {
+    it('allows to use dynamic values without breaking', () => {
+      require('../fixtures/CircularUser');
+      require('../fixtures/CircularBook');
+    });
+
+    it('breaks if there is no value for dynamic type', () => {
+      expect(() => {
+        require('../fixtures/BrokenCircularBook');
+      }).to.throw(Error, 'There is no dynamic type for attribute: owner');
     });
   });
 });

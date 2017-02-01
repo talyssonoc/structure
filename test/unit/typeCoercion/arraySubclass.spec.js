@@ -7,7 +7,7 @@ describe('type coercion', () => {
     var User;
 
     beforeEach(() => {
-      Collection = class Collection extends Array {}
+      Collection = class Collection extends Array {};
 
       User = attributes({
         books: {

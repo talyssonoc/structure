@@ -1,4 +1,5 @@
 const { SCHEMA } = require('./symbols');
+const { getType } = require('./typeResolver');
 
 function serialize(structure) {
   if(structure === undefined) {
@@ -17,9 +18,9 @@ function serialize(structure) {
 
     let serializedValue;
 
-    if(schema[attrName].itemType && schema[attrName].itemType.type[SCHEMA] !== undefined) {
+    if(schema[attrName].itemType && getTypeSchema(schema[attrName].itemType)) {
       serializedValue = attribute.map(serialize);
-    } else if(schema[attrName].type[SCHEMA] !== undefined) {
+    } else if(getTypeSchema(schema[attrName])) {
       serializedValue = serialize(attribute);
     } else {
       serializedValue = attribute;
@@ -29,6 +30,10 @@ function serialize(structure) {
   }
 
   return serializedStructure;
+}
+
+function getTypeSchema(typeDescriptor) {
+  return getType(typeDescriptor)[SCHEMA];
 }
 
 exports.serialize = serialize;

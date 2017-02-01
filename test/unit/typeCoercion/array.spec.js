@@ -118,4 +118,50 @@ describe('type coercion', () => {
       });
     });
   });
+
+  describe('Array from dynamic type', () => {
+    var CircularUser;
+    var BooksCollection;
+
+    beforeEach(() => {
+      CircularUser = require('../../fixtures/CircularUser');
+      BooksCollection = require('../../fixtures/BooksCollection');
+    });
+
+    it('coerces collection', () => {
+      const user = new CircularUser({
+        books: [
+          'Dragons of Ether',
+          'The Dark Tower'
+        ]
+      });
+
+      expect(user.books).to.be.instanceOf(BooksCollection);
+    });
+
+    it('coerces items', () => {
+      const user = new CircularUser({
+        books: ['The Lord of The Rings', 1984, true]
+      });
+
+      expect(user.books).to.eql([
+        'The Lord of The Rings',
+        '1984',
+        'true'
+      ]);
+    });
+
+    it('does not coerce items that are of the expected type', () => {
+      const book = new String('A Game of Thrones');
+
+      const user = new CircularUser({
+        books: [book]
+      });
+
+      expect(user.books).to.eql([
+        new String('A Game of Thrones')
+      ]);
+      expect(user.books[0]).to.equal(book);
+    });
+  });
 });

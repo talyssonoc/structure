@@ -8,7 +8,7 @@ class FantasyBooksCollection extends Array { }
 class FriendsCollection extends Array { }
 class Item { }
 
-var User = attributes({
+const User = attributes({
   name: String,
   item: Item,
   favoriteBook: Book,
@@ -25,6 +25,8 @@ var User = attributes({
     itemType: String
   }
 })(class User { });
+
+const CircularUser = require('../test/fixtures/CircularUser');
 
 exports.name = 'Coercion';
 
@@ -64,6 +66,71 @@ exports.cases = [
         favoriteBook: {
           year: '2017'
         }
+      });
+    }
+  },
+  {
+    name: 'Primitive coercion with dynamic types',
+    fn() {
+      new CircularUser({
+        name: 50
+      });
+    }
+  },
+  {
+    name: 'Nested coercion with dynamic types [x1]',
+    fn() {
+      new CircularUser({
+        favoriteBook: {
+          name: 'A Study in Scarlet'
+        }
+      });
+    }
+  },
+  {
+    name: 'Nested coercion with dynamic types [x2]',
+    fn() {
+      new CircularUser({
+        favoriteBook: {
+          name: 1984
+        }
+      });
+    }
+  },
+  {
+    name: 'Nested coercion with dynamic types [x3]',
+    fn() {
+      new CircularUser({
+        friends: [
+          new CircularUser(),
+          new CircularUser()
+        ]
+      });
+    }
+  },
+  {
+    name: 'Nested coercion with dynamic types [x4]',
+    fn() {
+      new CircularUser({
+        friends: [
+          {},
+          {}
+        ]
+      });
+    }
+  },
+  {
+    name: 'Nested coercion with dynamic types [x5]',
+    fn() {
+      new CircularUser({
+        friends: [
+          {
+            favoriteBook: {}
+          },
+          {
+            favoriteBook: {}
+          }
+        ]
       });
     }
   },
