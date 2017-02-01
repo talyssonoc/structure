@@ -7,7 +7,7 @@
 		exports["Structure"] = factory(require("lodash"), require("joi"));
 	else
 		root["Structure"] = factory(root["_"], root["joi"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_13__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_14__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,28 +73,32 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _require = __webpack_require__(3),
 	    normalizeSchema = _require.normalizeSchema;
 
-	var _require2 = __webpack_require__(22),
+	var _require2 = __webpack_require__(23),
 	    getInitialValues = _require2.getInitialValues;
 
-	var _require3 = __webpack_require__(14),
+	var _require3 = __webpack_require__(15),
 	    SCHEMA = _require3.SCHEMA;
 
-	var _require4 = __webpack_require__(23),
+	var _require4 = __webpack_require__(24),
 	    attributesDescriptor = _require4.attributesDescriptor,
 	    serializationDescriptor = _require4.serializationDescriptor;
 
-	var _require5 = __webpack_require__(12),
-	    validationDescriptor = _require5.validationDescriptor,
-	    staticValidationDescriptor = _require5.staticValidationDescriptor;
+	var _require5 = __webpack_require__(13),
+	    validationDescriptorForSchema = _require5.validationDescriptorForSchema,
+	    staticValidationDescriptorForSchema = _require5.staticValidationDescriptorForSchema;
 
 	var define = Object.defineProperty;
 
 	function attributesDecorator(declaredSchema) {
-	  if (arguments.length > 1) {
-	    var ErroneousPassedClass = arguments[1];
+	  var schemaOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  if ((typeof schemaOptions === 'undefined' ? 'undefined' : _typeof(schemaOptions)) !== 'object') {
+	    var ErroneousPassedClass = schemaOptions;
 
 	    var errorMessage = 'You passed the structure class as the second parameter of attributes(). The expected usage is `attributes(schema)(' + (ErroneousPassedClass.name || 'StructureClass') + ')`.';
 
@@ -113,7 +117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    });
 
-	    declaredSchema = normalizeSchema(declaredSchema);
+	    declaredSchema = normalizeSchema(declaredSchema, schemaOptions);
 
 	    if (WrapperClass[SCHEMA]) {
 	      declaredSchema = Object.assign({}, WrapperClass[SCHEMA], declaredSchema);
@@ -123,7 +127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      value: declaredSchema
 	    });
 
-	    define(WrapperClass, 'validate', staticValidationDescriptor);
+	    define(WrapperClass, 'validate', staticValidationDescriptorForSchema(declaredSchema));
 
 	    define(WrapperClass.prototype, SCHEMA, {
 	      value: declaredSchema
@@ -143,7 +147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    });
 
-	    define(WrapperClass.prototype, 'validate', validationDescriptor);
+	    define(WrapperClass.prototype, 'validate', validationDescriptorForSchema(declaredSchema));
 
 	    define(WrapperClass.prototype, 'toJSON', serializationDescriptor);
 
@@ -164,50 +168,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _require = __webpack_require__(4),
 	    coercionFor = _require.coercionFor;
 
-	var _require2 = __webpack_require__(12),
+	var _require2 = __webpack_require__(13),
 	    validationForAttribute = _require2.validationForAttribute,
 	    validationForSchema = _require2.validationForSchema;
 
-	var _require3 = __webpack_require__(14),
+	var _require3 = __webpack_require__(15),
 	    VALIDATE = _require3.VALIDATE;
 
-	function normalizeAttribute(attribute, attributeName) {
-	  switch (typeof attribute === 'undefined' ? 'undefined' : _typeof(attribute)) {
-	    case 'object':
-	      if (!attribute.type) {
-	        throw new Error('Missing type for attribute: ' + attributeName + '.');
-	      }
-
-	      if (typeof attribute.type !== 'function') {
-	        throw new TypeError('Attribute type must be a constructor: ' + attributeName + '.');
-	      }
-
-	      if (attribute.itemType) {
-	        attribute.itemType = normalizeAttribute(attribute.itemType, 'itemType');
-	      }
-
-	      return Object.assign({}, attribute, {
-	        coerce: coercionFor(attribute, attribute.itemType),
-	        validation: validationForAttribute(attribute)
-	      });
-
-	    case 'function':
-	      var normalizedType = { type: attribute };
-	      normalizedType.coerce = coercionFor(normalizedType);
-	      normalizedType.validation = validationForAttribute(normalizedType);
-
-	      return normalizedType;
-
-	    default:
-	      throw new TypeError('Invalid type for attribute: ' + attributeName + '.');
-	  }
-	}
-
-	function normalizeSchema(rawSchema) {
+	function normalizeSchema(rawSchema, schemaOptions) {
 	  var schema = Object.create(null);
 
 	  Object.keys(rawSchema).forEach(function (attributeName) {
-	    schema[attributeName] = normalizeAttribute(rawSchema[attributeName], attributeName);
+	    schema[attributeName] = normalizeAttribute(schemaOptions, rawSchema[attributeName], attributeName);
 	  });
 
 	  var schemaValidation = validationForSchema(schema);
@@ -217,6 +189,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 
 	  return schema;
+	}
+
+	function normalizeAttribute(schemaOptions, attribute, attributeName) {
+	  switch (typeof attribute === 'undefined' ? 'undefined' : _typeof(attribute)) {
+	    case 'object':
+	      if (!attribute.type) {
+	        throw new Error('Missing type for attribute: ' + attributeName + '.');
+	      }
+
+	      if (typeof attribute.type === 'string') {
+	        if (!schemaOptions.dynamics || !schemaOptions.dynamics[attribute.type]) {
+	          throw new Error('There is no dynamic type for attribute: ' + attributeName + '.');
+	        }
+
+	        attribute.getType = schemaOptions.dynamics[attribute.type];
+	        attribute.dynamicType = true;
+	      } else if (typeof attribute.type !== 'function') {
+	        throw new TypeError('Attribute type must be a constructor: ' + attributeName + '.');
+	      }
+
+	      if (attribute.itemType) {
+	        attribute.itemType = normalizeAttribute(schemaOptions, attribute.itemType, 'itemType');
+	      }
+
+	      return Object.assign({}, attribute, {
+	        coerce: coercionFor(attribute, attribute.itemType),
+	        validation: validationForAttribute(attribute)
+	      });
+
+	    case 'function':
+	    case 'string':
+	      return normalizeAttribute(schemaOptions, { type: attribute }, attributeName);
+
+	    default:
+	      throw new TypeError('Invalid type for attribute: ' + attributeName + '.');
+	  }
 	}
 
 	exports.normalizeSchema = normalizeSchema;
@@ -229,9 +237,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var arrayCoercionFor = __webpack_require__(5);
-	var genericCoercionFor = __webpack_require__(7);
+	var genericCoercionFor = __webpack_require__(8);
 
-	var types = [__webpack_require__(8), __webpack_require__(10), __webpack_require__(11)];
+	var types = [__webpack_require__(9), __webpack_require__(11), __webpack_require__(12)];
 
 	function coercionFor(typeDescriptor, itemTypeDescriptor) {
 	  if (itemTypeDescriptor) {
@@ -272,6 +280,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _require = __webpack_require__(6),
 	    ARRAY_OR_ITERABLE = _require.ARRAY_OR_ITERABLE;
 
+	var _require2 = __webpack_require__(7),
+	    getType = _require2.getType;
+
 	module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
 	  return function coerceArray(value) {
 	    if (value === undefined) {
@@ -286,7 +297,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      value = Array.apply(undefined, _toConsumableArray(value));
 	    }
 
-	    var coercedValue = new typeDescriptor.type();
+	    var type = getType(typeDescriptor);
+	    var coercedValue = new type();
 
 	    for (var i = 0; i < value.length; i++) {
 	      coercedValue.push(itemTypeDescriptor.coerce(value[i]));
@@ -313,18 +325,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = function genericCoercionFor(typeDescriptor) {
-	  return function coerce(value) {
-	    if (value === undefined) {
-	      return;
-	    }
+	exports.getType = function getType(typeDescriptor) {
+	  if (typeDescriptor.dynamicType) {
+	    return typeDescriptor.getType();
+	  }
 
-	    if (value instanceof typeDescriptor.type) {
-	      return value;
-	    }
-
-	    return new typeDescriptor.type(value);
-	  };
+	  return typeDescriptor.type;
 	};
 
 /***/ },
@@ -333,7 +339,32 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _require = __webpack_require__(9),
+	var _require = __webpack_require__(7),
+	    getType = _require.getType;
+
+	module.exports = function genericCoercionFor(typeDescriptor) {
+	  return function coerce(value) {
+	    if (value === undefined) {
+	      return;
+	    }
+
+	    var type = getType(typeDescriptor);
+
+	    if (value instanceof type) {
+	      return value;
+	    }
+
+	    return new type(value);
+	  };
+	};
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _require = __webpack_require__(10),
 	    isString = _require.isString;
 
 	module.exports = {
@@ -349,18 +380,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_10__;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(9),
+	var _require = __webpack_require__(10),
 	    isNumber = _require.isNumber;
 
 	module.exports = {
@@ -376,7 +407,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -389,21 +420,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(13);
+	var joi = __webpack_require__(14);
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    SCHEMA = _require.SCHEMA,
 	    VALIDATE = _require.VALIDATE;
 
-	var validations = [__webpack_require__(15), __webpack_require__(17), __webpack_require__(18), __webpack_require__(19)];
+	var validations = [__webpack_require__(16), __webpack_require__(18), __webpack_require__(19), __webpack_require__(20)];
 
-	var nestedValidation = __webpack_require__(20);
-	var arrayValidation = __webpack_require__(21);
+	var nestedValidation = __webpack_require__(21);
+	var arrayValidation = __webpack_require__(22);
 
 	exports.validationForAttribute = function validationForAttribute(typeDescriptor) {
 	  if (typeDescriptor.itemType !== undefined) {
@@ -458,25 +489,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	};
 
-	exports.validationDescriptor = {
-	  value: function validate() {
-	    var validation = this[SCHEMA][VALIDATE];
-	    var serializedStructure = this.toJSON();
+	exports.validationDescriptorForSchema = function validationDescriptorForSchema(schema) {
+	  var validation = schema[VALIDATE];
 
-	    return validateData(validation, serializedStructure);
-	  }
+	  return {
+	    value: function validate() {
+	      var serializedStructure = this.toJSON();
+
+	      return validateData(validation, serializedStructure);
+	    }
+	  };
 	};
 
-	exports.staticValidationDescriptor = {
-	  value: function validate(data) {
-	    if (data[SCHEMA]) {
-	      data = data.toJSON();
+	exports.staticValidationDescriptorForSchema = function staticValidationDescriptorForSchema(schema) {
+	  var validation = schema[VALIDATE];
+
+	  return {
+	    value: function validate(data) {
+	      if (data[SCHEMA]) {
+	        data = data.toJSON();
+	      }
+
+	      return validateData(validation, data);
 	    }
-
-	    var validation = this[SCHEMA][VALIDATE];
-
-	    return validateData(validation, data);
-	  }
+	  };
 	};
 
 	function validateData(validation, data) {
@@ -493,13 +529,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -511,14 +547,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(13);
+	var joi = __webpack_require__(14);
 
-	var _require = __webpack_require__(16),
+	var _require = __webpack_require__(17),
 	    mapToJoi = _require.mapToJoi,
 	    equalOption = _require.equalOption;
 
@@ -539,16 +575,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-	var joi = __webpack_require__(13);
+	var joi = __webpack_require__(14);
 
-	var _require = __webpack_require__(9),
+	var _require = __webpack_require__(10),
 	    isPlainObject = _require.isPlainObject;
 
 	exports.mapToJoi = function mapToJoi(typeDescriptor, _ref) {
@@ -620,15 +656,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return initial.equal(possibilities);
 	};
 
+	exports.requiredOption = function requiredOption(typeDescriptor, _ref8) {
+	  var initial = _ref8.initial;
+
+	  if (typeDescriptor.required) {
+	    return initial.required();
+	  }
+
+	  return initial;
+	};
+
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(13);
+	var joi = __webpack_require__(14);
 
-	var _require = __webpack_require__(16),
+	var _require = __webpack_require__(17),
 	    mapToJoi = _require.mapToJoi,
 	    mapToJoiWithReference = _require.mapToJoiWithReference,
 	    equalOption = _require.equalOption;
@@ -650,14 +696,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(13);
+	var joi = __webpack_require__(14);
 
-	var _require = __webpack_require__(16),
+	var _require = __webpack_require__(17),
 	    mapToJoi = _require.mapToJoi,
 	    equalOption = _require.equalOption;
 
@@ -674,14 +720,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(13);
+	var joi = __webpack_require__(14);
 
-	var _require = __webpack_require__(16),
+	var _require = __webpack_require__(17),
 	    mapToJoi = _require.mapToJoi,
 	    mapToJoiWithReference = _require.mapToJoiWithReference,
 	    equalOption = _require.equalOption;
@@ -703,46 +749,72 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var joi = __webpack_require__(13);
-
-	var _require = __webpack_require__(14),
-	    SCHEMA = _require.SCHEMA;
-
-	module.exports = function nestedValidation(typeDescriptor) {
-	  var joiSchema = joi.object();
-	  var typeSchema = typeDescriptor.type[SCHEMA];
-
-	  if (typeSchema !== undefined) {
-	    var nestedValidations = {};
-
-	    Object.keys(typeSchema).forEach(function (v) {
-	      nestedValidations[v] = typeSchema[v].validation;
-	    });
-
-	    joiSchema = joiSchema.keys(nestedValidations);
-	  }
-
-	  if (typeDescriptor.required) {
-	    joiSchema = joiSchema.required();
-	  }
-
-	  return joiSchema;
-	};
-
-/***/ },
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var joi = __webpack_require__(13);
+	var joi = __webpack_require__(14);
 
-	var _require = __webpack_require__(16),
+	var _require = __webpack_require__(15),
+	    SCHEMA = _require.SCHEMA;
+
+	var _require2 = __webpack_require__(17),
+	    requiredOption = _require2.requiredOption;
+
+	module.exports = function nestedValidation(typeDescriptor) {
+	  if (typeDescriptor.dynamicType) {
+	    return validationToDynamicType(typeDescriptor);
+	  }
+
+	  var typeSchema = typeDescriptor.type[SCHEMA];
+	  var joiSchema = getNestedValidations(typeSchema);
+
+	  joiSchema = requiredOption(typeDescriptor, {
+	    initial: joiSchema
+	  });
+
+	  return joiSchema;
+	};
+
+	function validationToDynamicType(typeDescriptor) {
+	  var joiSchema = joi.lazy(function () {
+	    var typeSchema = typeDescriptor.getType()[SCHEMA];
+
+	    return getNestedValidations(typeSchema);
+	  });
+
+	  joiSchema = requiredOption(typeDescriptor, {
+	    initial: joiSchema
+	  });
+
+	  return joiSchema;
+	}
+
+	function getNestedValidations(typeSchema) {
+	  var joiSchema = joi.object();
+
+	  if (typeSchema) {
+	    var nestedValidations = Object.keys(typeSchema).reduce(function (validations, v) {
+	      validations[v] = typeSchema[v].validation;
+	      return validations;
+	    }, {});
+
+	    joiSchema = joiSchema.keys(nestedValidations);
+	  }
+
+	  return joiSchema;
+	}
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var joi = __webpack_require__(14);
+
+	var _require = __webpack_require__(17),
 	    mapToJoi = _require.mapToJoi;
 
 	var joiMappings = [['required', 'required'], ['minLength', 'min', true], ['maxLength', 'max', true], ['exactLength', 'length', true]];
@@ -759,7 +831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -783,21 +855,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getInitialValues = getInitialValues;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    SCHEMA = _require.SCHEMA,
 	    ATTRIBUTES = _require.ATTRIBUTES;
 
 	var _require2 = __webpack_require__(6),
 	    NON_OBJECT_ATTRIBUTES = _require2.NON_OBJECT_ATTRIBUTES;
 
-	var _require3 = __webpack_require__(24),
+	var _require3 = __webpack_require__(25),
 	    serialize = _require3.serialize;
 
 	var createAttrs = function createAttrs() {
@@ -836,13 +908,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(14),
+	var _require = __webpack_require__(15),
 	    SCHEMA = _require.SCHEMA;
+
+	var _require2 = __webpack_require__(7),
+	    getType = _require2.getType;
 
 	function serialize(structure) {
 	  if (structure === undefined) {
@@ -861,9 +936,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var serializedValue = void 0;
 
-	    if (schema[attrName].itemType && schema[attrName].itemType.type[SCHEMA] !== undefined) {
+	    if (schema[attrName].itemType && getTypeSchema(schema[attrName].itemType)) {
 	      serializedValue = attribute.map(serialize);
-	    } else if (schema[attrName].type[SCHEMA] !== undefined) {
+	    } else if (getTypeSchema(schema[attrName])) {
 	      serializedValue = serialize(attribute);
 	    } else {
 	      serializedValue = attribute;
@@ -873,6 +948,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  return serializedStructure;
+	}
+
+	function getTypeSchema(typeDescriptor) {
+	  return getType(typeDescriptor)[SCHEMA];
 	}
 
 	exports.serialize = serialize;
