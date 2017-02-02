@@ -1,4 +1,4 @@
-const { ARRAY_OR_ITERABLE } = require('../errorMessages');
+const Errors = require('../errors');
 const { getType } = require('../typeResolver');
 
 module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
@@ -8,7 +8,7 @@ module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
     }
 
     if(value === null || (value.length === undefined && !value[Symbol.iterator])) {
-      throw new TypeError(ARRAY_OR_ITERABLE);
+      throw Errors.arrayOrIterable();
     }
 
     if(value[Symbol.iterator]) {

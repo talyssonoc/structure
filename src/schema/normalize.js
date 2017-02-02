@@ -1,8 +1,9 @@
-const { coercionFor } = require('./typeCoercion');
-const { validationForAttribute, validationForSchema } = require('./validation');
-const { VALIDATE } = require('./symbols');
+const { coercionFor } = require('../coercion');
+const { validationForAttribute, validationForSchema } = require('../validation');
+const { VALIDATE } = require('../symbols');
+const Errors = require('../errors');
 
-function normalizeSchema(rawSchema, schemaOptions) {
+module.exports = function normalize(rawSchema, schemaOptions) {
   const schema = Object.create(null);
 
   Object.keys(rawSchema).forEach((attributeName) => {
@@ -22,18 +23,18 @@ function normalizeAttribute(schemaOptions, attribute, attributeName) {
   switch(typeof attribute) {
   case 'object':
     if(!attribute.type) {
-      throw new Error(`Missing type for attribute: ${ attributeName }.`);
+      throw Errors.missingType(attributeName);
     }
 
     if (typeof attribute.type === 'string') {
       if(!schemaOptions.dynamics || !schemaOptions.dynamics[attribute.type]) {
-        throw new Error(`There is no dynamic type for attribute: ${ attributeName }.`);
+        throw Errors.missingDynamicType(attributeName);
       }
 
       attribute.getType = schemaOptions.dynamics[attribute.type];
       attribute.dynamicType = true;
     } else if(typeof attribute.type !== 'function') {
-      throw new TypeError(`Attribute type must be a constructor: ${ attributeName }.`);
+      throw Errors.invalidType(attributeName);
     }
 
     if(attribute.itemType) {
@@ -50,9 +51,6 @@ function normalizeAttribute(schemaOptions, attribute, attributeName) {
     return normalizeAttribute(schemaOptions, { type: attribute }, attributeName);
 
   default:
-    throw new TypeError(`Invalid type for attribute: ${ attributeName }.`);
+    throw Errors.invalidType(attributeName);
   }
 }
-
-exports.normalizeSchema = normalizeSchema;
-exports.VALIDATE = VALIDATE;

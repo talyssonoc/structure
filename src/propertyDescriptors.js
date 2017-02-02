@@ -1,5 +1,5 @@
 const { SCHEMA, ATTRIBUTES } = require('./symbols');
-const { NON_OBJECT_ATTRIBUTES } = require('./errorMessages');
+const Errors = require('./errors');
 const { serialize } = require('./serialization');
 
 const createAttrs = () => Object.create(null);
@@ -13,7 +13,7 @@ exports.attributesDescriptor = {
 
   set(newAttributes) {
     if(!newAttributes || typeof newAttributes !== OBJECT_TYPE) {
-      throw new TypeError(NON_OBJECT_ATTRIBUTES);
+      throw Errors.nonObjectAttributes();
     }
 
     const attributes = createAttrs();

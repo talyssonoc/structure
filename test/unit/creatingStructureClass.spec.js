@@ -91,7 +91,7 @@ describe('creating a structure class', () => {
     it('breaks if there is no value for dynamic type', () => {
       expect(() => {
         require('../fixtures/BrokenCircularBook');
-      }).to.throw(Error, 'There is no dynamic type for attribute: owner');
+      }).to.throw(Error, 'Missing dynamic type for attribute: owner');
     });
   });
 });
