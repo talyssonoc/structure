@@ -1,4 +1,4 @@
-exports.getType = function getType(typeDescriptor) {
+module.exports = function getAttributeType(typeDescriptor) {
   if(typeDescriptor.dynamicType) {
     return typeDescriptor.getType();
   }

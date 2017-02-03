@@ -1,4 +1,4 @@
-const { getType } = require('../typeResolver');
+const getType = require('../typeResolver');
 
 module.exports = function genericCoercionFor(typeDescriptor) {
   return function coerce(value) {

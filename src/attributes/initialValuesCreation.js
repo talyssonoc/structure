@@ -10,7 +10,7 @@ module.exports = function getInitialValues(attributes, schema, instance) {
   }
 
   return attributes;
-}
+};
 
 function getValue(value, instance) {
   if(typeof value === FUNCTION_TYPE) {

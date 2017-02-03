@@ -1,5 +1,5 @@
 const Errors = require('../errors');
-const { getType } = require('../typeResolver');
+const getType = require('../typeResolver');
 
 module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
   return function coerceArray(value) {

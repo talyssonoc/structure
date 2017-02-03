@@ -1,17 +1,13 @@
 const Schema = require('../schema');
-const getInitialValues = require('./initialValuesCreation');
-const { SCHEMA } = require('../symbols');
-const {
-  attributesDescriptor,
-  serializationDescriptor
-} = require('../propertyDescriptors');
-
-const {
-  validationDescriptorForSchema,
-  staticValidationDescriptorForSchema
-} = require('../validation');
-
+const Serialization = require('../serialization');
+const Validation = require('../validation');
 const Errors = require('../errors');
+const { SCHEMA } = require('../symbols');
+const getInitialValues = require('./initialValuesCreation');
+const {
+  attributeDescriptorFor,
+  attributesDescriptorFor
+} = require('./descriptors');
 
 const define = Object.defineProperty;
 
@@ -42,30 +38,21 @@ function attributesDecorator(schema, schemaOptions = {}) {
       value: schema
     });
 
-    define(WrapperClass, 'validate', staticValidationDescriptorForSchema(schema));
+    define(WrapperClass, 'validate', Validation.staticDescriptorFor(schema));
 
     define(WrapperClass.prototype, SCHEMA, {
       value: schema
     });
 
-    define(WrapperClass.prototype, 'attributes', attributesDescriptor);
+    define(WrapperClass.prototype, 'attributes', attributesDescriptorFor(schema));
 
     Object.keys(schema).forEach((attr) => {
-      define(WrapperClass.prototype, attr, {
-        enumerable: true,
-        get() {
-          return this.attributes[attr];
-        },
-
-        set(value) {
-          this.attributes[attr] = schema[attr].coerce(value);
-        }
-      });
+      define(WrapperClass.prototype, attr, attributeDescriptorFor(attr, schema));
     });
 
-    define(WrapperClass.prototype, 'validate', validationDescriptorForSchema(schema));
+    define(WrapperClass.prototype, 'validate', Validation.descriptorFor(schema));
 
-    define(WrapperClass.prototype, 'toJSON', serializationDescriptor);
+    define(WrapperClass.prototype, 'toJSON', Serialization.descriptor);
 
     return WrapperClass;
   };

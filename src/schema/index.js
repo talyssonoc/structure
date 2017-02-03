@@ -1,3 +1,3 @@
 module.exports = {
-  normalize: require('./normalize')
+  normalize: require('./normalization')
 };

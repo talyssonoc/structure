@@ -1,3 +1,1 @@
-module.exports = {
-  getInitialValues: require('./initialValuesCreation')
-};
+module.exports = require('./decorator');

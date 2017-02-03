@@ -1,7 +1,5 @@
 const joi = require('joi');
 
-const { SCHEMA, VALIDATE } = require('../symbols');
-
 const validations = [
   require('./string'),
   require('./number'),
@@ -12,7 +10,15 @@ const validations = [
 const nestedValidation = require('./nested');
 const arrayValidation = require('./array');
 
-exports.validationForAttribute = function validationForAttribute(typeDescriptor) {
+const {
+  validationDescriptorForSchema,
+  staticValidationDescriptorForSchema
+} = require('./descriptors');
+
+exports.descriptorFor = validationDescriptorForSchema;
+exports.staticDescriptorFor = staticValidationDescriptorForSchema;
+
+exports.forAttribute = function validationForAttribute(typeDescriptor) {
   if(typeDescriptor.itemType !== undefined) {
     return arrayValidation(typeDescriptor, typeDescriptor.itemType);
   }
@@ -34,7 +40,7 @@ const validatorOptions = {
   allowUnknown: false
 };
 
-exports.validationForSchema = function validationForSchema(schema) {
+exports.forSchema = function validationForSchema(schema) {
   const schemaValidation = {};
 
   Object.keys(schema).forEach((attributeName) => {
@@ -57,42 +63,3 @@ exports.validationForSchema = function validationForSchema(schema) {
     }
   };
 };
-
-exports.validationDescriptorForSchema = function validationDescriptorForSchema(schema) {
-  const validation = schema[VALIDATE];
-
-  return {
-    value: function validate() {
-      const serializedStructure = this.toJSON();
-
-      return validateData(validation, serializedStructure);
-    }
-  };
-};
-
-exports.staticValidationDescriptorForSchema = function staticValidationDescriptorForSchema(schema) {
-  const validation = schema[VALIDATE];
-
-  return {
-    value: function validate(data) {
-      if(data[SCHEMA]) {
-        data = data.toJSON();
-      }
-
-      return validateData(validation, data);
-    }
-  };
-};
-
-function validateData(validation, data) {
-  const errors = validation.validate(data);
-
-  if(errors) {
-    return {
-      valid: false,
-      errors
-    };
-  }
-
-  return { valid: true };
-}
