@@ -7,7 +7,7 @@ const types = [
   require('./boolean')
 ];
 
-function coercionFor(typeDescriptor, itemTypeDescriptor) {
+exports.for = function coercionFor(typeDescriptor, itemTypeDescriptor) {
   if(itemTypeDescriptor) {
     return arrayCoercionFor(typeDescriptor, itemTypeDescriptor);
   }
@@ -29,6 +29,4 @@ function coercionFor(typeDescriptor, itemTypeDescriptor) {
 
     return coercion.coerce(value);
   };
-}
-
-exports.coercionFor = coercionFor;
+};

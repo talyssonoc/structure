@@ -1,5 +1,5 @@
-const { SCHEMA } = require('./symbols');
-const { getType } = require('./typeResolver');
+const { SCHEMA } = require('../symbols');
+const getType = require('../typeResolver');
 
 function serialize(structure) {
   if(structure === undefined) {
@@ -36,4 +36,4 @@ function getTypeSchema(typeDescriptor) {
   return getType(typeDescriptor)[SCHEMA];
 }
 
-exports.serialize = serialize;
+module.exports = serialize;

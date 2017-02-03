@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { normalizeSchema } = require('../../src/schemaNormalization');
+const { normalize } = require('../../../src/schema');
 
 describe('schema normalization', () => {
   context('when passed attribute is the type itself', () => {
@@ -8,7 +8,7 @@ describe('schema normalization', () => {
         name: String
       };
 
-      expect(normalizeSchema(schema).name.type).to.equal(String);
+      expect(normalize(schema).name.type).to.equal(String);
     });
   });
 
@@ -19,7 +19,7 @@ describe('schema normalization', () => {
           name: { type: String }
         };
 
-        expect(normalizeSchema(schema).name.type).to.equal(String);
+        expect(normalize(schema).name.type).to.equal(String);
       });
     });
 
@@ -30,7 +30,7 @@ describe('schema normalization', () => {
         };
 
         expect(() => {
-          normalizeSchema(schema);
+          normalize(schema);
         }).to.throw(Error, /^Missing type for attribute: name\.$/);
       });
     });
@@ -42,8 +42,8 @@ describe('schema normalization', () => {
         const schema = { name: true };
 
         expect(() => {
-          normalizeSchema(schema);
-        }).to.throw(TypeError, /^Invalid type for attribute: name\.$/);
+          normalize(schema);
+        }).to.throw(TypeError, /^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
       });
     });
 
@@ -56,8 +56,8 @@ describe('schema normalization', () => {
         };
 
         expect(() => {
-          normalizeSchema(schema);
-        }).to.throw(TypeError, /^Attribute type must be a constructor: name\.$/);
+          normalize(schema);
+        }).to.throw(TypeError, /^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
       });
     });
   });
@@ -72,7 +72,7 @@ describe('schema normalization', () => {
           }
         };
 
-        expect(normalizeSchema(schema).name.itemType.type).to.eql(String);
+        expect(normalize(schema).name.itemType.type).to.eql(String);
       });
     });
 
@@ -85,7 +85,7 @@ describe('schema normalization', () => {
           }
         };
 
-        expect(normalizeSchema(schema).name.itemType.type).to.eql(String);
+        expect(normalize(schema).name.itemType.type).to.eql(String);
       });
     });
   });
