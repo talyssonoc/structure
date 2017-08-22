@@ -11,8 +11,12 @@ module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
       throw Errors.arrayOrIterable();
     }
 
-    if(value[Symbol.iterator]) {
-      value = Array(...value);
+    if(Array.isArray(value)) {
+      value = value.slice();
+    } else {
+      if(value[Symbol.iterator]) {
+        value = Array(...value);
+      }
     }
 
     const type = getType(typeDescriptor);

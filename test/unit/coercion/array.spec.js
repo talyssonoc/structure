@@ -3,6 +3,7 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Array', () => {
+    var Seat;
     var User;
 
     beforeEach(() => {
@@ -115,6 +116,27 @@ describe('type coercion', () => {
             books: 123
           });
         }).to.throw(TypeError, /^Value must be iterable or array-like\.$/);
+      });
+    });
+
+    context('when raw value is a single numeric array', () => {
+      beforeEach(() => {
+        Seat = attributes({
+          seats: {
+            type: Array,
+            itemType: Number
+          }
+        })(class Seat {});
+      });
+
+      it('return the correct array', () => {
+        const seat = new Seat({
+          seats: [1]
+        });
+
+        expect(seat.seats).to.eql([
+          1
+        ]);
       });
     });
   });
