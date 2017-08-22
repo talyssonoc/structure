@@ -738,11 +738,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 	var Errors = __webpack_require__(19);
 	var getType = __webpack_require__(22);
-
-	var _require = __webpack_require__(10),
-	    flatten = _require.flatten;
 
 	module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
 	  return function coerceArray(value) {
@@ -754,8 +753,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      throw Errors.arrayOrIterable();
 	    }
 
-	    if (value[Symbol.iterator]) {
-	      value = flatten(Array(value));
+	    if (Array.isArray(value)) {
+	      value = value.slice();
+	    } else {
+	      if (value[Symbol.iterator]) {
+	        value = Array.apply(undefined, _toConsumableArray(value));
+	      }
 	    }
 
 	    var type = getType(typeDescriptor);
