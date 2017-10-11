@@ -80,7 +80,7 @@ describe('validation', () => {
             }
           });
 
-          expect(valid).to.be.trye;
+          expect(valid).to.be.true;
           expect(errors).to.be.undefined;
         });
       });
