@@ -3,3 +3,4 @@ coverage/
 *.log
 .env
 .DS_Store
+.idea

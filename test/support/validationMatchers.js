@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const { nestedArray } = require('./validationHelper');
 
 exports.assertValid = function assertValid(structure) {
   const { valid, errors } = structure.validate();
@@ -13,5 +14,5 @@ exports.assertInvalid = function assertInvalid(structure, path) {
   expect(valid).to.be.false;
   expect(errors).to.be.instanceOf(Array);
   expect(errors).to.have.lengthOf(1);
-  expect(errors[0].path).to.equal(path);
+  expect(errors[0].path).to.eql(nestedArray(path));
 };

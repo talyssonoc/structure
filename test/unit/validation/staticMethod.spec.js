@@ -1,5 +1,6 @@
 const { attributes } = require('../../../src');
 const { expect } = require('chai');
+const { nestedArray } = require('../../support/validationHelper');
 
 describe('validation', () => {
   describe('Using structure static method', () => {
@@ -48,8 +49,8 @@ describe('validation', () => {
         expect(valid).to.be.false;
         expect(errors).to.be.instanceOf(Array);
         expect(errors).to.have.lengthOf(2);
-        expect(errors[0].path).to.equal('name');
-        expect(errors[1].path).to.equal('age');
+        expect(errors[0].path).to.eql(nestedArray('name'));
+        expect(errors[1].path).to.eql(nestedArray('age'));
       });
     });
 
@@ -65,7 +66,7 @@ describe('validation', () => {
           expect(valid).to.be.false;
           expect(errors).to.be.instanceOf(Array);
           expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('favoriteBook.name');
+          expect(errors[0].path).to.eql(nestedArray('favoriteBook.name'));
         });
       });
 
@@ -98,7 +99,7 @@ describe('validation', () => {
           expect(valid).to.be.false;
           expect(errors).to.be.instanceOf(Array);
           expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('age');
+          expect(errors[0].path).to.eql(nestedArray('age'));
         });
       });
 
@@ -113,8 +114,8 @@ describe('validation', () => {
           expect(valid).to.be.false;
           expect(errors).to.be.instanceOf(Array);
           expect(errors).to.have.lengthOf(2);
-          expect(errors[0].path).to.equal('name');
-          expect(errors[1].path).to.equal('age');
+          expect(errors[0].path).to.eql(nestedArray('name'));
+          expect(errors[1].path).to.eql(nestedArray('age'));
         });
       });
     });
