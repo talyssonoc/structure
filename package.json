@@ -35,7 +35,7 @@
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
-    "joi": "^11.3.4",
+    "joi": "https://github.com/mlepinay/joi-es5.git",
     "lodash": "^4.16.4"
   },
   "devDependencies": {
