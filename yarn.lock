@@ -1934,10 +1934,6 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-joi-browser@^10.0.6:
-  version "10.0.6"
-  resolved "https://registry.yarnpkg.com/joi-browser/-/joi-browser-10.0.6.tgz#2079c3fd845a886fc7ec5ce7c3f57422fbbdaa05"
-
 "joi@https://github.com/mlepinay/joi-es5.git":
   version "13.0.1"
   resolved "https://github.com/mlepinay/joi-es5.git#fc8ba9829c7743bfefa58ad2b87e67ae7d9f4a7a"
