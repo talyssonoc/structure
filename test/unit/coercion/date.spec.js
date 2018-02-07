@@ -41,7 +41,7 @@ describe('type coercion', () => {
         birth: null
       });
 
-      expect(user.birth).to.eql(new Date('1970-01-01T00:00:00'));
+      expect(user.birth).to.eql(new Date('1970-01-01T00:00:00Z'));
     });
   });
 });
