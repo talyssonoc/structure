@@ -1,6 +1,6 @@
 {
   "name": "structure",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A simple schema/attributes library built on top of modern JavaScript",
   "main": "src/index.js",
   "browser": "dist/structure.js",
@@ -18,6 +18,9 @@
   "contributors": [
     "Fernando <me@fleury.io>"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "license": "MIT",
   "keywords": [
     "entity",
