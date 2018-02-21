@@ -28,11 +28,11 @@ function attributesDecorator(schema, schemaOptions = {}) {
       }
     });
 
-    schema = Schema.normalize(schema, schemaOptions);
-
     if(WrapperClass[SCHEMA]) {
       schema = Object.assign({}, WrapperClass[SCHEMA], schema);
     }
+
+    schema = Schema.normalize(schema, schemaOptions);
 
     define(WrapperClass, SCHEMA, {
       value: schema
