@@ -65,6 +65,27 @@ describe('creating a structure class', () => {
       });
     });
 
+    context('when the function default value uses another class attribute', () => {
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: String,
+          surname: String,
+          fullname: {
+            type: String,
+            default: (self) => `${self.name} ${self.surname}`
+          }
+        })(class User {});
+      });
+
+      it('defines the attribute with the default value executing the function', () => {
+        const user = new User({ name: 'Jack', surname: 'Sparrow' });
+
+        expect(user.fullname).to.equal('Jack Sparrow');
+      });
+    });
+
     context('when the provided default value is a property', () => {
       var User;
 

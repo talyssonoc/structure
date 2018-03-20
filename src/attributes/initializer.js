@@ -1,14 +1,32 @@
-const FUNCTION_TYPE = 'function';
+const { isFunction } = require('lodash');
 
-function natives(attributes, schema) {
+const natives = Object.assign({}, {
+  getValue(attr) {
+    return attr.default;
+  },
+  shouldInitialize(attr) {
+    return !isFunction(attr.default);
+  }
+});
+
+const functions = Object.assign({}, {
+  getValue(attr, instance) {
+    return attr.default(instance);
+  },
+  shouldInitialize(attr) {
+    return isFunction(attr.default);
+  }
+});
+
+function initialize(attributes, schema, instance, Initializer) {
   for(let attr in schema) {
-    if (typeof schema[attr].default === FUNCTION_TYPE) {
+    if (!Initializer.shouldInitialize(schema[attr])) {
       continue;
     }
 
     attributes[attr] = (
       attributes[attr] === undefined
-      ? schema[attr].default
+      ? Initializer.getValue(schema[attr], instance)
       : attributes[attr]
     );
   }
@@ -16,20 +34,4 @@ function natives(attributes, schema) {
   return attributes;
 }
 
-function functions(attributes, schema, instance) {
-  for(let attr in schema) {
-    if (typeof schema[attr].default !== FUNCTION_TYPE) {
-      continue;
-    }
-
-    attributes[attr] = (
-      attributes[attr] === undefined
-      ? schema[attr].default(instance)
-      : attributes[attr]
-    );
-  }
-
-  return attributes;
-}
-
-module.exports = { natives, functions };
+module.exports = { initialize, natives, functions };

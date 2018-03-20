@@ -22,8 +22,8 @@ function attributesDecorator(schema, schemaOptions = {}) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
         const passedAttributes = constructorArgs[0] || {};
 
-        instance.attributes = Initializer.natives(passedAttributes, schema);
-        instance.attributes = Initializer.functions(passedAttributes, schema, instance);
+        instance.attributes = Initializer.initialize(passedAttributes, schema, instance, Initializer.natives);
+        instance.attributes = Initializer.initialize(passedAttributes, schema, instance, Initializer.functions);
 
         return instance;
       }
