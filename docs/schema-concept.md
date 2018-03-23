@@ -38,7 +38,22 @@ const User = attributes({
 ### default
 The __default__ of an attribute will be used if no value was provided for the specific attribute at construction time.
 
-You can also use a function which receives the instance as a parameter in order to provide the default. The operation must be synchronous and the function will called after all the other attributes are already assigned.
+You can also use a function which receives the instance as a parameter in order to provide the default. The operation must be synchronous and the function will called after all the other attributes are already assigned,
+thus, you can use the other attributes of your class to compose a default value.
+
+```js
+const User = attributes({
+  name: String,
+  greeting: {
+    type: String,
+    default: (instance) => instance.greeting()
+  }
+})(class User {
+  greeting() {
+    return `Hello ${this.name}`;
+  }
+});
+```
 
 Please note that removing the value of an attribute will not make it fallback to the default value.
 
