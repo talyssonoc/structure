@@ -1,3 +1,7 @@
+## 1.3.0 - 2018-03-23
+Enhancements:
+* When using default function to initialize attributes you can now refer to another attribute values to compose value
+
 ## 1.2.0 - 2017-02-01
 Features:
 * Allow circular reference on type definitions ([@talyssonoc](https://github.com/talyssonoc/structure/pull/30))
