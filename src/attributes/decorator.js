@@ -3,7 +3,7 @@ const Serialization = require('../serialization');
 const Validation = require('../validation');
 const Errors = require('../errors');
 const { SCHEMA } = require('../symbols');
-const getInitialValues = require('./initialValuesCreation');
+const Initializer = require('./initializer');
 const {
   attributeDescriptorFor,
   attributesDescriptorFor
@@ -22,7 +22,8 @@ function attributesDecorator(schema, schemaOptions = {}) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
         const passedAttributes = constructorArgs[0] || {};
 
-        instance.attributes = getInitialValues(passedAttributes, schema, instance);
+        instance.attributes = Initializer.initialize(passedAttributes, schema, instance, Initializer.natives);
+        instance.attributes = Initializer.initialize(passedAttributes, schema, instance, Initializer.functions);
 
         return instance;
       }
