@@ -121,7 +121,7 @@ describe('type coercion', () => {
 
     context('when raw value implements Symbol.iterator', () => {
       const books = {
-        [Symbol.iterator]: function*() {
+        *[Symbol.iterator]() {
           for(let i = 0; i < 3; i++) {
             yield i;
           }

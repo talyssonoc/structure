@@ -26,8 +26,8 @@ function initialize(attributes, schema, instance, Initializer) {
 
     attributes[attr] = (
       attributes[attr] === undefined
-      ? Initializer.getValue(schema[attr], instance)
-      : attributes[attr]
+        ? Initializer.getValue(schema[attr], instance)
+        : attributes[attr]
     );
   }
 
