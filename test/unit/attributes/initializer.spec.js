@@ -57,7 +57,7 @@ describe('Initializer', () => {
 
         it('throws a TypeError', () => {
           const wrapper = () => Initializer.functions.getValue(attributeDescriptor, {});
-          expect(wrapper).to.throw('attr.default is not a function');
+          expect(wrapper).to.throw('attrDescriptor.default is not a function');
         });
       });
     });
