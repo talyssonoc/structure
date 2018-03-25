@@ -1,6 +1,6 @@
 const { isFunction } = require('lodash');
 
-const natives = Object.assign({}, {
+const nativesInitializer = Object.assign({}, {
   getValue(attrDescriptor) {
     return attrDescriptor.default;
   },
@@ -9,7 +9,7 @@ const natives = Object.assign({}, {
   }
 });
 
-const functions = Object.assign({}, {
+const derivedInitializer = Object.assign({}, {
   getValue(attrDescriptor, instance) {
     return attrDescriptor.default(instance);
   },
@@ -18,34 +18,25 @@ const functions = Object.assign({}, {
   }
 });
 
-function initialize(attributes, schema, instance, Initializer) {
+function initialize(attributes, schema, instance) {
+  instance.attributes = initializeWith(nativesInitializer, attributes, schema, instance);
+  instance.attributes = initializeWith(derivedInitializer, attributes, schema, instance);
+
+  return attributes;
+}
+
+function initializeWith(Initializer, attributes, schema, instance) {
   for(let attrName in schema) {
-    initializeAttribute(attributes, attrName, schema, instance, Initializer);
+    const value = attributes[attrName];
+
+    if(value === undefined && Initializer.shouldInitialize(schema[attrName])) {
+      attributes[attrName] = Initializer.getValue(schema[attrName], instance);
+    }
   }
 
   return attributes;
 }
 
-function initializeAttribute(attributes, attrName, schema, instance, Initializer) {
-  if (!Initializer.shouldInitialize(schema[attrName])) {
-    return;
-  }
 
-  attributes[attrName] = getInitialValue(
-    attributes[attrName],
-    attrName,
-    schema,
-    instance,
-    Initializer
-  );
-}
 
-function getInitialValue(value, attrName, schema, instance, Initializer) {
-  if(value === undefined) {
-    return Initializer.getValue(schema[attrName], instance);
-  }
-
-  return value;
-}
-
-module.exports = { initialize, natives, functions };
+module.exports = { initialize, nativesInitializer, derivedInitializer };
