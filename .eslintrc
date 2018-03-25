@@ -10,7 +10,7 @@
   ],
   "rules": {
     "comma-spacing": ["error", { "before": false, "after": true }],
-    "complexity": ["error", 2],
+    "complexity": ["error", 3],
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "object-shorthand": ["error", "always", { "avoidQuotes": true,  "avoidExplicitReturnArrows": true }],
