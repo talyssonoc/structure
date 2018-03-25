@@ -36,10 +36,6 @@ function validateTypeDescriptor(typeDescriptor, attributeName) {
   if(!isObject(typeDescriptor.type) && !isDynamicTypeDescriptor(typeDescriptor)) {
     throw Errors.invalidType(attributeName);
   }
-
-  if(typeDescriptor.type == null) {
-    throw Errors.missingType(attributeName);
-  }
 }
 
 function isDynamicTypeDescriptor(typeDescriptor) {
