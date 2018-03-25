@@ -14,7 +14,7 @@ function normalizeTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
 }
 
 function normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
-  if (isDynamicTypeDescriptor(typeDescriptor)) {
+  if(isDynamicTypeDescriptor(typeDescriptor)) {
     typeDescriptor = addDynamicTypeGetter(schemaOptions, typeDescriptor, attributeName);
   }
 
@@ -26,6 +26,10 @@ function normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attribut
     );
   }
 
+  return createNormalizedTypeDescriptor(typeDescriptor);
+}
+
+function createNormalizedTypeDescriptor(typeDescriptor) {
   return Object.assign({}, typeDescriptor, {
     coerce: Coercion.for(typeDescriptor, typeDescriptor.itemType),
     validation: Validation.forAttribute(typeDescriptor)
