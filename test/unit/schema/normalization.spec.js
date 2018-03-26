@@ -22,18 +22,6 @@ describe('schema normalization', () => {
         expect(normalize(schema).name.type).to.equal(String);
       });
     });
-
-    context('when attribute object does not have the field type', () => {
-      it('throws an error', () => {
-        const schema = {
-          name: { something: 42 }
-        };
-
-        expect(() => {
-          normalize(schema);
-        }).to.throw(Error, /^Missing type for attribute: name\.$/);
-      });
-    });
   });
 
   context('when it is not possible to normalize the attribute', () => {
@@ -47,7 +35,7 @@ describe('schema normalization', () => {
       });
     });
 
-    context('when attribute type is not an object but #type is not a constructor', () => {
+    context('when attribute descriptor is complete but #type is not a constructor', () => {
       it('throws an error', () => {
         const schema = {
           name: {

@@ -8,10 +8,14 @@ module.exports = function genericCoercionFor(typeDescriptor) {
 
     const type = getType(typeDescriptor);
 
-    if(value instanceof type) {
+    if(!needsCoercion(value, type)) {
       return value;
     }
 
     return new type(value);
   };
 };
+
+function needsCoercion(value, type) {
+  return !(value instanceof type);
+}

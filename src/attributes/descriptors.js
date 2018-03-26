@@ -1,7 +1,6 @@
+const { isObject } = require('lodash');
 const Errors = require('../errors');
 const { ATTRIBUTES } = require('../symbols');
-
-const OBJECT_TYPE = 'object';
 
 exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, schema) {
   return {
@@ -23,15 +22,11 @@ exports.attributesDescriptorFor = function attributesDescriptorFor(schema) {
     },
 
     set(newAttributes) {
-      if(!newAttributes || typeof newAttributes !== OBJECT_TYPE) {
+      if(!isObject(newAttributes)) {
         throw Errors.nonObjectAttributes();
       }
 
-      const attributes = Object.create(null);
-
-      for(let attrName in schema) {
-        attributes[attrName] = schema[attrName].coerce(newAttributes[attrName]);
-      }
+      const attributes = coerceAttributes(newAttributes, schema);
 
       Object.defineProperty(this, ATTRIBUTES, {
         configurable: true,
@@ -40,3 +35,13 @@ exports.attributesDescriptorFor = function attributesDescriptorFor(schema) {
     }
   };
 };
+
+function coerceAttributes(newAttributes, schema) {
+  const attributes = Object.create(null);
+
+  for(let attrName in schema) {
+    attributes[attrName] = schema[attrName].coerce(newAttributes[attrName]);
+  }
+
+  return attributes;
+}

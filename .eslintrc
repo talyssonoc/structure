@@ -9,13 +9,14 @@
     "mocha"
   ],
   "rules": {
-    "comma-spacing": [2, { "before": false, "after": true }],
-    "indent": [2, 2],
-    "linebreak-style": [2, "unix"],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "complexity": ["error", 4],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
     "object-shorthand": ["error", "always", { "avoidQuotes": true,  "avoidExplicitReturnArrows": true }],
-    "mocha/no-exclusive-tests": 2,
-    "mocha/no-skipped-tests": 2,
-    "quotes": [2, "single"],
-    "semi": [2, "always"]
+    "mocha/no-exclusive-tests": "error",
+    "mocha/no-skipped-tests": "error",
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
   }
 }
