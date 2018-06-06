@@ -74,6 +74,18 @@ Be aware that not the whole test suite will pass on browsers, there are some cas
 
 Right now 95.5% of the tests will pass on Chrome 55, and 95% will pass on Firefox 45. We intend to make it support older versions using polyfills in the next releases.
 
+## BattleCry generators
+
+There are configurable [BattleCry](https://github.com/pedsmoreira/battlecry) generators ready to be downloaded and help scaffolding schema:
+
+```sh
+npm install -g battlecry
+cry download generator talyssonoc/structure
+cry g schema user name age:int:required cars:string[] favoriteBook:book friends:user[]:default :updateAge
+```
+
+Run `cry --help` to check more info about the generators available;
+
 ## [Contributing](/contributing.md)
 
 ## [LICENSE](/license.md)
