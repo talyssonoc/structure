@@ -85,9 +85,7 @@ describe('validation', () => {
 
       context('when value is present', () => {
         it('is valid', () => {
-          const user = new User({
-            books: []
-          });
+          const user = new User();
 
           assertValid(user);
         });

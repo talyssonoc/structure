@@ -68,6 +68,29 @@ describe('validation', () => {
       });
     });
 
+    describe('not required', () => {
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          name: {
+            type: String,
+            required: false
+          }
+        })(class User {});
+      });
+
+      context('when value is not present', () => {
+        it('is valid', () => {
+          const user = new User({
+            name: undefined
+          });
+
+          assertValid(user);
+        });
+      });
+    });
+
     describe('equal', () => {
       var User;
 
