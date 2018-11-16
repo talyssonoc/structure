@@ -70,6 +70,40 @@ describe('validation', () => {
       });
     });
 
+    describe('not required', () => {
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: String,
+            required: false
+          }
+        })(class User {});
+      });
+
+      context('when value is present', () => {
+        it('is valid', () => {
+          const user = new User({
+            books: []
+          });
+
+          assertValid(user);
+        });
+      });
+
+      context('when value is not present', () => {
+        it('is valid', () => {
+          const user = new User({
+            books: undefined
+          });
+
+          assertValid(user, 'books');
+        });
+      });
+    });
+
     describe('sparse array', () => {
       context('when array can not be sparse', () => {
         var User;
