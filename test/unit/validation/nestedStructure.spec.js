@@ -88,6 +88,37 @@ describe('validation', () => {
       });
     });
 
+    describe('not required', () => {
+      var Location;
+      var User;
+
+      beforeEach(() => {
+        Location = attributes({
+          x: {
+            type: Number
+          },
+          y: {
+            type: Number
+          }
+        })(class Location {});
+
+        User = attributes({
+          lastLocation: {
+            type: Location,
+            required: false
+          }
+        })(class User {});
+      });
+
+      context('when value is not present', () => {
+        it('is valid', () => {
+          const user = new User();
+
+          assertValid(user);
+        });
+      });
+    });
+
     describe('nested required', () => {
       var Location;
       var User;

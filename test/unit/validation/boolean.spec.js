@@ -68,6 +68,27 @@ describe('validation', () => {
       });
     });
 
+    describe('not required', () => {
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          isAdmin: {
+            type: Boolean,
+            required: false
+          }
+        })(class User {});
+      });
+
+      context('when value is not present', () => {
+        it('is valid', () => {
+          const user = new User();
+
+          assertValid(user);
+        });
+      });
+    });
+
     describe('equal', () => {
       var User;
 
