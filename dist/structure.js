@@ -52,14 +52,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -67,17 +67,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  attributes: __webpack_require__(2)
 	};
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(3);
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -112,8 +112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var instance = Reflect.construct(target, constructorArgs, newTarget);
 	        var passedAttributes = constructorArgs[0] || {};
 
-	        instance.attributes = Initializer.initialize(passedAttributes, schema, instance, Initializer.natives);
-	        instance.attributes = Initializer.initialize(passedAttributes, schema, instance, Initializer.functions);
+	        Initializer.initialize(passedAttributes, schema, instance);
 
 	        return instance;
 	      }
@@ -151,9 +150,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = attributesDecorator;
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -161,9 +160,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  normalize: __webpack_require__(5)
 	};
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -189,9 +188,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return schema;
 	};
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -262,15 +261,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -296,9 +295,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -309,17 +308,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _require = __webpack_require__(10),
 	    isPlainObject = _require.isPlainObject;
 
-	exports.mapToJoi = function mapToJoi(typeDescriptor, _ref) {
-	  var initial = _ref.initial,
-	      mappings = _ref.mappings;
+	var notRequired = function notRequired(_ref) {
+	  var optionName = _ref.optionName,
+	      typeDescriptor = _ref.typeDescriptor;
+	  return optionName === 'required' && typeDescriptor[optionName] === false;
+	};
 
-	  return mappings.reduce(function (joiSchema, _ref2) {
-	    var _ref3 = _slicedToArray(_ref2, 3),
-	        optionName = _ref3[0],
-	        joiMethod = _ref3[1],
-	        passValueToJoi = _ref3[2];
+	exports.mapToJoi = function mapToJoi(typeDescriptor, _ref2) {
+	  var initial = _ref2.initial,
+	      mappings = _ref2.mappings;
 
-	    if (typeDescriptor[optionName] === undefined) {
+	  return mappings.reduce(function (joiSchema, _ref3) {
+	    var _ref4 = _slicedToArray(_ref3, 3),
+	        optionName = _ref4[0],
+	        joiMethod = _ref4[1],
+	        passValueToJoi = _ref4[2];
+
+	    if (typeDescriptor[optionName] === undefined || notRequired({ optionName: optionName, typeDescriptor: typeDescriptor })) {
 	      return joiSchema;
 	    }
 
@@ -339,14 +344,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return valueOrReference;
 	}
 
-	exports.mapToJoiWithReference = function mapToJoiWithReference(typeDescriptor, _ref4) {
-	  var initial = _ref4.initial,
-	      mappings = _ref4.mappings;
+	exports.mapToJoiWithReference = function mapToJoiWithReference(typeDescriptor, _ref5) {
+	  var initial = _ref5.initial,
+	      mappings = _ref5.mappings;
 
-	  return mappings.reduce(function (joiSchema, _ref5) {
-	    var _ref6 = _slicedToArray(_ref5, 2),
-	        optionName = _ref6[0],
-	        joiMethod = _ref6[1];
+	  return mappings.reduce(function (joiSchema, _ref6) {
+	    var _ref7 = _slicedToArray(_ref6, 2),
+	        optionName = _ref7[0],
+	        joiMethod = _ref7[1];
 
 	    var optionValue = typeDescriptor[optionName];
 
@@ -360,8 +365,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, initial);
 	};
 
-	exports.equalOption = function equalOption(typeDescriptor, _ref7) {
-	  var initial = _ref7.initial;
+	exports.equalOption = function equalOption(typeDescriptor, _ref8) {
+	  var initial = _ref8.initial;
 
 	  var possibilities = typeDescriptor.equal;
 
@@ -378,8 +383,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return initial.equal(possibilities);
 	};
 
-	exports.requiredOption = function requiredOption(typeDescriptor, _ref8) {
-	  var initial = _ref8.initial;
+	exports.requiredOption = function requiredOption(typeDescriptor, _ref9) {
+	  var initial = _ref9.initial;
 
 	  if (typeDescriptor.required) {
 	    return initial.required();
@@ -388,15 +393,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return initial;
 	};
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_10__;
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -423,9 +428,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -447,9 +452,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -476,9 +481,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 14 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -534,9 +539,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return joiSchema;
 	}
 
-/***/ },
+/***/ }),
 /* 15 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -546,9 +551,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  VALIDATE: Symbol('validate')
 	};
 
-/***/ },
+/***/ }),
 /* 16 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -570,9 +575,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return joiSchema;
 	};
 
-/***/ },
+/***/ }),
 /* 17 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -619,59 +624,92 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return { valid: true };
 	}
 
-/***/ },
+/***/ }),
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	var _require = __webpack_require__(10),
+	    isObject = _require.isObject,
+	    isFunction = _require.isFunction,
+	    isString = _require.isString;
 
 	var Errors = __webpack_require__(19);
 	var Coercion = __webpack_require__(20);
 	var Validation = __webpack_require__(6);
 
-	function normalizeTypeDescriptor(schemaOptions, attribute, attributeName) {
-	  switch (typeof attribute === 'undefined' ? 'undefined' : _typeof(attribute)) {
-	    case 'object':
-	      if (!attribute.type) {
-	        throw Errors.missingType(attributeName);
-	      }
-
-	      if (typeof attribute.type === 'string') {
-	        if (!schemaOptions.dynamics || !schemaOptions.dynamics[attribute.type]) {
-	          throw Errors.missingDynamicType(attributeName);
-	        }
-
-	        attribute.getType = schemaOptions.dynamics[attribute.type];
-	        attribute.dynamicType = true;
-	      } else if (typeof attribute.type !== 'function') {
-	        throw Errors.invalidType(attributeName);
-	      }
-
-	      if (attribute.itemType) {
-	        attribute.itemType = normalizeTypeDescriptor(schemaOptions, attribute.itemType, 'itemType');
-	      }
-
-	      return Object.assign({}, attribute, {
-	        coerce: Coercion.for(attribute, attribute.itemType),
-	        validation: Validation.forAttribute(attribute)
-	      });
-
-	    case 'function':
-	    case 'string':
-	      return normalizeTypeDescriptor(schemaOptions, { type: attribute }, attributeName);
-
-	    default:
-	      throw Errors.invalidType(attributeName);
+	function normalizeTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
+	  if (isShorthandTypeDescriptor(typeDescriptor)) {
+	    typeDescriptor = convertToCompleteTypeDescriptor(typeDescriptor);
 	  }
+
+	  validateTypeDescriptor(typeDescriptor, attributeName);
+
+	  return normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName);
+	}
+
+	function normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
+	  if (isDynamicTypeDescriptor(typeDescriptor)) {
+	    typeDescriptor = addDynamicTypeGetter(schemaOptions, typeDescriptor, attributeName);
+	  }
+
+	  if (isArrayType(typeDescriptor)) {
+	    typeDescriptor.itemType = normalizeTypeDescriptor(schemaOptions, typeDescriptor.itemType, 'itemType');
+	  }
+
+	  return createNormalizedTypeDescriptor(typeDescriptor);
+	}
+
+	function createNormalizedTypeDescriptor(typeDescriptor) {
+	  return Object.assign({}, typeDescriptor, {
+	    coerce: Coercion.for(typeDescriptor, typeDescriptor.itemType),
+	    validation: Validation.forAttribute(typeDescriptor)
+	  });
+	}
+
+	function validateTypeDescriptor(typeDescriptor, attributeName) {
+	  if (!isObject(typeDescriptor.type) && !isDynamicTypeDescriptor(typeDescriptor)) {
+	    throw Errors.invalidType(attributeName);
+	  }
+	}
+
+	function isDynamicTypeDescriptor(typeDescriptor) {
+	  return isString(typeDescriptor.type);
+	}
+
+	function addDynamicTypeGetter(schemaOptions, typeDescriptor, attributeName) {
+	  if (!hasDynamicType(schemaOptions, typeDescriptor)) {
+	    throw Errors.missingDynamicType(attributeName);
+	  }
+
+	  typeDescriptor.getType = schemaOptions.dynamics[typeDescriptor.type];
+	  typeDescriptor.dynamicType = true;
+
+	  return typeDescriptor;
+	}
+
+	function isShorthandTypeDescriptor(typeDescriptor) {
+	  return isFunction(typeDescriptor) || isString(typeDescriptor);
+	}
+
+	function convertToCompleteTypeDescriptor(typeDescriptor) {
+	  return { type: typeDescriptor };
+	}
+
+	function hasDynamicType(schemaOptions, typeDescriptor) {
+	  return schemaOptions.dynamics && schemaOptions.dynamics[typeDescriptor.type];
+	}
+
+	function isArrayType(typeDescriptor) {
+	  return typeDescriptor.itemType != null;
 	}
 
 	exports.normalize = normalizeTypeDescriptor;
 
-/***/ },
+/***/ }),
 /* 19 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -685,9 +723,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  arrayOrIterable: function arrayOrIterable() {
 	    return new TypeError('Value must be iterable or array-like.');
 	  },
-	  missingType: function missingType(attributeName) {
-	    return new Error('Missing type for attribute: ' + attributeName + '.');
-	  },
 	  missingDynamicType: function missingDynamicType(attributeName) {
 	    return new Error('Missing dynamic type for attribute: ' + attributeName + '.');
 	  },
@@ -696,9 +731,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -712,10 +747,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return arrayCoercionFor(typeDescriptor, itemTypeDescriptor);
 	  }
 
-	  var coercion = types.find(function (c) {
+	  var coercion = getCoercion(typeDescriptor);
+
+	  return createCoercionFunction(coercion, typeDescriptor);
+	};
+
+	function getCoercion(typeDescriptor) {
+	  return types.find(function (c) {
 	    return c.type === typeDescriptor.type;
 	  });
+	}
 
+	function createCoercionFunction(coercion, typeDescriptor) {
 	  if (!coercion) {
 	    return genericCoercionFor(typeDescriptor);
 	  }
@@ -725,17 +768,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return;
 	    }
 
-	    if (coercion.test && coercion.test(value)) {
-	      return value;
+	    if (needsCoercion(value, coercion)) {
+	      return coercion.coerce(value);
 	    }
 
-	    return coercion.coerce(value);
+	    return value;
 	  };
-	};
+	}
 
-/***/ },
+	function needsCoercion(value, coercion) {
+	  return !coercion.test(value);
+	}
+
+/***/ }),
 /* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -745,37 +792,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	var getType = __webpack_require__(22);
 
 	module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
-	  return function coerceArray(value) {
-	    if (value === undefined) {
+	  return function coerceArray(rawValue) {
+	    if (rawValue === undefined) {
 	      return;
 	    }
 
-	    if (value === null || value.length === undefined && !value[Symbol.iterator]) {
-	      throw Errors.arrayOrIterable();
-	    }
+	    validateIfIterable(rawValue);
 
-	    if (Array.isArray(value)) {
-	      value = value.slice();
-	    } else {
-	      if (value[Symbol.iterator]) {
-	        value = Array.apply(undefined, _toConsumableArray(value));
-	      }
-	    }
+	    var items = extractItems(rawValue);
 
-	    var type = getType(typeDescriptor);
-	    var coercedValue = new type();
+	    var instance = createInstance(typeDescriptor);
 
-	    for (var i = 0; i < value.length; i++) {
-	      coercedValue.push(itemTypeDescriptor.coerce(value[i]));
-	    }
-
-	    return coercedValue;
+	    return fillInstance(instance, items, itemTypeDescriptor);
 	  };
 	};
 
-/***/ },
+	function validateIfIterable(value) {
+	  if (!isIterable(value)) {
+	    throw Errors.arrayOrIterable();
+	  }
+	}
+
+	function isIterable(value) {
+	  return value != null && (value.length != null || value[Symbol.iterator]);
+	}
+
+	function extractItems(iterable) {
+	  if (!Array.isArray(iterable) && iterable[Symbol.iterator]) {
+	    return Array.apply(undefined, _toConsumableArray(iterable));
+	  }
+
+	  return iterable;
+	}
+
+	function createInstance(typeDescriptor) {
+	  var type = getType(typeDescriptor);
+	  return new type();
+	}
+
+	function fillInstance(instance, items, itemTypeDescriptor) {
+	  for (var i = 0; i < items.length; i++) {
+	    instance.push(coerceItem(itemTypeDescriptor, items[i]));
+	  }
+
+	  return instance;
+	}
+
+	function coerceItem(itemTypeDescriptor, item) {
+	  return itemTypeDescriptor.coerce(item);
+	}
+
+/***/ }),
 /* 22 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -787,9 +856,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return typeDescriptor.type;
 	};
 
-/***/ },
+/***/ }),
 /* 23 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -803,7 +872,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var type = getType(typeDescriptor);
 
-	    if (value instanceof type) {
+	    if (!needsCoercion(value, type)) {
 	      return value;
 	    }
 
@@ -811,9 +880,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	};
 
-/***/ },
+	function needsCoercion(value, type) {
+	  return !(value instanceof type);
+	}
+
+/***/ }),
 /* 24 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -832,9 +905,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -853,22 +926,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 26 */
-/***/ function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	var _require = __webpack_require__(10),
+	    isBoolean = _require.isBoolean;
 
 	module.exports = {
 	  type: Boolean,
+	  test: isBoolean,
 	  coerce: function coerce(value) {
 	    return Boolean(value);
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 27 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -876,9 +953,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  descriptor: __webpack_require__(28)
 	};
 
-/***/ },
+/***/ }),
 /* 28 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -890,9 +967,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 29 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -907,92 +984,111 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  var schema = structure[SCHEMA];
-	  var serializedStructure = Object.create(null);
 
-	  for (var attrName in schema) {
-	    var attribute = structure[attrName];
-
-	    if (attribute == null) {
-	      continue;
-	    }
-
-	    var serializedValue = void 0;
-
-	    if (schema[attrName].itemType && getTypeSchema(schema[attrName].itemType)) {
-	      serializedValue = attribute.map(serialize);
-	    } else if (getTypeSchema(schema[attrName])) {
-	      serializedValue = serialize(attribute);
-	    } else {
-	      serializedValue = attribute;
-	    }
-
-	    serializedStructure[attrName] = serializedValue;
-	  }
-
-	  return serializedStructure;
+	  return serializeStructure(structure, schema);
 	}
 
 	function getTypeSchema(typeDescriptor) {
 	  return getType(typeDescriptor)[SCHEMA];
 	}
 
+	function serializeStructure(structure, schema) {
+	  var serializedStructure = Object.create(null);
+
+	  for (var attrName in schema) {
+	    var attribute = structure[attrName];
+
+	    if (attribute != null) {
+	      serializedStructure[attrName] = serializeAttribute(attribute, attrName, schema);
+	    }
+	  }
+
+	  return serializedStructure;
+	}
+
+	function serializeAttribute(attribute, attrName, schema) {
+	  if (isArrayType(schema, attrName)) {
+	    return attribute.map(serialize);
+	  }
+
+	  if (isNestedSchema(schema, attrName)) {
+	    return serialize(attribute);
+	  }
+
+	  return attribute;
+	}
+
+	function isArrayType(schema, attrName) {
+	  return schema[attrName].itemType && getTypeSchema(schema[attrName].itemType);
+	}
+
+	function isNestedSchema(schema, attrName) {
+	  return getTypeSchema(schema[attrName]);
+	}
+
 	module.exports = serialize;
 
-/***/ },
+/***/ }),
 /* 30 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _require = __webpack_require__(10),
 	    isFunction = _require.isFunction;
 
-	var natives = Object.assign({}, {
-	  getValue: function getValue(attr) {
-	    return attr.default;
+	var nativesInitializer = Object.assign({}, {
+	  getValue: function getValue(attrDescriptor) {
+	    return attrDescriptor.default;
 	  },
-	  shouldInitialize: function shouldInitialize(attr) {
-	    return !isFunction(attr.default);
+	  shouldInitialize: function shouldInitialize(attrDescriptor) {
+	    return !isFunction(attrDescriptor.default);
 	  }
 	});
 
-	var functions = Object.assign({}, {
-	  getValue: function getValue(attr, instance) {
-	    return attr.default(instance);
+	var derivedInitializer = Object.assign({}, {
+	  getValue: function getValue(attrDescriptor, instance) {
+	    return attrDescriptor.default(instance);
 	  },
-	  shouldInitialize: function shouldInitialize(attr) {
-	    return isFunction(attr.default);
+	  shouldInitialize: function shouldInitialize(attrDescriptor) {
+	    return isFunction(attrDescriptor.default);
 	  }
 	});
 
-	function initialize(attributes, schema, instance, Initializer) {
-	  for (var attr in schema) {
-	    if (!Initializer.shouldInitialize(schema[attr])) {
-	      continue;
+	function initialize(attributes, schema, instance) {
+	  instance.attributes = initializeWith(nativesInitializer, attributes, schema, instance);
+	  instance.attributes = initializeWith(derivedInitializer, attributes, schema, instance);
+
+	  return attributes;
+	}
+
+	function initializeWith(Initializer, attributes, schema, instance) {
+	  for (var attrName in schema) {
+	    var value = attributes[attrName];
+
+	    if (value === undefined && Initializer.shouldInitialize(schema[attrName])) {
+	      attributes[attrName] = Initializer.getValue(schema[attrName], instance);
 	    }
-
-	    attributes[attr] = attributes[attr] === undefined ? Initializer.getValue(schema[attr], instance) : attributes[attr];
 	  }
 
 	  return attributes;
 	}
 
-	module.exports = { initialize: initialize, natives: natives, functions: functions };
+	module.exports = { initialize: initialize, nativesInitializer: nativesInitializer, derivedInitializer: derivedInitializer };
 
-/***/ },
+/***/ }),
 /* 31 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	var _require = __webpack_require__(10),
+	    isObject = _require.isObject;
 
 	var Errors = __webpack_require__(19);
 
-	var _require = __webpack_require__(15),
-	    ATTRIBUTES = _require.ATTRIBUTES;
-
-	var OBJECT_TYPE = 'object';
+	var _require2 = __webpack_require__(15),
+	    ATTRIBUTES = _require2.ATTRIBUTES;
 
 	exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, schema) {
 	  return {
@@ -1012,15 +1108,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this[ATTRIBUTES];
 	    },
 	    set: function set(newAttributes) {
-	      if (!newAttributes || (typeof newAttributes === 'undefined' ? 'undefined' : _typeof(newAttributes)) !== OBJECT_TYPE) {
+	      if (!isObject(newAttributes)) {
 	        throw Errors.nonObjectAttributes();
 	      }
 
-	      var attributes = Object.create(null);
-
-	      for (var attrName in schema) {
-	        attributes[attrName] = schema[attrName].coerce(newAttributes[attrName]);
-	      }
+	      var attributes = coerceAttributes(newAttributes, schema);
 
 	      Object.defineProperty(this, ATTRIBUTES, {
 	        configurable: true,
@@ -1030,7 +1122,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	};
 
-/***/ }
+	function coerceAttributes(newAttributes, schema) {
+	  var attributes = Object.create(null);
+
+	  for (var attrName in schema) {
+	    attributes[attrName] = schema[attrName].coerce(newAttributes[attrName]);
+	  }
+
+	  return attributes;
+	}
+
+/***/ })
 /******/ ])
 });
 ;
