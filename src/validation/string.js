@@ -12,6 +12,7 @@ module.exports = {
     ['lowerCase', 'lowercase'],
     ['upperCase', 'uppercase'],
     ['email', 'email'],
+    ['uuid', 'uuid'],
     ['required', 'required']
   ],
   createJoiSchema(typeDescriptor) {

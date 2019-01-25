@@ -443,5 +443,38 @@ describe('validation', () => {
         });
       });
     });
+
+    describe('uuid', () => {
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          id: {
+            type: String,
+            uuid: true
+          }
+        })(class User {});
+      });
+
+      context('when value is a valid uuid', () => {
+        it('is valid', () => {
+          const user = new User({
+            name: '759535af-3314-4ace-81b9-a519c29d0e17'
+          });
+
+          assertValid(user);
+        });
+      });
+
+      context('when value is not a valid uuid', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            id: 'Not a valid uuid'
+          });
+
+          assertInvalid(user, 'id');
+        });
+      });
+    });
   });
 });
