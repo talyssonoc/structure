@@ -13,6 +13,10 @@ describe('validation', () => {
         User = attributes({
           lastLocation: {
             type: Location
+          },
+          nextLocation: {
+            type: Location,
+            nullable: true
           }
         })(class User {});
       });
@@ -28,9 +32,16 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
-        it('is valid', () => {
+        it('is valid with undefined', () => {
           const user = new User({
             lastLocation: undefined
+          });
+
+          assertValid(user);
+        });
+        it('is valid with null when nullable', () => {
+          const user = new User({
+            nextLocation: null
           });
 
           assertValid(user);

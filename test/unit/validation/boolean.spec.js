@@ -10,6 +10,10 @@ describe('validation', () => {
         User = attributes({
           isAdmin: {
             type: Boolean
+          },
+          hasAccepted: {
+            type: Boolean,
+            nullable: true
           }
         })(class User {});
       });
@@ -25,9 +29,16 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
-        it('is valid', () => {
+        it('is valid with undefined', () => {
           const user = new User({
             isAdmin: undefined
+          });
+
+          assertValid(user);
+        });
+        it('is valid with null when nullable', () => {
+          const user = new User({
+            hasAccepted: null
           });
 
           assertValid(user);

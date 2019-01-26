@@ -13,6 +13,10 @@ const User = attributes({
   books: {
     type: 'BooksCollection',
     itemType: String
+  },
+  nextBook: {
+    type: 'Book',
+    nullable: true
   }
 }, {
   dynamics: {

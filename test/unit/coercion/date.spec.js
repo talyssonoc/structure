@@ -7,7 +7,11 @@ describe('type coercion', () => {
 
     beforeEach(() => {
       User = attributes({
-        birth: Date
+        birth: Date,
+        death: {
+          type: Date,
+          nullable: true
+        }
       })(class User {});
     });
 
@@ -26,6 +30,14 @@ describe('type coercion', () => {
       });
 
       expect(user.birth).to.be.undefined;
+    });
+
+    it('does not coerces null when nullable', () => {
+      const user = new User({
+        death: null
+      });
+
+      expect(user.death).to.be.null;
     });
 
     it('coerces string to date', () => {

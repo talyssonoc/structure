@@ -7,7 +7,11 @@ describe('type coercion', () => {
 
     beforeEach(() => {
       User = attributes({
-        isAdmin: Boolean
+        isAdmin: Boolean,
+        hasAccepted: {
+          type: Boolean,
+          nullable: true
+        }
       })(class User {});
     });
 
@@ -17,6 +21,14 @@ describe('type coercion', () => {
       });
 
       expect(user.isAdmin).to.be.undefined;
+    });
+
+    it('does not coerces null when nullable', () => {
+      const user = new User({
+        hasAccepted: null
+      });
+
+      expect(user.hasAccepted).to.be.null;
     });
 
     it('coerces string to boolean', () => {

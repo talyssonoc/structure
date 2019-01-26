@@ -10,6 +10,10 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String
+          },
+          fatherName: {
+            type: String,
+            nullable: true
           }
         })(class User {});
       });
@@ -25,9 +29,16 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
-        it('is valid', () => {
+        it('is valid with undefined', () => {
           const user = new User({
             name: undefined
+          });
+
+          assertValid(user);
+        });
+        it('is valid with null when nullable', () => {
+          const user = new User({
+            fatherName: null
           });
 
           assertValid(user);
