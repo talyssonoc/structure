@@ -26,12 +26,12 @@ function createCoercionFunction(coercion, typeDescriptor) {
     return genericCoercionFor(typeDescriptor);
   }
 
-  return function coerce(value) {
+  return function coerce(value, nullable) {
     if(value === undefined) {
       return;
     }
 
-    if(needsCoercion(value, coercion)) {
+    if(needsCoercion(value, coercion, nullable)) {
       return coercion.coerce(value);
     }
 
@@ -39,6 +39,6 @@ function createCoercionFunction(coercion, typeDescriptor) {
   };
 }
 
-function needsCoercion(value, coercion) {
-  return !coercion.test(value);
+function needsCoercion(value, coercion, nullable) {
+  return (value !== null || !nullable) && !coercion.test(value);
 }

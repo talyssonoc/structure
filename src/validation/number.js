@@ -23,6 +23,10 @@ module.exports = {
       mappings: this.valueOrRefOptions
     });
 
+    if(typeDescriptor.nullable) {
+      joiSchema = joiSchema.allow(null);
+    }
+
     joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
     return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });

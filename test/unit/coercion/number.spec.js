@@ -7,7 +7,11 @@ describe('type coercion', () => {
 
     beforeEach(() => {
       User = attributes({
-        age: Number
+        age: Number,
+        earnings: {
+          type: Number,
+          nullable: true,
+        }
       })(class User {});
     });
 
@@ -27,6 +31,14 @@ describe('type coercion', () => {
       });
 
       expect(user.age).to.be.undefined;
+    });
+
+    it('does not coerces null when nullable', () => {
+      const user = new User({
+        earnings: null
+      });
+
+      expect(user.earnings).to.be.null;
     });
 
     it('coerces string to number', () => {

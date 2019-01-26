@@ -13,7 +13,11 @@ describe('type coercion', () => {
       })(class Location {});
 
       User = attributes({
-        location: Location
+        location: Location,
+        destination: {
+          type: Location,
+          nullable: true
+        }
       })(class User {});
     });
 
@@ -31,6 +35,14 @@ describe('type coercion', () => {
       });
 
       expect(user.location).to.be.undefined;
+    });
+
+    it('does not coerce null when nullable', () => {
+      const user = new User({
+        destination: null
+      });
+
+      expect(user.destination).to.be.null;
     });
 
     it('instantiates class with raw value', () => {

@@ -9,6 +9,10 @@ module.exports = {
   createJoiSchema(typeDescriptor) {
     var joiSchema = joi.boolean();
 
+    if(typeDescriptor.nullable) {
+      joiSchema = joiSchema.allow(null);
+    }
+
     joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
     return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });

@@ -62,6 +62,7 @@ Validations marked with __**__ accept a value or an [attribute reference](#attri
 - `lowerCase`: all characters must be lower cased
 - `upperCase`: all characters must be upper cased
 - `email`: is a valid email (default: `false`)
+- `nullable`: accepts null (default: `false`)
 
 ```javascript
 const User = attributes({
@@ -69,6 +70,10 @@ const User = attributes({
     type: String,
     upperCase: true,
     maxLength: 4
+  },
+  gender: {
+    type: String,
+    nullable: true
   },
   password: String,
   passwordConfirmation: {
@@ -101,6 +106,7 @@ const User = attributes({
 - `greater`: __**__ must be greater than passed value (works like the `>` operator)
 - `max`: __**__ maximum valid value (works like the `<=` operator)
 - `less`: __**__ must be smaller than passed value (works like the `<` operator)
+- `nullable`: accepts null (default: `false`)
 
 ```javascript
 const Pool = attributes({
@@ -111,6 +117,10 @@ const Pool = attributes({
   width: {
     type: Number,
     min: { attr: 'depth' }
+  },
+  price: {
+    type: Number,
+    nullable: true
   },
   length: {
     type: Number,
@@ -127,12 +137,17 @@ const Pool = attributes({
 
 - `required`: can't be undefined (default: `false`)
 - `equal`: __*__ equal to passed value
+- `nullable`: accepts null (default: `false`)
 
 ```javascript
 const User = attributes({
   isAdmin: {
     type: Boolean,
     required: true
+  },
+  hasAcceptedTerms: {
+    type: Boolean,
+    nullable: true
   }
 })(class User { });
 ```
@@ -143,6 +158,7 @@ const User = attributes({
 - `equal`: __*__ equal to passed value
 - `min`: __**__ must be after passed date
 - `max` __**__ must be before passed date
+- `nullable`: accepts null (default: `false`)
 
 ```javascript
 const Product = attributes({
@@ -150,12 +166,17 @@ const Product = attributes({
     type: Date,
     default: () => Date.now()
   },
+  updatedAt: {
+    type: Date,
+    nullable: true
+  },
   expirationDate: {
     type: Date,
     min: { attr: 'fabricationDate' }
   }
 })(class Product { });
 ```
+
 ### Array validations
 
 - `required`: can't be undefined (default: `false`)
@@ -169,14 +190,14 @@ const Group = attributes({
   members: {
     type: Array,
     itemType: String,
-    minLength: 2
+    minLength: 2,
     maxLength: 5,
     sparse: false
   },
   leaders: {
     type: Array,
     itemType: String,
-    minLength: 1
+    minLength: 1,
     maxLength: { attr: 'members' }
   }
 })
