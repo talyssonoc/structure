@@ -42,6 +42,14 @@ describe('instantiating a structure', () => {
     expect(user.name).to.equal('Me');
   });
 
+  it('don\'t reflect the changes outside of the escope', () => {
+    const rawUser = {};
+
+    new User(rawUser);
+
+    expect(rawUser).to.be.empty;
+  });
+
   it('ignores invalid attributes passed to constructor', () => {
     const user = new User({
       name: 'Myself',
