@@ -19,24 +19,28 @@ const derivedInitializer = Object.assign({}, {
 });
 
 function initialize(attributes, schema, instance) {
-  instance.attributes = initializeWith(nativesInitializer, attributes, schema, instance);
-  instance.attributes = initializeWith(derivedInitializer, attributes, schema, instance);
+  let initializedAttributes = {};
 
-  return attributes;
+  initializedAttributes = initializeWith(nativesInitializer, attributes, schema, initializedAttributes);
+  initializedAttributes = initializeWith(derivedInitializer, attributes, schema, initializedAttributes);
+
+  return instance.attributes = initializedAttributes;
 }
 
-function initializeWith(Initializer, attributes, schema, instance) {
+function initializeWith(initializer, attributes, schema, initializedAttributes) {
   for(let attrName in schema) {
     const value = attributes[attrName];
 
-    if(value === undefined && Initializer.shouldInitialize(schema[attrName])) {
-      attributes[attrName] = Initializer.getValue(schema[attrName], instance);
+    if (value !== undefined) {
+      continue;
+    }
+
+    if(initializer.shouldInitialize(schema[attrName])) {
+      attributes[attrName] = initializer.getValue(schema[attrName], initializedAttributes);
     }
   }
 
   return attributes;
 }
-
-
 
 module.exports = { initialize, nativesInitializer, derivedInitializer };
