@@ -1,8 +1,34 @@
 const { expect } = require('chai');
+const { spy } = require('sinon');
+const { attributes } = require('../../../src');
 const Initializer = require('../../../src/attributes/initializer');
 
 describe('Initializer', () => {
   let attributeDescriptor, instance;
+
+  describe('.initialize', () => {
+    let User, userInstance, schema, attributesSpy;
+
+    beforeEach(() => {
+      User = attributes({ name: String })(class User {});
+      userInstance = new User;
+      schema = { name: String };
+
+      attributesSpy = spy(userInstance, 'attributes', ['set']);
+    });
+
+    it('returns attributes', () => {
+      expect(
+        Initializer.initialize({ name: 'John Doe' }, schema, userInstance).name
+      ).to.equal('John Doe');
+    });
+
+    it('coerces only once', () => {
+      Initializer.initialize({ name: 'John Doe' }, schema, userInstance);
+
+      expect(attributesSpy.set.calledOnce).to.be.true;
+    });
+  });
 
   describe('.nativesInitializer', () => {
     context('when default attribute is a raw value', () => {
