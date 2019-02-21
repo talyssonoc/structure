@@ -1,6 +1,6 @@
 # Validate raw data
 
-In addition to the _instance_ `validate()` method, Structure also adds a _static_ `validate()` to your structure classes that receives a _raw object_ or a _structure instance_ as parameter and has the same return type of the [normal validation](validation/README.md):
+In addition to the _instance_ `validate()` method, Structure also adds a _static_ `validate()` to your structure classes that receives a _raw object_ or a _structure instance_ as parameter and has the same return type of the [normal validation](README.md):
 
 ```javascript
 const User = attributes({
