@@ -1,13 +1,28 @@
 # Shorthand type descriptor
-The shorthand is a pair of `propertyName: Type` key/value like: `age: Number`.
-
-# Complete type descriptor
-The complete descriptor allows you to declare additional info for the attribute. __For Array types it's required to use the complete type descriptor because you must specify the itemType__.
+The shorthand is a pair of `propertyName: Type` key/value like this:
 
 ```js
 const User = attributes({
-  name: String, // shorthand type descriptor
-  cars: { // complete type descriptor
+  name: String,
+  brithday: Date
+})(class User {
+  generateRandomBook() {
+    return '...';
+  }
+});
+```
+
+# Complete type descriptor
+The complete descriptor allows you to declare additional info for the attribute.
+__For Array types it's required to use the complete type descriptor because you must specify the `itemType`__.
+
+```js
+const User = attributes({
+  name: {
+    type: String,
+    default: 'Anonymous'
+  },
+  cars: {
     type: Array,
     itemType: String,
     default: ['Golf', 'Polo']
@@ -31,10 +46,13 @@ thus, you can use the other attributes of your class to compose a default value.
 
 ```js
 const User = attributes({
-  name: String,
+  name: {
+    type: String,
+    default: 'Anonymous' // static default value
+  },
   greeting: {
     type: String,
-    default: (instance) => instance.greeting()
+    default: (instance) => instance.greeting() // dynamic default value
   }
 })(class User {
   greeting() {
@@ -43,7 +61,7 @@ const User = attributes({
 });
 ```
 
-Please note that removing the value of an attribute will not make it fallback to the default value.
+Please note that setting the value of an attribute to undefined will not make it fallback to the default value.
 
 ## itemType
 The __itemType__ of an attribute is used to validate and coerce the type of each item from the attribute, like when the attribute type is `Array` or some class that extends `Array`.

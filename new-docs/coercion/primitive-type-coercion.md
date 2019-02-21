@@ -1,6 +1,6 @@
 # Primitive type coercion
 
-It'll do primitive type coercion when it tries to coerce values to `String`, `Number` or `Boolean` types.
+It's said to be primitive type coercion when it tries to coerce values to `String`, `Number` or `Boolean` types.
 
 For those types we basically use the type as a function (without using `new`), with a subtle difference: When coercing `null` to `String`, it'll coerce to empty string instead of the string `'null'`. For example:
 
