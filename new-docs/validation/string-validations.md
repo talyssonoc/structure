@@ -19,6 +19,12 @@ const User = attributes({
     type: String,
     guid: true
   },
+  token: {
+    type: String,
+    guid: {
+      version: ['uuidv4']
+    }
+  },
   initials: {
     type: String,
     upperCase: true,
