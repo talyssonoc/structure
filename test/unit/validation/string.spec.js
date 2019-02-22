@@ -443,5 +443,79 @@ describe('validation', () => {
         });
       });
     });
+
+    describe('guid', () => {
+      context('when validating as a generic guid', () => {
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            id: {
+              type: String,
+              guid: true
+            }
+          })(class User {});
+        });
+
+        context('when value is a valid guid', () => {
+          it('is valid', () => {
+            const user = new User({
+              id: '759535af-3314-4ace-81b9-a519c29d0e17'
+            });
+
+            assertValid(user);
+          });
+        });
+
+        context('when value is not a valid guid', () => {
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              id: 'Not a valid guid'
+            });
+
+            assertInvalid(user, 'id');
+          });
+        });
+      });
+
+      context('when validating a specific guid version', () => {
+        var User;
+
+        beforeEach(() => {
+          User = attributes({
+            id: {
+              type: String,
+              guid: {
+                version: ['uuidv4']
+              }
+            }
+          })(class User {});
+        });
+
+        context('when value is a valid guid', () => {
+          it('is valid', () => {
+            const uuidv4 = 'f35e1cf1-4ac9-4fbb-9c06-151dc8ff9107';
+
+            const user = new User({
+              id: uuidv4
+            });
+
+            assertValid(user);
+          });
+        });
+
+        context('when value is not a valid guid', () => {
+          it('is not valid and has errors set', () => {
+            const uuidv1 = 'c130564e-36d9-11e9-b210-d663bd873d93';
+
+            const user = new User({
+              id: uuidv1
+            });
+
+            assertInvalid(user, 'id');
+          });
+        });
+      });
+    });
   });
 });

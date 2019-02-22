@@ -11,9 +11,20 @@
 - `lowerCase`: all characters must be lower cased
 - `upperCase`: all characters must be upper cased
 - `email`: is a valid email (default: `false`)
+- `guid`: is a valid guid. You can pass a boolean or the [options object accepted by Joi](https://github.com/hapijs/joi/blob/v10.2.0/API.md#stringguid---aliases-uuid) (default: `false`)
 
 ```javascript
 const User = attributes({
+  id: {
+    type: String,
+    guid: true
+  },
+  token: {
+    type: String,
+    guid: {
+      version: ['uuidv4']
+    }
+  },
   initials: {
     type: String,
     upperCase: true,
