@@ -6,7 +6,10 @@ describe('instantiating a structure', () => {
 
   beforeEach(() => {
     User = attributes({
-      name: String
+      name: {
+        type: String,
+        default: 'Name'
+      }
     })(class User {
       constructor() {
         this.userInstanceStuff = 'Stuff value';
@@ -42,12 +45,13 @@ describe('instantiating a structure', () => {
     expect(user.name).to.equal('Me');
   });
 
-  it('don\'t reflect the changes outside of the escope', () => {
-    const rawUser = {};
+  it('does not mutate the attributes object passed to the constructor', () => {
+    const attributesObject = {};
 
-    new User(rawUser);
+    const user = new User(attributesObject);
 
-    expect(rawUser).to.be.empty;
+    expect(user.name).to.equal('Name');
+    expect(attributesObject).to.be.empty;
   });
 
   it('ignores invalid attributes passed to constructor', () => {
