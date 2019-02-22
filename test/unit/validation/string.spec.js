@@ -459,7 +459,7 @@ describe('validation', () => {
       context('when value is a valid uuid', () => {
         it('is valid', () => {
           const user = new User({
-            name: '759535af-3314-4ace-81b9-a519c29d0e17'
+            id: '759535af-3314-4ace-81b9-a519c29d0e17'
           });
 
           assertValid(user);
