@@ -9,13 +9,17 @@ exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
       return joiSchema;
     }
 
-    if(passValueToJoi && (!isFunction(passValueToJoi) || passValueToJoi(attributeDescriptor))) {
+    if(shouldPassValueToJoi(passValueToJoi, attributeDescriptor)) {
       return joiSchema[joiMethod](attributeDescriptor);
     }
 
     return joiSchema[joiMethod]();
   }, initial);
 };
+
+function shouldPassValueToJoi(passValueToJoi, attributeDescriptor) {
+  return passValueToJoi && (!isFunction(passValueToJoi) || passValueToJoi(attributeDescriptor));
+}
 
 function mapValueOrReference(valueOrReference) {
   if(isPlainObject(valueOrReference)) {
