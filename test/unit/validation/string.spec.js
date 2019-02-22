@@ -444,19 +444,19 @@ describe('validation', () => {
       });
     });
 
-    describe('uuid', () => {
+    describe('guid', () => {
       var User;
 
       beforeEach(() => {
         User = attributes({
           id: {
             type: String,
-            uuid: true
+            guid: true
           }
         })(class User {});
       });
 
-      context('when value is a valid uuid', () => {
+      context('when value is a valid guid', () => {
         it('is valid', () => {
           const user = new User({
             id: '759535af-3314-4ace-81b9-a519c29d0e17'
@@ -466,10 +466,10 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not a valid uuid', () => {
+      context('when value is not a valid guid', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            id: 'Not a valid uuid'
+            id: 'Not a valid guid'
           });
 
           assertInvalid(user, 'id');

@@ -11,13 +11,13 @@
 - `lowerCase`: all characters must be lower cased
 - `upperCase`: all characters must be upper cased
 - `email`: is a valid email (default: `false`)
-- `uuid`: is a valid uuid (default: `false`)
+- `guid`: is a valid guid (default: `false`)
 
 ```javascript
 const User = attributes({
   id: {
     type: String,
-    uuid: true
+    guid: true
   },
   initials: {
     type: String,
