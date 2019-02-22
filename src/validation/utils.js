@@ -1,14 +1,16 @@
 const joi = require('joi');
-const { isPlainObject } = require('lodash');
+const { isPlainObject, isFunction } = require('lodash');
 
 exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
   return mappings.reduce((joiSchema, [optionName, joiMethod, passValueToJoi]) => {
-    if(typeDescriptor[optionName] === undefined) {
+    const attributeDescriptor = typeDescriptor[optionName];
+
+    if(attributeDescriptor === undefined) {
       return joiSchema;
     }
 
-    if(passValueToJoi) {
-      return joiSchema[joiMethod](typeDescriptor[optionName]);
+    if(passValueToJoi && (!isFunction(passValueToJoi) || passValueToJoi(attributeDescriptor))) {
+      return joiSchema[joiMethod](attributeDescriptor);
     }
 
     return joiSchema[joiMethod]();
@@ -25,15 +27,15 @@ function mapValueOrReference(valueOrReference) {
 
 exports.mapToJoiWithReference = function mapToJoiWithReference(typeDescriptor, { initial, mappings }) {
   return mappings.reduce((joiSchema, [optionName, joiMethod]) => {
-    var optionValue = typeDescriptor[optionName];
+    var attributeDescriptor = typeDescriptor[optionName];
 
-    if(optionValue === undefined) {
+    if(attributeDescriptor === undefined) {
       return joiSchema;
     }
 
-    optionValue = mapValueOrReference(optionValue);
+    attributeDescriptor = mapValueOrReference(attributeDescriptor);
 
-    return joiSchema[joiMethod](optionValue);
+    return joiSchema[joiMethod](attributeDescriptor);
   }, initial);
 };
 

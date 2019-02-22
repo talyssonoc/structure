@@ -1,4 +1,5 @@
 const joi = require('joi');
+const { isPlainObject } = require('lodash');
 const { mapToJoi, equalOption } = require('./utils');
 
 module.exports = {
@@ -12,7 +13,7 @@ module.exports = {
     ['lowerCase', 'lowercase'],
     ['upperCase', 'uppercase'],
     ['email', 'email'],
-    ['guid', 'guid'],
+    ['guid', 'guid', isPlainObject],
     ['required', 'required']
   ],
   createJoiSchema(typeDescriptor) {
