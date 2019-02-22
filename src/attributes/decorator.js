@@ -20,7 +20,7 @@ function attributesDecorator(schema, schemaOptions = {}) {
     const WrapperClass = new Proxy(Class, {
       construct(target, constructorArgs, newTarget) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
-        const passedAttributes = constructorArgs[0] || {};
+        const passedAttributes = Object.assign({}, constructorArgs[0]);
 
         Initializer.initialize(passedAttributes, schema, instance);
 
