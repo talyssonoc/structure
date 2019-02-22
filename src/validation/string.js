@@ -13,8 +13,7 @@ module.exports = {
     ['lowerCase', 'lowercase'],
     ['upperCase', 'uppercase'],
     ['email', 'email'],
-    ['guid', 'guid', isPlainObject],
-    ['required', 'required']
+    ['guid', 'guid', isPlainObject]
   ],
   createJoiSchema(typeDescriptor) {
     var joiSchema = joi.string();

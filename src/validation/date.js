@@ -3,9 +3,7 @@ const { mapToJoi, mapToJoiWithReference, equalOption } = require('./utils');
 
 module.exports = {
   type: Date,
-  joiMappings: [
-    ['required', 'required']
-  ],
+  joiMappings: [],
   valueOrRefOptions: [
     ['min', 'min'],
     ['max', 'max'],
