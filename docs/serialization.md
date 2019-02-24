@@ -1,6 +1,11 @@
 # Serialization
 
-It's possible to obtain a serialized object of a Structure using the method `toJSON()`. This method is also compliant with the [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) specification, so you can use it to serialize your object too. **Be aware that `toJSON()` will return an object, not the JSON in form of a string like `JSON.stringify()` does.** Refer to the [Date#toJSON](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON) specification to see how dates will be serialized by `JSON.stringify`.
+It's possible to obtain a serialized object of a Structure using the method `toJSON()`. This method is also compliant with the [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) specification, so you can use it to serialize your object too.
+
+**Important:**
+
+- Be aware that `toJSON()` will return an object, not the JSON in form of a string like `JSON.stringify()` does
+- Refer to the [Date#toJSON](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON) specification to see how dates will be serialized by `JSON.stringify`
 
 ```javascript
 const Book = attributes({

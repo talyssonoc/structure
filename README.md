@@ -86,6 +86,6 @@ cry g schema user name age:int:required cars:string[] favoriteBook:book friends:
 
 Run `cry --help` to check more info about the generators available;
 
-## [Contributing](/contributing.md)
+## [Contributing](contributing.md)
 
-## [LICENSE](/license.md)
+## [LICENSE](license.md)
