@@ -8,8 +8,7 @@ module.exports = {
     ['precision', 'precision', true],
     ['multiple', 'multiple', true],
     ['positive', 'positive', true],
-    ['negative', 'negative', true],
-    ['required', 'required']
+    ['negative', 'negative', true]
   ],
   valueOrRefOptions: [
     ['min', 'min'],

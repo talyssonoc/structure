@@ -2,7 +2,6 @@ const joi = require('joi');
 const { mapToJoi } = require('./utils');
 
 const joiMappings = [
-  ['required', 'required'],
   ['minLength', 'min', true],
   ['maxLength', 'max', true],
   ['exactLength', 'length', true]

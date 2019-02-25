@@ -2,9 +2,8 @@ const joi = require('joi');
 const { isPlainObject, isFunction } = require('lodash');
 
 exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
-  return mappings.reduce((joiSchema, [optionName, joiMethod, passValueToJoi]) => {
+  let joiSchema = mappings.reduce((joiSchema, [optionName, joiMethod, passValueToJoi]) => {
     const attributeDescriptor = typeDescriptor[optionName];
-
     if(attributeDescriptor === undefined) {
       return joiSchema;
     }
@@ -15,6 +14,10 @@ exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
 
     return joiSchema[joiMethod]();
   }, initial);
+
+  joiSchema = requiredOption(typeDescriptor, { initial: joiSchema });
+
+  return joiSchema;
 };
 
 function shouldPassValueToJoi(passValueToJoi, attributeDescriptor) {
@@ -59,10 +62,12 @@ exports.equalOption = function equalOption(typeDescriptor, { initial }) {
   return initial.equal(possibilities);
 };
 
-exports.requiredOption = function requiredOption(typeDescriptor, { initial }) {
+function requiredOption(typeDescriptor, { initial }) {
   if(typeDescriptor.required) {
     return initial.required();
   }
 
   return initial;
-};
+}
+
+exports.requiredOption = requiredOption;

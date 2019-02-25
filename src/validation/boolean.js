@@ -3,9 +3,7 @@ const { mapToJoi, equalOption } = require('./utils');
 
 module.exports = {
   type: Boolean,
-  joiMappings: [
-    ['required', 'required']
-  ],
+  joiMappings: [],
   createJoiSchema(typeDescriptor) {
     var joiSchema = joi.boolean();
 

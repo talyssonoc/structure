@@ -44,6 +44,5 @@ function getNestedValidations(typeSchema) {
     joiSchema = joiSchema.keys(nestedValidations);
   }
 
-
   return joiSchema;
 }
