@@ -747,31 +747,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	function getCoercion(typeDescriptor) {
-	  return types.find(function (c) {
+	  var coercion = types.find(function (c) {
 	    return c.type === typeDescriptor.type;
 	  });
+
+	  if (coercion) {
+	    return coercion;
+	  }
+
+	  return genericCoercionFor;
 	}
 
 	function createCoercionFunction(coercion, typeDescriptor) {
-	  if (!coercion) {
-	    return genericCoercionFor(typeDescriptor);
-	  }
-
 	  return function coerce(value) {
 	    if (value === undefined) {
 	      return;
 	    }
 
-	    if (needsCoercion(value, coercion)) {
-	      return coercion.coerce(value);
+	    if (!coercion.isCoerced(value, typeDescriptor)) {
+	      return coercion.coerce(value, typeDescriptor);
 	    }
 
 	    return value;
 	  };
-	}
-
-	function needsCoercion(value, coercion) {
-	  return !coercion.test(value);
 	}
 
 /***/ },
@@ -858,25 +856,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var getType = __webpack_require__(22);
 
-	module.exports = function genericCoercionFor(typeDescriptor) {
-	  return function coerce(value) {
-	    if (value === undefined) {
-	      return;
-	    }
-
+	module.exports = {
+	  isCoerced: function isCoerced(value, typeDescriptor) {
+	    return value instanceof getType(typeDescriptor);
+	  },
+	  coerce: function coerce(value, typeDescriptor) {
 	    var type = getType(typeDescriptor);
 
-	    if (!needsCoercion(value, type)) {
-	      return value;
-	    }
-
 	    return new type(value);
-	  };
+	  }
 	};
-
-	function needsCoercion(value, type) {
-	  return !(value instanceof type);
-	}
 
 /***/ },
 /* 24 */
@@ -889,7 +878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 	  type: String,
-	  test: isString,
+	  isCoerced: isString,
 	  coerce: function coerce(value) {
 	    if (value === null) {
 	      return '';
@@ -910,7 +899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 	  type: Number,
-	  test: isNumber,
+	  isCoerced: isNumber,
 	  coerce: function coerce(value) {
 	    if (value === null) {
 	      return 0;
@@ -931,7 +920,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 	  type: Boolean,
-	  test: isBoolean,
+	  isCoerced: isBoolean,
 	  coerce: function coerce(value) {
 	    return Boolean(value);
 	  }

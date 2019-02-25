@@ -18,27 +18,25 @@ exports.for = function coercionFor(typeDescriptor, itemTypeDescriptor) {
 };
 
 function getCoercion(typeDescriptor) {
-  return types.find((c) => c.type === typeDescriptor.type);
+  const coercion = types.find((c) => c.type === typeDescriptor.type);
+
+  if(coercion) {
+    return coercion;
+  }
+
+  return genericCoercionFor;
 }
 
 function createCoercionFunction(coercion, typeDescriptor) {
-  if(!coercion) {
-    return genericCoercionFor(typeDescriptor);
-  }
-
   return function coerce(value) {
     if(value === undefined) {
       return;
     }
 
-    if(needsCoercion(value, coercion)) {
-      return coercion.coerce(value);
+    if(!coercion.isCoerced(value, typeDescriptor)) {
+      return coercion.coerce(value, typeDescriptor);
     }
 
     return value;
   };
-}
-
-function needsCoercion(value, coercion) {
-  return !coercion.test(value);
 }

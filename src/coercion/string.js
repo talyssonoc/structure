@@ -2,7 +2,7 @@ const { isString } = require('lodash');
 
 module.exports = {
   type: String,
-  test: isString,
+  isCoerced: isString,
   coerce(value) {
     if(value === null) {
       return '';
