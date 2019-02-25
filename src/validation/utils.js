@@ -62,10 +62,12 @@ exports.equalOption = function equalOption(typeDescriptor, { initial }) {
   return initial.equal(possibilities);
 };
 
-const requiredOption = (typeDescriptor, { initial }) => {
+function requiredOption(typeDescriptor, { initial }) {
   if(typeDescriptor.required) {
     return initial.required();
   }
 
   return initial;
-};
+}
+
+exports.requiredOption = requiredOption;

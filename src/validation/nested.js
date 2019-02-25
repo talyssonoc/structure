@@ -1,5 +1,6 @@
 const joi = require('joi');
 const { SCHEMA } = require('../symbols');
+const { requiredOption } = require('./utils');
 
 module.exports = function nestedValidation(typeDescriptor) {
   if(typeDescriptor.dynamicType) {
@@ -7,15 +8,27 @@ module.exports = function nestedValidation(typeDescriptor) {
   }
 
   const typeSchema = typeDescriptor.type[SCHEMA];
-  return getNestedValidations(typeSchema);
+  var joiSchema = getNestedValidations(typeSchema);
+
+  joiSchema = requiredOption(typeDescriptor, {
+    initial: joiSchema
+  });
+
+  return joiSchema;
 };
 
 function validationToDynamicType(typeDescriptor) {
-  return joi.lazy(() => {
+  var joiSchema = joi.lazy(() => {
     const typeSchema = typeDescriptor.getType()[SCHEMA];
 
     return getNestedValidations(typeSchema);
   });
+
+  joiSchema = requiredOption(typeDescriptor, {
+    initial: joiSchema
+  });
+
+  return joiSchema;
 }
 
 function getNestedValidations(typeSchema) {
@@ -30,7 +43,6 @@ function getNestedValidations(typeSchema) {
 
     joiSchema = joiSchema.keys(nestedValidations);
   }
-
 
   return joiSchema;
 }
