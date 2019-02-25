@@ -1,7 +1,7 @@
 const getType = require('../typeResolver');
 
 module.exports = {
-  isCoerced: function(value, typeDescriptor) {
+  isCoerced(value, typeDescriptor) {
     return value instanceof getType(typeDescriptor);
   },
   coerce(value, typeDescriptor) {
