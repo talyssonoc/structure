@@ -1,4 +1,4 @@
-const { curryRight } = require('lodash');
+const { isFunction, curryRight } = require('lodash');
 
 exports.execute = curryRight(
   function(value, coercion, typeDescriptor) {
@@ -7,7 +7,9 @@ exports.execute = curryRight(
     }
 
     if (value === null) {
-      return coercion.default;
+      return isFunction(coercion.default)
+        ? coercion.default()
+        : coercion.default;
     }
 
     if (coercion.isCoerced(value, typeDescriptor)) {
