@@ -2,8 +2,9 @@ const { isBoolean } = require('lodash');
 
 module.exports = {
   type: Boolean,
-  test: isBoolean,
+  isCoerced: isBoolean,
+  default: false,
   coerce(value) {
-    return Boolean(value);
+    return this.type(value);
   }
 };

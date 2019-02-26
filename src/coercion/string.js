@@ -2,12 +2,9 @@ const { isString } = require('lodash');
 
 module.exports = {
   type: String,
-  test: isString,
+  isCoerced: isString,
+  default: '',
   coerce(value) {
-    if(value === null) {
-      return '';
-    }
-
-    return String(value);
+    return this.type(value);
   }
 };

@@ -2,12 +2,9 @@ const { isNumber } = require('lodash');
 
 module.exports = {
   type: Number,
-  test: isNumber,
+  isCoerced: isNumber,
+  default: 0,
   coerce(value) {
-    if(value === null) {
-      return 0;
-    }
-
-    return Number(value);
+    return this.type(value);
   }
 };
