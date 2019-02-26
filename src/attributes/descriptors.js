@@ -5,12 +5,13 @@ const { ATTRIBUTES } = require('../symbols');
 exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, schema) {
   return {
     enumerable: true,
+
     get() {
       return this.attributes[attributeName];
     },
 
     set(value) {
-      this.attributes[attributeName] = schema[attributeName].coerce(value, schema[attributeName].nullable);
+      this.attributes[attributeName] = schema[attributeName].coerce(value);
     }
   };
 };
@@ -40,7 +41,7 @@ function coerceAttributes(newAttributes, schema) {
   const attributes = Object.create(null);
 
   for(let attrName in schema) {
-    attributes[attrName] = schema[attrName].coerce(newAttributes[attrName], schema[attrName].nullable);
+    attributes[attrName] = schema[attrName].coerce(newAttributes[attrName]);
   }
 
   return attributes;

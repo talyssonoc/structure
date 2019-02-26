@@ -7,7 +7,7 @@ exports.execute = curryRight(
     }
 
     if (value === null) {
-      return getDefaultValue(coercion);
+      return getNullableValue(coercion, typeDescriptor);
     }
 
     if (coercion.isCoerced(value, typeDescriptor)) {
@@ -17,6 +17,10 @@ exports.execute = curryRight(
     return coercion.coerce(value, typeDescriptor);
   }
 );
+
+function getNullableValue(coercion, typeDescriptor) {
+  return typeDescriptor.nullable === true ? null : getDefaultValue(coercion);
+}
 
 function getDefaultValue(coercion) {
   return isFunction(coercion.default) ? coercion.default() : coercion.default;

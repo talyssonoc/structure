@@ -20,10 +20,6 @@ describe('validation', () => {
         User = attributes({
           lastLocation: {
             type: Location
-          },
-          nextLocation: {
-            type: Location,
-            nullable: true
           }
         })(class User {});
       });
@@ -39,16 +35,9 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
-        it('is valid with undefined', () => {
+        it('is valid', () => {
           const user = new User({
             lastLocation: undefined
-          });
-
-          assertValid(user);
-        });
-        it('is valid with null when nullable', () => {
-          const user = new User({
-            nextLocation: null
           });
 
           assertValid(user);
@@ -143,10 +132,6 @@ describe('validation', () => {
           y: {
             type: Number,
             required: true
-          },
-          z: {
-            type: Number,
-            nullable: true
           }
         })(class Location {});
 
@@ -175,13 +160,6 @@ describe('validation', () => {
           });
 
           assertInvalid(user, 'lastLocation.y');
-        });
-        it('is valid with null when nullable', () => {
-          const user = new User({
-            lastLocation: new Location({ x: 1, y: 2, z: null })
-          });
-
-          assertValid(user);
         });
       });
     });
@@ -215,14 +193,6 @@ describe('validation', () => {
           });
 
           assertValid(user);
-        });
-        it('is valid with null when nullable', () => {
-          const user = new CircularUser({
-            favoriteBook: {},
-            nextBook: null
-          });
-
-          assertValid(user, 'favoriteBook');
         });
       });
     });

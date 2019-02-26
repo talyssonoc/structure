@@ -23,11 +23,25 @@ describe('Coercion', () => {
     });
 
     context('when value is null', () => {
-      context('and default attribute is a plain value', () => {
+      beforeEach(() => value = null);
+
+      context('and attribute is nullable', () => {
         beforeEach(() => {
-          value = null;
           coercion = CoercionNumber;
-          typeDescriptor = null;
+          typeDescriptor = { nullable: true };
+        });
+
+        it('returns null', () => {
+          const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+
+          expect(executionResponse).to.be.null;
+        });
+      });
+
+      context('and attribute is not nullable', () => {
+        beforeEach(() => {
+          coercion = CoercionNumber;
+          typeDescriptor = { nullable: false };
         });
 
         it('returns default value present on Coercion object', () => {
@@ -39,9 +53,8 @@ describe('Coercion', () => {
 
       context('and default attribute is a dynamic value', () => {
         beforeEach(() => {
-          value = null;
           coercion = CoercionDate;
-          typeDescriptor = null;
+          typeDescriptor = { nullable: false };
         });
 
         it('returns default value present on Coercion object', () => {

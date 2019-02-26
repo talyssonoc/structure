@@ -21,7 +21,7 @@ function validationToDynamicType(typeDescriptor) {
   var joiSchema = joi.lazy(() => {
     const typeSchema = typeDescriptor.getType()[SCHEMA];
 
-    return getNestedValidations(typeSchema, typeDescriptor.nullable);
+    return getNestedValidations(typeSchema);
   });
 
   joiSchema = requiredOption(typeDescriptor, {
@@ -31,12 +31,8 @@ function validationToDynamicType(typeDescriptor) {
   return joiSchema;
 }
 
-function getNestedValidations(typeSchema, nullable) {
+function getNestedValidations(typeSchema) {
   var joiSchema = joi.object();
-
-  if(nullable) {
-    joiSchema = joiSchema.allow(null);
-  }
 
   if(typeSchema) {
     const nestedValidations = Object.keys(typeSchema)

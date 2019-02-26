@@ -4,6 +4,7 @@
 - `equal`: __*__ equal to passed value
 - `min`: __**__ must be after passed date
 - `max` __**__ must be before passed date
+- `nullable`: accepts null (default: `false`)
 
 ```javascript
 const Product = attributes({
@@ -14,6 +15,10 @@ const Product = attributes({
   expirationDate: {
     type: Date,
     min: { attr: 'fabricationDate' }
+  },
+  createdAt: {
+    type: Date,
+    nullable: true
   }
 })(class Product { });
 ```

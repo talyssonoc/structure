@@ -11,6 +11,7 @@
 - `greater`: __**__ must be greater than passed value (works like the `>` operator)
 - `max`: __**__ maximum valid value (works like the `<=` operator)
 - `less`: __**__ must be smaller than passed value (works like the `<` operator)
+- `nullable`: accepts null (default: `false`)
 
 ```javascript
 const Pool = attributes({
@@ -25,6 +26,10 @@ const Pool = attributes({
   length: {
     type: Number,
     greater: { attr: 'width' }
+  },
+  capacity: {
+    type: Number,
+    nullable: true
   }
 })(class Pool {
   getVolume() {

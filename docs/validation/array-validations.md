@@ -11,14 +11,14 @@ const Group = attributes({
   members: {
     type: Array,
     itemType: String,
-    minLength: 2
+    minLength: 2,
     maxLength: 5,
     sparse: false
   },
   leaders: {
     type: Array,
     itemType: String,
-    minLength: 1
+    minLength: 1,
     maxLength: { attr: 'members' }
   }
 })
