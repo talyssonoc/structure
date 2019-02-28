@@ -36,6 +36,7 @@ describe('validation', () => {
 
           assertValid(user);
         });
+
         it('is valid with null when nullable', () => {
           const user = new User({
             hasAccepted: null
@@ -99,7 +100,7 @@ describe('validation', () => {
             })(class User {});
           });
 
-          it('is not valid and has errors set', () => {
+          it('is valid', () => {
             const user = new User({ isAdmin: null });
 
             assertValid(user);
@@ -117,7 +118,7 @@ describe('validation', () => {
             })(class User {});
           });
 
-          it('is not valid', () => {
+          it('is not valid and has errors set', () => {
             const user = new User({ isAdmin: null });
 
             assertInvalid(user, 'isAdmin');

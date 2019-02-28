@@ -43,8 +43,8 @@ describe('serialization', () => {
       });
     });
 
-    context("when attribute's value is null", () => {
-      var city;
+    context('when attribute\'s value is null', () => {
+      var City;
 
       context('and is not nullable', () => {
         beforeEach(() => {
@@ -80,6 +80,30 @@ describe('serialization', () => {
 
           expect(serializedCity).to.have.all.keys(['name']);
           expect(serializedCity).to.eql({ name: null });
+        });
+      });
+
+      context('and is a nullable relationship', () => {
+        var Country;
+        var City;
+
+        beforeEach(() => {
+          Country = attributes({ name: String })(class Country {});
+
+          City = attributes({
+            country: {
+              type: Country,
+              nullable: true
+            }
+          })(class City {});
+        });
+
+        it('serializes null attributes', () => {
+          const city = new City({ country: null });
+
+          const serializedCity = city.toJSON();
+
+          expect(serializedCity.country).to.be.null;
         });
       });
     });

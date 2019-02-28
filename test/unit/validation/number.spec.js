@@ -36,6 +36,7 @@ describe('validation', () => {
 
           assertValid(user);
         });
+
         it('is valid with null when nullable', () => {
           const user = new User({
             earnings: null

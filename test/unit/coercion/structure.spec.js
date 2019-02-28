@@ -82,15 +82,15 @@ describe('type coercion', () => {
       context('and attribute is nullable', () => {
         beforeEach(() => user = new User({ destination: null }));
 
-        it('assigns null value', () => {
+        it('assigns null', () => {
           expect(user.destination).to.be.null;
         });
       });
 
-      context('assigns undefined', () => {
+      context('and attribute is not nullable', () => {
         beforeEach(() => user = new User({ location: null }));
 
-        it('does not coerce', () => {
+        it('assigns undefined', () => {
           expect(user.location).to.be.undefined;
         });
       });

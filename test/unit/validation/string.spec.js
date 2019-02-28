@@ -101,7 +101,7 @@ describe('validation', () => {
           });
 
           it('is valid', () => {
-            user = new User({ name: null });
+            const user = new User({ name: null });
 
             assertValid(user);
           });
@@ -119,7 +119,7 @@ describe('validation', () => {
           });
 
           it('is not valid and has errors set', () => {
-            user = new User({ name: null });
+            const user = new User({ name: null });
 
             assertInvalid(user, 'name');
           });
