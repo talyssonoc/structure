@@ -42,5 +42,46 @@ describe('serialization', () => {
         expect(serializedUser).to.have.all.keys(['name']);
       });
     });
+
+    context("when attribute's value is null", () => {
+      var city;
+
+      context('and is not nullable', () => {
+        beforeEach(() => {
+          City = attributes({ name: String })(class City {});
+        });
+
+        it('serializes with default value', () => {
+          const city = new City({
+            name: null
+          });
+
+          const serializedCity = city.toJSON();
+
+          expect(serializedCity).to.have.all.keys(['name']);
+          expect(serializedCity).to.eql({ name: '' });
+        });
+      });
+
+      context('and is nullable', () => {
+        beforeEach(() => {
+          City = attributes({
+            name: {
+              type: String,
+              nullable: true
+            }
+          })(class City {});
+        });
+
+        it('serializes null attributes', () => {
+          const city = new City({ name: null });
+
+          const serializedCity = city.toJSON();
+
+          expect(serializedCity).to.have.all.keys(['name']);
+          expect(serializedCity).to.eql({ name: null });
+        });
+      });
+    });
   });
 });

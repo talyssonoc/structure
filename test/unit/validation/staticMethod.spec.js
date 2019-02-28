@@ -10,14 +10,16 @@ describe('validation', () => {
       Book = attributes({
         name: {
           type: String,
-          required: true
+          required: true,
+          nullable: true
         }
       })(class Book { });
 
       User = attributes({
         name: {
           type: String,
-          required: true
+          required: true,
+          nullable: false
         },
         age: {
           type: Number,
@@ -27,7 +29,7 @@ describe('validation', () => {
       })(class User { });
     });
 
-    context('when data is valid', () => {
+    context('when required attributes are present', () => {
       it('returns valid as true and no errors', () => {
         const { valid, errors } = User.validate({
           name: 'The name',
@@ -39,7 +41,7 @@ describe('validation', () => {
       });
     });
 
-    context('when data is invalid', () => {
+    context('when required attributes are absent', () => {
       it('returns valid as false and array of errors', () => {
         const { valid, errors } = User.validate({
           age: 10
@@ -53,8 +55,45 @@ describe('validation', () => {
       });
     });
 
+    context('when required attributes are null', () => {
+      context('and attributes is nullable', () => {
+        it('is valid', () => {
+          const { valid, errors } = Book.validate({ name: null });
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
+        });
+      });
+
+      context('and attributes is not nullable', () => {
+        it('is not valid and has errors set', () => {
+          const { valid, errors } = User.validate({ name: null });
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('name');
+        });
+      });
+    });
+
     context('when there is nested validation', () => {
-      context('when data is invalid', () => {
+      context('and required attributes are present', () => {
+        it('returns valid as true and no errors', () => {
+          const { valid, errors } = User.validate({
+            name: 'some name',
+            age: 25,
+            favoriteBook: {
+              name: 'The Lord of the Rings'
+            }
+          });
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
+        });
+      });
+
+      context('and required attributes are absent', () => {
         it('returns valid as false and an array of errors', () => {
           const { valid, errors } = User.validate({
             name: 'some name',
@@ -69,40 +108,55 @@ describe('validation', () => {
         });
       });
 
-      context('when data is valid', () => {
+      context('and nullable attributes receive null value', () => {
         it('returns valid as true and no errors', () => {
           const { valid, errors } = User.validate({
             name: 'some name',
             age: 25,
-            favoriteBook: {
-              name: 'The Lord of the Rings'
-            }
+            favoriteBook: { name: null }
           });
 
           expect(valid).to.be.true;
           expect(errors).to.be.undefined;
         });
       });
-    });
 
-    context('when passed data is a structure', () => {
-      context('when structure is valid', () => {
-        it('returns valid as true and no errors', () => {
-          const user = new User({
-            name: 'Something',
-            age: 18
+      context('and non nullable attributes receive null value', () => {
+        var Test;
+
+        before(() => {
+          Test = attributes({ user: User })(class Test { });
+        });
+
+        it('returns valid as false and an array of errors', () => {
+          const { valid, errors } = Test.validate({
+            user: { name: null }
           });
-
-          const { valid, errors } = User.validate(user);
 
           expect(valid).to.be.false;
           expect(errors).to.be.instanceOf(Array);
           expect(errors).to.have.lengthOf(1);
-          expect(errors[0].path).to.equal('age');
+          expect(errors[0].path).to.equal('user.name');
+        });
+      });
+    });
+
+    context('when passed data is a structure', () => {
+      context('when required attributes are present and valid', () => {
+        it('returns valid as true and no errors', () => {
+          const user = new User({
+            name: 'Something',
+            age: 21
+          });
+
+          const { valid, errors } = User.validate(user);
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
         });
       });
 
-      context('when structure is invalid', () => {
+      context('when required attributes are absent or invalid', () => {
         it('returns valid as false and array of errors', () => {
           const user = new User({
             age: 10
@@ -115,6 +169,42 @@ describe('validation', () => {
           expect(errors).to.have.lengthOf(2);
           expect(errors[0].path).to.equal('name');
           expect(errors[1].path).to.equal('age');
+        });
+      });
+
+      context('and nullable attributes receive null value', () => {
+        it('returns valid as true and no errors', () => {
+          const user = new User({
+            name: 'Something',
+            age: 21,
+            favoriteBook: new Book({ name: null })
+          });
+
+          const { valid, errors } = User.validate(user);
+
+          expect(valid).to.be.true;
+          expect(errors).to.be.undefined;
+        });
+      });
+
+      context('and non nullable attributes receive null value', () => {
+        var Test;
+
+        before(() => {
+          Test = attributes({ user: User })(class Test { });
+        });
+
+        it('returns valid as false and an array of errors', () => {
+          const test = new Test({
+            user: { name: null }
+          });
+
+          const { valid, errors } = Test.validate(test);
+
+          expect(valid).to.be.false;
+          expect(errors).to.be.instanceOf(Array);
+          expect(errors).to.have.lengthOf(1);
+          expect(errors[0].path).to.equal('user.name');
         });
       });
     });

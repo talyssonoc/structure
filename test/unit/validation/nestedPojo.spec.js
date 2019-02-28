@@ -39,6 +39,7 @@ describe('validation', () => {
 
           assertValid(user);
         });
+
         it('is valid with null when nullable', () => {
           const user = new User({
             nextLocation: null
@@ -53,18 +54,18 @@ describe('validation', () => {
       var Location;
       var User;
 
-      beforeEach(() => {
-        Location = class Location {};
-
-        User = attributes({
-          lastLocation: {
-            type: Location,
-            required: true
-          }
-        })(class User {});
-      });
+      beforeEach(() => Location = class Location {});
 
       context('when value is present', () => {
+        beforeEach(() => {
+          User = attributes({
+            lastLocation: {
+              type: Location,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is valid', () => {
           const user = new User({
             lastLocation: new Location()
@@ -75,12 +76,59 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
+        beforeEach(() => {
+          User = attributes({
+            lastLocation: {
+              type: Location,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is not valid and has errors set', () => {
           const user = new User({
             lastLocation: undefined
           });
 
           assertInvalid(user, 'lastLocation');
+        });
+      });
+
+      context('when value is null', () => {
+        context('and attribute is nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              lastLocation: {
+                type: Location,
+                required: true,
+                nullable: true
+              }
+            })(class User {});
+          });
+
+          it('is valid', () => {
+            const user = new User({ lastLocation: null });
+
+            assertValid(user);
+          });
+        });
+
+        context('and attribute is not nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              lastLocation: {
+                type: Location,
+                required: true,
+                nullable: false
+              }
+            })(class User {});
+          });
+
+          it('is not valid and has errors set', () => {
+            const user = new User({ lastLocation: null });
+
+            assertInvalid(user, 'lastLocation');
+          });
         });
       });
     });
@@ -108,6 +156,5 @@ describe('validation', () => {
         });
       });
     });
-
   });
 });

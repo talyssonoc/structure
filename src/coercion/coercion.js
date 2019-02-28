@@ -19,7 +19,11 @@ exports.execute = curryRight(
 );
 
 function getNullableValue(coercion, typeDescriptor) {
-  return typeDescriptor.nullable === true ? null : getDefaultValue(coercion);
+  return isInitilizable(typeDescriptor) ? getDefaultValue(coercion) : null;
+}
+
+function isInitilizable(typeDescriptor) {
+  return !typeDescriptor.required && !typeDescriptor.nullable;
 }
 
 function getDefaultValue(coercion) {

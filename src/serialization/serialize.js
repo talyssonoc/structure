@@ -6,7 +6,7 @@ function serialize(structure) {
     return;
   }
 
-  const schema = structure[SCHEMA];
+  let schema = structure ? structure[SCHEMA] : {};
 
   return serializeStructure(structure, schema);
 }
@@ -21,7 +21,7 @@ function serializeStructure(structure, schema) {
   for(let attrName in schema) {
     let attribute = structure[attrName];
 
-    if(attribute != null) {
+    if(attribute != null || (attribute !== undefined && schema[attrName].nullable)) {
       serializedStructure[attrName] = serializeAttribute(attribute, attrName, schema);
     }
   }

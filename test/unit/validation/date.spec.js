@@ -36,6 +36,7 @@ describe('validation', () => {
 
           assertValid(user);
         });
+
         it('is valid with null when nullable', () => {
           const user = new User({
             death: null
@@ -49,16 +50,16 @@ describe('validation', () => {
     describe('required', () => {
       var User;
 
-      beforeEach(() => {
-        User = attributes({
-          birth: {
-            type: Date,
-            required: true
-          }
-        })(class User {});
-      });
-
       context('when value is present', () => {
+        beforeEach(() => {
+          User = attributes({
+            birth: {
+              type: Date,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is valid', () => {
           const user = new User({
             birth: new Date()
@@ -69,12 +70,59 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
+        beforeEach(() => {
+          User = attributes({
+            birth: {
+              type: Date,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is not valid and has errors set', () => {
           const user = new User({
             birth: undefined
           });
 
           assertInvalid(user, 'birth');
+        });
+      });
+
+      context('when value is null', () => {
+        context('and attribute is nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              birth: {
+                type: Date,
+                required: true,
+                nullable: true
+              }
+            })(class User {});
+          });
+
+          it('is valid', () => {
+            const user = new User({ birth: null });
+
+            assertValid(user);
+          });
+        });
+
+        context('and attribute is not nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              birth: {
+                type: Date,
+                required: true,
+                nullable: false
+              }
+            })(class User {});
+          });
+
+          it('is not valid and has errors set', () => {
+            const user = new User({ birth: null });
+
+            assertInvalid(user, 'birth');
+          });
         });
       });
     });

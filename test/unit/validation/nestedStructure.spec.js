@@ -51,23 +51,21 @@ describe('validation', () => {
 
       beforeEach(() => {
         Location = attributes({
-          x: {
-            type: Number
-          },
-          y: {
-            type: Number
-          }
+          x: { type: Number },
+          y: { type: Number }
         })(class Location {});
-
-        User = attributes({
-          lastLocation: {
-            type: Location,
-            required: true
-          }
-        })(class User {});
       });
 
       context('when value is present', () => {
+        beforeEach(() => {
+          User = attributes({
+            lastLocation: {
+              type: Location,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is valid', () => {
           const user = new User({
             lastLocation: new Location()
@@ -78,12 +76,59 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
+        beforeEach(() => {
+          User = attributes({
+            lastLocation: {
+              type: Location,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is not valid and has errors set', () => {
           const user = new User({
             lastLocation: undefined
           });
 
           assertInvalid(user, 'lastLocation');
+        });
+      });
+
+      context('when value is null', () => {
+        context('and attribute is nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              lastLocation: {
+                type: Location,
+                required: true,
+                nullable: true
+              }
+            })(class User {});
+          });
+
+          it('is valid', () => {
+            const user = new User({ lastLocation: null });
+
+            assertValid(user);
+          });
+        });
+
+        context('and attribute is not nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              lastLocation: {
+                type: Location,
+                required: true,
+                nullable: false
+              }
+            })(class User {});
+          });
+
+          it('is not valid and has errors set', () => {
+            const user = new User({ lastLocation: null });
+
+            assertInvalid(user, 'lastLocation');
+          });
         });
       });
     });
@@ -123,27 +168,18 @@ describe('validation', () => {
       var Location;
       var User;
 
-      beforeEach(() => {
-        Location = attributes({
-          x: {
-            type: Number,
-            required: true
-          },
-          y: {
-            type: Number,
-            required: true
-          }
-        })(class Location {});
-
-        User = attributes({
-          lastLocation: {
-            type: Location,
-            required: true
-          }
-        })(class User {});
-      });
-
       context('when nested value is present', () => {
+        beforeEach(() => {
+          Location = attributes({
+            x: { type: Number, required: true },
+            y: { type: Number, required: true }
+          })(class Location {});
+
+          User = attributes(
+            { lastLocation: { type: Location, required: true } }
+          )(class User {});
+        });
+
         it('is valid', () => {
           const user = new User({
             lastLocation: new Location({ x: 1, y: 2 })
@@ -154,12 +190,67 @@ describe('validation', () => {
       });
 
       context('when nested value is not present', () => {
+        beforeEach(() => {
+          Location = attributes({
+            x: { type: Number, required: true },
+            y: { type: Number, required: true }
+          })(class Location {});
+
+          User = attributes(
+            { lastLocation: { type: Location, required: true } }
+          )(class User {});
+        });
+
         it('is not valid and has errors set', () => {
           const user = new User({
-            lastLocation: new Location({ x: 1, y: undefined})
+            lastLocation: new Location({ x: 1, y: undefined })
           });
 
           assertInvalid(user, 'lastLocation.y');
+        });
+      });
+
+      context('when nested value is null', () => {
+        context('and attribute is nullable', () => {
+          beforeEach(() => {
+            Location = attributes({
+              x: { type: Number, required: true },
+              y: { type: Number, required: true, nullable: true }
+            })(class Location {});
+
+            User = attributes(
+              { lastLocation: { type: Location, required: true } }
+            )(class User {});
+          });
+
+          it('is valid', () => {
+            const user = new User({
+              lastLocation: new Location({ x: 1, y: null })
+            });
+
+            assertValid(user);
+          });
+        });
+
+        context('and attribute is not nullable', () => {
+          beforeEach(() => {
+            Location = attributes({
+              x: { type: Number, required: true },
+              y: { type: Number, required: true, nullable: false }
+            })(class Location {});
+
+            User = attributes(
+              { lastLocation: { type: Location, required: true } }
+            )(class User {});
+          });
+
+          it('is not valid and has errors set', () => {
+            const user = new User({
+              lastLocation: new Location({ x: 1, y: null })
+            });
+
+            assertInvalid(user, 'lastLocation.y');
+          });
         });
       });
     });

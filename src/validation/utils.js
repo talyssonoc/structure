@@ -63,8 +63,12 @@ exports.equalOption = function equalOption(typeDescriptor, { initial }) {
 };
 
 function requiredOption(typeDescriptor, { initial }) {
+  if(typeDescriptor.nullable) {
+    initial = initial.allow(null);
+  }
+
   if(typeDescriptor.required) {
-    return initial.required();
+    initial = initial.required();
   }
 
   return initial;

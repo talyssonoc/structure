@@ -47,7 +47,7 @@ describe('type coercion', () => {
       expect(user.isAdmin).to.equal(false);
     });
 
-    it('coerces null to zero', () => {
+    it('coerces null to false', () => {
       const user = new User({
         isAdmin: null
       });

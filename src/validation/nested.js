@@ -8,7 +8,7 @@ module.exports = function nestedValidation(typeDescriptor) {
   }
 
   const typeSchema = typeDescriptor.type[SCHEMA];
-  var joiSchema = getNestedValidations(typeSchema, typeDescriptor.nullable);
+  var joiSchema = getNestedValidations(typeSchema);
 
   joiSchema = requiredOption(typeDescriptor, {
     initial: joiSchema

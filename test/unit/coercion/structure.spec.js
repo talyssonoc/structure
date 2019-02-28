@@ -21,48 +21,79 @@ describe('type coercion', () => {
       })(class User {});
     });
 
-    it('does not coerce if raw value is an instance of class', () => {
-      const location = new Location({ x: 1, y: 2});
+    context('when raw value is an instance of class', () => {
+      var location, user;
 
-      const user = new User({ location });
-
-      expect(user.location).to.equal(location);
-    });
-
-    it('does not coerce undefined', () => {
-      const user = new User({
-        location: undefined
+      beforeEach(() => {
+        location = new Location({ x: 1, y: 2 });
+        user = new User({ location });
       });
 
-      expect(user.location).to.be.undefined;
+      it('does not coerce', () => {
+        expect(user.location).to.equal(location);
+      });
     });
 
-    it('does not coerce null when nullable', () => {
-      const user = new User({
-        destination: null
+    context('when attributes is already in correct type', () => {
+      var user;
+
+      beforeEach(() => {
+        user = new User({
+          location: { x: 1, y: 2 }
+        });
       });
 
-      expect(user.destination).to.be.null;
+      it('does not coerce', () => {
+        expect(user.location).to.be.instanceOf(Location);
+        expect(user.location.x).to.equal(1);
+        expect(user.location.y).to.equal(2);
+      });
     });
 
-    it('instantiates class with raw value', () => {
-      const user = new User({
-        location: { x: 1, y: 2}
+    context('when attributes in a different type', () => {
+      var user;
+
+      beforeEach(() => {
+        user = new User({
+          location: { x: '1', y: '2' }
+        });
       });
 
-      expect(user.location).to.be.instanceOf(Location);
-      expect(user.location.x).to.equal(1);
-      expect(user.location.y).to.equal(2);
+      it('coerces to correct type', () => {
+        expect(user.location).to.be.instanceOf(Location);
+        expect(user.location.x).to.equal(1);
+        expect(user.location.y).to.equal(2);
+      });
     });
 
-    it('does nested coercion', () => {
-      const user = new User({
-        location: { x: '1', y: '2'}
+    context('when value is undefined', () => {
+      var user;
+
+      beforeEach(() => user = new User({ location: undefined }));
+
+      it('does not coerce', () => {
+        expect(user.location).to.be.undefined;
+      });
+    });
+
+    context('when value is null', () => {
+      var user;
+
+      context('and attribute is nullable', () => {
+        beforeEach(() => user = new User({ destination: null }));
+
+        it('assigns null value', () => {
+          expect(user.destination).to.be.null;
+        });
       });
 
-      expect(user.location).to.be.instanceOf(Location);
-      expect(user.location.x).to.equal(1);
-      expect(user.location.y).to.equal(2);
+      context('assigns undefined', () => {
+        beforeEach(() => user = new User({ location: null }));
+
+        it('does not coerce', () => {
+          expect(user.location).to.be.undefined;
+        });
+      });
     });
   });
 
@@ -75,47 +106,73 @@ describe('type coercion', () => {
       CircularBook = require('../../fixtures/CircularBook');
     });
 
-    it('creates instance properly', () => {
-      const userOne = new CircularUser({
-        name: 'Circular user one',
-        friends: [],
-        favoriteBook: {
-          name: 'The Silmarillion',
-          owner: {}
-        }
+    context('when there are not allowed nullable attributes', () => {
+      var userOne, userTwo;
+
+      beforeEach(() => {
+        userOne = new CircularUser({
+          name: 'Circular user one',
+          friends: [],
+          favoriteBook: {
+            name: 'The Silmarillion',
+            owner: {}
+          },
+          nextBook: null
+        });
+
+        userTwo = new CircularUser({
+          name: 'Circular user two',
+          friends: [userOne],
+          nextBook: null
+        });
       });
 
-      const userTwo = new CircularUser({
-        name: 'Circular user two',
-        friends: [userOne]
+      it('creates instance properly', () => {
+        expect(userOne).to.be.instanceOf(CircularUser);
+        expect(userOne.favoriteBook).to.be.instanceOf(CircularBook);
+        expect(userOne.favoriteBook.owner).to.be.instanceOf(CircularUser);
+        expect(userOne.nextBook).to.be.undefined;
+
+        expect(userTwo).to.be.instanceOf(CircularUser);
+        expect(userTwo.friends[0]).to.be.instanceOf(CircularUser);
+        expect(userTwo.nextBook).to.be.undefined;
       });
 
-      expect(userOne).to.be.instanceOf(CircularUser);
-      expect(userOne.favoriteBook).to.be.instanceOf(CircularBook);
-      expect(userOne.favoriteBook.owner).to.be.instanceOf(CircularUser);
-      expect(userTwo).to.be.instanceOf(CircularUser);
-      expect(userTwo.friends[0]).to.be.instanceOf(CircularUser);
+      it('coerces when updating the value', () => {
+        const user = new CircularUser({
+          favoriteBook: {
+            name: 'The Silmarillion',
+            owner: {}
+          }
+        });
+
+        user.favoriteBook = {
+          name: 'The World of Ice & Fire',
+          owner: { name: 'New name' }
+        };
+
+        expect(user.favoriteBook).to.be.instanceOf(CircularBook);
+        expect(user.favoriteBook.name).to.equal('The World of Ice & Fire');
+        expect(user.favoriteBook.owner).to.be.instanceOf(CircularUser);
+        expect(user.favoriteBook.owner.name).to.equal('New name');
+      });
     });
 
-    it('coerces when updating the value', () => {
-      const user = new CircularUser({
-        favoriteBook: {
-          name: 'The Silmarillion',
-          owner: {}
-        }
+    context('when there are allowed nullable attributes', () => {
+      var userOne, userTwo;
+
+      beforeEach(() => {
+        userOne = new CircularUser({ friends: [], favoriteBook: null });
+        userTwo = new CircularUser({ friends: [userOne], favoriteBook: null });
       });
 
-      user.favoriteBook = {
-        name: 'The World of Ice & Fire',
-        owner: {
-          name: 'New name'
-        }
-      };
+      it('creates instance properly', () => {
+        expect(userOne).to.be.instanceOf(CircularUser);
+        expect(userOne.favoriteBook).to.be.null;
 
-      expect(user.favoriteBook).to.be.instanceOf(CircularBook);
-      expect(user.favoriteBook.name).to.equal('The World of Ice & Fire');
-      expect(user.favoriteBook.owner).to.be.instanceOf(CircularUser);
-      expect(user.favoriteBook.owner.name).to.equal('New name');
+        expect(userTwo).to.be.instanceOf(CircularUser);
+        expect(userTwo.favoriteBook).to.be.null;
+      });
     });
   });
 });

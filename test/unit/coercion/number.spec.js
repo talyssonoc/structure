@@ -10,7 +10,7 @@ describe('type coercion', () => {
         age: Number,
         earnings: {
           type: Number,
-          nullable: true,
+          nullable: true
         }
       })(class User {});
     });
@@ -33,7 +33,7 @@ describe('type coercion', () => {
       expect(user.age).to.be.undefined;
     });
 
-    it('does not coerces null when nullable', () => {
+    it('does not coerce null when nullable', () => {
       const user = new User({
         earnings: null
       });

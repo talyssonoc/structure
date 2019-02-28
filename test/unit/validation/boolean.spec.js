@@ -49,16 +49,16 @@ describe('validation', () => {
     describe('required', () => {
       var User;
 
-      beforeEach(() => {
-        User = attributes({
-          isAdmin: {
-            type: Boolean,
-            required: true
-          }
-        })(class User {});
-      });
-
       context('when value is present', () => {
+        beforeEach(() => {
+          User = attributes({
+            isAdmin: {
+              type: Boolean,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is valid', () => {
           const user = new User({
             isAdmin: true
@@ -69,12 +69,59 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
+        beforeEach(() => {
+          User = attributes({
+            isAdmin: {
+              type: Boolean,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is not valid and has errors set', () => {
           const user = new User({
             isAdmin: undefined
           });
 
           assertInvalid(user, 'isAdmin');
+        });
+      });
+
+      context('when value is null', () => {
+        context('and attribute is nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              isAdmin: {
+                type: Boolean,
+                required: true,
+                nullable: true
+              }
+            })(class User {});
+          });
+
+          it('is not valid and has errors set', () => {
+            const user = new User({ isAdmin: null });
+
+            assertValid(user);
+          });
+        });
+
+        context('and attribute is not nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              isAdmin: {
+                type: Boolean,
+                required: true,
+                nullable: false
+              }
+            })(class User {});
+          });
+
+          it('is not valid', () => {
+            const user = new User({ isAdmin: null });
+
+            assertInvalid(user, 'isAdmin');
+          });
         });
       });
     });
