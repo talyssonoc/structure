@@ -1,8 +1,8 @@
 # Nullable attributes
 
-Structure actually allow you to treat `null` values in different ways including accept or even ignore (default behavior) them during coercion and serialization.
+You can change the way an attribute is treated when the value `null`is assigned to it by using the `nullable` option with the value `true`, this would affect the way the attribute is coerced, validated and serialized.
 
-When you choose to not map __nullable__ attributes on your __schema__ by default the value assigned will be __false__, therefore, expected behavior is gonna be to assume default values for those attributes.
+If you do not set the `nullable` option for an attribute it will default to `false` and make your attribute __not nullable__.
 
 ```javascript
 /*
@@ -29,11 +29,9 @@ user.attributes; // { name: '', age: 0, active: false, createdAt: 1970-01-01T00:
 user.validate() // { valid: true }
 ```
 
-Notice that the __default__ value for __String__ is empty, what it means that you need to accept empty values to turn your schema valid.
+### Nullable optional attributes
 
-### Accepting nullables (optional attributes)
-
-When you choose to accept __nullables__ in attributes that you actually not require our coercion functions will just not define a __default__ value for those attributes and will assign `null` to them.
+When you set an optional attribute to be __nullable__ you are choosing not to assign a default value for it when instantiating your structure passing `null` as the value of this attribute, so the actual value will be `null` and will be considered valid.
 
 ```javascript
 /*
@@ -54,9 +52,9 @@ user.attributes; // { name: null }
 user.validate() // { valid: true }
 ```
 
-### Accepting nullables (required attributes)
+### Nullable required attributes
 
-We understand that when an attribute is required it should to be present and actually has a value assigned to it, even an `undefined`, `null` or whatever value what it means that coercion function will not assign a __default__ value even if __nullable__ attribute is __false__.
+We consider that when an attribute is __required__ there should be some value assigned to it even if it's `undefined`, `null` or any other value. It means that coercion will never assign a __default__ value to __required__ attributes even if __nullable__ option is __false__.
 
 ```javascript
 /*
@@ -66,7 +64,7 @@ const User = attributes({
   name: {
     type: String,
     required: true,
-    nullable: false
+    nullable: false // non-nullable required attribute
   }
 })(class User { });
 
@@ -102,4 +100,6 @@ user.validate() // { valid: true }
 
 **Important:**
 
-- Notice that usually an __undefined__ or __null__ value is not returned when you serialize your schema but when you accept a __nullable__ attribute this attribute is going also to be returned in your serialized schema, see [Serialization](serialization.md)
+- Notice that by not using the `nullable` option the __default__ value for __String__ is an empty string, which means that you need to accept empty strings to make your schema valid.
+
+- Notice that usually an attribute with the value __undefined__ or __null__ is not included when you serialize your structure, but when it is __nullable__ this attribute is going to be returned in your serialized schema.

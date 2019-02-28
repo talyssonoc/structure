@@ -4,6 +4,7 @@
 * [Schema concept](schema-concept/README.md)
   * [Shorthand and complete type descriptor](schema-concept/shorthand-and-complete-type-descriptor.md)
   * [Circular reference](schema-concept/circular-references-and-dynamic-types.md)
+  * [Nullable attributes](schema-concept/nullable-attributes.md)
 * [Coercion](coercion/README.md)
   * [Primitive type coercion](coercion/primitive-type-coercion.md)
   * [Arrays coercion](coercion/arrays-and-array-subclasses.md)
