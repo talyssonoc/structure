@@ -66,7 +66,7 @@ describe('Coercion', () => {
         it('creates a new object instance for default value', () => {
           const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
 
-          expect(executionResponse).not.to.be.eq(coercion.default());
+          expect(executionResponse).not.to.be.eq(coercion.nullValue());
         });
       });
     });

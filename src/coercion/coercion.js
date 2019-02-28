@@ -20,7 +20,7 @@ exports.execute = curryRight(
 
 function getNullableValue(coercion, typeDescriptor) {
   return needsNullableInitialization(typeDescriptor)
-    ? getDefaultValue(coercion)
+    ? getNullValue(coercion)
     : null;
 }
 
@@ -28,6 +28,6 @@ function needsNullableInitialization(typeDescriptor) {
   return !typeDescriptor.required && !typeDescriptor.nullable;
 }
 
-function getDefaultValue(coercion) {
-  return isFunction(coercion.default) ? coercion.default() : coercion.default;
+function getNullValue(coercion) {
+  return isFunction(coercion.nullValue) ? coercion.nullValue() : coercion.nullValue;
 }
