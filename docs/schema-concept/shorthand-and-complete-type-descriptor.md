@@ -66,7 +66,7 @@ Please note that setting the value of an attribute to undefined will not make it
 ## itemType
 The __itemType__ of an attribute is used to validate and coerce the type of each item from the attribute, like when the attribute type is `Array` or some class that extends `Array`.
 
-* Please refer to [Validation](validation/README.md) in order to check a bit more on validation properties.
+* Please refer to [Validation](../validation/README.md) in order to check a bit more on validation properties.
 
 # Type concept
 Each attribute needs a __type__ definition, that's how Structure validates and coerces the attribute's value. It can be divided into three categories (as in right now):
