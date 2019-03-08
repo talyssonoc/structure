@@ -1,6 +1,6 @@
 # Nullable attributes
 
-You can change the way an attribute is treated when the value `null`is assigned to it by using the `nullable` option with the value `true`, this would affect the way the attribute is coerced, validated and serialized.
+You can change the way an attribute is treated when the value `null` is assigned to it by using the `nullable` option with the value `true`, this would affect the way the attribute is coerced, validated and serialized.
 
 If you do not set the `nullable` option for an attribute it will default to `false` and make your attribute __not nullable__.
 
