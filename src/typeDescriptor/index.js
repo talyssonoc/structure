@@ -8,6 +8,8 @@ function normalizeTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
     typeDescriptor = convertToCompleteTypeDescriptor(typeDescriptor);
   }
 
+  console.log(typeDescriptor);
+
   validateTypeDescriptor(typeDescriptor, attributeName);
 
   return normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName);
@@ -18,12 +20,37 @@ function normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attribut
     typeDescriptor = addDynamicTypeGetter(schemaOptions, typeDescriptor, attributeName);
   }
 
-  if(isArrayType(typeDescriptor)) {
-    typeDescriptor.itemType = normalizeTypeDescriptor(
-      schemaOptions,
-      typeDescriptor.itemType,
-      'itemType'
-    );
+  if(isIterableType(typeDescriptor)) {
+    if (isMap(typeDescriptor)) {
+      console.log('Im a map');
+      console.log(typeDescriptor.itemType.key);
+      console.log(typeof(typeDescriptor.itemType.key));
+
+
+      typeDescriptor.itemType = {
+        key: normalizeTypeDescriptor(
+          schemaOptions,
+          typeDescriptor.itemType.key,
+          'itemType'
+        ),
+        attributes: normalizeTypeDescriptor(
+          schemaOptions,
+          typeDescriptor.itemType.attributes,
+          'itemType'
+        )
+      }
+    }
+    else {
+      console.log('Im a array');
+      console.log(typeDescriptor.itemType);
+      console.log(typeof(typeDescriptor.itemType));
+
+      typeDescriptor.itemType = normalizeTypeDescriptor(
+        schemaOptions,
+        typeDescriptor.itemType,
+        'itemType'
+      );
+    }
   }
 
   return createNormalizedTypeDescriptor(typeDescriptor);
@@ -69,8 +96,12 @@ function hasDynamicType(schemaOptions, typeDescriptor) {
   return schemaOptions.dynamics && schemaOptions.dynamics[typeDescriptor.type];
 }
 
-function isArrayType(typeDescriptor) {
+function isIterableType(typeDescriptor) {
   return typeDescriptor.itemType != null;
+}
+
+function isMap(typeDescriptor) {
+  return typeDescriptor.itemType.key != null;
 }
 
 exports.normalize = normalizeTypeDescriptor;
