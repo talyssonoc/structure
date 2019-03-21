@@ -9,6 +9,10 @@ describe('instantiating a structure', () => {
       name: {
         type: String,
         default: 'Name'
+      },
+      uuid: {
+        type: String,
+        default: (instance) => instance.getUuid()
       }
     })(class User {
       constructor() {
@@ -17,6 +21,10 @@ describe('instantiating a structure', () => {
 
       userMethod() {
         return 'I am a user';
+      }
+
+      getUuid() {
+        return 10;
       }
     });
   });
@@ -50,7 +58,6 @@ describe('instantiating a structure', () => {
 
     const user = new User(attributesObject);
 
-    expect(user.name).to.equal('Name');
     expect(attributesObject).to.be.empty;
   });
 
@@ -70,6 +77,26 @@ describe('instantiating a structure', () => {
 
     expect(user.name).to.equal('Self');
     expect(user.attributes.name).to.equal('Self');
+  });
+
+  describe('attributes initialization', () => {
+    describe('default value', () => {
+      context('when attribute default value is a static value', () => {
+        it('defaults to the static value', () => {
+          const user = new User();
+
+          expect(user.name).to.equal('Name');
+        });
+      });
+
+      context('when attribute default value is a function', () => {
+        it('calls the function using the instance of the object as parameter', () => {
+          const user = new User();
+
+          expect(user.uuid).to.equal('10');
+        });
+      });
+    });
   });
 });
 
