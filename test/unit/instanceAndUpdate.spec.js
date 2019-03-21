@@ -56,7 +56,7 @@ describe('instantiating a structure', () => {
   it('does not mutate the attributes object passed to the constructor', () => {
     const attributesObject = {};
 
-    const user = new User(attributesObject);
+    new User(attributesObject);
 
     expect(attributesObject).to.be.empty;
   });
