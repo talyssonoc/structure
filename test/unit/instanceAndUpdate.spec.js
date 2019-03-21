@@ -90,7 +90,7 @@ describe('instantiating a structure', () => {
       });
 
       context('when attribute default value is a function', () => {
-        it('calls the function using the instance of the object as parameter', () => {
+        it('calls the function using the instance of the object as parameter and perform coercion', () => {
           const user = new User();
 
           expect(user.uuid).to.equal('10');
