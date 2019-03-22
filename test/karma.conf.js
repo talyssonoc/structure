@@ -1,16 +1,31 @@
-const webpackConfig = require('../webpack.config');
+const babel = require('rollup-plugin-babel');
+const commonjs = require('rollup-plugin-commonjs');
+const resolve = require('rollup-plugin-node-resolve');
+const alias = require('rollup-plugin-alias');
 
-Object.assign(webpackConfig, {
-  externals: {},
-  resolve: {
-    alias: {
-      joi: 'joi-browser'
-    }
+const rollupConfig = {
+  output: {
+    format: 'iife',
+    name: 'Structure',
+    sourcemap: 'inline'
   },
-  devtool: 'inline-source-map'
-});
+  plugins: [
+    resolve({
+      jsnext: true,
+      main: true
+    }),
+    commonjs({
+    }),
+    babel({
+      exclude: 'node_modules/**',
+    }),
+    alias({
+      joi: 'joi-browser'
+    })
+  ]
+};
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     frameworks: ['mocha'],
     browsers: ['Chrome'],
@@ -18,25 +33,17 @@ module.exports = function(config) {
     reporters: ['mocha'],
     singleRun: true,
 
-    files: [
-      'browserSetup.js'
-    ],
+    rollupPreprocessor: rollupConfig,
+
+    files: [{ pattern: './unit/**/*.spec.js', watched: false }],
 
     preprocessors: {
-      'browserSetup.js': ['webpack', 'sourcemap']
+      './unit/**/*.spec.js': ['rollup', 'sourcemap']
     },
 
     mochaReporter: {
       showDiff: true
     },
-
-    webpack: webpackConfig,
-
-    webpackMiddleware: {
-      noInfo: true
-    },
-
-    beforeMiddleware: ['webpackBlocker'],
 
     phantomjsLauncher: {
       exitOnResourceError: true
