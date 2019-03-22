@@ -31,7 +31,7 @@
   "scripts": {
     "test": "mocha",
     "test:browser": "karma start test/karma.conf.js",
-    "build": "webpack",
+    "build": "rollup --config",
     "coverage": "istanbul cover --report html --report lcov node_modules/mocha/bin/_mocha",
     "lint": "eslint {src,test,benchmark}/**/*.js",
     "benchmark": "node benchmark/benchmark.js",
@@ -43,6 +43,9 @@
     "lodash": "^4.16.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/polyfill": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "babel": "^6.5.2",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.8",
@@ -64,6 +67,9 @@
     "karma-webpack": "^2.0.1",
     "mocha": "^3.1.0",
     "proxy-polyfill": "^0.1.6",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-node-resolve": "^4.0.1",
     "sinon": "^7.2.4",
     "webpack": "^1.13.3"
   }
