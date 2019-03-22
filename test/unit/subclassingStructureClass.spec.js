@@ -159,11 +159,19 @@ describe('subclassing a structure with another structure', () => {
 
   beforeEach(() => {
     User = attributes({
-      name: String
+      name: String,
+      uuid: {
+        type: String,
+        default: () => 123
+      }
     })(class User {});
 
     Admin = attributes({
-      level: Number
+      level: Number,
+      identifier: {
+        type: String,
+        default: (instance) => `Admin-${instance.uuid}`
+      }
     })(class Admin extends User {});
   });
 
@@ -184,5 +192,25 @@ describe('subclassing a structure with another structure', () => {
 
     expect(admin).to.be.instanceOf(Admin);
     expect(admin).to.be.instanceOf(User);
+  });
+
+  context('default value', () => {
+    context('when subclass uses an attribute from superclass to generate a default value', () => {
+      context('when superclass uses default', () => {
+        it('allows to access it properly', () => {
+          const admin = new Admin();
+
+          expect(admin.identifier).to.equal('Admin-123');
+        });
+      });
+
+      context('when a value is passed to superclass defaultable attribute', () => {
+        it('allows to access it properly', () => {
+          const admin = new Admin({ uuid: '321' });
+
+          expect(admin.identifier).to.equal('Admin-321');
+        });
+      });
+    });
   });
 });
