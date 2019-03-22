@@ -665,6 +665,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var initializationOrderFor = __webpack_require__(20);
 
+	function initializedValue(attrPassedValue, attrInitializer, attrDescriptor, instance) {
+	  if (attrPassedValue !== undefined) {
+	    return attrPassedValue;
+	  }
+
+	  return attrInitializer(attrDescriptor, instance);
+	}
+
 	module.exports = function forSchema(schema) {
 	  var initializationOrder = initializationOrderFor(schema);
 
@@ -680,11 +688,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var attrDescriptor = schema[attrName];
 	        var attrPassedValue = attributes[attrName];
 
-	        if (attrPassedValue !== undefined) {
-	          instance[attrName] = attrPassedValue;
-	        } else {
-	          instance[attrName] = attrInitializer(attrDescriptor, instance);
-	        }
+	        instance[attrName] = initializedValue(attrPassedValue, attrInitializer, attrDescriptor, instance);
 	      }
 	    }
 	  };
