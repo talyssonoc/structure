@@ -1,6 +1,7 @@
 const Validation = require('../validation');
+const Initialization = require('../initialization');
 const TypeDescriptor = require('../typeDescriptor');
-const { VALIDATE } = require('../symbols');
+const { VALIDATE, INITIALIZE } = require('../symbols');
 
 module.exports = function normalizeSchema(rawSchema, schemaOptions) {
   const schema = Object.create(null);
@@ -13,6 +14,12 @@ module.exports = function normalizeSchema(rawSchema, schemaOptions) {
 
   Object.defineProperty(schema, VALIDATE, {
     value: schemaValidation
+  });
+
+  const initialization = Initialization.forSchema(schema);
+
+  Object.defineProperty(schema, INITIALIZE, {
+    value: initialization
   });
 
   return schema;

@@ -9,6 +9,21 @@ describe('instantiating a structure', () => {
       name: {
         type: String,
         default: 'Name'
+      },
+      password: {
+        type: String
+      },
+      nickname: {
+        type: String,
+        default: (instance) => instance.name
+      },
+      uuid: {
+        type: String,
+        default: (instance) => instance.getUuid()
+      },
+      attrUsingMethodUsingAttr: {
+        type: String,
+        default: (instance) => instance.someMethod()
       }
     })(class User {
       constructor() {
@@ -18,45 +33,47 @@ describe('instantiating a structure', () => {
       userMethod() {
         return 'I am a user';
       }
+
+      getUuid() {
+        return 10;
+      }
+
+      someMethod() {
+        return `Method => ${this.name}`;
+      }
     });
   });
 
   it('has access to instance methods', () => {
-    const user = new User({
-      name: 'Me'
-    });
+    const user = new User();
 
     expect(user.userMethod()).to.equal('I am a user');
   });
 
   it('has access to instance attributes created on constructor', () => {
-    const user = new User({
-      name: 'Me'
-    });
+    const user = new User();
 
     expect(user.userInstanceStuff).to.equal('Stuff value');
   });
 
   it('has attributes passed to constructor assigned to the object', () => {
     const user = new User({
-      name: 'Me'
+      password: 'My password'
     });
 
-    expect(user.name).to.equal('Me');
+    expect(user.password).to.equal('My password');
   });
 
   it('does not mutate the attributes object passed to the constructor', () => {
     const attributesObject = {};
 
-    const user = new User(attributesObject);
+    new User(attributesObject);
 
-    expect(user.name).to.equal('Name');
     expect(attributesObject).to.be.empty;
   });
 
   it('ignores invalid attributes passed to constructor', () => {
     const user = new User({
-      name: 'Myself',
       invalid: 'I will be ignored'
     });
 
@@ -65,11 +82,63 @@ describe('instantiating a structure', () => {
 
   it('reflects instance attributes to #attributes', () => {
     const user = new User({
-      name: 'Self'
+      password: 'The password'
     });
 
-    expect(user.name).to.equal('Self');
-    expect(user.attributes.name).to.equal('Self');
+    expect(user.password).to.equal('The password');
+    expect(user.attributes.password).to.equal('The password');
+  });
+
+  describe('attributes initialization', () => {
+    describe('default value', () => {
+      context('when attribute default value is a static value', () => {
+        it('defaults to the static value', () => {
+          const user = new User();
+
+          expect(user.name).to.equal('Name');
+        });
+      });
+
+      context('when attribute default value is a function', () => {
+        it('calls the function using the instance of the object as parameter and perform coercion', () => {
+          const user = new User();
+
+          expect(user.uuid).to.equal('10');
+        });
+      });
+
+      context('when attribute dynamic default uses a static defaultable attribute', () => {
+        context('when static defaultable attribute uses default value', () => {
+          it('allows to access the value of that attribute', () => {
+            const user = new User();
+
+            expect(user.nickname).to.equal('Name');
+          });
+        });
+
+        context('when static defaultable attribute has a value passed to it', () => {
+          it('allows to access the value of that attribute', () => {
+            const user = new User({ name: 'This is my name' });
+
+            expect(user.nickname).to.equal('This is my name');
+          });
+        });
+
+        context('when dynamic default uses a method that uses an attribute with default', () => {
+          it('generates the default value properly', () => {
+            const user = new User();
+
+            expect(user.attrUsingMethodUsingAttr).to.equal('Method => Name');
+          });
+        });
+      });
+
+      it('overrides default value with passed value', () => {
+        const user = new User({ name: 'Not the default' });
+
+        expect(user.name).to.equal('Not the default');
+      });
+    });
   });
 });
 
