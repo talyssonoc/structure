@@ -1,3 +1,7 @@
+## 1.4.0 - 2019-03-26
+Enhancements:
+* Add `nullable` option
+
 ## 1.3.2 - 2019-03-22
 Fix:
 * The actual instance is passed to the dynamic defaults
