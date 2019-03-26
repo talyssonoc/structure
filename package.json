@@ -1,6 +1,6 @@
 {
   "name": "structure",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "A simple schema/attributes library built on top of modern JavaScript",
   "main": "src/index.js",
   "browser": "dist/structure.js",
