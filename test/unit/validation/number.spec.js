@@ -10,6 +10,10 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number
+          },
+          earnings: {
+            type: Number,
+            nullable: true,
           }
         })(class User {});
       });
@@ -25,9 +29,17 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
-        it('is valid', () => {
+        it('is valid with undefined', () => {
           const user = new User({
             age: undefined
+          });
+
+          assertValid(user);
+        });
+
+        it('is valid with null when nullable', () => {
+          const user = new User({
+            earnings: null
           });
 
           assertValid(user);
@@ -38,16 +50,16 @@ describe('validation', () => {
     describe('required', () => {
       var User;
 
-      beforeEach(() => {
-        User = attributes({
-          age: {
-            type: Number,
-            required: true
-          }
-        })(class User {});
-      });
-
       context('when value is present', () => {
+        beforeEach(() => {
+          User = attributes({
+            age: {
+              type: Number,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is valid', () => {
           const user = new User({
             age: 42
@@ -58,6 +70,15 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
+        beforeEach(() => {
+          User = attributes({
+            age: {
+              type: Number,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is not valid and has errors set', () => {
           const user = new User({
             age: undefined
@@ -66,8 +87,45 @@ describe('validation', () => {
           assertInvalid(user, 'age');
         });
       });
-    });
 
+      context('when value is null', () => {
+        context('and attribute is nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              age: {
+                type: Number,
+                required: true,
+                nullable: true
+              }
+            })(class User {});
+          });
+
+          it('is valid', () => {
+            const user = new User({ age: null });
+
+            assertValid(user);
+          });
+        });
+
+        context('and attribute is not nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              age: {
+                type: Number,
+                required: true,
+                nullable: false
+              }
+            })(class User {});
+          });
+
+          it('is not valid and has errors set', () => {
+            const user = new User({ age: null });
+
+            assertInvalid(user, 'age');
+          });
+        });
+      });
+    });
 
     describe('not required', () => {
       var User;

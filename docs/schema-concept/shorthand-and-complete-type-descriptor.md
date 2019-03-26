@@ -61,7 +61,24 @@ const User = attributes({
 });
 ```
 
-Please note that setting the value of an attribute to undefined will not make it fallback to the default value.
+Please note that initializing an attribute with undefined will make it fallback to the default value while instantiating the structure, but it will not fallback when assigning the attribute after the structure is already constructed.
+
+```js
+const User = attributes({
+  name: {
+    type: String,
+    default: 'Anonymous' // static default value
+  }
+})(class User { });
+
+const firstUser = new User({ name: undefined });
+firstUser.name; // 'Anonymous' =>  fallbacks to default value
+
+const secondUser = new User({ name: 'Some name' });
+
+secondUser.name = undefined;
+secondUser.name; // undefined => does not fallback to default value
+```
 
 ## itemType
 The __itemType__ of an attribute is used to validate and coerce the type of each item from the attribute, like when the attribute type is `Array` or some class that extends `Array`.

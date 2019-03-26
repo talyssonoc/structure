@@ -10,6 +10,10 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String
+          },
+          fatherName: {
+            type: String,
+            nullable: true
           }
         })(class User {});
       });
@@ -25,9 +29,17 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
-        it('is valid', () => {
+        it('is valid with undefined', () => {
           const user = new User({
             name: undefined
+          });
+
+          assertValid(user);
+        });
+
+        it('is valid with null when nullable', () => {
+          const user = new User({
+            fatherName: null
           });
 
           assertValid(user);
@@ -38,16 +50,16 @@ describe('validation', () => {
     describe('required', () => {
       var User;
 
-      beforeEach(() => {
-        User = attributes({
-          name: {
-            type: String,
-            required: true
-          }
-        })(class User {});
-      });
-
       context('when value is present', () => {
+        beforeEach(() => {
+          User = attributes({
+            name: {
+              type: String,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is valid', () => {
           const user = new User({
             name: 'Some name'
@@ -58,12 +70,59 @@ describe('validation', () => {
       });
 
       context('when value is not present', () => {
+        beforeEach(() => {
+          User = attributes({
+            name: {
+              type: String,
+              required: true
+            }
+          })(class User {});
+        });
+
         it('is not valid and has errors set', () => {
           const user = new User({
             name: undefined
           });
 
           assertInvalid(user, 'name');
+        });
+      });
+
+      context('when value is null', () => {
+        context('and attribute is nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              name: {
+                type: String,
+                required: true,
+                nullable: true
+              }
+            })(class User {});
+          });
+
+          it('is valid', () => {
+            const user = new User({ name: null });
+
+            assertValid(user);
+          });
+        });
+
+        context('and attribute is not nullable', () => {
+          beforeEach(() => {
+            User = attributes({
+              name: {
+                type: String,
+                required: true,
+                nullable: false
+              }
+            })(class User {});
+          });
+
+          it('is not valid and has errors set', () => {
+            const user = new User({ name: null });
+
+            assertInvalid(user, 'name');
+          });
         });
       });
     });
@@ -190,7 +249,6 @@ describe('validation', () => {
           });
         });
       });
-
     });
 
     describe('minLength', () => {

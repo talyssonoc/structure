@@ -42,5 +42,70 @@ describe('serialization', () => {
         expect(serializedUser).to.have.all.keys(['name']);
       });
     });
+
+    context('when attribute\'s value is null', () => {
+      var City;
+
+      context('and is not nullable', () => {
+        beforeEach(() => {
+          City = attributes({ name: String })(class City {});
+        });
+
+        it('serializes with default value', () => {
+          const city = new City({
+            name: null
+          });
+
+          const serializedCity = city.toJSON();
+
+          expect(serializedCity).to.have.all.keys(['name']);
+          expect(serializedCity).to.eql({ name: '' });
+        });
+      });
+
+      context('and is nullable', () => {
+        beforeEach(() => {
+          City = attributes({
+            name: {
+              type: String,
+              nullable: true
+            }
+          })(class City {});
+        });
+
+        it('serializes null attributes', () => {
+          const city = new City({ name: null });
+
+          const serializedCity = city.toJSON();
+
+          expect(serializedCity).to.have.all.keys(['name']);
+          expect(serializedCity).to.eql({ name: null });
+        });
+      });
+
+      context('and is a nullable relationship', () => {
+        var Country;
+        var City;
+
+        beforeEach(() => {
+          Country = attributes({ name: String })(class Country {});
+
+          City = attributes({
+            country: {
+              type: Country,
+              nullable: true
+            }
+          })(class City {});
+        });
+
+        it('serializes null attributes', () => {
+          const city = new City({ country: null });
+
+          const serializedCity = city.toJSON();
+
+          expect(serializedCity.country).to.be.null;
+        });
+      });
+    });
   });
 });

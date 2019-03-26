@@ -8,11 +8,15 @@ const User = attributes({
   },
   favoriteBook: {
     type: 'Book',
-    required: true
+    required: true,
+    nullable: true
   },
   books: {
     type: 'BooksCollection',
     itemType: String
+  },
+  nextBook: {
+    type: 'Book'
   }
 }, {
   dynamics: {

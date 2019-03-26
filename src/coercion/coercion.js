@@ -7,7 +7,7 @@ exports.execute = curryRight(
     }
 
     if (value === null) {
-      return getDefaultValue(coercion);
+      return getNullableValue(coercion, typeDescriptor);
     }
 
     if (coercion.isCoerced(value, typeDescriptor)) {
@@ -18,6 +18,16 @@ exports.execute = curryRight(
   }
 );
 
-function getDefaultValue(coercion) {
-  return isFunction(coercion.default) ? coercion.default() : coercion.default;
+function getNullableValue(coercion, typeDescriptor) {
+  return needsNullableInitialization(typeDescriptor)
+    ? getNullValue(coercion)
+    : null;
+}
+
+function needsNullableInitialization(typeDescriptor) {
+  return !typeDescriptor.required && !typeDescriptor.nullable;
+}
+
+function getNullValue(coercion) {
+  return isFunction(coercion.nullValue) ? coercion.nullValue() : coercion.nullValue;
 }

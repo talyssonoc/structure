@@ -6,6 +6,7 @@ It's possible to obtain a serialized object of a Structure using the method `toJ
 
 - Be aware that `toJSON()` will return an object, not the JSON in form of a string like `JSON.stringify()` does
 - Refer to the [Date#toJSON](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON) specification to see how dates will be serialized by `JSON.stringify`
+- Refer to [Dealing with nullable attributes](schema-concept/nullable-attributes.md) to check how `nullables` are going to be returned on __Serialization__
 
 ```javascript
 const Book = attributes({

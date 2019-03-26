@@ -3,7 +3,7 @@ const { isString } = require('lodash');
 module.exports = {
   type: String,
   isCoerced: isString,
-  default: '',
+  nullValue: '',
   coerce(value) {
     return this.type(value);
   }

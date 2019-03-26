@@ -7,68 +7,136 @@ describe('type coercion', () => {
 
     beforeEach(() => {
       User = attributes({
-        name: String
+        name: String,
+        fatherName: {
+          type: String,
+          nullable: true
+        }
       })(class User {});
     });
 
-    it('does not coerce if value is already a string', () => {
-      const name = new String('Some name');
+    context('when not nullable', () => {
+      it('does not coerce if value is already a string', () => {
+        const name = new String('Some name');
 
-      const user = new User({ name });
+        const user = new User({ name });
 
-      expect(user.name).to.not.equal('Some name');
-      expect(user.name).to.not.equal(new String('Some name'));
-      expect(user.name).to.eql(name);
-    });
-
-    it('does not coerces undefined', () => {
-      const user = new User({
-        name: undefined
+        expect(user.name).to.not.equal('Some name');
+        expect(user.name).to.not.equal(new String('Some name'));
+        expect(user.name).to.eql(name);
       });
 
-      expect(user.name).to.be.undefined;
-    });
+      it('does not coerces undefined', () => {
+        const user = new User({
+          name: undefined
+        });
 
-    it('coerces integer to string', () => {
-      const user = new User({
-        name: 10
+        expect(user.name).to.be.undefined;
       });
 
-      expect(user.name).to.equal('10');
-    });
+      it('coerces integer to string', () => {
+        const user = new User({
+          name: 10
+        });
 
-    it('coerces float to string', () => {
-      const user = new User({
-        name: 10.42
+        expect(user.name).to.equal('10');
       });
 
-      expect(user.name).to.equal('10.42');
-    });
+      it('coerces float to string', () => {
+        const user = new User({
+          name: 10.42
+        });
 
-    it('coerces null to empty string', () => {
-      const user = new User({
-        name: null
+        expect(user.name).to.equal('10.42');
       });
 
-      expect(user.name).to.equal('');
-    });
+      it('coerces null to empty string', () => {
+        const user = new User({
+          name: null
+        });
 
-    it('coerces boolean to string', () => {
-      const user = new User({
-        name: false
+        expect(user.name).to.equal('');
       });
 
-      expect(user.name).to.equal('false');
-    });
+      it('coerces boolean to string', () => {
+        const user = new User({
+          name: false
+        });
 
-    it('coerces date to string', () => {
-      const date = new Date();
-
-      const user = new User({
-        name: date
+        expect(user.name).to.equal('false');
       });
 
-      expect(user.name).to.equal(date.toString());
+      it('coerces date to string', () => {
+        const date = new Date();
+
+        const user = new User({
+          name: date
+        });
+
+        expect(user.name).to.equal(date.toString());
+      });
+    });
+
+    context('when nullable', () => {
+      it('does not coerce if value is already a string', () => {
+        const fatherName = new String('Some name');
+
+        const user = new User({ fatherName });
+
+        expect(user.fatherName).to.not.equal('Some name');
+        expect(user.fatherName).to.not.equal(new String('Some name'));
+        expect(user.fatherName).to.eql(fatherName);
+      });
+
+      it('does not coerces undefined', () => {
+        const user = new User({
+          fatherName: undefined
+        });
+
+        expect(user.fatherName).to.be.undefined;
+      });
+
+      it('does not coerces null', () => {
+        const user = new User({
+          fatherName: null
+        });
+
+        expect(user.fatherName).to.be.null;
+      });
+
+      it('coerces integer to string', () => {
+        const user = new User({
+          fatherName: 10
+        });
+
+        expect(user.fatherName).to.equal('10');
+      });
+
+      it('coerces float to string', () => {
+        const user = new User({
+          fatherName: 10.42
+        });
+
+        expect(user.fatherName).to.equal('10.42');
+      });
+
+      it('coerces boolean to string', () => {
+        const user = new User({
+          fatherName: false
+        });
+
+        expect(user.fatherName).to.equal('false');
+      });
+
+      it('coerces date to string', () => {
+        const date = new Date();
+
+        const user = new User({
+          fatherName: date
+        });
+
+        expect(user.fatherName).to.equal(date.toString());
+      });
     });
 
     describe('coercing an object to string', () => {

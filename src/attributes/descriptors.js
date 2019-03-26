@@ -5,6 +5,7 @@ const { ATTRIBUTES } = require('../symbols');
 exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, schema) {
   return {
     enumerable: true,
+
     get() {
       return this.attributes[attributeName];
     },
