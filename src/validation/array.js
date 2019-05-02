@@ -4,7 +4,8 @@ const { mapToJoi } = require('./utils');
 const joiMappings = [
   ['minLength', 'min', true],
   ['maxLength', 'max', true],
-  ['exactLength', 'length', true]
+  ['exactLength', 'length', true],
+  ['unique', 'unique']
 ];
 
 module.exports = function arrayValidation(typeDescriptor, itemTypeDescriptor) {

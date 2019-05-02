@@ -5,6 +5,7 @@
 - `minLength`: minimum quantity of items
 - `maxLength`: maximum quantity of items
 - `exactLength`: exact quantity of items
+- `unique`: can't have duplicate items
 
 ```javascript
 const Group = attributes({
