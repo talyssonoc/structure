@@ -79,6 +79,54 @@ describe('serialization', () => {
         expect(serializedUser.location).to.have.all.keys(['longitude']);
       });
     });
+
+    context('when a nested structure provides a static toJSON', () => {
+      var Person;
+      var Pet;
+
+      beforeEach(() => {
+        Pet = attributes({
+          name: String,
+          breed: String
+        })(class Pet {
+          static toJSON(json) {
+            json.petTagID = 123;
+            return json;
+          }
+        });
+
+        Person = attributes({
+          name: String,
+          age: Number,
+          pet: Pet
+        })(class Person {});
+      });
+
+      it('modifies the nested structure when serializing', () => {
+        const pet = new Pet({
+          name: 'Spot',
+          breed: 'dog'
+        });
+
+        const person = new Person({
+          name: 'Bill',
+          age: 42,
+          pet
+        });
+
+        const serializedPerson = person.toJSON();
+
+        expect(serializedPerson).to.eql({
+          name: 'Bill',
+          age: 42,
+          pet: {
+            name: 'Spot',
+            breed: 'dog',
+            petTagID: 123
+          }
+        });
+      });
+    });
   });
 
   describe('Nested structure with dynamic attribute types', () => {

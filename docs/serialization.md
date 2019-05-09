@@ -43,3 +43,34 @@ user.toJSON(); /* {
 
 JSON.stringify(user)); // {"name":"John Something","birth":"1990-10-10T03:00:00.000Z","books":[{"name":"The name of the wind"},{"name":"Stonehenge"}]}
 ```
+
+### Use static toJSON to further modify serialized object:
+**Important:**
+
+- setting a static toJSON changes the result of toJSON, but does not modify the instance
+- nested static toJSON methods are supported
+
+```javascript
+const  User = attributes({
+  name: String,
+  secret: String
+})(class User {
+  static toJSON(json) {
+    json.secret = 'REDACTED';
+    return json;
+  }
+});
+
+const user = new User({
+  name: 'John Something',
+  secret: 'cries during weddings'
+});
+
+user.secret // 'cries during weddings'
+
+user.toJSON(); /* {
+  name: 'John Something',
+  secret: 'REDACTED'
+}
+*/
+```

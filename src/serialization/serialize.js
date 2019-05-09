@@ -8,7 +8,13 @@ function serialize(structure) {
 
   const schema = structure[SCHEMA];
 
-  return serializeStructure(structure, schema);
+  const serializedStructure = serializeStructure(structure, schema);
+
+  if (typeof structure.constructor.toJSON === 'function') {
+    return structure.constructor.toJSON(serializedStructure);
+  } else {
+    return serializedStructure;
+  }
 }
 
 function getTypeSchema(typeDescriptor) {

@@ -107,5 +107,35 @@ describe('serialization', () => {
         });
       });
     });
+    context('when static toJSON is provided', () => {
+      var Person;
+
+      beforeEach(() => {
+        Person = attributes({
+          name: String,
+          age: Number
+        })(class Person {
+          static toJSON(json) {
+            json.hairColor = 'brown';
+            return json;
+          }
+        });
+      });
+
+      it('modifies and returns the object', () => {
+        const person = new Person({
+          name: 'Bill',
+          age: 42
+        });
+
+        const serializedPerson = person.toJSON();
+
+        expect(serializedPerson).to.eql({
+          name: 'Bill',
+          age: 42,
+          hairColor: 'brown'
+        });
+      });
+    });
   });
 });
