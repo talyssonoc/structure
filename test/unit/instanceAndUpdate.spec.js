@@ -11,7 +11,8 @@ describe('instantiating a structure', () => {
         default: 'Name'
       },
       password: {
-        type: String
+        type: String,
+        required: true
       },
       nickname: {
         type: String,
@@ -137,6 +138,26 @@ describe('instantiating a structure', () => {
         const user = new User({ name: 'Not the default' });
 
         expect(user.name).to.equal('Not the default');
+      });
+    });
+
+    describe('instanding a structure with buildStrictMode', () => {
+      context('when object is invalid', () => {
+        it('throw an error', () => {
+          expect(() => {
+            const user = User.buildStrictMode();  
+          }).to.throw(Error, /required/);  
+        });
+      });
+
+      context('when object is valid', () => {
+        it('return a intance', () => {
+          const user = User.buildStrictMode({
+            password: 'My password'
+          });
+      
+          expect(user.password).to.equal('My password');      
+        });
       });
     });
   });
