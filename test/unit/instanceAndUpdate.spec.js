@@ -145,7 +145,7 @@ describe('instantiating a structure', () => {
       context('when object is invalid', () => {
         it('throw an error', () => {
           expect(() => {
-            const user = User.buildStrictMode();  
+            User.buildStrictMode();  
           }).to.throw(Error, /required/);  
         });
       });

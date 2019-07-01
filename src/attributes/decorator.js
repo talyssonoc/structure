@@ -35,7 +35,7 @@ function attributesDecorator(schema, schemaOptions = {}) {
       if(!valid) throw new Error(errors.map((err) => err.message).join('. '));
 
       return instance;
-    };
+    }
 
     WrapperClass.buildStrictMode = buildStrictMode;
 
