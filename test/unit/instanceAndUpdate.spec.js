@@ -141,18 +141,18 @@ describe('instantiating a structure', () => {
       });
     });
 
-    describe('instanding a structure with buildStrictMode', () => {
+    describe('instantiating a structure with buildStrict', () => {
       context('when object is invalid', () => {
         it('throw an error', () => {
           expect(() => {
-            User.buildStrictMode();  
-          }).to.throw(Error, /required/);  
+            User.buildStrict();  
+          }).to.throw(Error, 'Invalid Attributes');  
         });
       });
 
       context('when object is valid', () => {
-        it('return a intance', () => {
-          const user = User.buildStrictMode({
+        it('return an intance', () => {
+          const user = User.buildStrict({
             password: 'My password'
           });
       
