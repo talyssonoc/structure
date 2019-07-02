@@ -193,6 +193,25 @@ describe('instantiating a structure with dynamic attribute types', () => {
     expect(userTwo).to.be.instanceOf(CircularUser);
     expect(userTwo.friends[0]).to.be.instanceOf(CircularUser);
   });
+
+  describe('with buildStrict', () => {
+    context('when object is invalid', () => {
+      it('throw an error', () => {
+        expect(() => {
+
+          CircularUser.buildStrict({
+            name: 'Circular user one',
+            friends: [],
+            favoriteBook: new CircularBook({
+              name: 'Brave new world',
+              pages: 'twenty'
+            })
+          });
+
+        }).to.throw(Error, 'Invalid Attributes');
+      });
+    });
+  });
 });
 
 describe('updating an instance', () => {

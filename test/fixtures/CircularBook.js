@@ -3,7 +3,10 @@ const { attributes } = require('../../src');
 const Book = attributes({
   name: String,
   owner: 'User',
-  nextBook: 'Book'
+  nextBook: 'Book',
+  pages: {
+    type: Number
+  }
 }, {
   dynamics: {
     User: () => require('./CircularUser'),
