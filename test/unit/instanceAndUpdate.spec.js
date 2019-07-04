@@ -185,25 +185,25 @@ describe('instantiating a structure without coercion', () => {
       age: {
         type: Number
       }
-    },{
+    }, {
       coerceAttributes: false
     })(class Person {});
   });
 
   context('passing a string to a number attributte', () => {
-    it("doesn't coerce to number", () => {
+    it("does not coerce to number", () => {
       const person = new Person({
         name: 'Person 1',
         age: '20'
-      })
+      });
 
       let { valid } = person.validate();
 
       expect(person.age).to.be.a('string');
       expect(person.age).to.equal('20');
       expect(valid).to.be.false;
-    })
-  })
+    });
+  });
 });
 
 describe('updating an instance', () => {
