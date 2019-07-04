@@ -11,6 +11,7 @@
   * [Generic coercion](coercion/generic-coercion.md)
   * [Recursive coercion](coercion/recursive-coercion.md)
   * [Observations](coercion/observations.md)
+  * [No coersion](coercion/no-coersion.md)
 * [Validation](validation/README.md)
   * [String validations](validation/string-validations.md)
   * [Number validations](validation/number-validations.md)
