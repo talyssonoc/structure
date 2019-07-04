@@ -1,6 +1,6 @@
 const { isObject } = require('lodash');
 const Errors = require('../errors');
-const { ATTRIBUTES } = require('../symbols');
+const { ATTRIBUTES, SCHEMA_OPTIONS } = require('../symbols');
 
 exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, schema) {
   return {
@@ -11,7 +11,8 @@ exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, 
     },
 
     set(value) {
-      this.attributes[attributeName] = schema[attributeName].coerce(value);
+      if(schema[SCHEMA_OPTIONS].coerceAttributes) this.attributes[attributeName] = schema[attributeName].coerce(value);
+      else this.attributes[attributeName] = value;
     }
   };
 };

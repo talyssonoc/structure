@@ -3,7 +3,8 @@ const Serialization = require('../serialization');
 const Validation = require('../validation');
 const Initialization = require('../initialization');
 const Errors = require('../errors');
-const { SCHEMA } = require('../symbols');
+const _ = require('lodash');
+const { SCHEMA, SCHEMA_OPTIONS } = require('../symbols');
 const {
   attributeDescriptorFor,
   attributesDescriptorFor
@@ -11,10 +12,16 @@ const {
 
 const define = Object.defineProperty;
 
+const defaultSchemaOptions = {
+  coerceAttributes: true
+}
+
 function attributesDecorator(schema, schemaOptions = {}) {
   if(typeof schemaOptions !== 'object') {
     throw Errors.classAsSecondParam(schemaOptions);
   }
+
+  schemaOptions = _.merge({}, defaultSchemaOptions, schemaOptions);
 
   return function decorator(Class) {
     const WrapperClass = new Proxy(Class, {
@@ -33,6 +40,8 @@ function attributesDecorator(schema, schemaOptions = {}) {
     }
 
     schema = Schema.normalize(schema, schemaOptions);
+
+    schema[SCHEMA_OPTIONS] = schemaOptions;
 
     define(WrapperClass, SCHEMA, {
       value: schema
