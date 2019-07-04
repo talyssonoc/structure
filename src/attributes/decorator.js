@@ -14,7 +14,7 @@ const define = Object.defineProperty;
 
 const defaultSchemaOptions = {
   coerceAttributes: true
-}
+};
 
 function attributesDecorator(schema, schemaOptions = {}) {
   if(typeof schemaOptions !== 'object') {
