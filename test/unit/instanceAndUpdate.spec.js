@@ -191,7 +191,7 @@ describe('instantiating a structure without coercion', () => {
   });
 
   context('passing a string to a number attributte', () => {
-    it("does not coerce to number", () => {
+    it('does not coerce to number', () => {
       const person = new Person({
         name: 'Person 1',
         age: '20'
