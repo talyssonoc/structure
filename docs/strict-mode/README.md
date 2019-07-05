@@ -1,6 +1,6 @@
-# Build Strict
+# Strict mode
 
-To instantiate a structure and automatically throw an error if that is invalid, you can use the buildStrict function.
+To instantiate a structure that automatically throws an error if that is invalid, you can use the buildStrict function.
 
 ```js
 const { attributes } = require('structure');
@@ -12,7 +12,7 @@ const User = attributes({
     age: Number
 })(class User {});
 
-var user = User.buildStrictMode({
+var user = User.buildStrict({
   age: 'Twenty'
 });
 
