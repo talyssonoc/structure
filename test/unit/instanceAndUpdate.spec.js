@@ -144,9 +144,14 @@ describe('instantiating a structure', () => {
     describe('instantiating a structure with buildStrict', () => {
       context('when object is invalid', () => {
         it('throw an error', () => {
+          let errorDetails = [{
+            message: '"password" is required',
+            path: 'password'
+          }];
+
           expect(() => {
             User.buildStrict();  
-          }).to.throw(Error, 'Invalid Attributes');  
+          }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
         });
       });
 
@@ -197,6 +202,11 @@ describe('instantiating a structure with dynamic attribute types', () => {
   describe('with buildStrict', () => {
     context('when object is invalid', () => {
       it('throw an error', () => {
+        let errorDetails = [{
+          message: '"pages" must be a number',
+          path: 'favoriteBook.pages'
+        }];
+
         expect(() => {
 
           CircularUser.buildStrict({
@@ -208,7 +218,7 @@ describe('instantiating a structure with dynamic attribute types', () => {
             })
           });
 
-        }).to.throw(Error, 'Invalid Attributes');
+        }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
       });
     });
   });
