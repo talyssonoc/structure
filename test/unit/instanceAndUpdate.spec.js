@@ -11,7 +11,8 @@ describe('instantiating a structure', () => {
         default: 'Name'
       },
       password: {
-        type: String
+        type: String,
+        required: true
       },
       nickname: {
         type: String,
@@ -139,6 +140,31 @@ describe('instantiating a structure', () => {
         expect(user.name).to.equal('Not the default');
       });
     });
+
+    describe('instantiating a structure with buildStrict', () => {
+      context('when object is invalid', () => {
+        it('throw an error', () => {
+          let errorDetails = [{
+            message: '"password" is required',
+            path: 'password'
+          }];
+
+          expect(() => {
+            User.buildStrict();  
+          }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
+        });
+      });
+
+      context('when object is valid', () => {
+        it('return an intance', () => {
+          const user = User.buildStrict({
+            password: 'My password'
+          });
+      
+          expect(user.password).to.equal('My password');      
+        });
+      });
+    });
   });
 });
 
@@ -171,6 +197,29 @@ describe('instantiating a structure with dynamic attribute types', () => {
     expect(userOne.favoriteBook.owner).to.be.instanceOf(CircularUser);
     expect(userTwo).to.be.instanceOf(CircularUser);
     expect(userTwo.friends[0]).to.be.instanceOf(CircularUser);
+  });
+
+  describe('with buildStrict', () => {
+    context('when object is invalid', () => {
+      it('throw an error', () => {
+        let errorDetails = [{
+          message: '"pages" must be a number',
+          path: 'favoriteBook.pages'
+        }];
+
+        expect(() => {
+          CircularUser.buildStrict({
+            name: 'Circular user one',
+            friends: [],
+            favoriteBook: new CircularBook({
+              name: 'Brave new world',
+              pages: 'twenty'
+            })
+          });
+
+        }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
+      });
+    });
   });
 });
 

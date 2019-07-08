@@ -28,6 +28,17 @@ function attributesDecorator(schema, schemaOptions = {}) {
       }
     });
 
+    function buildStrict(constructorArgs){
+      const instance = new WrapperClass(constructorArgs);
+
+      const {valid, errors} = instance.validate();
+      if(!valid) throw Errors.invalidAttributes(errors);
+
+      return instance;
+    }
+
+    WrapperClass.buildStrict = buildStrict;
+
     if(WrapperClass[SCHEMA]) {
       schema = Object.assign({}, WrapperClass[SCHEMA], schema);
     }
