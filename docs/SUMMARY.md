@@ -20,7 +20,7 @@
   * [Attribute reference](validation/attribute-reference.md)
   * [Nested validations](validation/nested-validations.md)
   * [Validate raw data](validation/validate-raw-data.md)
-* [Strict mode](strict-mode/README.md)
+* [Strict mode](strict-mode.md)
 * [Serialization](serialization.md)
 * [Contributing](../contributing.md)
 * [License](../license.md)
