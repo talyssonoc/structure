@@ -208,7 +208,6 @@ describe('instantiating a structure with dynamic attribute types', () => {
         }];
 
         expect(() => {
-
           CircularUser.buildStrict({
             name: 'Circular user one',
             friends: [],

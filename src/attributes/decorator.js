@@ -29,9 +29,9 @@ function attributesDecorator(schema, schemaOptions = {}) {
     });
 
     function buildStrict(constructorArgs){
-      let instance = new WrapperClass(constructorArgs);
+      const instance = new WrapperClass(constructorArgs);
 
-      let {valid, errors} = instance.validate();
+      const {valid, errors} = instance.validate();
       if(!valid) throw Errors.invalidAttributes(errors);
 
       return instance;
