@@ -16,7 +16,7 @@
   * [Number validations](validation/number-validations.md)
   * [Boolean validations](validation/boolean-validations.md)
   * [Date validations](validation/date-validations.md)
-  * [Array validations](validation/array-validations.md)m
+  * [Array validations](validation/array-validations.md)
   * [Attribute reference](validation/attribute-reference.md)
   * [Nested validations](validation/nested-validations.md)
   * [Validate raw data](validation/validate-raw-data.md)
