@@ -1,3 +1,7 @@
+## 1.5.0 - 2019-07-08
+Enhancements:
+* Add `buildStrict` static method
+
 ## 1.4.0 - 2019-03-26
 Enhancements:
 * Add `nullable` option
