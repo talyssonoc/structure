@@ -117,6 +117,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    });
 
+	    function buildStrict(constructorArgs) {
+	      var instance = new WrapperClass(constructorArgs);
+
+	      var _instance$validate = instance.validate(),
+	          valid = _instance$validate.valid,
+	          errors = _instance$validate.errors;
+
+	      if (!valid) throw Errors.invalidAttributes(errors);
+
+	      return instance;
+	    }
+
+	    WrapperClass.buildStrict = buildStrict;
+
 	    if (WrapperClass[SCHEMA]) {
 	      schema = Object.assign({}, WrapperClass[SCHEMA], schema);
 	    }
@@ -838,6 +852,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	function invalidAttributes(errors) {
+	  var error = new Error('Invalid Attributes');
+	  error.details = errors;
+	  return error;
+	}
+
 	module.exports = {
 	  classAsSecondParam: function classAsSecondParam(ErroneousPassedClass) {
 	    return new Error('You passed the structure class as the second parameter of attributes(). The expected usage is `attributes(schema)(' + (ErroneousPassedClass.name || 'StructureClass') + ')`.');
@@ -853,7 +873,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  invalidType: function invalidType(attributeName) {
 	    return new TypeError('Attribute type must be a constructor or the name of a dynamic type: ' + attributeName + '.');
-	  }
+	  },
+	  invalidAttributes: invalidAttributes
 	};
 
 /***/ },
