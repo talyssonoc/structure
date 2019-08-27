@@ -1,8 +1,8 @@
-class ValidationError extends Error {
+class DefautValidationError extends Error {
   constructor(errors) {
     super('Invalid Attributes');
     this.details = errors;
   }
 }
 
-module.exports = ValidationError;
+module.exports = DefautValidationError;

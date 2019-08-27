@@ -1,6 +1,9 @@
 const Errors = require('../errors');
+const DefaultValidationError = require('../errors/DefaultValidationError');
 
 exports.buildStrictDescriptorFor = function buildStrictDescriptorFor(StructureClass, schemaOptions) {
+  const StructureValidationError = schemaOptions.strictValidationErrorClass || DefaultValidationError;
+
   return {
     value: function buildStrict(constructorArgs) {
       const instance = new StructureClass(constructorArgs);
@@ -8,7 +11,7 @@ exports.buildStrictDescriptorFor = function buildStrictDescriptorFor(StructureCl
       const { valid, errors } = instance.validate();
 
       if (!valid) {
-        throw Errors.invalidAttributes(errors, schemaOptions.strictValidationErrorClass);
+        throw Errors.invalidAttributes(errors, StructureValidationError);
       }
 
       return instance;
