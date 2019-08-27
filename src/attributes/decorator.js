@@ -2,6 +2,7 @@ const Schema = require('../schema');
 const Serialization = require('../serialization');
 const Validation = require('../validation');
 const Initialization = require('../initialization');
+const StrictMode = require('../strictMode')
 const Errors = require('../errors');
 const { SCHEMA } = require('../symbols');
 const {
@@ -28,16 +29,7 @@ function attributesDecorator(schema, schemaOptions = {}) {
       }
     });
 
-    function buildStrict(constructorArgs){
-      const instance = new WrapperClass(constructorArgs);
-
-      const {valid, errors} = instance.validate();
-      if(!valid) throw Errors.invalidAttributes(errors);
-
-      return instance;
-    }
-
-    WrapperClass.buildStrict = buildStrict;
+    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(WrapperClass, schemaOptions));
 
     if(WrapperClass[SCHEMA]) {
       schema = Object.assign({}, WrapperClass[SCHEMA], schema);

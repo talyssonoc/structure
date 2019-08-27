@@ -1,8 +1,4 @@
-function invalidAttributes(errors){
-  let error = new Error('Invalid Attributes');
-  error.details = errors;
-  return error;
-}
+const ValidationError = require('./ValidationError')
 
 module.exports = {
   classAsSecondParam: (ErroneousPassedClass) => new Error(`You passed the structure class as the second parameter of attributes(). The expected usage is \`attributes(schema)(${ ErroneousPassedClass.name || 'StructureClass' })\`.`),
@@ -10,5 +6,5 @@ module.exports = {
   arrayOrIterable: () => new TypeError('Value must be iterable or array-like.'),
   missingDynamicType: (attributeName) => new Error(`Missing dynamic type for attribute: ${ attributeName }.`),
   invalidType: (attributeName) => new TypeError(`Attribute type must be a constructor or the name of a dynamic type: ${ attributeName }.`),
-  invalidAttributes
+  invalidAttributes: (errors, CustomValidationError) => new (CustomValidationError || ValidationError)(errors)
 };

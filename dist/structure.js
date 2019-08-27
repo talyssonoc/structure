@@ -84,15 +84,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var Schema = __webpack_require__(4);
-	var Serialization = __webpack_require__(33);
+	var Serialization = __webpack_require__(34);
 	var Validation = __webpack_require__(6);
 	var Initialization = __webpack_require__(18);
+	var StrictMode = __webpack_require__(37);
 	var Errors = __webpack_require__(23);
 
 	var _require = __webpack_require__(15),
 	    SCHEMA = _require.SCHEMA;
 
-	var _require2 = __webpack_require__(36),
+	var _require2 = __webpack_require__(38),
 	    attributeDescriptorFor = _require2.attributeDescriptorFor,
 	    attributesDescriptorFor = _require2.attributesDescriptorFor;
 
@@ -117,19 +118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    });
 
-	    function buildStrict(constructorArgs) {
-	      var instance = new WrapperClass(constructorArgs);
-
-	      var _instance$validate = instance.validate(),
-	          valid = _instance$validate.valid,
-	          errors = _instance$validate.errors;
-
-	      if (!valid) throw Errors.invalidAttributes(errors);
-
-	      return instance;
-	    }
-
-	    WrapperClass.buildStrict = buildStrict;
+	    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(WrapperClass, schemaOptions));
 
 	    if (WrapperClass[SCHEMA]) {
 	      schema = Object.assign({}, WrapperClass[SCHEMA], schema);
@@ -775,7 +764,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isString = _require.isString;
 
 	var Errors = __webpack_require__(23);
-	var Coercion = __webpack_require__(24);
+	var Coercion = __webpack_require__(25);
 	var Validation = __webpack_require__(6);
 
 	function normalizeTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
@@ -848,15 +837,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 23 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	function invalidAttributes(errors) {
-	  var error = new Error('Invalid Attributes');
-	  error.details = errors;
-	  return error;
-	}
+	var ValidationError = __webpack_require__(24);
 
 	module.exports = {
 	  classAsSecondParam: function classAsSecondParam(ErroneousPassedClass) {
@@ -874,20 +859,51 @@ return /******/ (function(modules) { // webpackBootstrap
 	  invalidType: function invalidType(attributeName) {
 	    return new TypeError('Attribute type must be a constructor or the name of a dynamic type: ' + attributeName + '.');
 	  },
-	  invalidAttributes: invalidAttributes
+	  invalidAttributes: function invalidAttributes(errors, CustomValidationError) {
+	    return new (CustomValidationError || ValidationError)(errors);
+	  }
 	};
 
 /***/ },
 /* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ValidationError = function (_Error) {
+	  _inherits(ValidationError, _Error);
+
+	  function ValidationError(errors) {
+	    _classCallCheck(this, ValidationError);
+
+	    var _this = _possibleConstructorReturn(this, (ValidationError.__proto__ || Object.getPrototypeOf(ValidationError)).call(this, 'Invalid Attributes'));
+
+	    _this.details = errors;
+	    return _this;
+	  }
+
+	  return ValidationError;
+	}(Error);
+
+	module.exports = ValidationError;
+
+/***/ },
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var arrayCoercionFor = __webpack_require__(25);
-	var genericCoercionFor = __webpack_require__(27);
-	var Coercion = __webpack_require__(28);
+	var arrayCoercionFor = __webpack_require__(26);
+	var genericCoercionFor = __webpack_require__(28);
+	var Coercion = __webpack_require__(29);
 
-	var types = [__webpack_require__(29), __webpack_require__(30), __webpack_require__(31), __webpack_require__(32)];
+	var types = [__webpack_require__(30), __webpack_require__(31), __webpack_require__(32), __webpack_require__(33)];
 
 	exports.for = function coercionFor(typeDescriptor, itemTypeDescriptor) {
 	  if (itemTypeDescriptor) {
@@ -912,7 +928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -920,7 +936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var Errors = __webpack_require__(23);
-	var getType = __webpack_require__(26);
+	var getType = __webpack_require__(27);
 
 	module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
 	  return function coerceArray(rawValue) {
@@ -974,7 +990,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -988,12 +1004,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getType = __webpack_require__(26);
+	var getType = __webpack_require__(27);
 
 	module.exports = {
 	  isCoerced: function isCoerced(value, typeDescriptor) {
@@ -1007,7 +1023,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1045,7 +1061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1063,7 +1079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1081,7 +1097,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1099,7 +1115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1119,27 +1135,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = {
-	  descriptor: __webpack_require__(34)
-	};
-
-/***/ },
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var serialize = __webpack_require__(35);
-
 	module.exports = {
-	  value: function toJSON() {
-	    return serialize(this);
-	  }
+	  descriptor: __webpack_require__(35)
 	};
 
 /***/ },
@@ -1148,10 +1150,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var serialize = __webpack_require__(36);
+
+	module.exports = {
+	  value: function toJSON() {
+	    return serialize(this);
+	  }
+	};
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _require = __webpack_require__(15),
 	    SCHEMA = _require.SCHEMA;
 
-	var getType = __webpack_require__(26);
+	var getType = __webpack_require__(27);
 
 	function serialize(structure) {
 	  if (structure == null) {
@@ -1212,7 +1228,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = serialize;
 
 /***/ },
-/* 36 */
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Errors = __webpack_require__(23);
+
+	exports.buildStrictDescriptorFor = function buildStrictDescriptorFor(StructureClass, schemaOptions) {
+	  return {
+	    value: function buildStrict(constructorArgs) {
+	      var instance = new StructureClass(constructorArgs);
+
+	      var _instance$validate = instance.validate(),
+	          valid = _instance$validate.valid,
+	          errors = _instance$validate.errors;
+
+	      if (!valid) {
+	        throw Errors.invalidAttributes(errors, schemaOptions.strictValidationErrorClass);
+	      }
+
+	      return instance;
+	    }
+	  };
+	};
+
+/***/ },
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
