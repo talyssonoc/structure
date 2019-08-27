@@ -1,3 +1,7 @@
+## 1.6.0 - 2019-08-27
+Enhancements:
+* Allow custom error class to static mode
+
 ## 1.5.0 - 2019-07-08
 Enhancements:
 * Add `buildStrict` static method

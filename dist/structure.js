@@ -87,12 +87,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Serialization = __webpack_require__(33);
 	var Validation = __webpack_require__(6);
 	var Initialization = __webpack_require__(18);
+	var StrictMode = __webpack_require__(36);
 	var Errors = __webpack_require__(23);
 
 	var _require = __webpack_require__(15),
 	    SCHEMA = _require.SCHEMA;
 
-	var _require2 = __webpack_require__(36),
+	var _require2 = __webpack_require__(38),
 	    attributeDescriptorFor = _require2.attributeDescriptorFor,
 	    attributesDescriptorFor = _require2.attributesDescriptorFor;
 
@@ -117,19 +118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    });
 
-	    function buildStrict(constructorArgs) {
-	      var instance = new WrapperClass(constructorArgs);
-
-	      var _instance$validate = instance.validate(),
-	          valid = _instance$validate.valid,
-	          errors = _instance$validate.errors;
-
-	      if (!valid) throw Errors.invalidAttributes(errors);
-
-	      return instance;
-	    }
-
-	    WrapperClass.buildStrict = buildStrict;
+	    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(WrapperClass, schemaOptions));
 
 	    if (WrapperClass[SCHEMA]) {
 	      schema = Object.assign({}, WrapperClass[SCHEMA], schema);
@@ -852,12 +841,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	function invalidAttributes(errors) {
-	  var error = new Error('Invalid Attributes');
-	  error.details = errors;
-	  return error;
-	}
-
 	module.exports = {
 	  classAsSecondParam: function classAsSecondParam(ErroneousPassedClass) {
 	    return new Error('You passed the structure class as the second parameter of attributes(). The expected usage is `attributes(schema)(' + (ErroneousPassedClass.name || 'StructureClass') + ')`.');
@@ -874,7 +857,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  invalidType: function invalidType(attributeName) {
 	    return new TypeError('Attribute type must be a constructor or the name of a dynamic type: ' + attributeName + '.');
 	  },
-	  invalidAttributes: invalidAttributes
+	  invalidAttributes: function invalidAttributes(errors, StructureValidationError) {
+	    return new StructureValidationError(errors);
+	  }
 	};
 
 /***/ },
@@ -1213,6 +1198,64 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Errors = __webpack_require__(23);
+	var DefaultValidationError = __webpack_require__(37);
+
+	exports.buildStrictDescriptorFor = function buildStrictDescriptorFor(StructureClass, schemaOptions) {
+	  var StructureValidationError = schemaOptions.strictValidationErrorClass || DefaultValidationError;
+
+	  return {
+	    value: function buildStrict(constructorArgs) {
+	      var instance = new StructureClass(constructorArgs);
+
+	      var _instance$validate = instance.validate(),
+	          valid = _instance$validate.valid,
+	          errors = _instance$validate.errors;
+
+	      if (!valid) {
+	        throw Errors.invalidAttributes(errors, StructureValidationError);
+	      }
+
+	      return instance;
+	    }
+	  };
+	};
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DefautValidationError = function (_Error) {
+	  _inherits(DefautValidationError, _Error);
+
+	  function DefautValidationError(errors) {
+	    _classCallCheck(this, DefautValidationError);
+
+	    var _this = _possibleConstructorReturn(this, (DefautValidationError.__proto__ || Object.getPrototypeOf(DefautValidationError)).call(this, 'Invalid Attributes'));
+
+	    _this.details = errors;
+	    return _this;
+	  }
+
+	  return DefautValidationError;
+	}(Error);
+
+	module.exports = DefautValidationError;
+
+/***/ },
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

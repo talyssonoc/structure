@@ -143,15 +143,48 @@ describe('instantiating a structure', () => {
 
     describe('instantiating a structure with buildStrict', () => {
       context('when object is invalid', () => {
-        it('throw an error', () => {
-          let errorDetails = [{
-            message: '"password" is required',
-            path: 'password'
-          }];
+        context('when using default error class', () => {
+          it('throws a default error', () => {
+            let errorDetails = [{
+              message: '"password" is required',
+              path: 'password'
+            }];
 
-          expect(() => {
-            User.buildStrict();  
-          }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
+            expect(() => {
+              User.buildStrict();
+            }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
+          });
+        });
+
+        context('when using custom error class', () => {
+          var UserWithCustomError;
+          var InvalidUser;
+
+          beforeEach(() => {
+            InvalidUser = class InvalidUser extends Error {
+              constructor(errors) {
+                super('There is something wrong with this user');
+                this.errors = errors;
+              }
+            };
+
+            UserWithCustomError = attributes({
+              name: {
+                type: String,
+                minLength: 3
+              }
+            }, {
+              strictValidationErrorClass: InvalidUser
+            })(class UserWithCustomError {});
+          });
+
+          it('throws a custom error', () => {
+            expect(() => {
+              UserWithCustomError.buildStrict({
+                name: 'JJ'
+              });
+            }).to.throw(InvalidUser, 'There is something wrong with this user');
+          });
         });
       });
 
@@ -160,8 +193,8 @@ describe('instantiating a structure', () => {
           const user = User.buildStrict({
             password: 'My password'
           });
-      
-          expect(user.password).to.equal('My password');      
+
+          expect(user.password).to.equal('My password');
         });
       });
     });
