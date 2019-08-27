@@ -1,4 +1,4 @@
-const ValidationError = require('./ValidationError')
+const ValidationError = require('./ValidationError');
 
 module.exports = {
   classAsSecondParam: (ErroneousPassedClass) => new Error(`You passed the structure class as the second parameter of attributes(). The expected usage is \`attributes(schema)(${ ErroneousPassedClass.name || 'StructureClass' })\`.`),

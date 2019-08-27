@@ -158,7 +158,7 @@ describe('instantiating a structure', () => {
 
         context('when using custom error class', () => {
           var UserWithCustomError;
-          var InvalidUser
+          var InvalidUser;
 
           beforeEach(() => {
             InvalidUser = class InvalidUser extends Error {
@@ -166,7 +166,7 @@ describe('instantiating a structure', () => {
                 super('There is something wrong with this user');
                 this.errors = errors;
               }
-            }
+            };
 
             UserWithCustomError = attributes({
               name: {
@@ -174,9 +174,9 @@ describe('instantiating a structure', () => {
                 minLength: 3
               }
             }, {
-                strictValidationErrorClass: InvalidUser
-            })(class UserWithCustomError {})
-          })
+              strictValidationErrorClass: InvalidUser
+            })(class UserWithCustomError {});
+          });
 
           it('throws a custom error', () => {
             expect(() => {

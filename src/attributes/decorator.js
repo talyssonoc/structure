@@ -2,7 +2,7 @@ const Schema = require('../schema');
 const Serialization = require('../serialization');
 const Validation = require('../validation');
 const Initialization = require('../initialization');
-const StrictMode = require('../strictMode')
+const StrictMode = require('../strictMode');
 const Errors = require('../errors');
 const { SCHEMA } = require('../symbols');
 const {

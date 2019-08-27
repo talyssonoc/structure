@@ -1,4 +1,4 @@
-const Errors = require('../errors')
+const Errors = require('../errors');
 
 exports.buildStrictDescriptorFor = function buildStrictDescriptorFor(StructureClass, schemaOptions) {
   return {
@@ -13,5 +13,5 @@ exports.buildStrictDescriptorFor = function buildStrictDescriptorFor(StructureCl
 
       return instance;
     }
-  }
-}
+  };
+};
