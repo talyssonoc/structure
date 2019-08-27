@@ -4,19 +4,21 @@
     "es6": true,
     "mocha": true
   },
-  "extends": "eslint:recommended",
-  "plugins": [
-    "mocha"
-  ],
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["mocha"],
   "rules": {
     "comma-spacing": ["error", { "before": false, "after": true }],
     "complexity": ["error", 4],
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
-    "object-shorthand": ["error", "always", { "avoidQuotes": true,  "avoidExplicitReturnArrows": true }],
+    "object-shorthand": [
+      "error",
+      "always",
+      { "avoidQuotes": true, "avoidExplicitReturnArrows": true }
+    ],
     "mocha/no-exclusive-tests": "error",
     "mocha/no-skipped-tests": "error",
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "always"]
   }
 }

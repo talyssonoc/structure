@@ -2,7 +2,10 @@ const { isObject } = require('lodash');
 const Errors = require('../errors');
 const { ATTRIBUTES } = require('../symbols');
 
-exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, schema) {
+exports.attributeDescriptorFor = function attributeDescriptorFor(
+  attributeName,
+  schema
+) {
   return {
     enumerable: true,
 
@@ -12,7 +15,7 @@ exports.attributeDescriptorFor = function attributeDescriptorFor(attributeName, 
 
     set(value) {
       this.attributes[attributeName] = schema[attributeName].coerce(value);
-    }
+    },
   };
 };
 
@@ -23,7 +26,7 @@ exports.attributesDescriptorFor = function attributesDescriptorFor(schema) {
     },
 
     set(newAttributes) {
-      if(!isObject(newAttributes)) {
+      if (!isObject(newAttributes)) {
         throw Errors.nonObjectAttributes();
       }
 
@@ -31,16 +34,16 @@ exports.attributesDescriptorFor = function attributesDescriptorFor(schema) {
 
       Object.defineProperty(this, ATTRIBUTES, {
         configurable: true,
-        value: attributes
+        value: attributes,
       });
-    }
+    },
   };
 };
 
 function coerceAttributes(newAttributes, schema) {
   const attributes = Object.create(null);
 
-  for(let attrName in schema) {
+  for (let attrName in schema) {
     attributes[attrName] = schema[attrName].coerce(newAttributes[attrName]);
   }
 

@@ -10,14 +10,14 @@ describe('type coercion', () => {
         isAdmin: Boolean,
         hasAccepted: {
           type: Boolean,
-          nullable: true
-        }
+          nullable: true,
+        },
       })(class User {});
     });
 
     it('does not coerces undefined', () => {
       const user = new User({
-        isAdmin: undefined
+        isAdmin: undefined,
       });
 
       expect(user.isAdmin).to.be.undefined;
@@ -25,7 +25,7 @@ describe('type coercion', () => {
 
     it('does not coerces null when nullable', () => {
       const user = new User({
-        hasAccepted: null
+        hasAccepted: null,
       });
 
       expect(user.hasAccepted).to.be.null;
@@ -33,7 +33,7 @@ describe('type coercion', () => {
 
     it('coerces string to boolean', () => {
       const user = new User({
-        isAdmin: '10'
+        isAdmin: '10',
       });
 
       expect(user.isAdmin).to.equal(true);
@@ -41,7 +41,7 @@ describe('type coercion', () => {
 
     it('coerces empty string to false', () => {
       const user = new User({
-        isAdmin: ''
+        isAdmin: '',
       });
 
       expect(user.isAdmin).to.equal(false);
@@ -49,7 +49,7 @@ describe('type coercion', () => {
 
     it('coerces null to false', () => {
       const user = new User({
-        isAdmin: null
+        isAdmin: null,
       });
 
       expect(user.isAdmin).to.be.false;
@@ -57,7 +57,7 @@ describe('type coercion', () => {
 
     it('coerces positive number to true', () => {
       const user = new User({
-        isAdmin: 1
+        isAdmin: 1,
       });
 
       expect(user.isAdmin).to.be.true;
@@ -65,7 +65,7 @@ describe('type coercion', () => {
 
     it('coerces negative number to true', () => {
       const user = new User({
-        isAdmin: -1
+        isAdmin: -1,
       });
 
       expect(user.isAdmin).to.be.true;
@@ -73,7 +73,7 @@ describe('type coercion', () => {
 
     it('coerces zero to false', () => {
       const user = new User({
-        isAdmin: 0
+        isAdmin: 0,
       });
 
       expect(user.isAdmin).to.be.false;
@@ -83,7 +83,7 @@ describe('type coercion', () => {
       const date = new Date();
 
       const user = new User({
-        isAdmin: date
+        isAdmin: date,
       });
 
       expect(user.isAdmin).to.be.true;
@@ -91,7 +91,7 @@ describe('type coercion', () => {
 
     it('coerces object to true', () => {
       const user = new User({
-        isAdmin: {}
+        isAdmin: {},
       });
 
       expect(user.isAdmin).to.be.true;

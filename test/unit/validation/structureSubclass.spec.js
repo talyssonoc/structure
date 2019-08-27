@@ -1,5 +1,8 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
+const {
+  assertValid,
+  assertInvalid,
+} = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('structure subclass', () => {
@@ -10,22 +13,22 @@ describe('validation', () => {
       User = attributes({
         name: {
           type: String,
-          required: true
-        }
+          required: true,
+        },
       })(class User {});
 
       Admin = attributes({
         level: {
           type: Number,
-          required: true
-        }
+          required: true,
+        },
       })(class Admin extends User {});
     });
 
     context('with invalid superclass schema', () => {
       it('is invalid', () => {
         const admin = new Admin({
-          level: 3
+          level: 3,
         });
 
         assertInvalid(admin, 'name');
@@ -35,7 +38,7 @@ describe('validation', () => {
     context('with invalid subclass schema', () => {
       it('is invalid', () => {
         const admin = new Admin({
-          name: 'The admin'
+          name: 'The admin',
         });
 
         assertInvalid(admin, 'level');
@@ -46,7 +49,7 @@ describe('validation', () => {
       it('is valid', () => {
         const admin = new Admin({
           name: 'The admin',
-          level: 3
+          level: 3,
         });
 
         assertValid(admin);
@@ -63,12 +66,12 @@ describe('validation', () => {
             name: {
               type: String,
               required: true,
-              nullable: true
-            }
+              nullable: true,
+            },
           })(class Vehicle {});
 
           Car = attributes({
-            gearbox: String
+            gearbox: String,
           })(class Car extends Vehicle {});
         });
 
@@ -85,12 +88,12 @@ describe('validation', () => {
             name: {
               type: String,
               required: true,
-              nullable: false
-            }
+              nullable: false,
+            },
           })(class Vehicle {});
 
           Car = attributes({
-            gearbox: String
+            gearbox: String,
           })(class Car extends Vehicle {});
         });
 

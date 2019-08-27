@@ -13,17 +13,20 @@ module.exports = {
     ['lowerCase', 'lowercase'],
     ['upperCase', 'uppercase'],
     ['email', 'email'],
-    ['guid', 'guid', isPlainObject]
+    ['guid', 'guid', isPlainObject],
   ],
   createJoiSchema(typeDescriptor) {
     var joiSchema = joi.string();
 
-    if(typeDescriptor.empty) {
+    if (typeDescriptor.empty) {
       joiSchema = joiSchema.allow('');
     }
 
     joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
-    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
-  }
+    return mapToJoi(typeDescriptor, {
+      initial: joiSchema,
+      mappings: this.joiMappings,
+    });
+  },
 };

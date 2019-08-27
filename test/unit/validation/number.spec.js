@@ -1,5 +1,8 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
+const {
+  assertValid,
+  assertInvalid,
+} = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Number', () => {
@@ -9,19 +12,19 @@ describe('validation', () => {
       beforeEach(() => {
         User = attributes({
           age: {
-            type: Number
+            type: Number,
           },
           earnings: {
             type: Number,
             nullable: true,
-          }
+          },
         })(class User {});
       });
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            age: 42
+            age: 42,
           });
 
           assertValid(user);
@@ -31,7 +34,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
-            age: undefined
+            age: undefined,
           });
 
           assertValid(user);
@@ -39,7 +42,7 @@ describe('validation', () => {
 
         it('is valid with null when nullable', () => {
           const user = new User({
-            earnings: null
+            earnings: null,
           });
 
           assertValid(user);
@@ -55,14 +58,14 @@ describe('validation', () => {
           User = attributes({
             age: {
               type: Number,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is valid', () => {
           const user = new User({
-            age: 42
+            age: 42,
           });
 
           assertValid(user);
@@ -74,14 +77,14 @@ describe('validation', () => {
           User = attributes({
             age: {
               type: Number,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: undefined
+            age: undefined,
           });
 
           assertInvalid(user, 'age');
@@ -95,8 +98,8 @@ describe('validation', () => {
               age: {
                 type: Number,
                 required: true,
-                nullable: true
-              }
+                nullable: true,
+              },
             })(class User {});
           });
 
@@ -113,8 +116,8 @@ describe('validation', () => {
               age: {
                 type: Number,
                 required: true,
-                nullable: false
-              }
+                nullable: false,
+              },
             })(class User {});
           });
 
@@ -134,8 +137,8 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            required: false
-          }
+            required: false,
+          },
         })(class User {});
       });
 
@@ -156,15 +159,15 @@ describe('validation', () => {
           User = attributes({
             age: {
               type: Number,
-              equal: 2
-            }
+              equal: 2,
+            },
           })(class User {});
         });
 
         context('when value is equal', () => {
           it('is valid', () => {
             const user = new User({
-              age: 2
+              age: 2,
             });
 
             assertValid(user);
@@ -174,7 +177,7 @@ describe('validation', () => {
         context('when value is different', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
-              age: 1
+              age: 1,
             });
 
             assertInvalid(user, 'age');
@@ -188,12 +191,12 @@ describe('validation', () => {
         beforeEach(() => {
           User = attributes({
             startAge: {
-              type: Number
+              type: Number,
             },
             currentAge: {
               type: Number,
-              equal: [{ attr: 'startAge' }, 3]
-            }
+              equal: [{ attr: 'startAge' }, 3],
+            },
           })(class User {});
         });
 
@@ -201,7 +204,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
-              currentAge: 2
+              currentAge: 2,
             });
 
             assertValid(user);
@@ -212,7 +215,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
-              currentAge: 3
+              currentAge: 3,
             });
 
             assertValid(user);
@@ -223,7 +226,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               startAge: 1,
-              currentAge: 2
+              currentAge: 2,
             });
 
             assertInvalid(user, 'currentAge');
@@ -237,12 +240,12 @@ describe('validation', () => {
         beforeEach(() => {
           User = attributes({
             startAge: {
-              type: Number
+              type: Number,
             },
             currentAge: {
               type: Number,
-              equal: { attr: 'startAge' }
-            }
+              equal: { attr: 'startAge' },
+            },
           })(class User {});
         });
 
@@ -250,7 +253,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
-              currentAge: 2
+              currentAge: 2,
             });
 
             assertValid(user);
@@ -261,7 +264,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               startAge: 1,
-              currentAge: 2
+              currentAge: 2,
             });
 
             assertInvalid(user, 'currentAge');
@@ -278,15 +281,15 @@ describe('validation', () => {
           User = attributes({
             age: {
               type: Number,
-              min: 2
-            }
+              min: 2,
+            },
           })(class User {});
         });
 
         context('when value is equal to min', () => {
           it('is valid', () => {
             const user = new User({
-              age: 2
+              age: 2,
             });
 
             assertValid(user);
@@ -296,7 +299,7 @@ describe('validation', () => {
         context('when value is greater than min', () => {
           it('is valid', () => {
             const user = new User({
-              age: 3
+              age: 3,
             });
 
             assertValid(user);
@@ -306,7 +309,7 @@ describe('validation', () => {
         context('when value is less than min', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
-              age: 1
+              age: 1,
             });
 
             assertInvalid(user, 'age');
@@ -320,12 +323,12 @@ describe('validation', () => {
         beforeEach(() => {
           User = attributes({
             startAge: {
-              type: Number
+              type: Number,
             },
             currentAge: {
               type: Number,
-              min: { attr: 'startAge' }
-            }
+              min: { attr: 'startAge' },
+            },
           })(class User {});
         });
 
@@ -333,7 +336,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
-              currentAge: 2
+              currentAge: 2,
             });
 
             assertValid(user);
@@ -344,7 +347,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
-              currentAge: 3
+              currentAge: 3,
             });
 
             assertValid(user);
@@ -355,7 +358,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               startAge: 3,
-              currentAge: 2
+              currentAge: 2,
             });
 
             assertInvalid(user, 'currentAge');
@@ -371,15 +374,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            greater: 2
-          }
+            greater: 2,
+          },
         })(class User {});
       });
 
       context('when value is equal to greater', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 2
+            age: 2,
           });
 
           assertInvalid(user, 'age');
@@ -389,7 +392,7 @@ describe('validation', () => {
       context('when value is greater than greater', () => {
         it('is valid', () => {
           const user = new User({
-            age: 3
+            age: 3,
           });
 
           assertValid(user);
@@ -399,7 +402,7 @@ describe('validation', () => {
       context('when value is less than greater', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 1
+            age: 1,
           });
 
           assertInvalid(user, 'age');
@@ -414,15 +417,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            max: 2
-          }
+            max: 2,
+          },
         })(class User {});
       });
 
       context('when value is equal to max', () => {
         it('is valid', () => {
           const user = new User({
-            age: 2
+            age: 2,
           });
 
           assertValid(user);
@@ -432,7 +435,7 @@ describe('validation', () => {
       context('when value is less than max', () => {
         it('is valid', () => {
           const user = new User({
-            age: 1
+            age: 1,
           });
 
           assertValid(user);
@@ -442,7 +445,7 @@ describe('validation', () => {
       context('when value is greater than max', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 3
+            age: 3,
           });
 
           assertInvalid(user, 'age');
@@ -457,15 +460,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            less: 2
-          }
+            less: 2,
+          },
         })(class User {});
       });
 
       context('when value is equal to less', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 2
+            age: 2,
           });
 
           assertInvalid(user, 'age');
@@ -475,7 +478,7 @@ describe('validation', () => {
       context('when value is less than less', () => {
         it('is valid', () => {
           const user = new User({
-            age: 1
+            age: 1,
           });
 
           assertValid(user);
@@ -485,7 +488,7 @@ describe('validation', () => {
       context('when value is greater than less', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 3
+            age: 3,
           });
 
           assertInvalid(user, 'age');
@@ -500,15 +503,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            integer: true
-          }
+            integer: true,
+          },
         })(class User {});
       });
 
       context('when value is an integer', () => {
         it('is valid', () => {
           const user = new User({
-            age: 42
+            age: 42,
           });
 
           assertValid(user);
@@ -518,7 +521,7 @@ describe('validation', () => {
       context('when value is not an integer', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 4.2
+            age: 4.2,
           });
 
           assertInvalid(user, 'age');
@@ -533,15 +536,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            precision: 2
-          }
+            precision: 2,
+          },
         })(class User {});
       });
 
       context('when value has less than precision decimal places', () => {
         it('is valid', () => {
           const user = new User({
-            age: 4.20
+            age: 4.2,
           });
 
           assertValid(user);
@@ -551,7 +554,7 @@ describe('validation', () => {
       context('when value has more than precision decimal places', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 0.042
+            age: 0.042,
           });
 
           assertInvalid(user, 'age');
@@ -566,15 +569,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            multiple: 3
-          }
+            multiple: 3,
+          },
         })(class User {});
       });
 
       context('when value is multiple of given value', () => {
         it('is valid', () => {
           const user = new User({
-            age: 6
+            age: 6,
           });
 
           assertValid(user);
@@ -584,7 +587,7 @@ describe('validation', () => {
       context('when value is not multiple of given value', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 7
+            age: 7,
           });
 
           assertInvalid(user, 'age');
@@ -599,15 +602,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            positive: true
-          }
+            positive: true,
+          },
         })(class User {});
       });
 
       context('when value is positive', () => {
         it('is valid', () => {
           const user = new User({
-            age: 1
+            age: 1,
           });
 
           assertValid(user);
@@ -617,7 +620,7 @@ describe('validation', () => {
       context('when value is zero', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 0
+            age: 0,
           });
 
           assertInvalid(user, 'age');
@@ -627,7 +630,7 @@ describe('validation', () => {
       context('when value is negative', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: -1
+            age: -1,
           });
 
           assertInvalid(user, 'age');
@@ -642,15 +645,15 @@ describe('validation', () => {
         User = attributes({
           age: {
             type: Number,
-            negative: true
-          }
+            negative: true,
+          },
         })(class User {});
       });
 
       context('when value is negative', () => {
         it('is valid', () => {
           const user = new User({
-            age: -1
+            age: -1,
           });
 
           assertValid(user);
@@ -660,7 +663,7 @@ describe('validation', () => {
       context('when value is zero', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 0
+            age: 0,
           });
 
           assertInvalid(user, 'age');
@@ -670,7 +673,7 @@ describe('validation', () => {
       context('when value is positive', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            age: 1
+            age: 1,
           });
 
           assertInvalid(user, 'age');

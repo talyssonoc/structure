@@ -6,5 +6,5 @@ module.exports = {
   nullValue: () => new Date(null),
   coerce(value) {
     return new this.type(value);
-  }
+  },
 };

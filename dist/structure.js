@@ -304,7 +304,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
-	    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
+	    return mapToJoi(typeDescriptor, {
+	      initial: joiSchema,
+	      mappings: this.joiMappings
+	    });
 	  }
 	};
 
@@ -447,7 +450,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
-	    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
+	    return mapToJoi(typeDescriptor, {
+	      initial: joiSchema,
+	      mappings: this.joiMappings
+	    });
 	  }
 	};
 
@@ -471,7 +477,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
-	    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
+	    return mapToJoi(typeDescriptor, {
+	      initial: joiSchema,
+	      mappings: this.joiMappings
+	    });
 	  }
 	};
 
@@ -500,7 +509,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
-	    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
+	    return mapToJoi(typeDescriptor, {
+	      initial: joiSchema,
+	      mappings: this.joiMappings
+	    });
 	  }
 	};
 
@@ -594,7 +606,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  joiSchema = joiSchema.sparse(canBeSparse);
 
-	  joiSchema = mapToJoi(typeDescriptor, { initial: joiSchema, mappings: joiMappings });
+	  joiSchema = mapToJoi(typeDescriptor, {
+	    initial: joiSchema,
+	    mappings: joiMappings
+	  });
 
 	  return joiSchema;
 	};
@@ -841,25 +856,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	module.exports = {
-	  classAsSecondParam: function classAsSecondParam(ErroneousPassedClass) {
-	    return new Error('You passed the structure class as the second parameter of attributes(). The expected usage is `attributes(schema)(' + (ErroneousPassedClass.name || 'StructureClass') + ')`.');
-	  },
-	  nonObjectAttributes: function nonObjectAttributes() {
-	    return new TypeError('#attributes can\'t be set to a non-object.');
-	  },
-	  arrayOrIterable: function arrayOrIterable() {
-	    return new TypeError('Value must be iterable or array-like.');
-	  },
-	  missingDynamicType: function missingDynamicType(attributeName) {
-	    return new Error('Missing dynamic type for attribute: ' + attributeName + '.');
-	  },
-	  invalidType: function invalidType(attributeName) {
-	    return new TypeError('Attribute type must be a constructor or the name of a dynamic type: ' + attributeName + '.');
-	  },
-	  invalidAttributes: function invalidAttributes(errors, StructureValidationError) {
-	    return new StructureValidationError(errors);
-	  }
+	exports.classAsSecondParam = function (ErroneousPassedClass) {
+	  return new Error('You passed the structure class as the second parameter of attributes(). The expected usage is `attributes(schema)(' + (ErroneousPassedClass.name || 'StructureClass') + ')`.');
+	};
+
+	exports.nonObjectAttributes = function () {
+	  return new TypeError("#attributes can't be set to a non-object.");
+	};
+
+	exports.arrayOrIterable = function () {
+	  return new TypeError('Value must be iterable or array-like.');
+	};
+
+	exports.missingDynamicType = function (attributeName) {
+	  return new Error('Missing dynamic type for attribute: ' + attributeName + '.');
+	};
+
+	exports.invalidType = function (attributeName) {
+	  return new TypeError('Attribute type must be a constructor or the name of a dynamic type: ' + attributeName + '.');
+	};
+
+	exports.invalidAttributes = function (errors, StructureValidationError) {
+	  return new StructureValidationError(errors);
 	};
 
 /***/ },

@@ -1,5 +1,8 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
+const {
+  assertValid,
+  assertInvalid,
+} = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Boolean', () => {
@@ -9,19 +12,19 @@ describe('validation', () => {
       beforeEach(() => {
         User = attributes({
           isAdmin: {
-            type: Boolean
+            type: Boolean,
           },
           hasAccepted: {
             type: Boolean,
-            nullable: true
-          }
+            nullable: true,
+          },
         })(class User {});
       });
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            isAdmin: true
+            isAdmin: true,
           });
 
           assertValid(user);
@@ -31,7 +34,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
-            isAdmin: undefined
+            isAdmin: undefined,
           });
 
           assertValid(user);
@@ -39,7 +42,7 @@ describe('validation', () => {
 
         it('is valid with null when nullable', () => {
           const user = new User({
-            hasAccepted: null
+            hasAccepted: null,
           });
 
           assertValid(user);
@@ -55,14 +58,14 @@ describe('validation', () => {
           User = attributes({
             isAdmin: {
               type: Boolean,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is valid', () => {
           const user = new User({
-            isAdmin: true
+            isAdmin: true,
           });
 
           assertValid(user);
@@ -74,14 +77,14 @@ describe('validation', () => {
           User = attributes({
             isAdmin: {
               type: Boolean,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is not valid and has errors set', () => {
           const user = new User({
-            isAdmin: undefined
+            isAdmin: undefined,
           });
 
           assertInvalid(user, 'isAdmin');
@@ -95,8 +98,8 @@ describe('validation', () => {
               isAdmin: {
                 type: Boolean,
                 required: true,
-                nullable: true
-              }
+                nullable: true,
+              },
             })(class User {});
           });
 
@@ -113,8 +116,8 @@ describe('validation', () => {
               isAdmin: {
                 type: Boolean,
                 required: true,
-                nullable: false
-              }
+                nullable: false,
+              },
             })(class User {});
           });
 
@@ -134,8 +137,8 @@ describe('validation', () => {
         User = attributes({
           isAdmin: {
             type: Boolean,
-            required: false
-          }
+            required: false,
+          },
         })(class User {});
       });
 
@@ -155,15 +158,15 @@ describe('validation', () => {
         User = attributes({
           isAdmin: {
             type: Boolean,
-            equal: true
-          }
+            equal: true,
+          },
         })(class User {});
       });
 
       context('when value is equal', () => {
         it('is valid', () => {
           const user = new User({
-            isAdmin: true
+            isAdmin: true,
           });
 
           assertValid(user);
@@ -173,7 +176,7 @@ describe('validation', () => {
       context('when value is different', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            isAdmin: false
+            isAdmin: false,
           });
 
           assertInvalid(user, 'isAdmin');

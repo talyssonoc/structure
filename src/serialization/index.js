@@ -1,3 +1,3 @@
 module.exports = {
-  descriptor: require('./descriptor')
+  descriptor: require('./descriptor'),
 };

@@ -8,5 +8,5 @@ module.exports = {
     const type = getType(typeDescriptor);
 
     return new type(value);
-  }
+  },
 };

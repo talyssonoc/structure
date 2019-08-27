@@ -5,7 +5,7 @@ describe('schema normalization', () => {
   context('when passed attribute is the type itself', () => {
     it('normalizes to an object with the type field being equal to the passed type', () => {
       const schema = {
-        name: String
+        name: String,
       };
 
       expect(normalize(schema).name.type).to.equal(String);
@@ -16,7 +16,7 @@ describe('schema normalization', () => {
     context('when attribute object has the field type', () => {
       it('normalizes to an object with the type field being equal to the passed type', () => {
         const schema = {
-          name: { type: String }
+          name: { type: String },
         };
 
         expect(normalize(schema).name.type).to.equal(String);
@@ -31,23 +31,32 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalize(schema);
-        }).to.throw(TypeError, /^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
+        }).to.throw(
+          TypeError,
+          /^Attribute type must be a constructor or the name of a dynamic type: name\.$/
+        );
       });
     });
 
-    context('when attribute descriptor is complete but #type is not a constructor', () => {
-      it('throws an error', () => {
-        const schema = {
-          name: {
-            type: true
-          }
-        };
+    context(
+      'when attribute descriptor is complete but #type is not a constructor',
+      () => {
+        it('throws an error', () => {
+          const schema = {
+            name: {
+              type: true,
+            },
+          };
 
-        expect(() => {
-          normalize(schema);
-        }).to.throw(TypeError, /^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
-      });
-    });
+          expect(() => {
+            normalize(schema);
+          }).to.throw(
+            TypeError,
+            /^Attribute type must be a constructor or the name of a dynamic type: name\.$/
+          );
+        });
+      }
+    );
   });
 
   context('when attribute has itemType', () => {
@@ -56,8 +65,8 @@ describe('schema normalization', () => {
         const schema = {
           name: {
             type: Array,
-            itemType: { type: String }
-          }
+            itemType: { type: String },
+          },
         };
 
         expect(normalize(schema).name.itemType.type).to.eql(String);
@@ -69,8 +78,8 @@ describe('schema normalization', () => {
         const schema = {
           name: {
             type: Array,
-            itemType: String
-          }
+            itemType: String,
+          },
         };
 
         expect(normalize(schema).name.itemType.type).to.eql(String);

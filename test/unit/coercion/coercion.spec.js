@@ -16,14 +16,18 @@ describe('Coercion', () => {
       });
 
       it('returns undefined', () => {
-        const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+        const executionResponse = Coercion.execute(
+          value,
+          coercion,
+          typeDescriptor
+        );
 
         expect(executionResponse).to.be.undefined;
       });
     });
 
     context('when value is null', () => {
-      beforeEach(() => value = null);
+      beforeEach(() => (value = null));
 
       context('and attribute is nullable', () => {
         beforeEach(() => {
@@ -32,7 +36,11 @@ describe('Coercion', () => {
         });
 
         it('returns null', () => {
-          const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+          const executionResponse = Coercion.execute(
+            value,
+            coercion,
+            typeDescriptor
+          );
 
           expect(executionResponse).to.be.null;
         });
@@ -45,7 +53,11 @@ describe('Coercion', () => {
         });
 
         it('returns default value present on Coercion object', () => {
-          const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+          const executionResponse = Coercion.execute(
+            value,
+            coercion,
+            typeDescriptor
+          );
 
           expect(executionResponse).to.be.eq(0);
         });
@@ -58,13 +70,21 @@ describe('Coercion', () => {
         });
 
         it('returns default value present on Coercion object', () => {
-          const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+          const executionResponse = Coercion.execute(
+            value,
+            coercion,
+            typeDescriptor
+          );
 
           expect(executionResponse).to.be.eql(new Date('1970-01-01T00:00:00Z'));
         });
 
         it('creates a new object instance for default value', () => {
-          const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+          const executionResponse = Coercion.execute(
+            value,
+            coercion,
+            typeDescriptor
+          );
 
           expect(executionResponse).not.to.be.eq(coercion.nullValue());
         });
@@ -83,7 +103,11 @@ describe('Coercion', () => {
       afterEach(() => CoercionNumber.coerce.restore());
 
       it('returns default value present on Coercion object', () => {
-        const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+        const executionResponse = Coercion.execute(
+          value,
+          coercion,
+          typeDescriptor
+        );
 
         expect(executionResponse).to.be.eq(42);
       });
@@ -103,7 +127,11 @@ describe('Coercion', () => {
       });
 
       it('returns default value present on Coercion object', () => {
-        const executionResponse = Coercion.execute(value, coercion, typeDescriptor);
+        const executionResponse = Coercion.execute(
+          value,
+          coercion,
+          typeDescriptor
+        );
 
         expect(executionResponse).to.be.eq(1008);
       });

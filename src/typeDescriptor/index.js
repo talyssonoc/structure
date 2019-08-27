@@ -4,21 +4,33 @@ const Coercion = require('../coercion');
 const Validation = require('../validation');
 
 function normalizeTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
-  if(isShorthandTypeDescriptor(typeDescriptor)) {
+  if (isShorthandTypeDescriptor(typeDescriptor)) {
     typeDescriptor = convertToCompleteTypeDescriptor(typeDescriptor);
   }
 
   validateTypeDescriptor(typeDescriptor, attributeName);
 
-  return normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName);
+  return normalizeCompleteTypeDescriptor(
+    schemaOptions,
+    typeDescriptor,
+    attributeName
+  );
 }
 
-function normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
-  if(isDynamicTypeDescriptor(typeDescriptor)) {
-    typeDescriptor = addDynamicTypeGetter(schemaOptions, typeDescriptor, attributeName);
+function normalizeCompleteTypeDescriptor(
+  schemaOptions,
+  typeDescriptor,
+  attributeName
+) {
+  if (isDynamicTypeDescriptor(typeDescriptor)) {
+    typeDescriptor = addDynamicTypeGetter(
+      schemaOptions,
+      typeDescriptor,
+      attributeName
+    );
   }
 
-  if(isArrayType(typeDescriptor)) {
+  if (isArrayType(typeDescriptor)) {
     typeDescriptor.itemType = normalizeTypeDescriptor(
       schemaOptions,
       typeDescriptor.itemType,
@@ -32,12 +44,15 @@ function normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attribut
 function createNormalizedTypeDescriptor(typeDescriptor) {
   return Object.assign({}, typeDescriptor, {
     coerce: Coercion.for(typeDescriptor, typeDescriptor.itemType),
-    validation: Validation.forAttribute(typeDescriptor)
+    validation: Validation.forAttribute(typeDescriptor),
   });
 }
 
 function validateTypeDescriptor(typeDescriptor, attributeName) {
-  if(!isObject(typeDescriptor.type) && !isDynamicTypeDescriptor(typeDescriptor)) {
+  if (
+    !isObject(typeDescriptor.type) &&
+    !isDynamicTypeDescriptor(typeDescriptor)
+  ) {
     throw Errors.invalidType(attributeName);
   }
 }
@@ -47,7 +62,7 @@ function isDynamicTypeDescriptor(typeDescriptor) {
 }
 
 function addDynamicTypeGetter(schemaOptions, typeDescriptor, attributeName) {
-  if(!hasDynamicType(schemaOptions, typeDescriptor)) {
+  if (!hasDynamicType(schemaOptions, typeDescriptor)) {
     throw Errors.missingDynamicType(attributeName);
   }
 

@@ -3,7 +3,7 @@ const getType = require('../typeResolver');
 
 module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
   return function coerceArray(rawValue) {
-    if(rawValue === undefined) {
+    if (rawValue === undefined) {
       return;
     }
 
@@ -18,7 +18,7 @@ module.exports = function arrayCoercionFor(typeDescriptor, itemTypeDescriptor) {
 };
 
 function validateIfIterable(value) {
-  if(!isIterable(value)) {
+  if (!isIterable(value)) {
     throw Errors.arrayOrIterable();
   }
 }
@@ -28,7 +28,7 @@ function isIterable(value) {
 }
 
 function extractItems(iterable) {
-  if(!Array.isArray(iterable) && iterable[Symbol.iterator]) {
+  if (!Array.isArray(iterable) && iterable[Symbol.iterator]) {
     return Array(...iterable);
   }
 
@@ -41,7 +41,7 @@ function createInstance(typeDescriptor) {
 }
 
 function fillInstance(instance, items, itemTypeDescriptor) {
-  for(let i = 0; i < items.length; i++) {
+  for (let i = 0; i < items.length; i++) {
     instance.push(coerceItem(itemTypeDescriptor, items[i]));
   }
 

@@ -15,12 +15,12 @@ describe('type coercion', () => {
       };
 
       User = attributes({
-        location: Location
+        location: Location,
       })(class User {});
     });
 
     it('does not coerce if raw value is an instance of class', () => {
-      const location = new Location({ x: 1, y: 2});
+      const location = new Location({ x: 1, y: 2 });
 
       const user = new User({ location });
 
@@ -29,7 +29,7 @@ describe('type coercion', () => {
 
     it('instantiates class with raw value', () => {
       const user = new User({
-        location: { x: 1, y: 2}
+        location: { x: 1, y: 2 },
       });
 
       expect(user.location).to.be.instanceOf(Location);
@@ -39,7 +39,7 @@ describe('type coercion', () => {
 
     it('does not coerce undefined', () => {
       const user = new User({
-        location: undefined
+        location: undefined,
       });
 
       expect(user.location).to.be.undefined;

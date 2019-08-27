@@ -8,41 +8,43 @@ describe('instantiating a structure', () => {
     User = attributes({
       name: {
         type: String,
-        default: 'Name'
+        default: 'Name',
       },
       password: {
         type: String,
-        required: true
+        required: true,
       },
       nickname: {
         type: String,
-        default: (instance) => instance.name
+        default: (instance) => instance.name,
       },
       uuid: {
         type: String,
-        default: (instance) => instance.getUuid()
+        default: (instance) => instance.getUuid(),
       },
       attrUsingMethodUsingAttr: {
         type: String,
-        default: (instance) => instance.someMethod()
-      }
-    })(class User {
-      constructor() {
-        this.userInstanceStuff = 'Stuff value';
-      }
+        default: (instance) => instance.someMethod(),
+      },
+    })(
+      class User {
+        constructor() {
+          this.userInstanceStuff = 'Stuff value';
+        }
 
-      userMethod() {
-        return 'I am a user';
-      }
+        userMethod() {
+          return 'I am a user';
+        }
 
-      getUuid() {
-        return 10;
-      }
+        getUuid() {
+          return 10;
+        }
 
-      someMethod() {
-        return `Method => ${this.name}`;
+        someMethod() {
+          return `Method => ${this.name}`;
+        }
       }
-    });
+    );
   });
 
   it('has access to instance methods', () => {
@@ -59,7 +61,7 @@ describe('instantiating a structure', () => {
 
   it('has attributes passed to constructor assigned to the object', () => {
     const user = new User({
-      password: 'My password'
+      password: 'My password',
     });
 
     expect(user.password).to.equal('My password');
@@ -75,7 +77,7 @@ describe('instantiating a structure', () => {
 
   it('ignores invalid attributes passed to constructor', () => {
     const user = new User({
-      invalid: 'I will be ignored'
+      invalid: 'I will be ignored',
     });
 
     expect(user.invalid).to.be.undefined;
@@ -83,7 +85,7 @@ describe('instantiating a structure', () => {
 
   it('reflects instance attributes to #attributes', () => {
     const user = new User({
-      password: 'The password'
+      password: 'The password',
     });
 
     expect(user.password).to.equal('The password');
@@ -108,31 +110,45 @@ describe('instantiating a structure', () => {
         });
       });
 
-      context('when attribute dynamic default uses a static defaultable attribute', () => {
-        context('when static defaultable attribute uses default value', () => {
-          it('allows to access the value of that attribute', () => {
-            const user = new User();
+      context(
+        'when attribute dynamic default uses a static defaultable attribute',
+        () => {
+          context(
+            'when static defaultable attribute uses default value',
+            () => {
+              it('allows to access the value of that attribute', () => {
+                const user = new User();
 
-            expect(user.nickname).to.equal('Name');
-          });
-        });
+                expect(user.nickname).to.equal('Name');
+              });
+            }
+          );
 
-        context('when static defaultable attribute has a value passed to it', () => {
-          it('allows to access the value of that attribute', () => {
-            const user = new User({ name: 'This is my name' });
+          context(
+            'when static defaultable attribute has a value passed to it',
+            () => {
+              it('allows to access the value of that attribute', () => {
+                const user = new User({ name: 'This is my name' });
 
-            expect(user.nickname).to.equal('This is my name');
-          });
-        });
+                expect(user.nickname).to.equal('This is my name');
+              });
+            }
+          );
 
-        context('when dynamic default uses a method that uses an attribute with default', () => {
-          it('generates the default value properly', () => {
-            const user = new User();
+          context(
+            'when dynamic default uses a method that uses an attribute with default',
+            () => {
+              it('generates the default value properly', () => {
+                const user = new User();
 
-            expect(user.attrUsingMethodUsingAttr).to.equal('Method => Name');
-          });
-        });
-      });
+                expect(user.attrUsingMethodUsingAttr).to.equal(
+                  'Method => Name'
+                );
+              });
+            }
+          );
+        }
+      );
 
       it('overrides default value with passed value', () => {
         const user = new User({ name: 'Not the default' });
@@ -145,14 +161,19 @@ describe('instantiating a structure', () => {
       context('when object is invalid', () => {
         context('when using default error class', () => {
           it('throws a default error', () => {
-            let errorDetails = [{
-              message: '"password" is required',
-              path: 'password'
-            }];
+            let errorDetails = [
+              {
+                message: '"password" is required',
+                path: 'password',
+              },
+            ];
 
             expect(() => {
               User.buildStrict();
-            }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
+            })
+              .to.throw(Error, 'Invalid Attributes')
+              .with.property('details')
+              .that.deep.equals(errorDetails);
           });
         });
 
@@ -168,20 +189,23 @@ describe('instantiating a structure', () => {
               }
             };
 
-            UserWithCustomError = attributes({
-              name: {
-                type: String,
-                minLength: 3
+            UserWithCustomError = attributes(
+              {
+                name: {
+                  type: String,
+                  minLength: 3,
+                },
+              },
+              {
+                strictValidationErrorClass: InvalidUser,
               }
-            }, {
-              strictValidationErrorClass: InvalidUser
-            })(class UserWithCustomError {});
+            )(class UserWithCustomError {});
           });
 
           it('throws a custom error', () => {
             expect(() => {
               UserWithCustomError.buildStrict({
-                name: 'JJ'
+                name: 'JJ',
               });
             }).to.throw(InvalidUser, 'There is something wrong with this user');
           });
@@ -191,7 +215,7 @@ describe('instantiating a structure', () => {
       context('when object is valid', () => {
         it('return an intance', () => {
           const user = User.buildStrict({
-            password: 'My password'
+            password: 'My password',
           });
 
           expect(user.password).to.equal('My password');
@@ -216,13 +240,13 @@ describe('instantiating a structure with dynamic attribute types', () => {
       friends: [],
       favoriteBook: new CircularBook({
         name: 'Brave new world',
-        owner: new CircularUser()
-      })
+        owner: new CircularUser(),
+      }),
     });
 
     const userTwo = new CircularUser({
       name: 'Circular user two',
-      friends: [userOne]
+      friends: [userOne],
     });
 
     expect(userOne).to.be.instanceOf(CircularUser);
@@ -235,10 +259,12 @@ describe('instantiating a structure with dynamic attribute types', () => {
   describe('with buildStrict', () => {
     context('when object is invalid', () => {
       it('throw an error', () => {
-        let errorDetails = [{
-          message: '"pages" must be a number',
-          path: 'favoriteBook.pages'
-        }];
+        let errorDetails = [
+          {
+            message: '"pages" must be a number',
+            path: 'favoriteBook.pages',
+          },
+        ];
 
         expect(() => {
           CircularUser.buildStrict({
@@ -246,11 +272,13 @@ describe('instantiating a structure with dynamic attribute types', () => {
             friends: [],
             favoriteBook: new CircularBook({
               name: 'Brave new world',
-              pages: 'twenty'
-            })
+              pages: 'twenty',
+            }),
           });
-
-        }).to.throw(Error, 'Invalid Attributes').with.property('details').that.deep.equals(errorDetails);
+        })
+          .to.throw(Error, 'Invalid Attributes')
+          .with.property('details')
+          .that.deep.equals(errorDetails);
       });
     });
   });
@@ -261,15 +289,13 @@ describe('updating an instance', () => {
 
   beforeEach(() => {
     User = attributes({
-      name: String
-    })(class User {
-
-    });
+      name: String,
+    })(class User {});
   });
 
   it('updates instance attribute value when assigned a new value', () => {
     const user = new User({
-      name: 'My name'
+      name: 'My name',
     });
 
     user.name = 'New name';
@@ -279,7 +305,7 @@ describe('updating an instance', () => {
 
   it('reflects new value assigned to attribute on #attributes', () => {
     const user = new User({
-      name: 'My name'
+      name: 'My name',
     });
 
     user.name = 'New name';
@@ -289,11 +315,11 @@ describe('updating an instance', () => {
 
   it('reflects new value assigned to #attributes on instance attribute', () => {
     const user = new User({
-      name: 'My name'
+      name: 'My name',
     });
 
     user.attributes = {
-      name: 'New name'
+      name: 'New name',
     };
 
     expect(user.name).to.equal('New name');
@@ -307,7 +333,7 @@ describe('updating an instance', () => {
 
   it('throws if value assigned to #attributes is not an object', () => {
     const user = new User({
-      name: 'My name'
+      name: 'My name',
     });
 
     expect(() => {
@@ -329,13 +355,13 @@ describe('updating a structure with dynamic attribute types', () => {
     const user = new CircularUser({
       favoriteBook: new CircularBook({
         name: 'Brave new world',
-        owner: new CircularUser()
-      })
+        owner: new CircularUser(),
+      }),
     });
 
     user.favoriteBook = new CircularBook({
       name: '1984',
-      owner: user
+      owner: user,
     });
 
     expect(user.favoriteBook).to.be.instanceOf(CircularBook);
