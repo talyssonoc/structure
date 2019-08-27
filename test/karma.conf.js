@@ -4,10 +4,10 @@ Object.assign(webpackConfig, {
   externals: {},
   resolve: {
     alias: {
-      joi: 'joi-browser'
-    }
+      joi: 'joi-browser',
+    },
   },
-  devtool: 'inline-source-map'
+  devtool: 'inline-source-map',
 });
 
 module.exports = function(config) {
@@ -18,28 +18,26 @@ module.exports = function(config) {
     reporters: ['mocha'],
     singleRun: true,
 
-    files: [
-      'browserSetup.js'
-    ],
+    files: ['browserSetup.js'],
 
     preprocessors: {
-      'browserSetup.js': ['webpack', 'sourcemap']
+      'browserSetup.js': ['webpack', 'sourcemap'],
     },
 
     mochaReporter: {
-      showDiff: true
+      showDiff: true,
     },
 
     webpack: webpackConfig,
 
     webpackMiddleware: {
-      noInfo: true
+      noInfo: true,
     },
 
     beforeMiddleware: ['webpackBlocker'],
 
     phantomjsLauncher: {
-      exitOnResourceError: true
-    }
+      exitOnResourceError: true,
+    },
   });
 };

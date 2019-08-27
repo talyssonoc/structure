@@ -1,5 +1,8 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
+const {
+  assertValid,
+  assertInvalid,
+} = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('String', () => {
@@ -9,19 +12,19 @@ describe('validation', () => {
       beforeEach(() => {
         User = attributes({
           name: {
-            type: String
+            type: String,
           },
           fatherName: {
             type: String,
-            nullable: true
-          }
+            nullable: true,
+          },
         })(class User {});
       });
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some name'
+            name: 'Some name',
           });
 
           assertValid(user);
@@ -31,7 +34,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
-            name: undefined
+            name: undefined,
           });
 
           assertValid(user);
@@ -39,7 +42,7 @@ describe('validation', () => {
 
         it('is valid with null when nullable', () => {
           const user = new User({
-            fatherName: null
+            fatherName: null,
           });
 
           assertValid(user);
@@ -55,14 +58,14 @@ describe('validation', () => {
           User = attributes({
             name: {
               type: String,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is valid', () => {
           const user = new User({
-            name: 'Some name'
+            name: 'Some name',
           });
 
           assertValid(user);
@@ -74,14 +77,14 @@ describe('validation', () => {
           User = attributes({
             name: {
               type: String,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: undefined
+            name: undefined,
           });
 
           assertInvalid(user, 'name');
@@ -95,8 +98,8 @@ describe('validation', () => {
               name: {
                 type: String,
                 required: true,
-                nullable: true
-              }
+                nullable: true,
+              },
             })(class User {});
           });
 
@@ -113,8 +116,8 @@ describe('validation', () => {
               name: {
                 type: String,
                 required: true,
-                nullable: false
-              }
+                nullable: false,
+              },
             })(class User {});
           });
 
@@ -134,15 +137,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            required: false
-          }
+            required: false,
+          },
         })(class User {});
       });
 
       context('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
-            name: undefined
+            name: undefined,
           });
 
           assertValid(user);
@@ -157,15 +160,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            equal: 'Something'
-          }
+            equal: 'Something',
+          },
         })(class User {});
       });
 
       context('when value is equal', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Something'
+            name: 'Something',
           });
 
           assertValid(user);
@@ -175,7 +178,7 @@ describe('validation', () => {
       context('when value is different', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Another thing'
+            name: 'Another thing',
           });
 
           assertInvalid(user, 'name');
@@ -191,15 +194,15 @@ describe('validation', () => {
           User = attributes({
             name: {
               type: String,
-              empty: true
-            }
+              empty: true,
+            },
           })(class User {});
         });
 
         context('when value is not empty', () => {
           it('is valid', () => {
             const user = new User({
-              name: 'Some name'
+              name: 'Some name',
             });
 
             assertValid(user);
@@ -209,7 +212,7 @@ describe('validation', () => {
         context('when value is empty', () => {
           it('is valid', () => {
             const user = new User({
-              name: ''
+              name: '',
             });
 
             assertValid(user);
@@ -224,15 +227,15 @@ describe('validation', () => {
           User = attributes({
             name: {
               type: String,
-              empty: false
-            }
+              empty: false,
+            },
           })(class User {});
         });
 
         context('when value is not empty', () => {
           it('is valid', () => {
             const user = new User({
-              name: 'Some name'
+              name: 'Some name',
             });
 
             assertValid(user);
@@ -242,7 +245,7 @@ describe('validation', () => {
         context('when value is empty', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
-              name: ''
+              name: '',
             });
 
             assertInvalid(user, 'name');
@@ -258,15 +261,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            minLength: 3
-          }
+            minLength: 3,
+          },
         })(class User {});
       });
 
       context('when value has minimum length', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some name'
+            name: 'Some name',
           });
 
           assertValid(user);
@@ -276,7 +279,7 @@ describe('validation', () => {
       context('when value is shorter than minimum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Hi'
+            name: 'Hi',
           });
 
           assertInvalid(user, 'name');
@@ -291,15 +294,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            maxLength: 4
-          }
+            maxLength: 4,
+          },
         })(class User {});
       });
 
       context('when value has maximum length', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some'
+            name: 'Some',
           });
 
           assertValid(user);
@@ -309,7 +312,7 @@ describe('validation', () => {
       context('when value is longer than maximum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Some name'
+            name: 'Some name',
           });
 
           assertInvalid(user, 'name');
@@ -324,15 +327,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            exactLength: 4
-          }
+            exactLength: 4,
+          },
         })(class User {});
       });
 
       context('when value has exact length', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'Some'
+            name: 'Some',
           });
 
           assertValid(user);
@@ -342,7 +345,7 @@ describe('validation', () => {
       context('when value is longer than exact length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Some name'
+            name: 'Some name',
           });
 
           assertInvalid(user, 'name');
@@ -352,7 +355,7 @@ describe('validation', () => {
       context('when value is shorter than exact length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Hi'
+            name: 'Hi',
           });
 
           assertInvalid(user, 'name');
@@ -367,15 +370,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            regex: /\w\d/
-          }
+            regex: /\w\d/,
+          },
         })(class User {});
       });
 
       context('when value matches the regex', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'A1'
+            name: 'A1',
           });
 
           assertValid(user);
@@ -385,7 +388,7 @@ describe('validation', () => {
       context('when value does not match the regex', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Something'
+            name: 'Something',
           });
 
           assertInvalid(user, 'name');
@@ -400,15 +403,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            alphanumeric: true
-          }
+            alphanumeric: true,
+          },
         })(class User {});
       });
 
       context('when value is alphanumeric', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'A1B2'
+            name: 'A1B2',
           });
 
           assertValid(user);
@@ -418,7 +421,7 @@ describe('validation', () => {
       context('when value is not alphanumeric', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'No alphanumeric $ string'
+            name: 'No alphanumeric $ string',
           });
 
           assertInvalid(user, 'name');
@@ -433,15 +436,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            lowerCase: true
-          }
+            lowerCase: true,
+          },
         })(class User {});
       });
 
       context('when value is lower cased', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'abc'
+            name: 'abc',
           });
 
           assertValid(user);
@@ -451,7 +454,7 @@ describe('validation', () => {
       context('when value has some upper case character', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Abc'
+            name: 'Abc',
           });
 
           assertInvalid(user, 'name');
@@ -466,15 +469,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            upperCase: true
-          }
+            upperCase: true,
+          },
         })(class User {});
       });
 
       context('when value is upper cased', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'ABC'
+            name: 'ABC',
           });
 
           assertValid(user);
@@ -484,7 +487,7 @@ describe('validation', () => {
       context('when value has some lower case character', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Abc'
+            name: 'Abc',
           });
 
           assertInvalid(user, 'name');
@@ -499,15 +502,15 @@ describe('validation', () => {
         User = attributes({
           name: {
             type: String,
-            email: true
-          }
+            email: true,
+          },
         })(class User {});
       });
 
       context('when value is a valid email', () => {
         it('is valid', () => {
           const user = new User({
-            name: 'name@host.com'
+            name: 'name@host.com',
           });
 
           assertValid(user);
@@ -517,7 +520,7 @@ describe('validation', () => {
       context('when value is shorter than minimum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            name: 'Not a valid email'
+            name: 'Not a valid email',
           });
 
           assertInvalid(user, 'name');
@@ -533,15 +536,15 @@ describe('validation', () => {
           User = attributes({
             id: {
               type: String,
-              guid: true
-            }
+              guid: true,
+            },
           })(class User {});
         });
 
         context('when value is a valid guid', () => {
           it('is valid', () => {
             const user = new User({
-              id: '759535af-3314-4ace-81b9-a519c29d0e17'
+              id: '759535af-3314-4ace-81b9-a519c29d0e17',
             });
 
             assertValid(user);
@@ -551,7 +554,7 @@ describe('validation', () => {
         context('when value is not a valid guid', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
-              id: 'Not a valid guid'
+              id: 'Not a valid guid',
             });
 
             assertInvalid(user, 'id');
@@ -567,9 +570,9 @@ describe('validation', () => {
             id: {
               type: String,
               guid: {
-                version: ['uuidv4']
-              }
-            }
+                version: ['uuidv4'],
+              },
+            },
           })(class User {});
         });
 
@@ -578,7 +581,7 @@ describe('validation', () => {
             const uuidv4 = 'f35e1cf1-4ac9-4fbb-9c06-151dc8ff9107';
 
             const user = new User({
-              id: uuidv4
+              id: uuidv4,
             });
 
             assertValid(user);
@@ -590,7 +593,7 @@ describe('validation', () => {
             const uuidv1 = 'c130564e-36d9-11e9-b210-d663bd873d93';
 
             const user = new User({
-              id: uuidv1
+              id: uuidv1,
             });
 
             assertInvalid(user, 'id');

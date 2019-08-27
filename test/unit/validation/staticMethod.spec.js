@@ -11,29 +11,29 @@ describe('validation', () => {
         name: {
           type: String,
           required: true,
-          nullable: true
-        }
-      })(class Book { });
+          nullable: true,
+        },
+      })(class Book {});
 
       User = attributes({
         name: {
           type: String,
           required: true,
-          nullable: false
+          nullable: false,
         },
         age: {
           type: Number,
-          min: 21
+          min: 21,
         },
-        favoriteBook: Book
-      })(class User { });
+        favoriteBook: Book,
+      })(class User {});
     });
 
     context('when required attributes are present', () => {
       it('returns valid as true and no errors', () => {
         const { valid, errors } = User.validate({
           name: 'The name',
-          age: 25
+          age: 25,
         });
 
         expect(valid).to.be.true;
@@ -44,7 +44,7 @@ describe('validation', () => {
     context('when required attributes are absent', () => {
       it('returns valid as false and array of errors', () => {
         const { valid, errors } = User.validate({
-          age: 10
+          age: 10,
         });
 
         expect(valid).to.be.false;
@@ -84,8 +84,8 @@ describe('validation', () => {
             name: 'some name',
             age: 25,
             favoriteBook: {
-              name: 'The Lord of the Rings'
-            }
+              name: 'The Lord of the Rings',
+            },
           });
 
           expect(valid).to.be.true;
@@ -98,7 +98,7 @@ describe('validation', () => {
           const { valid, errors } = User.validate({
             name: 'some name',
             age: 25,
-            favoriteBook: {}
+            favoriteBook: {},
           });
 
           expect(valid).to.be.false;
@@ -113,7 +113,7 @@ describe('validation', () => {
           const { valid, errors } = User.validate({
             name: 'some name',
             age: 25,
-            favoriteBook: { name: null }
+            favoriteBook: { name: null },
           });
 
           expect(valid).to.be.true;
@@ -125,12 +125,12 @@ describe('validation', () => {
         var Test;
 
         before(() => {
-          Test = attributes({ user: User })(class Test { });
+          Test = attributes({ user: User })(class Test {});
         });
 
         it('returns valid as false and an array of errors', () => {
           const { valid, errors } = Test.validate({
-            user: { name: null }
+            user: { name: null },
           });
 
           expect(valid).to.be.false;
@@ -146,7 +146,7 @@ describe('validation', () => {
         it('returns valid as true and no errors', () => {
           const user = new User({
             name: 'Something',
-            age: 21
+            age: 21,
           });
 
           const { valid, errors } = User.validate(user);
@@ -159,7 +159,7 @@ describe('validation', () => {
       context('when required attributes are absent or invalid', () => {
         it('returns valid as false and array of errors', () => {
           const user = new User({
-            age: 10
+            age: 10,
           });
 
           const { valid, errors } = User.validate(user);
@@ -177,7 +177,7 @@ describe('validation', () => {
           const user = new User({
             name: 'Something',
             age: 21,
-            favoriteBook: new Book({ name: null })
+            favoriteBook: new Book({ name: null }),
           });
 
           const { valid, errors } = User.validate(user);
@@ -191,12 +191,12 @@ describe('validation', () => {
         var Test;
 
         before(() => {
-          Test = attributes({ user: User })(class Test { });
+          Test = attributes({ user: User })(class Test {});
         });
 
         it('returns valid as false and an array of errors', () => {
           const test = new Test({
-            user: { name: null }
+            user: { name: null },
           });
 
           const { valid, errors } = Test.validate(test);

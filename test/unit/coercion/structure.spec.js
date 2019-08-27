@@ -9,15 +9,15 @@ describe('type coercion', () => {
     beforeEach(() => {
       Location = attributes({
         x: Number,
-        y: Number
+        y: Number,
       })(class Location {});
 
       User = attributes({
         location: Location,
         destination: {
           type: Location,
-          nullable: true
-        }
+          nullable: true,
+        },
       })(class User {});
     });
 
@@ -39,7 +39,7 @@ describe('type coercion', () => {
 
       beforeEach(() => {
         user = new User({
-          location: { x: 1, y: 2 }
+          location: { x: 1, y: 2 },
         });
       });
 
@@ -55,7 +55,7 @@ describe('type coercion', () => {
 
       beforeEach(() => {
         user = new User({
-          location: { x: '1', y: '2' }
+          location: { x: '1', y: '2' },
         });
       });
 
@@ -69,7 +69,7 @@ describe('type coercion', () => {
     context('when value is undefined', () => {
       var user;
 
-      beforeEach(() => user = new User({ location: undefined }));
+      beforeEach(() => (user = new User({ location: undefined })));
 
       it('does not coerce', () => {
         expect(user.location).to.be.undefined;
@@ -80,7 +80,7 @@ describe('type coercion', () => {
       var user;
 
       context('and attribute is nullable', () => {
-        beforeEach(() => user = new User({ destination: null }));
+        beforeEach(() => (user = new User({ destination: null })));
 
         it('assigns null', () => {
           expect(user.destination).to.be.null;
@@ -88,7 +88,7 @@ describe('type coercion', () => {
       });
 
       context('and attribute is not nullable', () => {
-        beforeEach(() => user = new User({ location: null }));
+        beforeEach(() => (user = new User({ location: null })));
 
         it('assigns undefined', () => {
           expect(user.location).to.be.undefined;
@@ -115,15 +115,15 @@ describe('type coercion', () => {
           friends: [],
           favoriteBook: {
             name: 'The Silmarillion',
-            owner: {}
+            owner: {},
           },
-          nextBook: null
+          nextBook: null,
         });
 
         userTwo = new CircularUser({
           name: 'Circular user two',
           friends: [userOne],
-          nextBook: null
+          nextBook: null,
         });
       });
 
@@ -142,13 +142,13 @@ describe('type coercion', () => {
         const user = new CircularUser({
           favoriteBook: {
             name: 'The Silmarillion',
-            owner: {}
-          }
+            owner: {},
+          },
         });
 
         user.favoriteBook = {
           name: 'The World of Ice & Fire',
-          owner: { name: 'New name' }
+          owner: { name: 'New name' },
         };
 
         expect(user.favoriteBook).to.be.instanceOf(CircularBook);

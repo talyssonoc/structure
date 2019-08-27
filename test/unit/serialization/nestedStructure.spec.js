@@ -9,12 +9,12 @@ describe('serialization', () => {
     beforeEach(() => {
       Location = attributes({
         longitude: Number,
-        latitude: Number
+        latitude: Number,
       })(class Location {});
 
       User = attributes({
         name: String,
-        location: Location
+        location: Location,
       })(class User {});
     });
 
@@ -22,20 +22,20 @@ describe('serialization', () => {
       it('include all data defined on schema', () => {
         const location = new Location({
           longitude: 123,
-          latitude: 321
+          latitude: 321,
         });
 
         const user = new User({
           name: 'Something',
-          location
+          location,
         });
 
         expect(user.toJSON()).to.eql({
           name: 'Something',
           location: {
             longitude: 123,
-            latitude: 321
-          }
+            latitude: 321,
+          },
         });
       });
     });
@@ -43,7 +43,7 @@ describe('serialization', () => {
     context('when nested structure is missing', () => {
       it('does not set a key for missing structure', () => {
         const user = new User({
-          name: 'Some name'
+          name: 'Some name',
         });
 
         const serializedUser = user.toJSON();
@@ -59,12 +59,12 @@ describe('serialization', () => {
     context('when some attribute on nested structure is missing', () => {
       it('does not set a key for missing nested attribute', () => {
         const location = new Location({
-          longitude: 123
+          longitude: 123,
         });
 
         const user = new User({
           name: 'Name',
-          location
+          location,
         });
 
         const serializedUser = user.toJSON();
@@ -72,8 +72,8 @@ describe('serialization', () => {
         expect(serializedUser).to.eql({
           name: 'Name',
           location: {
-            longitude: 123
-          }
+            longitude: 123,
+          },
         });
 
         expect(serializedUser.location).to.have.all.keys(['longitude']);
@@ -97,14 +97,14 @@ describe('serialization', () => {
           friends: [
             new CircularUser({
               name: 'Friend 1',
-              favoriteBook: new CircularBook({ name: 'Book 1' })
+              favoriteBook: new CircularBook({ name: 'Book 1' }),
             }),
             new CircularUser({
               name: 'Friend 2',
-              favoriteBook: new CircularBook({ name: 'Book 2'})
-            })
+              favoriteBook: new CircularBook({ name: 'Book 2' }),
+            }),
           ],
-          favoriteBook: new CircularBook({ name: 'The Book'})
+          favoriteBook: new CircularBook({ name: 'The Book' }),
         });
 
         expect(user.toJSON()).to.eql({
@@ -112,14 +112,14 @@ describe('serialization', () => {
           friends: [
             {
               name: 'Friend 1',
-              favoriteBook: { name: 'Book 1' }
+              favoriteBook: { name: 'Book 1' },
             },
             {
               name: 'Friend 2',
-              favoriteBook: { name: 'Book 2'}
-            }
+              favoriteBook: { name: 'Book 2' },
+            },
           ],
-          favoriteBook: { name: 'The Book' }
+          favoriteBook: { name: 'The Book' },
         });
       });
     });
@@ -127,11 +127,11 @@ describe('serialization', () => {
     context('when nested structure is missing', () => {
       it('does not set a key for missing structure', () => {
         const user = new CircularUser({
-          name: 'Something'
+          name: 'Something',
         });
 
         expect(user.toJSON()).to.eql({
-          name: 'Something'
+          name: 'Something',
         });
       });
     });
@@ -140,12 +140,12 @@ describe('serialization', () => {
       it('does not set a key for missing nested attribute', () => {
         const user = new CircularUser({
           name: 'Something',
-          favoriteBook: new CircularBook({})
+          favoriteBook: new CircularBook({}),
         });
 
         expect(user.toJSON()).to.eql({
           name: 'Something',
-          favoriteBook: {}
+          favoriteBook: {},
         });
       });
     });

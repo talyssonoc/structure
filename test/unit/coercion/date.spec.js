@@ -10,8 +10,8 @@ describe('type coercion', () => {
         birth: Date,
         death: {
           type: Date,
-          nullable: true
-        }
+          nullable: true,
+        },
       })(class User {});
     });
 
@@ -26,7 +26,7 @@ describe('type coercion', () => {
 
     it('does not coerces undefined', () => {
       const user = new User({
-        birth: undefined
+        birth: undefined,
       });
 
       expect(user.birth).to.be.undefined;
@@ -34,7 +34,7 @@ describe('type coercion', () => {
 
     it('does not coerces null when nullable', () => {
       const user = new User({
-        death: null
+        death: null,
       });
 
       expect(user.death).to.be.null;
@@ -42,7 +42,7 @@ describe('type coercion', () => {
 
     it('coerces string to date', () => {
       const user = new User({
-        birth: 'Feb 3, 1892'
+        birth: 'Feb 3, 1892',
       });
 
       expect(user.birth).to.eql(new Date('Feb 3, 1892'));
@@ -50,7 +50,7 @@ describe('type coercion', () => {
 
     it('coerces null to first date on Unix time', () => {
       const user = new User({
-        birth: null
+        birth: null,
       });
 
       expect(user.birth).to.eql(new Date('1970-01-01T00:00:00Z'));

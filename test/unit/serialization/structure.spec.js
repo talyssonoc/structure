@@ -8,7 +8,7 @@ describe('serialization', () => {
     beforeEach(() => {
       User = attributes({
         name: String,
-        age: Number
+        age: Number,
       })(class User {});
     });
 
@@ -16,12 +16,12 @@ describe('serialization', () => {
       it('include all data defined on schema', () => {
         const user = new User({
           name: 'Something',
-          age: 42
+          age: 42,
         });
 
         expect(user.toJSON()).to.eql({
           name: 'Something',
-          age: 42
+          age: 42,
         });
       });
     });
@@ -30,7 +30,7 @@ describe('serialization', () => {
       it('does not set a key for missing attribute', () => {
         const user = new User({
           name: 'Some name',
-          age: undefined
+          age: undefined,
         });
 
         const serializedUser = user.toJSON();
@@ -43,7 +43,7 @@ describe('serialization', () => {
       });
     });
 
-    context('when attribute\'s value is null', () => {
+    context("when attribute's value is null", () => {
       var City;
 
       context('and is not nullable', () => {
@@ -53,7 +53,7 @@ describe('serialization', () => {
 
         it('serializes with default value', () => {
           const city = new City({
-            name: null
+            name: null,
           });
 
           const serializedCity = city.toJSON();
@@ -68,8 +68,8 @@ describe('serialization', () => {
           City = attributes({
             name: {
               type: String,
-              nullable: true
-            }
+              nullable: true,
+            },
           })(class City {});
         });
 
@@ -93,8 +93,8 @@ describe('serialization', () => {
           City = attributes({
             country: {
               type: Country,
-              nullable: true
-            }
+              nullable: true,
+            },
           })(class City {});
         });
 

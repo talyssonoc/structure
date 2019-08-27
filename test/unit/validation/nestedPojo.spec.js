@@ -1,5 +1,8 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
+const {
+  assertValid,
+  assertInvalid,
+} = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with POJO class', () => {
@@ -12,19 +15,19 @@ describe('validation', () => {
 
         User = attributes({
           lastLocation: {
-            type: Location
+            type: Location,
           },
           nextLocation: {
             type: Location,
-            nullable: true
-          }
+            nullable: true,
+          },
         })(class User {});
       });
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            lastLocation: new Location()
+            lastLocation: new Location(),
           });
 
           assertValid(user);
@@ -34,7 +37,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
-            lastLocation: undefined
+            lastLocation: undefined,
           });
 
           assertValid(user);
@@ -42,7 +45,7 @@ describe('validation', () => {
 
         it('is valid with null when nullable', () => {
           const user = new User({
-            nextLocation: null
+            nextLocation: null,
           });
 
           assertValid(user);
@@ -54,21 +57,21 @@ describe('validation', () => {
       var Location;
       var User;
 
-      beforeEach(() => Location = class Location {});
+      beforeEach(() => (Location = class Location {}));
 
       context('when value is present', () => {
         beforeEach(() => {
           User = attributes({
             lastLocation: {
               type: Location,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is valid', () => {
           const user = new User({
-            lastLocation: new Location()
+            lastLocation: new Location(),
           });
 
           assertValid(user);
@@ -80,14 +83,14 @@ describe('validation', () => {
           User = attributes({
             lastLocation: {
               type: Location,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is not valid and has errors set', () => {
           const user = new User({
-            lastLocation: undefined
+            lastLocation: undefined,
           });
 
           assertInvalid(user, 'lastLocation');
@@ -101,8 +104,8 @@ describe('validation', () => {
               lastLocation: {
                 type: Location,
                 required: true,
-                nullable: true
-              }
+                nullable: true,
+              },
             })(class User {});
           });
 
@@ -119,8 +122,8 @@ describe('validation', () => {
               lastLocation: {
                 type: Location,
                 required: true,
-                nullable: false
-              }
+                nullable: false,
+              },
             })(class User {});
           });
 
@@ -143,8 +146,8 @@ describe('validation', () => {
         User = attributes({
           lastLocation: {
             type: Location,
-            required: false
-          }
+            required: false,
+          },
         })(class User {});
       });
 

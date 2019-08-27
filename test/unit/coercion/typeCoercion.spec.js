@@ -6,7 +6,7 @@ describe('type coercion', () => {
 
   beforeEach(() => {
     User = attributes({
-      name: String
+      name: String,
     })(class User {});
   });
 

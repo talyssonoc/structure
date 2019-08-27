@@ -8,15 +8,15 @@ describe('serialization', () => {
 
     beforeEach(() => {
       Book = attributes({
-        name: String
+        name: String,
       })(class Book {});
 
       User = attributes({
         name: String,
         books: {
           type: Array,
-          itemType: Book
-        }
+          itemType: Book,
+        },
       })(class User {});
     });
 
@@ -24,16 +24,12 @@ describe('serialization', () => {
       it('include all data defined on schema', () => {
         const user = new User({
           name: 'Something',
-          books: [
-            new Book({ name: 'The Hobbit' })
-          ]
+          books: [new Book({ name: 'The Hobbit' })],
         });
 
         expect(user.toJSON()).to.eql({
           name: 'Something',
-          books: [
-            { name: 'The Hobbit' }
-          ]
+          books: [{ name: 'The Hobbit' }],
         });
       });
     });
@@ -45,8 +41,8 @@ describe('serialization', () => {
           books: [
             new Book({ name: 'The Silmarillion' }),
             undefined,
-            new Book({ name: 'The Lord of the Rings' })
-          ]
+            new Book({ name: 'The Lord of the Rings' }),
+          ],
         });
 
         const serializedUser = user.toJSON();
@@ -56,8 +52,8 @@ describe('serialization', () => {
           books: [
             { name: 'The Silmarillion' },
             undefined,
-            { name: 'The Lord of the Rings' }
-          ]
+            { name: 'The Lord of the Rings' },
+          ],
         });
 
         expect(serializedUser).to.have.all.keys(['name', 'books']);

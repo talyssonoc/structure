@@ -1,6 +1,8 @@
 const { SCHEMA, VALIDATE } = require('../symbols');
 
-exports.validationDescriptorForSchema = function validationDescriptorForSchema(schema) {
+exports.validationDescriptorForSchema = function validationDescriptorForSchema(
+  schema
+) {
   const validation = schema[VALIDATE];
 
   return {
@@ -8,31 +10,33 @@ exports.validationDescriptorForSchema = function validationDescriptorForSchema(s
       const serializedStructure = this.toJSON();
 
       return validateData(validation, serializedStructure);
-    }
+    },
   };
 };
 
-exports.staticValidationDescriptorForSchema = function staticValidationDescriptorForSchema(schema) {
+exports.staticValidationDescriptorForSchema = function staticValidationDescriptorForSchema(
+  schema
+) {
   const validation = schema[VALIDATE];
 
   return {
     value: function validate(data) {
-      if(data[SCHEMA]) {
+      if (data[SCHEMA]) {
         data = data.toJSON();
       }
 
       return validateData(validation, data);
-    }
+    },
   };
 };
 
 function validateData(validation, data) {
   const errors = validation.validate(data);
 
-  if(errors) {
+  if (errors) {
     return {
       valid: false,
-      errors
+      errors,
     };
   }
 
