@@ -97,6 +97,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    attributeDescriptorFor = _require2.attributeDescriptorFor,
 	    attributesDescriptorFor = _require2.attributesDescriptorFor;
 
+	var Cloning = __webpack_require__(39);
+
 	var define = Object.defineProperty;
 
 	function attributesDecorator(schema) {
@@ -117,8 +119,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return instance;
 	      }
 	    });
-
-	    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(WrapperClass, schemaOptions));
 
 	    if (WrapperClass[SCHEMA]) {
 	      schema = Object.assign({}, WrapperClass[SCHEMA], schema);
@@ -145,6 +145,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    define(WrapperClass.prototype, 'validate', Validation.descriptorFor(schema));
 
 	    define(WrapperClass.prototype, 'toJSON', Serialization.descriptor);
+
+	    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(WrapperClass, schemaOptions));
+
+	    define(WrapperClass.prototype, 'clone', Cloning.buildCloneDescriptorFor(WrapperClass));
 
 	    return WrapperClass;
 	  };
@@ -1328,6 +1332,35 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return attributes;
 	}
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports.buildCloneDescriptorFor = function buildCloneDescriptorFor(StructureClass) {
+	  return {
+	    value: function clone() {
+	      var overwrites = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	      var strict = options.strict;
+
+
+	      var newAttributes = Object.assign({}, this.attributes, overwrites);
+
+	      var cloneInstance = void 0;
+
+	      if (strict) {
+	        cloneInstance = StructureClass.buildStrict(newAttributes);
+	      } else {
+	        cloneInstance = new StructureClass(newAttributes);
+	      }
+
+	      return cloneInstance;
+	    }
+	  };
+	};
 
 /***/ }
 /******/ ])
