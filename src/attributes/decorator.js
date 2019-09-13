@@ -9,6 +9,7 @@ const {
   attributeDescriptorFor,
   attributesDescriptorFor,
 } = require('./descriptors');
+const Cloning = require('../cloning');
 
 const define = Object.defineProperty;
 
@@ -28,11 +29,6 @@ function attributesDecorator(schema, schemaOptions = {}) {
         return instance;
       },
     });
-
-    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(
-      WrapperClass,
-      schemaOptions
-    ));
 
     if (WrapperClass[SCHEMA]) {
       schema = Object.assign({}, WrapperClass[SCHEMA], schema);
@@ -66,6 +62,15 @@ function attributesDecorator(schema, schemaOptions = {}) {
     ));
 
     define(WrapperClass.prototype, 'toJSON', Serialization.descriptor);
+
+    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(
+      WrapperClass,
+      schemaOptions
+    ));
+
+    define(WrapperClass.prototype, 'clone', Cloning.buildCloneDescriptorFor(
+      WrapperClass
+    ));
 
     return WrapperClass;
   };
