@@ -371,8 +371,8 @@ describe('updating a structure with dynamic attribute types', () => {
 });
 
 describe('cloning an instance', () => {
-  var User;
-  var Book;
+  let User;
+  let Book;
 
   beforeEach(() => {
     Book = attributes({
