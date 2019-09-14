@@ -2,6 +2,7 @@ exports.buildCloneDescriptorFor = function buildCloneDescriptorFor(
   StructureClass
 ) {
   return {
+    configurable: true,
     value: function clone(overwrites = {}, options = {}) {
       const { strict } = options;
 

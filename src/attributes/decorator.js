@@ -50,13 +50,6 @@ function attributesDecorator(schema, schemaOptions = {}) {
       schema
     ));
 
-    Object.keys(schema).forEach((attr) => {
-      define(WrapperClass.prototype, attr, attributeDescriptorFor(
-        attr,
-        schema
-      ));
-    });
-
     define(WrapperClass.prototype, 'validate', Validation.descriptorFor(
       schema
     ));
@@ -71,6 +64,13 @@ function attributesDecorator(schema, schemaOptions = {}) {
     define(WrapperClass.prototype, 'clone', Cloning.buildCloneDescriptorFor(
       WrapperClass
     ));
+
+    Object.keys(schema).forEach((attr) => {
+      define(WrapperClass.prototype, attr, attributeDescriptorFor(
+        attr,
+        schema
+      ));
+    });
 
     return WrapperClass;
   };
