@@ -138,10 +138,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    define(WrapperClass.prototype, 'attributes', attributesDescriptorFor(schema));
 
-	    Object.keys(schema).forEach(function (attr) {
-	      define(WrapperClass.prototype, attr, attributeDescriptorFor(attr, schema));
-	    });
-
 	    define(WrapperClass.prototype, 'validate', Validation.descriptorFor(schema));
 
 	    define(WrapperClass.prototype, 'toJSON', Serialization.descriptor);
@@ -149,6 +145,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    define(WrapperClass, 'buildStrict', StrictMode.buildStrictDescriptorFor(WrapperClass, schemaOptions));
 
 	    define(WrapperClass.prototype, 'clone', Cloning.buildCloneDescriptorFor(WrapperClass));
+
+	    Object.keys(schema).forEach(function (attr) {
+	      define(WrapperClass.prototype, attr, attributeDescriptorFor(attr, schema));
+	    });
 
 	    return WrapperClass;
 	  };
@@ -1341,6 +1341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.buildCloneDescriptorFor = function buildCloneDescriptorFor(StructureClass) {
 	  return {
+	    configurable: true,
 	    value: function clone() {
 	      var overwrites = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
