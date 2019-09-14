@@ -1,3 +1,7 @@
+## 1.7.0 - 2019-09-14
+Enhancements:
+* Add method to clone structures
+
 ## 1.6.0 - 2019-08-27
 Enhancements:
 * Allow custom error class to static mode
