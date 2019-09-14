@@ -150,7 +150,7 @@ describe('instantiating a structure', () => {
         }
       );
 
-      it('overrides default value with passed value', () => {
+      it('overwrites default value with passed value', () => {
         const user = new User({ name: 'Not the default' });
 
         expect(user.name).to.equal('Not the default');
@@ -367,5 +367,212 @@ describe('updating a structure with dynamic attribute types', () => {
     expect(user.favoriteBook).to.be.instanceOf(CircularBook);
     expect(user.favoriteBook.owner).to.be.instanceOf(CircularUser);
     expect(user.favoriteBook.owner).to.equal(user);
+  });
+});
+
+describe('cloning an instance', () => {
+  let User;
+  let Book;
+
+  beforeEach(() => {
+    Book = attributes({
+      name: {
+        type: String,
+        required: true,
+      },
+    })(class Book {});
+
+    User = attributes({
+      name: {
+        type: String,
+        required: true,
+      },
+      age: Number,
+      favoriteBook: Book,
+    })(class User {});
+  });
+
+  context('when nothing is overwritten', () => {
+    context('when not passing overwrite object', () => {
+      it('makes a shallow clone', () => {
+        const user = new User({
+          name: 'Me',
+          favoriteBook: {
+            name: 'The Silmarillion',
+          },
+        });
+
+        const userClone = user.clone();
+
+        expect(userClone.name).to.equal('Me');
+        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+      });
+    });
+
+    context('when passing overwrite object', () => {
+      it('makes a shallow clone', () => {
+        const user = new User({
+          name: 'Me',
+          favoriteBook: {
+            name: 'The Silmarillion',
+          },
+        });
+
+        const userClone = user.clone({});
+
+        expect(userClone.name).to.equal('Me');
+        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+      });
+    });
+  });
+
+  context('when overwritting attributes', () => {
+    context('when overwritting a primitive type attribute', () => {
+      it('overwrites it, leaving other attributes untouched', () => {
+        const user = new User({
+          name: 'Me',
+          favoriteBook: {
+            name: 'The Silmarillion',
+          },
+        });
+
+        const userClone = user.clone({
+          name: 'Myself',
+        });
+
+        expect(userClone.name).to.equal('Myself');
+        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+      });
+
+      context('when overwritten attribute needs coercion', () => {
+        it('coerces attribute', () => {
+          const user = new User({
+            name: 'Me',
+            age: 42,
+            favoriteBook: {
+              name: 'The Silmarillion',
+            },
+          });
+
+          const userClone = user.clone({
+            age: '123',
+          });
+
+          expect(userClone.age).to.equal(123);
+        });
+      });
+    });
+
+    context('when overwritting a nested structure', () => {
+      context('when passing a new instance of the nested structure', () => {
+        it('overwrites it, leaving other attributes untouched', () => {
+          const user = new User({
+            name: 'Me',
+            favoriteBook: {
+              name: 'The Silmarillion',
+            },
+          });
+
+          const userClone = user.clone({
+            favoriteBook: new Book({ name: 'The Lord of the Rings' }),
+          });
+
+          expect(userClone.name).to.equal('Me');
+          expect(userClone.favoriteBook).not.to.equal(user.favoriteBook);
+          expect(userClone.favoriteBook.name).to.equal('The Lord of the Rings');
+        });
+      });
+
+      context('when passing the attributes of the nested structure', () => {
+        it('coerces attribute to a new nested structure, overwrites it, and leave other attributes untouched', () => {
+          const user = new User({
+            name: 'Me',
+            favoriteBook: {
+              name: 'The Silmarillion',
+            },
+          });
+
+          const userClone = user.clone({
+            favoriteBook: { name: 'The Lord of the Rings' },
+          });
+
+          expect(userClone.name).to.equal('Me');
+          expect(userClone.favoriteBook).not.to.equal(user.favoriteBook);
+          expect(userClone.favoriteBook.name).to.equal('The Lord of the Rings');
+        });
+      });
+    });
+  });
+
+  context('strict mode', () => {
+    context('when overwritten attributes are valid', () => {
+      it('clones normally', () => {
+        const user = new User({
+          name: 'Me',
+          favoriteBook: {
+            name: 'The Silmarillion',
+          },
+        });
+
+        const userClone = user.clone({ name: 'Me' }, { strict: true });
+
+        expect(userClone.name).to.equal('Me');
+        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+      });
+    });
+
+    context('when overwritten attributes are invalid', () => {
+      context('when primitive attribute is invalid', () => {
+        it('throws an error', () => {
+          const user = new User({
+            name: 'Me',
+            favoriteBook: {
+              name: 'The Silmarillion',
+            },
+          });
+
+          let errorDetails = [
+            {
+              message: '"name" is required',
+              path: 'name',
+            },
+          ];
+
+          expect(() => {
+            user.clone({ name: null }, { strict: true });
+          })
+            .to.throw(Error, 'Invalid Attributes')
+            .with.property('details')
+            .that.deep.equals(errorDetails);
+        });
+      });
+
+      context('when nested attribute is invalid', () => {
+        context('when passing a the attributes of the nested attribute', () => {
+          it('throws an error', () => {
+            const user = new User({
+              name: 'Me',
+              favoriteBook: {
+                name: 'The Silmarillion',
+              },
+            });
+
+            let errorDetails = [
+              {
+                message: '"name" is required',
+                path: 'favoriteBook.name',
+              },
+            ];
+
+            expect(() => {
+              user.clone({ favoriteBook: {} }, { strict: true });
+            })
+              .to.throw(Error, 'Invalid Attributes')
+              .with.property('details')
+              .that.deep.equals(errorDetails);
+          });
+        });
+      });
+    });
   });
 });
