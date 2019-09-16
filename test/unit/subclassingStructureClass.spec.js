@@ -153,12 +153,8 @@ describe('subclassing a structure with a POJO class', () => {
     it('has access to static methods and properties', () => {
       expect(AdminStructure.staticMethod()).to.equal('I am on a static method');
       expect(AdminStructure.staticProperty).to.equal('I am a static property');
-      expect(AdminStructure.staticAdminMethod()).to.equal(
-        'I am also on a static method'
-      );
-      expect(AdminStructure.staticAdminProperty).to.equal(
-        'I am also a static property'
-      );
+      expect(AdminStructure.staticAdminMethod()).to.equal('I am also on a static method');
+      expect(AdminStructure.staticAdminProperty).to.equal('I am also a static property');
     });
   });
 });
@@ -205,28 +201,91 @@ describe('subclassing a structure with another structure', () => {
   });
 
   context('default value', () => {
-    context(
-      'when subclass uses an attribute from superclass to generate a default value',
-      () => {
-        context('when superclass uses default', () => {
-          it('allows to access it properly', () => {
-            const admin = new Admin();
+    context('when subclass uses an attribute from superclass to generate a default value', () => {
+      context('when superclass uses default', () => {
+        it('allows to access it properly', () => {
+          const admin = new Admin();
 
-            expect(admin.identifier).to.equal('Admin-123');
-          });
+          expect(admin.identifier).to.equal('Admin-123');
         });
+      });
 
-        context(
-          'when a value is passed to superclass defaultable attribute',
-          () => {
-            it('allows to access it properly', () => {
-              const admin = new Admin({ uuid: '321' });
+      context('when a value is passed to superclass defaultable attribute', () => {
+        it('allows to access it properly', () => {
+          const admin = new Admin({ uuid: '321' });
 
-              expect(admin.identifier).to.equal('Admin-321');
-            });
-          }
-        );
+          expect(admin.identifier).to.equal('Admin-321');
+        });
+      });
+    });
+  });
+});
+
+describe('subclassing a POJO class with a structure', () => {
+  let Employee;
+  let Writer;
+  let Reviewer;
+
+  beforeEach(() => {
+    Employee = class Employee {
+      getType() {
+        return this.type.toUpperCase();
       }
-    );
+    };
+
+    Writer = attributes({ type: String })(class Writer extends Employee {});
+    Reviewer = attributes({ type: String })(class Reviewer extends Employee {});
+  });
+
+  context('when structure attribute is a structure which extends a POJO', () => {
+    let Sector;
+
+    beforeEach(() => {
+      Sector = attributes({
+        leader: Employee,
+      })(class Sector {});
+    });
+
+    it('does not coerce if the attribute value is from subclass', () => {
+      const writer = new Writer({ type: 'writer' });
+      const writingSector = new Sector({ leader: writer });
+
+      const reviewer = new Reviewer({ type: 'reviewer' });
+      const reviewingSector = new Sector({ leader: reviewer });
+
+      expect(writingSector.leader).to.be.instanceof(Writer);
+      expect(writingSector.leader.getType()).to.equal('WRITER');
+
+      expect(reviewingSector.leader).to.be.instanceof(Reviewer);
+      expect(reviewingSector.leader.getType()).to.equal('REVIEWER');
+    });
+  });
+
+  context('when a structure attribute is an array of structures which extends a POJO', () => {
+    let Company;
+
+    beforeEach(() => {
+      Company = attributes({
+        employees: {
+          type: Array,
+          itemType: Employee,
+        },
+      })(class Company {});
+    });
+
+    it('does not coerce the items to the base class', () => {
+      const writer = new Writer({ type: 'writer' });
+      const reviewer = new Reviewer({ type: 'reviewer' });
+
+      const company = new Company({
+        employees: [writer, reviewer],
+      });
+
+      expect(company.employees[0]).to.be.instanceof(Writer);
+      expect(company.employees[0].getType()).to.equal('WRITER');
+
+      expect(company.employees[1]).to.be.instanceof(Reviewer);
+      expect(company.employees[1].getType()).to.equal('REVIEWER');
+    });
   });
 });
