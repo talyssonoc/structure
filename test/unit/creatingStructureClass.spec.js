@@ -20,7 +20,10 @@ describe('creating a structure class', () => {
 
         expect(() => {
           attributes({}, anonymousClass);
-        }).to.throw(Error, /^You passed the structure class.*\(StructureClass\)`\./);
+        }).to.throw(
+          Error,
+          /^You passed the structure class.*\(StructureClass\)`\./
+        );
       });
     });
   });
@@ -38,7 +41,7 @@ describe('creating a structure class', () => {
       RawUser.staticProperty = 'I am a static property';
 
       User = attributes({
-        name: String
+        name: String,
       })(RawUser);
     });
 
@@ -54,7 +57,7 @@ describe('creating a structure class', () => {
 
       beforeEach(() => {
         User = attributes({
-          age: { type: Number, default: () => 18 }
+          age: { type: Number, default: () => 18 },
         })(class User {});
       });
 
@@ -65,33 +68,36 @@ describe('creating a structure class', () => {
       });
     });
 
-    context('when the function default value uses another class attribute', () => {
-      var User;
+    context(
+      'when the function default value uses another class attribute',
+      () => {
+        var User;
 
-      beforeEach(() => {
-        User = attributes({
-          name: String,
-          surname: String,
-          fullname: {
-            type: String,
-            default: (self) => `${self.name} ${self.surname}`
-          }
-        })(class User {});
-      });
+        beforeEach(() => {
+          User = attributes({
+            name: String,
+            surname: String,
+            fullname: {
+              type: String,
+              default: (self) => `${self.name} ${self.surname}`,
+            },
+          })(class User {});
+        });
 
-      it('defines the attribute with the default value executing the function', () => {
-        const user = new User({ name: 'Jack', surname: 'Sparrow' });
+        it('defines the attribute with the default value executing the function', () => {
+          const user = new User({ name: 'Jack', surname: 'Sparrow' });
 
-        expect(user.fullname).to.equal('Jack Sparrow');
-      });
-    });
+          expect(user.fullname).to.equal('Jack Sparrow');
+        });
+      }
+    );
 
     context('when the provided default value is a property', () => {
       var User;
 
       beforeEach(() => {
         User = attributes({
-          age: { type: Number, default: 18 }
+          age: { type: Number, default: 18 },
         })(class User {});
       });
 

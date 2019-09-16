@@ -1,3 +1,15 @@
+## 1.7.0 - 2019-09-14
+Enhancements:
+* Add method to clone structures
+
+## 1.6.0 - 2019-08-27
+Enhancements:
+* Allow custom error class to static mode
+
+## 1.5.0 - 2019-07-08
+Enhancements:
+* Add `buildStrict` static method
+
 ## 1.4.0 - 2019-03-26
 Enhancements:
 * Add `nullable` option

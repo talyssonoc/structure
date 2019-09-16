@@ -9,6 +9,9 @@ module.exports = {
 
     joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
 
-    return mapToJoi(typeDescriptor, { initial: joiSchema, mappings: this.joiMappings });
-  }
+    return mapToJoi(typeDescriptor, {
+      initial: joiSchema,
+      mappings: this.joiMappings,
+    });
+  },
 };

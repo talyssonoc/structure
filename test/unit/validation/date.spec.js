@@ -1,5 +1,8 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
+const {
+  assertValid,
+  assertInvalid,
+} = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Date', () => {
@@ -9,19 +12,19 @@ describe('validation', () => {
       beforeEach(() => {
         User = attributes({
           birth: {
-            type: Date
+            type: Date,
           },
           death: {
             type: Date,
-            nullable: true
-          }
+            nullable: true,
+          },
         })(class User {});
       });
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            birth: new Date()
+            birth: new Date(),
           });
 
           assertValid(user);
@@ -31,7 +34,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
-            birth: undefined
+            birth: undefined,
           });
 
           assertValid(user);
@@ -39,7 +42,7 @@ describe('validation', () => {
 
         it('is valid with null when nullable', () => {
           const user = new User({
-            death: null
+            death: null,
           });
 
           assertValid(user);
@@ -55,14 +58,14 @@ describe('validation', () => {
           User = attributes({
             birth: {
               type: Date,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is valid', () => {
           const user = new User({
-            birth: new Date()
+            birth: new Date(),
           });
 
           assertValid(user);
@@ -74,14 +77,14 @@ describe('validation', () => {
           User = attributes({
             birth: {
               type: Date,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is not valid and has errors set', () => {
           const user = new User({
-            birth: undefined
+            birth: undefined,
           });
 
           assertInvalid(user, 'birth');
@@ -95,8 +98,8 @@ describe('validation', () => {
               birth: {
                 type: Date,
                 required: true,
-                nullable: true
-              }
+                nullable: true,
+              },
             })(class User {});
           });
 
@@ -113,8 +116,8 @@ describe('validation', () => {
               birth: {
                 type: Date,
                 required: true,
-                nullable: false
-              }
+                nullable: false,
+              },
             })(class User {});
           });
 
@@ -134,8 +137,8 @@ describe('validation', () => {
         User = attributes({
           birth: {
             type: Date,
-            required: false
-          }
+            required: false,
+          },
         })(class User {});
       });
 
@@ -158,8 +161,8 @@ describe('validation', () => {
         User = attributes({
           birth: {
             type: Date,
-            equal: now
-          }
+            equal: now,
+          },
         })(class User {});
       });
 
@@ -168,7 +171,7 @@ describe('validation', () => {
           const nowCopy = new Date(now.toISOString());
 
           const user = new User({
-            birth: nowCopy
+            birth: nowCopy,
           });
 
           assertValid(user);
@@ -180,7 +183,7 @@ describe('validation', () => {
           const otherTime = new Date(10);
 
           const user = new User({
-            birth: otherTime
+            birth: otherTime,
           });
 
           assertInvalid(user, 'birth');
@@ -201,8 +204,8 @@ describe('validation', () => {
           User = attributes({
             birth: {
               type: Date,
-              max: now
-            }
+              max: now,
+            },
           })(class User {});
         });
 
@@ -211,7 +214,7 @@ describe('validation', () => {
             const before = new Date(10);
 
             const user = new User({
-              birth: before
+              birth: before,
             });
 
             assertValid(user);
@@ -223,7 +226,7 @@ describe('validation', () => {
             const after = new Date();
 
             const user = new User({
-              birth: after
+              birth: after,
             });
 
             assertInvalid(user, 'birth');
@@ -243,11 +246,11 @@ describe('validation', () => {
           User = attributes({
             createdAt: {
               type: Date,
-              max: { attr: 'updatedAt' }
+              max: { attr: 'updatedAt' },
             },
             updatedAt: {
-              type: Date
-            }
+              type: Date,
+            },
           })(class User {});
         });
 
@@ -257,7 +260,7 @@ describe('validation', () => {
 
             const user = new User({
               createdAt: before,
-              updatedAt: now
+              updatedAt: now,
             });
 
             assertValid(user);
@@ -270,7 +273,7 @@ describe('validation', () => {
 
             const user = new User({
               createdAt: after,
-              updatedAt: now
+              updatedAt: now,
             });
 
             assertInvalid(user, 'createdAt');
@@ -288,8 +291,8 @@ describe('validation', () => {
         User = attributes({
           birth: {
             type: Date,
-            min: now
-          }
+            min: now,
+          },
         })(class User {});
       });
 
@@ -298,7 +301,7 @@ describe('validation', () => {
           const after = new Date();
 
           const user = new User({
-            birth: after
+            birth: after,
           });
 
           assertValid(user);
@@ -310,7 +313,7 @@ describe('validation', () => {
           const before = new Date(10);
 
           const user = new User({
-            birth: before
+            birth: before,
           });
 
           assertInvalid(user, 'birth');

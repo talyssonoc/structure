@@ -10,8 +10,8 @@ describe('type coercion', () => {
         name: String,
         fatherName: {
           type: String,
-          nullable: true
-        }
+          nullable: true,
+        },
       })(class User {});
     });
 
@@ -28,7 +28,7 @@ describe('type coercion', () => {
 
       it('does not coerces undefined', () => {
         const user = new User({
-          name: undefined
+          name: undefined,
         });
 
         expect(user.name).to.be.undefined;
@@ -36,7 +36,7 @@ describe('type coercion', () => {
 
       it('coerces integer to string', () => {
         const user = new User({
-          name: 10
+          name: 10,
         });
 
         expect(user.name).to.equal('10');
@@ -44,7 +44,7 @@ describe('type coercion', () => {
 
       it('coerces float to string', () => {
         const user = new User({
-          name: 10.42
+          name: 10.42,
         });
 
         expect(user.name).to.equal('10.42');
@@ -52,7 +52,7 @@ describe('type coercion', () => {
 
       it('coerces null to empty string', () => {
         const user = new User({
-          name: null
+          name: null,
         });
 
         expect(user.name).to.equal('');
@@ -60,7 +60,7 @@ describe('type coercion', () => {
 
       it('coerces boolean to string', () => {
         const user = new User({
-          name: false
+          name: false,
         });
 
         expect(user.name).to.equal('false');
@@ -70,7 +70,7 @@ describe('type coercion', () => {
         const date = new Date();
 
         const user = new User({
-          name: date
+          name: date,
         });
 
         expect(user.name).to.equal(date.toString());
@@ -90,7 +90,7 @@ describe('type coercion', () => {
 
       it('does not coerces undefined', () => {
         const user = new User({
-          fatherName: undefined
+          fatherName: undefined,
         });
 
         expect(user.fatherName).to.be.undefined;
@@ -98,7 +98,7 @@ describe('type coercion', () => {
 
       it('does not coerces null', () => {
         const user = new User({
-          fatherName: null
+          fatherName: null,
         });
 
         expect(user.fatherName).to.be.null;
@@ -106,7 +106,7 @@ describe('type coercion', () => {
 
       it('coerces integer to string', () => {
         const user = new User({
-          fatherName: 10
+          fatherName: 10,
         });
 
         expect(user.fatherName).to.equal('10');
@@ -114,7 +114,7 @@ describe('type coercion', () => {
 
       it('coerces float to string', () => {
         const user = new User({
-          fatherName: 10.42
+          fatherName: 10.42,
         });
 
         expect(user.fatherName).to.equal('10.42');
@@ -122,7 +122,7 @@ describe('type coercion', () => {
 
       it('coerces boolean to string', () => {
         const user = new User({
-          fatherName: false
+          fatherName: false,
         });
 
         expect(user.fatherName).to.equal('false');
@@ -132,7 +132,7 @@ describe('type coercion', () => {
         const date = new Date();
 
         const user = new User({
-          fatherName: date
+          fatherName: date,
         });
 
         expect(user.fatherName).to.equal(date.toString());
@@ -145,7 +145,7 @@ describe('type coercion', () => {
           const objectWithoutToString = { data: 42 };
 
           const user = new User({
-            name: objectWithoutToString
+            name: objectWithoutToString,
           });
 
           expect(user.name).to.equal('[object Object]');
@@ -156,11 +156,13 @@ describe('type coercion', () => {
         it('coerces object to value returned from #toString()', () => {
           const objectWithToString = {
             data: 42,
-            toString() { return this.data; }
+            toString() {
+              return this.data;
+            },
           };
 
           const user = new User({
-            name: objectWithToString
+            name: objectWithToString,
           });
 
           expect(user.name).to.equal('42');

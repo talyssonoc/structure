@@ -12,20 +12,20 @@ const arrayValidation = require('./array');
 
 const {
   validationDescriptorForSchema,
-  staticValidationDescriptorForSchema
+  staticValidationDescriptorForSchema,
 } = require('./descriptors');
 
 exports.descriptorFor = validationDescriptorForSchema;
 exports.staticDescriptorFor = staticValidationDescriptorForSchema;
 
 exports.forAttribute = function validationForAttribute(typeDescriptor) {
-  if(typeDescriptor.itemType !== undefined) {
+  if (typeDescriptor.itemType !== undefined) {
     return arrayValidation(typeDescriptor, typeDescriptor.itemType);
   }
 
   const validation = validations.find((v) => v.type === typeDescriptor.type);
 
-  if(!validation) {
+  if (!validation) {
     return nestedValidation(typeDescriptor);
   }
 
@@ -37,7 +37,7 @@ const mapDetail = ({ message, path }) => ({ message, path });
 const validatorOptions = {
   abortEarly: false,
   convert: false,
-  allowUnknown: false
+  allowUnknown: false,
 };
 
 exports.forSchema = function validationForSchema(schema) {
@@ -55,11 +55,11 @@ exports.forSchema = function validationForSchema(schema) {
 
       const { error } = joiValidation.validate(structure, validatorOptions);
 
-      if(error) {
+      if (error) {
         validationErrors = error.details.map(mapDetail);
       }
 
       return validationErrors;
-    }
+    },
   };
 };

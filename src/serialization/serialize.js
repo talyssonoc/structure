@@ -2,7 +2,7 @@ const { SCHEMA } = require('../symbols');
 const getType = require('../typeResolver');
 
 function serialize(structure) {
-  if(structure == null) {
+  if (structure == null) {
     return structure;
   }
 
@@ -18,11 +18,15 @@ function getTypeSchema(typeDescriptor) {
 function serializeStructure(structure, schema) {
   const serializedStructure = Object.create(null);
 
-  for(let attrName in schema) {
+  for (let attrName in schema) {
     let attribute = structure[attrName];
 
-    if(isPresent(attribute) || isNullable(attribute, schema, attrName)) {
-      serializedStructure[attrName] = serializeAttribute(attribute, attrName, schema);
+    if (isPresent(attribute) || isNullable(attribute, schema, attrName)) {
+      serializedStructure[attrName] = serializeAttribute(
+        attribute,
+        attrName,
+        schema
+      );
     }
   }
 
@@ -38,11 +42,11 @@ function isNullable(attribute, schema, attrName) {
 }
 
 function serializeAttribute(attribute, attrName, schema) {
-  if(isArrayType(schema, attrName)) {
+  if (isArrayType(schema, attrName)) {
     return attribute.map(serialize);
   }
 
-  if(isNestedSchema(schema, attrName)) {
+  if (isNestedSchema(schema, attrName)) {
     return serialize(attribute);
   }
 

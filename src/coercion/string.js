@@ -6,5 +6,5 @@ module.exports = {
   nullValue: '',
   coerce(value) {
     return this.type(value);
-  }
+  },
 };

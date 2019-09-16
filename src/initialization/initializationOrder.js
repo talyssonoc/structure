@@ -16,10 +16,10 @@ module.exports = function initializationOrderFor(schema) {
   const staticInitializations = [];
   const derivedInitializations = [];
 
-  for(let attrName in schema) {
+  for (let attrName in schema) {
     const attributeDescriptor = schema[attrName];
 
-    if(isStaticInitialization(attributeDescriptor)) {
+    if (isStaticInitialization(attributeDescriptor)) {
       staticInitializations.push([attrName, staticInitialization]);
     } else {
       derivedInitializations.push([attrName, derivedInitialization]);

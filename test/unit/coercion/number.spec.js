@@ -10,8 +10,8 @@ describe('type coercion', () => {
         age: Number,
         earnings: {
           type: Number,
-          nullable: true
-        }
+          nullable: true,
+        },
       })(class User {});
     });
 
@@ -27,7 +27,7 @@ describe('type coercion', () => {
 
     it('does not coerces undefined', () => {
       const user = new User({
-        age: undefined
+        age: undefined,
       });
 
       expect(user.age).to.be.undefined;
@@ -35,7 +35,7 @@ describe('type coercion', () => {
 
     it('does not coerce null when nullable', () => {
       const user = new User({
-        earnings: null
+        earnings: null,
       });
 
       expect(user.earnings).to.be.null;
@@ -43,7 +43,7 @@ describe('type coercion', () => {
 
     it('coerces string to number', () => {
       const user = new User({
-        age: '10'
+        age: '10',
       });
 
       expect(user.age).to.equal(10);
@@ -51,7 +51,7 @@ describe('type coercion', () => {
 
     it('coerces null to zero', () => {
       const user = new User({
-        age: null
+        age: null,
       });
 
       expect(user.age).to.equal(0);
@@ -59,7 +59,7 @@ describe('type coercion', () => {
 
     it('coerces true to one', () => {
       const user = new User({
-        age: true
+        age: true,
       });
 
       expect(user.age).to.equal(1);
@@ -67,7 +67,7 @@ describe('type coercion', () => {
 
     it('coerces false to zero', () => {
       const user = new User({
-        age: false
+        age: false,
       });
 
       expect(user.age).to.equal(0);
@@ -77,7 +77,7 @@ describe('type coercion', () => {
       const date = new Date();
 
       const user = new User({
-        age: date
+        age: date,
       });
 
       expect(user.age).to.equal(date.valueOf());
@@ -89,7 +89,7 @@ describe('type coercion', () => {
           const objectWithoutValueOf = { data: 42 };
 
           const user = new User({
-            age: objectWithoutValueOf
+            age: objectWithoutValueOf,
           });
 
           expect(Number.isNaN(user.age)).to.be.true;
@@ -100,11 +100,13 @@ describe('type coercion', () => {
         it('coerces object to value returned by #valueOf()', () => {
           const objectWithValueOf = {
             data: '42',
-            valueOf() { return this.data; }
+            valueOf() {
+              return this.data;
+            },
           };
 
           const user = new User({
-            age: objectWithValueOf
+            age: objectWithValueOf,
           });
 
           expect(user.age).to.equal(42);

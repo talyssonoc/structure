@@ -1,5 +1,8 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
+const {
+  assertValid,
+  assertInvalid,
+} = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with structure class', () => {
@@ -10,24 +13,24 @@ describe('validation', () => {
       beforeEach(() => {
         Location = attributes({
           x: {
-            type: Number
+            type: Number,
           },
           y: {
-            type: Number
-          }
+            type: Number,
+          },
         })(class Location {});
 
         User = attributes({
           lastLocation: {
-            type: Location
-          }
+            type: Location,
+          },
         })(class User {});
       });
 
       context('when value is present', () => {
         it('is valid', () => {
           const user = new User({
-            lastLocation: new Location()
+            lastLocation: new Location(),
           });
 
           assertValid(user);
@@ -37,7 +40,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
-            lastLocation: undefined
+            lastLocation: undefined,
           });
 
           assertValid(user);
@@ -52,7 +55,7 @@ describe('validation', () => {
       beforeEach(() => {
         Location = attributes({
           x: { type: Number },
-          y: { type: Number }
+          y: { type: Number },
         })(class Location {});
       });
 
@@ -61,14 +64,14 @@ describe('validation', () => {
           User = attributes({
             lastLocation: {
               type: Location,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is valid', () => {
           const user = new User({
-            lastLocation: new Location()
+            lastLocation: new Location(),
           });
 
           assertValid(user);
@@ -80,14 +83,14 @@ describe('validation', () => {
           User = attributes({
             lastLocation: {
               type: Location,
-              required: true
-            }
+              required: true,
+            },
           })(class User {});
         });
 
         it('is not valid and has errors set', () => {
           const user = new User({
-            lastLocation: undefined
+            lastLocation: undefined,
           });
 
           assertInvalid(user, 'lastLocation');
@@ -101,8 +104,8 @@ describe('validation', () => {
               lastLocation: {
                 type: Location,
                 required: true,
-                nullable: true
-              }
+                nullable: true,
+              },
             })(class User {});
           });
 
@@ -119,8 +122,8 @@ describe('validation', () => {
               lastLocation: {
                 type: Location,
                 required: true,
-                nullable: false
-              }
+                nullable: false,
+              },
             })(class User {});
           });
 
@@ -140,18 +143,18 @@ describe('validation', () => {
       beforeEach(() => {
         Location = attributes({
           x: {
-            type: Number
+            type: Number,
           },
           y: {
-            type: Number
-          }
+            type: Number,
+          },
         })(class Location {});
 
         User = attributes({
           lastLocation: {
             type: Location,
-            required: false
-          }
+            required: false,
+          },
         })(class User {});
       });
 
@@ -172,17 +175,17 @@ describe('validation', () => {
         beforeEach(() => {
           Location = attributes({
             x: { type: Number, required: true },
-            y: { type: Number, required: true }
+            y: { type: Number, required: true },
           })(class Location {});
 
-          User = attributes(
-            { lastLocation: { type: Location, required: true } }
-          )(class User {});
+          User = attributes({
+            lastLocation: { type: Location, required: true },
+          })(class User {});
         });
 
         it('is valid', () => {
           const user = new User({
-            lastLocation: new Location({ x: 1, y: 2 })
+            lastLocation: new Location({ x: 1, y: 2 }),
           });
 
           assertValid(user);
@@ -193,17 +196,17 @@ describe('validation', () => {
         beforeEach(() => {
           Location = attributes({
             x: { type: Number, required: true },
-            y: { type: Number, required: true }
+            y: { type: Number, required: true },
           })(class Location {});
 
-          User = attributes(
-            { lastLocation: { type: Location, required: true } }
-          )(class User {});
+          User = attributes({
+            lastLocation: { type: Location, required: true },
+          })(class User {});
         });
 
         it('is not valid and has errors set', () => {
           const user = new User({
-            lastLocation: new Location({ x: 1, y: undefined })
+            lastLocation: new Location({ x: 1, y: undefined }),
           });
 
           assertInvalid(user, 'lastLocation.y');
@@ -215,17 +218,17 @@ describe('validation', () => {
           beforeEach(() => {
             Location = attributes({
               x: { type: Number, required: true },
-              y: { type: Number, required: true, nullable: true }
+              y: { type: Number, required: true, nullable: true },
             })(class Location {});
 
-            User = attributes(
-              { lastLocation: { type: Location, required: true } }
-            )(class User {});
+            User = attributes({
+              lastLocation: { type: Location, required: true },
+            })(class User {});
           });
 
           it('is valid', () => {
             const user = new User({
-              lastLocation: new Location({ x: 1, y: null })
+              lastLocation: new Location({ x: 1, y: null }),
             });
 
             assertValid(user);
@@ -236,17 +239,17 @@ describe('validation', () => {
           beforeEach(() => {
             Location = attributes({
               x: { type: Number, required: true },
-              y: { type: Number, required: true, nullable: false }
+              y: { type: Number, required: true, nullable: false },
             })(class Location {});
 
-            User = attributes(
-              { lastLocation: { type: Location, required: true } }
-            )(class User {});
+            User = attributes({
+              lastLocation: { type: Location, required: true },
+            })(class User {});
           });
 
           it('is not valid and has errors set', () => {
             const user = new User({
-              lastLocation: new Location({ x: 1, y: null })
+              lastLocation: new Location({ x: 1, y: null }),
             });
 
             assertInvalid(user, 'lastLocation.y');
@@ -270,7 +273,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new CircularUser({
             friends: [],
-            favoriteBook: {}
+            favoriteBook: {},
           });
 
           assertValid(user);
@@ -280,7 +283,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is valid', () => {
           const user = new CircularUser({
-            favoriteBook: {}
+            favoriteBook: {},
           });
 
           assertValid(user);
@@ -292,7 +295,7 @@ describe('validation', () => {
       context('when value is present', () => {
         it('is valid', () => {
           const user = new CircularUser({
-            favoriteBook: {}
+            favoriteBook: {},
           });
 
           assertValid(user);
@@ -313,8 +316,8 @@ describe('validation', () => {
         it('is valid', () => {
           const book = new CircularBook({
             owner: {
-              favoriteBook: new CircularBook()
-            }
+              favoriteBook: new CircularBook(),
+            },
           });
 
           assertValid(book);
@@ -324,7 +327,7 @@ describe('validation', () => {
       context('when value is not present', () => {
         it('is invalid', () => {
           const book = new CircularBook({
-            owner: new CircularUser()
+            owner: new CircularUser(),
           });
 
           assertInvalid(book, 'owner.favoriteBook');
