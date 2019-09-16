@@ -377,5 +377,42 @@ describe('validation', () => {
         });
       });
     });
+    describe('unique', () => {
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          books: {
+            type: Array,
+            itemType: String,
+            unique: true
+          }
+        })(class User {});
+      });
+      context('when array is unique', () => {
+        it('is valid', () => {
+          const user = new User({
+            books: [
+              'The Gunslinger',
+              'The Drawing of the Three'
+            ]
+          });
+
+          assertValid(user);
+        });
+      });
+      context('when array is not unique', () => {
+        it('is not valid and has errors set', () => {
+          const user = new User({
+            books: [
+              'The Wastelands',
+              'The Wastelands'
+            ]
+          });
+
+          assertInvalid(user, 'books.1');
+        });
+      });
+    });
   });
 });

@@ -2,6 +2,7 @@
 
 - `required`: can't be undefined (default: `false`)
 - `sparse`: can have undefined items (default: `true`)
+- `unique`: can't have duplicate items (default: `false`)
 - `minLength`: minimum quantity of items
 - `maxLength`: maximum quantity of items
 - `exactLength`: exact quantity of items
@@ -13,7 +14,8 @@ const Group = attributes({
     itemType: String,
     minLength: 2,
     maxLength: 5,
-    sparse: false
+    sparse: false,
+    unique: true
   },
   leaders: {
     type: Array,
