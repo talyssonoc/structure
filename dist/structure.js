@@ -602,7 +602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _require = __webpack_require__(10),
 	    mapToJoi = _require.mapToJoi;
 
-	var joiMappings = [['minLength', 'min', true], ['maxLength', 'max', true], ['exactLength', 'length', true]];
+	var joiMappings = [['minLength', 'min', true], ['maxLength', 'max', true], ['exactLength', 'length', true], ['unique', 'unique']];
 
 	module.exports = function arrayValidation(typeDescriptor, itemTypeDescriptor) {
 	  var joiSchema = joi.array().items(itemTypeDescriptor.validation);
