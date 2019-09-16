@@ -1,3 +1,7 @@
+## 1.8.0 - 2019-09-16
+Enhancements:
+* Add `unique` validation to arrays
+
 ## 1.7.0 - 2019-09-14
 Enhancements:
 * Add method to clone structures
