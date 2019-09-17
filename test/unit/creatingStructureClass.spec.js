@@ -43,7 +43,7 @@ describe('creating a structure class', () => {
         });
       });
 
-      it('should be', () => {
+      it('should be modified', () => {
         expect((new User({ age: 1 })).age).to.equal(11);
       });
 
