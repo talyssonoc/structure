@@ -1,5 +1,12 @@
-const { ATTRIBUTES } = require('../symbols');
 const initializationOrderFor = require('./initializationOrder');
+
+function getPassedAttrValue(attrName, attributes, instance) {
+  if (instance[attrName] !== undefined) {
+    return instance[attrName];
+  }
+
+  return attributes[attrName];
+}
 
 function initializedValue(
   attrPassedValue,
@@ -19,12 +26,10 @@ module.exports = function forSchema(schema) {
 
   return {
     initialize(attributes, instance) {
-      instance[ATTRIBUTES] = Object.create(null);
-
       for (let i = 0; i < initializationOrder.length; i++) {
         const [attrName, attrInitializer] = initializationOrder[i];
         const attrDescriptor = schema[attrName];
-        const attrPassedValue = attributes[attrName];
+        const attrPassedValue = getPassedAttrValue(attrName, attributes, instance);
 
         instance[attrName] = initializedValue(
           attrPassedValue,

@@ -28,6 +28,31 @@ describe('creating a structure class', () => {
     });
   });
 
+  describe('setting attribute inside constructor', () => {
+    context('when constructor modifies an attribute', () => {
+      var User;
+
+      beforeEach(() => {
+        User = attributes({
+          age: Number,
+          name: String
+        })(class User {
+          constructor({ age }) {
+            this.age = age + 10;
+          }
+        });
+      });
+
+      it('should be', () => {
+        expect((new User({ age: 1 })).age).to.equal(11);
+      });
+
+      it('defining a constructor does not modify additional attributes', () => {
+        expect((new User({ age: 1, name: 'Test Name' })).name).to.equal('Test Name');
+      });
+    });
+  });
+
   describe('using class static methods and properties', () => {
     var User;
 

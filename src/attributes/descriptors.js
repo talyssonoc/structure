@@ -22,6 +22,10 @@ exports.attributeDescriptorFor = function attributeDescriptorFor(
 exports.attributesDescriptorFor = function attributesDescriptorFor(schema) {
   return {
     get() {
+      if (!this[ATTRIBUTES]) {
+        this[ATTRIBUTES] = Object.create(null);
+      }
+
       return this[ATTRIBUTES];
     },
 
