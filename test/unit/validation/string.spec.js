@@ -84,7 +84,7 @@ describe('validation', () => {
             name: undefined,
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
 
@@ -121,7 +121,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ name: null });
 
-            assertInvalid(user, 'name');
+            assertInvalid(user, ['name']);
           });
         });
       });
@@ -178,7 +178,7 @@ describe('validation', () => {
             name: 'Another thing',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -245,7 +245,7 @@ describe('validation', () => {
               name: '',
             });
 
-            assertInvalid(user, 'name');
+            assertInvalid(user, ['name']);
           });
         });
       });
@@ -279,7 +279,7 @@ describe('validation', () => {
             name: 'Hi',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -312,7 +312,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -345,7 +345,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
 
@@ -355,7 +355,7 @@ describe('validation', () => {
             name: 'Hi',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -388,7 +388,7 @@ describe('validation', () => {
             name: 'Something',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -421,7 +421,7 @@ describe('validation', () => {
             name: 'No alphanumeric $ string',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -454,7 +454,7 @@ describe('validation', () => {
             name: 'Abc',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -487,7 +487,7 @@ describe('validation', () => {
             name: 'Abc',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -520,7 +520,7 @@ describe('validation', () => {
             name: 'Not a valid email',
           });
 
-          assertInvalid(user, 'name');
+          assertInvalid(user, ['name']);
         });
       });
     });
@@ -554,7 +554,7 @@ describe('validation', () => {
               id: 'Not a valid guid',
             });
 
-            assertInvalid(user, 'id');
+            assertInvalid(user, ['id']);
           });
         });
       });
@@ -593,7 +593,7 @@ describe('validation', () => {
               id: uuidv1,
             });
 
-            assertInvalid(user, 'id');
+            assertInvalid(user, ['id']);
           });
         });
       });

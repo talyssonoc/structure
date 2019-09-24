@@ -11,5 +11,5 @@ exports.assertInvalid = function assertInvalid(structure, path) {
   expect(valid).toBe(false);
   expect(errors).toBeInstanceOf(Array);
   expect(errors).toHaveLength(1);
-  expect(errors[0].path).toBe(path);
+  expect(errors[0].path).toEqual(path);
 };

@@ -49,8 +49,8 @@ describe('validation', () => {
         expect(valid).toBe(false);
         expect(errors).toBeInstanceOf(Array);
         expect(errors).toHaveLength(2);
-        expect(errors[0].path).toBe('name');
-        expect(errors[1].path).toBe('age');
+        expect(errors[0].path).toEqual(['name']);
+        expect(errors[1].path).toEqual(['age']);
       });
     });
 
@@ -71,7 +71,7 @@ describe('validation', () => {
           expect(valid).toBe(false);
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
-          expect(errors[0].path).toBe('name');
+          expect(errors[0].path).toEqual(['name']);
         });
       });
     });
@@ -103,7 +103,7 @@ describe('validation', () => {
           expect(valid).toBe(false);
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
-          expect(errors[0].path).toBe('favoriteBook.name');
+          expect(errors[0].path).toEqual(['favoriteBook', 'name']);
         });
       });
 
@@ -135,7 +135,7 @@ describe('validation', () => {
           expect(valid).toBe(false);
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
-          expect(errors[0].path).toBe('user.name');
+          expect(errors[0].path).toEqual(['user', 'name']);
         });
       });
     });
@@ -166,8 +166,8 @@ describe('validation', () => {
           expect(valid).toBe(false);
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(2);
-          expect(errors[0].path).toBe('name');
-          expect(errors[1].path).toBe('age');
+          expect(errors[0].path).toEqual(['name']);
+          expect(errors[1].path).toEqual(['age']);
         });
       });
 
@@ -203,7 +203,7 @@ describe('validation', () => {
           expect(valid).toBe(false);
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
-          expect(errors[0].path).toBe('user.name');
+          expect(errors[0].path).toEqual(['user', 'name']);
         });
       });
     });

@@ -1,4 +1,4 @@
-const joi = require('joi');
+const joi = require('@hapi/joi');
 const { isPlainObject, isFunction } = require('lodash');
 
 exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
@@ -56,13 +56,13 @@ exports.equalOption = function equalOption(typeDescriptor, { initial }) {
     return initial;
   }
 
-  if (Array.isArray(possibilities)) {
-    possibilities = possibilities.map(mapValueOrReference);
-  } else {
-    possibilities = mapValueOrReference(possibilities);
+  if (!Array.isArray(possibilities)) {
+    possibilities = [possibilities];
   }
 
-  return initial.equal(possibilities);
+  possibilities = possibilities.map(mapValueOrReference);
+
+  return initial.equal(...possibilities);
 };
 
 function requiredOption(typeDescriptor, { initial }) {

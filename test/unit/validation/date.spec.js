@@ -84,7 +84,7 @@ describe('validation', () => {
             birth: undefined,
           });
 
-          assertInvalid(user, 'birth');
+          assertInvalid(user, ['birth']);
         });
       });
 
@@ -121,7 +121,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ birth: null });
 
-            assertInvalid(user, 'birth');
+            assertInvalid(user, ['birth']);
           });
         });
       });
@@ -183,7 +183,7 @@ describe('validation', () => {
             birth: otherTime,
           });
 
-          assertInvalid(user, 'birth');
+          assertInvalid(user, ['birth']);
         });
       });
     });
@@ -226,7 +226,7 @@ describe('validation', () => {
               birth: after,
             });
 
-            assertInvalid(user, 'birth');
+            assertInvalid(user, ['birth']);
           });
         });
       });
@@ -273,7 +273,7 @@ describe('validation', () => {
               updatedAt: now,
             });
 
-            assertInvalid(user, 'createdAt');
+            assertInvalid(user, ['createdAt']);
           });
         });
       });
@@ -313,7 +313,7 @@ describe('validation', () => {
             birth: before,
           });
 
-          assertInvalid(user, 'birth');
+          assertInvalid(user, ['birth']);
         });
       });
     });

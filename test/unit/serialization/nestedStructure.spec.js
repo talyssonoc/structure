@@ -76,7 +76,7 @@ describe('serialization', () => {
     });
   });
 
-  describe('Nested structure with dynamic attribute types', () => {
+  describe.skip('Nested structure with dynamic attribute types', () => {
     let CircularUser;
     let CircularBook;
 

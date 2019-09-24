@@ -65,7 +65,7 @@ describe('validation', () => {
             books: undefined,
           });
 
-          assertInvalid(user, 'books');
+          assertInvalid(user, ['books']);
         });
       });
     });
@@ -132,7 +132,7 @@ describe('validation', () => {
               books: ['The Lusiads', undefined],
             });
 
-            assertInvalid(user, 'books.1');
+            assertInvalid(user, ['books', 1]);
           });
         });
       });
@@ -212,12 +212,12 @@ describe('validation', () => {
             books: [new Book({ name: 'The Hobbit' }), new Book({ name: undefined })],
           });
 
-          assertInvalid(user, 'books.1.name');
+          assertInvalid(user, ['books', 1, 'name']);
         });
       });
     });
 
-    describe('nested validation with dynamic attribute types', () => {
+    describe.skip('nested validation with dynamic attribute types', () => {
       let CircularUser;
 
       beforeEach(() => {
@@ -251,7 +251,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          assertInvalid(user, 'friends.1.favoriteBook');
+          assertInvalid(user, ['friends', 1, 'favoriteBook']);
         });
       });
     });
@@ -285,7 +285,7 @@ describe('validation', () => {
             books: ['1984'],
           });
 
-          assertInvalid(user, 'books');
+          assertInvalid(user, ['books']);
         });
       });
     });
@@ -319,7 +319,7 @@ describe('validation', () => {
             books: ['1984', 'The Game of Thrones', 'Dragons of Ether'],
           });
 
-          assertInvalid(user, 'books');
+          assertInvalid(user, ['books']);
         });
       });
     });
@@ -353,7 +353,7 @@ describe('validation', () => {
             books: ['The Wastelands'],
           });
 
-          assertInvalid(user, 'books');
+          assertInvalid(user, ['books']);
         });
       });
 
@@ -363,7 +363,7 @@ describe('validation', () => {
             books: ['Wizard and Glass', 'The Wind Through the Keyhole', 'Wolves of the Calla'],
           });
 
-          assertInvalid(user, 'books');
+          assertInvalid(user, ['books']);
         });
       });
     });
@@ -394,7 +394,7 @@ describe('validation', () => {
             books: ['The Wastelands', 'The Wastelands'],
           });
 
-          assertInvalid(user, 'books.1');
+          assertInvalid(user, ['books', 1]);
         });
       });
     });

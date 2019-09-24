@@ -84,7 +84,7 @@ describe('validation', () => {
             isAdmin: undefined,
           });
 
-          assertInvalid(user, 'isAdmin');
+          assertInvalid(user, ['isAdmin']);
         });
       });
 
@@ -121,7 +121,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ isAdmin: null });
 
-            assertInvalid(user, 'isAdmin');
+            assertInvalid(user, ['isAdmin']);
           });
         });
       });
@@ -176,7 +176,7 @@ describe('validation', () => {
             isAdmin: false,
           });
 
-          assertInvalid(user, 'isAdmin');
+          assertInvalid(user, ['isAdmin']);
         });
       });
     });

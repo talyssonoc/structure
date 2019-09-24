@@ -90,7 +90,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          assertInvalid(user, 'lastLocation');
+          assertInvalid(user, ['lastLocation']);
         });
       });
 
@@ -127,7 +127,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ lastLocation: null });
 
-            assertInvalid(user, 'lastLocation');
+            assertInvalid(user, ['lastLocation']);
           });
         });
       });

@@ -28,7 +28,7 @@ describe('validation', () => {
           level: 3,
         });
 
-        assertInvalid(admin, 'name');
+        assertInvalid(admin, ['name']);
       });
     });
 
@@ -38,7 +38,7 @@ describe('validation', () => {
           name: 'The admin',
         });
 
-        assertInvalid(admin, 'level');
+        assertInvalid(admin, ['level']);
       });
     });
 
@@ -97,7 +97,7 @@ describe('validation', () => {
         it('is not valid and has errors set', () => {
           const car = new Car({ name: null });
 
-          assertInvalid(car, 'name');
+          assertInvalid(car, ['name']);
         });
       });
     });

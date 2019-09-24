@@ -1,4 +1,4 @@
-const joi = require('joi');
+const joi = require('@hapi/joi');
 const { mapToJoi } = require('./utils');
 
 const joiMappings = [

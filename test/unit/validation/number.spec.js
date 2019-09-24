@@ -84,7 +84,7 @@ describe('validation', () => {
             age: undefined,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
 
@@ -121,7 +121,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ age: null });
 
-            assertInvalid(user, 'age');
+            assertInvalid(user, ['age']);
           });
         });
       });
@@ -177,7 +177,7 @@ describe('validation', () => {
               age: 1,
             });
 
-            assertInvalid(user, 'age');
+            assertInvalid(user, ['age']);
           });
         });
       });
@@ -226,7 +226,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertInvalid(user, 'currentAge');
+            assertInvalid(user, ['currentAge']);
           });
         });
       });
@@ -264,7 +264,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertInvalid(user, 'currentAge');
+            assertInvalid(user, ['currentAge']);
           });
         });
       });
@@ -309,7 +309,7 @@ describe('validation', () => {
               age: 1,
             });
 
-            assertInvalid(user, 'age');
+            assertInvalid(user, ['age']);
           });
         });
       });
@@ -358,7 +358,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertInvalid(user, 'currentAge');
+            assertInvalid(user, ['currentAge']);
           });
         });
       });
@@ -382,7 +382,7 @@ describe('validation', () => {
             age: 2,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
 
@@ -402,7 +402,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
@@ -445,7 +445,7 @@ describe('validation', () => {
             age: 3,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
@@ -468,7 +468,7 @@ describe('validation', () => {
             age: 2,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
 
@@ -488,7 +488,7 @@ describe('validation', () => {
             age: 3,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
@@ -521,7 +521,7 @@ describe('validation', () => {
             age: 4.2,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
@@ -554,7 +554,7 @@ describe('validation', () => {
             age: 0.042,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
@@ -587,7 +587,7 @@ describe('validation', () => {
             age: 7,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
@@ -620,7 +620,7 @@ describe('validation', () => {
             age: 0,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
 
@@ -630,7 +630,7 @@ describe('validation', () => {
             age: -1,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
@@ -663,7 +663,7 @@ describe('validation', () => {
             age: 0,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
 
@@ -673,7 +673,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertInvalid(user, 'age');
+          assertInvalid(user, ['age']);
         });
       });
     });
