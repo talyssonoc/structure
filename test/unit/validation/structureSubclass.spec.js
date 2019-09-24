@@ -1,13 +1,10 @@
 const { attributes } = require('../../../src');
-const {
-  assertValid,
-  assertInvalid,
-} = require('../../support/validationMatchers');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('structure subclass', () => {
-    var Admin;
-    var User;
+    let Admin;
+    let User;
 
     beforeEach(() => {
       User = attributes({
@@ -57,8 +54,8 @@ describe('validation', () => {
     });
 
     context('with nullable attributes on superclass', () => {
-      var Vehicle;
-      var Car;
+      let Vehicle;
+      let Car;
 
       context('when nullable is true', () => {
         beforeEach(() => {

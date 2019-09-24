@@ -3,8 +3,8 @@ const { attributes } = require('../../../src');
 
 describe('serialization', () => {
   describe('Nested structure', () => {
-    var Location;
-    var User;
+    let Location;
+    let User;
 
     beforeEach(() => {
       Location = attributes({
@@ -82,8 +82,8 @@ describe('serialization', () => {
   });
 
   describe('Nested structure with dynamic attribute types', () => {
-    var CircularUser;
-    var CircularBook;
+    let CircularUser;
+    let CircularBook;
 
     beforeEach(() => {
       CircularUser = require('../../fixtures/CircularUser');

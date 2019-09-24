@@ -16,7 +16,7 @@ module.exports = {
     ['guid', 'guid', isPlainObject],
   ],
   createJoiSchema(typeDescriptor) {
-    var joiSchema = joi.string();
+    let joiSchema = joi.string();
 
     if (typeDescriptor.empty) {
       joiSchema = joiSchema.allow('');

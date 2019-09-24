@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
-  var User;
+  let User;
 
   beforeEach(() => {
     User = attributes({

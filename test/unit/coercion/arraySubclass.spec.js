@@ -3,8 +3,8 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Array subclass', () => {
-    var Collection;
-    var User;
+    let Collection;
+    let User;
 
     beforeEach(() => {
       Collection = class Collection extends Array {};

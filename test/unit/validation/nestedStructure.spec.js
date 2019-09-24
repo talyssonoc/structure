@@ -1,14 +1,11 @@
 const { attributes } = require('../../../src');
-const {
-  assertValid,
-  assertInvalid,
-} = require('../../support/validationMatchers');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with structure class', () => {
     describe('no validation', () => {
-      var Location;
-      var User;
+      let Location;
+      let User;
 
       beforeEach(() => {
         Location = attributes({
@@ -49,8 +46,8 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      var Location;
-      var User;
+      let Location;
+      let User;
 
       beforeEach(() => {
         Location = attributes({
@@ -137,8 +134,8 @@ describe('validation', () => {
     });
 
     describe('not required', () => {
-      var Location;
-      var User;
+      let Location;
+      let User;
 
       beforeEach(() => {
         Location = attributes({
@@ -168,8 +165,8 @@ describe('validation', () => {
     });
 
     describe('nested required', () => {
-      var Location;
-      var User;
+      let Location;
+      let User;
 
       context('when nested value is present', () => {
         beforeEach(() => {
@@ -260,8 +257,8 @@ describe('validation', () => {
   });
 
   describe('Nested with structure class with dynamic attribute types', () => {
-    var CircularUser;
-    var CircularBook;
+    let CircularUser;
+    let CircularBook;
 
     beforeEach(() => {
       CircularUser = require('../../fixtures/CircularUser');

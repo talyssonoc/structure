@@ -1,13 +1,10 @@
 const { attributes } = require('../../../src');
-const {
-  assertValid,
-  assertInvalid,
-} = require('../../support/validationMatchers');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Boolean', () => {
     describe('no validation', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -51,7 +48,7 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      var User;
+      let User;
 
       context('when value is present', () => {
         beforeEach(() => {
@@ -131,7 +128,7 @@ describe('validation', () => {
     });
 
     describe('not required', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -152,7 +149,7 @@ describe('validation', () => {
     });
 
     describe('equal', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({

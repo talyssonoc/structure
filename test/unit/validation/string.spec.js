@@ -1,13 +1,10 @@
 const { attributes } = require('../../../src');
-const {
-  assertValid,
-  assertInvalid,
-} = require('../../support/validationMatchers');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('String', () => {
     describe('no validation', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -51,7 +48,7 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      var User;
+      let User;
 
       context('when value is present', () => {
         beforeEach(() => {
@@ -131,7 +128,7 @@ describe('validation', () => {
     });
 
     describe('not required', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -154,7 +151,7 @@ describe('validation', () => {
     });
 
     describe('equal', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -188,7 +185,7 @@ describe('validation', () => {
 
     describe('empty', () => {
       describe('empty: true', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -221,7 +218,7 @@ describe('validation', () => {
       });
 
       describe('empty: false', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -255,7 +252,7 @@ describe('validation', () => {
     });
 
     describe('minLength', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -288,7 +285,7 @@ describe('validation', () => {
     });
 
     describe('maxLength', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -321,7 +318,7 @@ describe('validation', () => {
     });
 
     describe('exactLength', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -364,7 +361,7 @@ describe('validation', () => {
     });
 
     describe('regex', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -397,7 +394,7 @@ describe('validation', () => {
     });
 
     describe('alphanumeric', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -430,7 +427,7 @@ describe('validation', () => {
     });
 
     describe('lowerCase', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -463,7 +460,7 @@ describe('validation', () => {
     });
 
     describe('upperCase', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -496,7 +493,7 @@ describe('validation', () => {
     });
 
     describe('email', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -530,7 +527,7 @@ describe('validation', () => {
 
     describe('guid', () => {
       context('when validating as a generic guid', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -563,7 +560,7 @@ describe('validation', () => {
       });
 
       context('when validating a specific guid version', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({

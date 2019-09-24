@@ -3,8 +3,8 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Structure class', () => {
-    var Location;
-    var User;
+    let Location;
+    let User;
 
     beforeEach(() => {
       Location = attributes({
@@ -22,7 +22,7 @@ describe('type coercion', () => {
     });
 
     context('when raw value is an instance of class', () => {
-      var location, user;
+      let location, user;
 
       beforeEach(() => {
         location = new Location({ x: 1, y: 2 });
@@ -35,7 +35,7 @@ describe('type coercion', () => {
     });
 
     context('when attributes is already in correct type', () => {
-      var user;
+      let user;
 
       beforeEach(() => {
         user = new User({
@@ -51,7 +51,7 @@ describe('type coercion', () => {
     });
 
     context('when attributes in a different type', () => {
-      var user;
+      let user;
 
       beforeEach(() => {
         user = new User({
@@ -67,7 +67,7 @@ describe('type coercion', () => {
     });
 
     context('when value is undefined', () => {
-      var user;
+      let user;
 
       beforeEach(() => (user = new User({ location: undefined })));
 
@@ -77,7 +77,7 @@ describe('type coercion', () => {
     });
 
     context('when value is null', () => {
-      var user;
+      let user;
 
       context('and attribute is nullable', () => {
         beforeEach(() => (user = new User({ destination: null })));
@@ -98,8 +98,8 @@ describe('type coercion', () => {
   });
 
   describe('Structure class with dynamic attribute types', () => {
-    var CircularUser;
-    var CircularBook;
+    let CircularUser;
+    let CircularBook;
 
     beforeEach(() => {
       CircularUser = require('../../fixtures/CircularUser');
@@ -107,7 +107,7 @@ describe('type coercion', () => {
     });
 
     context('when there are not allowed nullable attributes', () => {
-      var userOne, userTwo;
+      let userOne, userTwo;
 
       beforeEach(() => {
         userOne = new CircularUser({
@@ -159,7 +159,7 @@ describe('type coercion', () => {
     });
 
     context('when there are allowed nullable attributes', () => {
-      var userOne, userTwo;
+      let userOne, userTwo;
 
       beforeEach(() => {
         userOne = new CircularUser({ friends: [], favoriteBook: null });

@@ -5,14 +5,12 @@ const joiMappings = [
   ['minLength', 'min', true],
   ['maxLength', 'max', true],
   ['exactLength', 'length', true],
-  ['unique', 'unique']
-
+  ['unique', 'unique'],
 ];
 
 module.exports = function arrayValidation(typeDescriptor, itemTypeDescriptor) {
-  var joiSchema = joi.array().items(itemTypeDescriptor.validation);
-  const canBeSparse =
-    typeDescriptor.sparse === undefined || typeDescriptor.sparse;
+  let joiSchema = joi.array().items(itemTypeDescriptor.validation);
+  const canBeSparse = typeDescriptor.sparse === undefined || typeDescriptor.sparse;
 
   joiSchema = joiSchema.sparse(canBeSparse);
 

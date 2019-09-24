@@ -3,8 +3,8 @@ const { attributes } = require('../../../src');
 
 describe('serialization', () => {
   describe('Array', () => {
-    var Book;
-    var User;
+    let Book;
+    let User;
 
     beforeEach(() => {
       Book = attributes({
@@ -49,11 +49,7 @@ describe('serialization', () => {
 
         expect(serializedUser).to.eql({
           name: 'Some name',
-          books: [
-            { name: 'The Silmarillion' },
-            undefined,
-            { name: 'The Lord of the Rings' },
-          ],
+          books: [{ name: 'The Silmarillion' }, undefined, { name: 'The Lord of the Rings' }],
         });
 
         expect(serializedUser).to.have.all.keys(['name', 'books']);

@@ -1,13 +1,10 @@
 const { attributes } = require('../../../src');
-const {
-  assertValid,
-  assertInvalid,
-} = require('../../support/validationMatchers');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Number', () => {
     describe('no validation', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -51,7 +48,7 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      var User;
+      let User;
 
       context('when value is present', () => {
         beforeEach(() => {
@@ -131,7 +128,7 @@ describe('validation', () => {
     });
 
     describe('not required', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -153,7 +150,7 @@ describe('validation', () => {
 
     describe('equal', () => {
       describe('when using a value', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -186,7 +183,7 @@ describe('validation', () => {
       });
 
       describe('when using a mixed array os possibilities', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -235,7 +232,7 @@ describe('validation', () => {
       });
 
       describe('when using a reference', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -275,7 +272,7 @@ describe('validation', () => {
 
     describe('min', () => {
       describe('when using a number', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -318,7 +315,7 @@ describe('validation', () => {
       });
 
       describe('when using a reference to another attribute', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -368,7 +365,7 @@ describe('validation', () => {
     });
 
     describe('greater', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -411,7 +408,7 @@ describe('validation', () => {
     });
 
     describe('max', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -454,7 +451,7 @@ describe('validation', () => {
     });
 
     describe('less', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -497,7 +494,7 @@ describe('validation', () => {
     });
 
     describe('integer', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -530,7 +527,7 @@ describe('validation', () => {
     });
 
     describe('precision', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -563,7 +560,7 @@ describe('validation', () => {
     });
 
     describe('multiple', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -596,7 +593,7 @@ describe('validation', () => {
     });
 
     describe('positive', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -639,7 +636,7 @@ describe('validation', () => {
     });
 
     describe('negative', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({

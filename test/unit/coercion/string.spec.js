@@ -3,7 +3,7 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('String', () => {
-    var User;
+    let User;
 
     beforeEach(() => {
       User = attributes({

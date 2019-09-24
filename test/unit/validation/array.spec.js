@@ -1,13 +1,10 @@
 const { attributes } = require('../../../src');
-const {
-  assertValid,
-  assertInvalid,
-} = require('../../support/validationMatchers');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Array', () => {
     describe('no validation', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -40,7 +37,7 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -74,7 +71,7 @@ describe('validation', () => {
     });
 
     describe('not required', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -107,7 +104,7 @@ describe('validation', () => {
 
     describe('sparse array', () => {
       context('when array can not be sparse', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -141,7 +138,7 @@ describe('validation', () => {
       });
 
       context('when array can be sparse', () => {
-        var User;
+        let User;
 
         beforeEach(() => {
           User = attributes({
@@ -176,8 +173,8 @@ describe('validation', () => {
     });
 
     describe('nested validation', () => {
-      var Book;
-      var User;
+      let Book;
+      let User;
 
       beforeEach(() => {
         Book = attributes({
@@ -212,10 +209,7 @@ describe('validation', () => {
       context('when nested value is not present', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            books: [
-              new Book({ name: 'The Hobbit' }),
-              new Book({ name: undefined }),
-            ],
+            books: [new Book({ name: 'The Hobbit' }), new Book({ name: undefined })],
           });
 
           assertInvalid(user, 'books.1.name');
@@ -224,7 +218,7 @@ describe('validation', () => {
     });
 
     describe('nested validation with dynamic attribute types', () => {
-      var CircularUser;
+      let CircularUser;
 
       beforeEach(() => {
         CircularUser = require('../../fixtures/CircularUser');
@@ -263,7 +257,7 @@ describe('validation', () => {
     });
 
     describe('minLength', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -297,7 +291,7 @@ describe('validation', () => {
     });
 
     describe('maxLength', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -331,7 +325,7 @@ describe('validation', () => {
     });
 
     describe('exactLength', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
@@ -366,11 +360,7 @@ describe('validation', () => {
       context('when array has more than exact length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            books: [
-              'Wizard and Glass',
-              'The Wind Through the Keyhole',
-              'Wolves of the Calla',
-            ],
+            books: ['Wizard and Glass', 'The Wind Through the Keyhole', 'Wolves of the Calla'],
           });
 
           assertInvalid(user, 'books');
@@ -378,24 +368,21 @@ describe('validation', () => {
       });
     });
     describe('unique', () => {
-      var User;
+      let User;
 
       beforeEach(() => {
         User = attributes({
           books: {
             type: Array,
             itemType: String,
-            unique: true
-          }
+            unique: true,
+          },
         })(class User {});
       });
       context('when array is unique', () => {
         it('is valid', () => {
           const user = new User({
-            books: [
-              'The Gunslinger',
-              'The Drawing of the Three'
-            ]
+            books: ['The Gunslinger', 'The Drawing of the Three'],
           });
 
           assertValid(user);
@@ -404,10 +391,7 @@ describe('validation', () => {
       context('when array is not unique', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
-            books: [
-              'The Wastelands',
-              'The Wastelands'
-            ]
+            books: ['The Wastelands', 'The Wastelands'],
           });
 
           assertInvalid(user, 'books.1');

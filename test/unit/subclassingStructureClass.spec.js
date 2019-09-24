@@ -2,8 +2,8 @@ const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('subclassing a structure with a POJO class', () => {
-  var User;
-  var Admin;
+  let User;
+  let Admin;
 
   beforeEach(() => {
     User = attributes({
@@ -126,7 +126,7 @@ describe('subclassing a structure with a POJO class', () => {
   });
 
   describe('using subclass static methods and properties', () => {
-    var AdminStructure;
+    let AdminStructure;
 
     beforeEach(() => {
       class RawUser {
@@ -160,8 +160,8 @@ describe('subclassing a structure with a POJO class', () => {
 });
 
 describe('subclassing a structure with another structure', () => {
-  var Admin;
-  var User;
+  let Admin;
+  let User;
 
   beforeEach(() => {
     User = attributes({

@@ -3,8 +3,8 @@ const { expect } = require('chai');
 
 describe('validation', () => {
   describe('Using structure static method', () => {
-    var User;
-    var Book;
+    let User;
+    let Book;
 
     before(() => {
       Book = attributes({
@@ -122,7 +122,7 @@ describe('validation', () => {
       });
 
       context('and non nullable attributes receive null value', () => {
-        var Test;
+        let Test;
 
         before(() => {
           Test = attributes({ user: User })(class Test {});
@@ -188,7 +188,7 @@ describe('validation', () => {
       });
 
       context('and non nullable attributes receive null value', () => {
-        var Test;
+        let Test;
 
         before(() => {
           Test = attributes({ user: User })(class Test {});

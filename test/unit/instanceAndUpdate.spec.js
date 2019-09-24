@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('instantiating a structure', () => {
-  var User;
+  let User;
 
   beforeEach(() => {
     User = attributes({
@@ -110,45 +110,31 @@ describe('instantiating a structure', () => {
         });
       });
 
-      context(
-        'when attribute dynamic default uses a static defaultable attribute',
-        () => {
-          context(
-            'when static defaultable attribute uses default value',
-            () => {
-              it('allows to access the value of that attribute', () => {
-                const user = new User();
+      context('when attribute dynamic default uses a static defaultable attribute', () => {
+        context('when static defaultable attribute uses default value', () => {
+          it('allows to access the value of that attribute', () => {
+            const user = new User();
 
-                expect(user.nickname).to.equal('Name');
-              });
-            }
-          );
+            expect(user.nickname).to.equal('Name');
+          });
+        });
 
-          context(
-            'when static defaultable attribute has a value passed to it',
-            () => {
-              it('allows to access the value of that attribute', () => {
-                const user = new User({ name: 'This is my name' });
+        context('when static defaultable attribute has a value passed to it', () => {
+          it('allows to access the value of that attribute', () => {
+            const user = new User({ name: 'This is my name' });
 
-                expect(user.nickname).to.equal('This is my name');
-              });
-            }
-          );
+            expect(user.nickname).to.equal('This is my name');
+          });
+        });
 
-          context(
-            'when dynamic default uses a method that uses an attribute with default',
-            () => {
-              it('generates the default value properly', () => {
-                const user = new User();
+        context('when dynamic default uses a method that uses an attribute with default', () => {
+          it('generates the default value properly', () => {
+            const user = new User();
 
-                expect(user.attrUsingMethodUsingAttr).to.equal(
-                  'Method => Name'
-                );
-              });
-            }
-          );
-        }
-      );
+            expect(user.attrUsingMethodUsingAttr).to.equal('Method => Name');
+          });
+        });
+      });
 
       it('overwrites default value with passed value', () => {
         const user = new User({ name: 'Not the default' });
@@ -178,8 +164,8 @@ describe('instantiating a structure', () => {
         });
 
         context('when using custom error class', () => {
-          var UserWithCustomError;
-          var InvalidUser;
+          let UserWithCustomError;
+          let InvalidUser;
 
           beforeEach(() => {
             InvalidUser = class InvalidUser extends Error {
@@ -226,8 +212,8 @@ describe('instantiating a structure', () => {
 });
 
 describe('instantiating a structure with dynamic attribute types', () => {
-  var CircularUser;
-  var CircularBook;
+  let CircularUser;
+  let CircularBook;
 
   beforeEach(() => {
     CircularUser = require('../fixtures/CircularUser');
@@ -285,7 +271,7 @@ describe('instantiating a structure with dynamic attribute types', () => {
 });
 
 describe('updating an instance', () => {
-  var User;
+  let User;
 
   beforeEach(() => {
     User = attributes({
@@ -343,8 +329,8 @@ describe('updating an instance', () => {
 });
 
 describe('updating a structure with dynamic attribute types', () => {
-  var CircularUser;
-  var CircularBook;
+  let CircularUser;
+  let CircularBook;
 
   beforeEach(() => {
     CircularUser = require('../fixtures/CircularUser');

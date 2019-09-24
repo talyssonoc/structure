@@ -5,9 +5,7 @@ module.exports = {
   type: Boolean,
   joiMappings: [],
   createJoiSchema(typeDescriptor) {
-    var joiSchema = joi.boolean();
-
-    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
+    let joiSchema = equalOption(typeDescriptor, { initial: joi.boolean() });
 
     return mapToJoi(typeDescriptor, {
       initial: joiSchema,

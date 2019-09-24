@@ -3,8 +3,8 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('POJO class', () => {
-    var User;
-    var Location;
+    let User;
+    let Location;
 
     beforeEach(() => {
       Location = class Location {

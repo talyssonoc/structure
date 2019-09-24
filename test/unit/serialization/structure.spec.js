@@ -3,7 +3,7 @@ const { attributes } = require('../../../src');
 
 describe('serialization', () => {
   describe('Structure', () => {
-    var User;
+    let User;
 
     beforeEach(() => {
       User = attributes({
@@ -44,7 +44,7 @@ describe('serialization', () => {
     });
 
     context("when attribute's value is null", () => {
-      var City;
+      let City;
 
       context('and is not nullable', () => {
         beforeEach(() => {
@@ -84,8 +84,8 @@ describe('serialization', () => {
       });
 
       context('and is a nullable relationship', () => {
-        var Country;
-        var City;
+        let Country;
+        let City;
 
         beforeEach(() => {
           Country = attributes({ name: String })(class Country {});

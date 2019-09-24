@@ -1,14 +1,11 @@
 const { attributes } = require('../../../src');
-const {
-  assertValid,
-  assertInvalid,
-} = require('../../support/validationMatchers');
+const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with POJO class', () => {
     describe('no validation', () => {
-      var Location;
-      var User;
+      let Location;
+      let User;
 
       beforeEach(() => {
         Location = class Location {};
@@ -54,8 +51,8 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      var Location;
-      var User;
+      let Location;
+      let User;
 
       beforeEach(() => (Location = class Location {}));
 
@@ -137,8 +134,8 @@ describe('validation', () => {
     });
 
     describe('not required', () => {
-      var Location;
-      var User;
+      let Location;
+      let User;
 
       beforeEach(() => {
         Location = class Location {};

@@ -10,14 +10,9 @@ module.exports = {
     ['positive', 'positive', true],
     ['negative', 'negative', true],
   ],
-  valueOrRefOptions: [
-    ['min', 'min'],
-    ['greater', 'greater'],
-    ['max', 'max'],
-    ['less', 'less'],
-  ],
+  valueOrRefOptions: [['min', 'min'], ['greater', 'greater'], ['max', 'max'], ['less', 'less']],
   createJoiSchema(typeDescriptor) {
-    var joiSchema = mapToJoiWithReference(typeDescriptor, {
+    let joiSchema = mapToJoiWithReference(typeDescriptor, {
       initial: joi.number(),
       mappings: this.valueOrRefOptions,
     });

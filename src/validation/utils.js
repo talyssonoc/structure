@@ -2,21 +2,18 @@ const joi = require('joi');
 const { isPlainObject, isFunction } = require('lodash');
 
 exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
-  let joiSchema = mappings.reduce(
-    (joiSchema, [optionName, joiMethod, passValueToJoi]) => {
-      const attributeDescriptor = typeDescriptor[optionName];
-      if (attributeDescriptor === undefined) {
-        return joiSchema;
-      }
+  let joiSchema = mappings.reduce((joiSchema, [optionName, joiMethod, passValueToJoi]) => {
+    const attributeDescriptor = typeDescriptor[optionName];
+    if (attributeDescriptor === undefined) {
+      return joiSchema;
+    }
 
-      if (shouldPassValueToJoi(passValueToJoi, attributeDescriptor)) {
-        return joiSchema[joiMethod](attributeDescriptor);
-      }
+    if (shouldPassValueToJoi(passValueToJoi, attributeDescriptor)) {
+      return joiSchema[joiMethod](attributeDescriptor);
+    }
 
-      return joiSchema[joiMethod]();
-    },
-    initial
-  );
+    return joiSchema[joiMethod]();
+  }, initial);
 
   joiSchema = requiredOption(typeDescriptor, { initial: joiSchema });
 
@@ -24,10 +21,7 @@ exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
 };
 
 function shouldPassValueToJoi(passValueToJoi, attributeDescriptor) {
-  return (
-    passValueToJoi &&
-    (!isFunction(passValueToJoi) || passValueToJoi(attributeDescriptor))
-  );
+  return passValueToJoi && (!isFunction(passValueToJoi) || passValueToJoi(attributeDescriptor));
 }
 
 function mapValueOrReference(valueOrReference) {
@@ -43,7 +37,7 @@ exports.mapToJoiWithReference = function mapToJoiWithReference(
   { initial, mappings }
 ) {
   return mappings.reduce((joiSchema, [optionName, joiMethod]) => {
-    var attributeDescriptor = typeDescriptor[optionName];
+    let attributeDescriptor = typeDescriptor[optionName];
 
     if (attributeDescriptor === undefined) {
       return joiSchema;
@@ -56,7 +50,7 @@ exports.mapToJoiWithReference = function mapToJoiWithReference(
 };
 
 exports.equalOption = function equalOption(typeDescriptor, { initial }) {
-  var possibilities = typeDescriptor.equal;
+  let possibilities = typeDescriptor.equal;
 
   if (possibilities === undefined) {
     return initial;

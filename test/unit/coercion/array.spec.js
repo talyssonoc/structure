@@ -3,8 +3,8 @@ const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Array', () => {
-    var Seat;
-    var User;
+    let Seat;
+    let User;
 
     beforeEach(() => {
       User = attributes({
@@ -134,8 +134,8 @@ describe('type coercion', () => {
   });
 
   describe('Array from dynamic type', () => {
-    var CircularUser;
-    var BooksCollection;
+    let CircularUser;
+    let BooksCollection;
 
     beforeEach(() => {
       CircularUser = require('../../fixtures/CircularUser');

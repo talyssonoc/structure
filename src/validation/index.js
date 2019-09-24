@@ -51,15 +51,11 @@ exports.forSchema = function validationForSchema(schema) {
 
   return {
     validate(structure) {
-      var validationErrors;
-
       const { error } = joiValidation.validate(structure, validatorOptions);
 
       if (error) {
-        validationErrors = error.details.map(mapDetail);
+        return error.details.map(mapDetail);
       }
-
-      return validationErrors;
     },
   };
 };
