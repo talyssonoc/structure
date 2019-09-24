@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('serialization', () => {
@@ -20,21 +19,21 @@ describe('serialization', () => {
       })(class User {});
     });
 
-    context('when all data is present', () => {
+    describe('when all data is present', () => {
       it('include all data defined on schema', () => {
         const user = new User({
           name: 'Something',
           books: [new Book({ name: 'The Hobbit' })],
         });
 
-        expect(user.toJSON()).to.eql({
+        expect(user.toJSON()).toEqual({
           name: 'Something',
           books: [{ name: 'The Hobbit' }],
         });
       });
     });
 
-    context('when some item is undefined', () => {
+    describe('when some item is undefined', () => {
       it('does not set a key for missing attribute', () => {
         const user = new User({
           name: 'Some name',
@@ -47,12 +46,10 @@ describe('serialization', () => {
 
         const serializedUser = user.toJSON();
 
-        expect(serializedUser).to.eql({
+        expect(serializedUser).toEqual({
           name: 'Some name',
           books: [{ name: 'The Silmarillion' }, undefined, { name: 'The Lord of the Rings' }],
         });
-
-        expect(serializedUser).to.have.all.keys(['name', 'books']);
       });
     });
   });

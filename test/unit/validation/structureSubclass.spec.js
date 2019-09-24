@@ -22,7 +22,7 @@ describe('validation', () => {
       })(class Admin extends User {});
     });
 
-    context('with invalid superclass schema', () => {
+    describe('with invalid superclass schema', () => {
       it('is invalid', () => {
         const admin = new Admin({
           level: 3,
@@ -32,7 +32,7 @@ describe('validation', () => {
       });
     });
 
-    context('with invalid subclass schema', () => {
+    describe('with invalid subclass schema', () => {
       it('is invalid', () => {
         const admin = new Admin({
           name: 'The admin',
@@ -42,7 +42,7 @@ describe('validation', () => {
       });
     });
 
-    context('with valid superclass and subclass schema', () => {
+    describe('with valid superclass and subclass schema', () => {
       it('is valid', () => {
         const admin = new Admin({
           name: 'The admin',
@@ -53,11 +53,11 @@ describe('validation', () => {
       });
     });
 
-    context('with nullable attributes on superclass', () => {
+    describe('with nullable attributes on superclass', () => {
       let Vehicle;
       let Car;
 
-      context('when nullable is true', () => {
+      describe('when nullable is true', () => {
         beforeEach(() => {
           Vehicle = attributes({
             name: {
@@ -79,7 +79,7 @@ describe('validation', () => {
         });
       });
 
-      context('when nullable is false', () => {
+      describe('when nullable is false', () => {
         beforeEach(() => {
           Vehicle = attributes({
             name: {

@@ -1,17 +1,15 @@
-const { expect } = require('chai');
-
 exports.assertValid = function assertValid(structure) {
   const { valid, errors } = structure.validate();
 
-  expect(valid).to.be.true;
-  expect(errors).to.be.undefined;
+  expect(valid).toBe(true);
+  expect(errors).toBeUndefined();
 };
 
 exports.assertInvalid = function assertInvalid(structure, path) {
   const { valid, errors } = structure.validate();
 
-  expect(valid).to.be.false;
-  expect(errors).to.be.instanceOf(Array);
-  expect(errors).to.have.lengthOf(1);
-  expect(errors[0].path).to.equal(path);
+  expect(valid).toBe(false);
+  expect(errors).toBeInstanceOf(Array);
+  expect(errors).toHaveLength(1);
+  expect(errors[0].path).toBe(path);
 };

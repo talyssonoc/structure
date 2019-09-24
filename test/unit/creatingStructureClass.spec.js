@@ -1,17 +1,16 @@
-const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('creating a structure class', () => {
   describe('structure class is passed as the second parameter', () => {
-    context('when structure class has a name', () => {
+    describe('when structure class has a name', () => {
       it('throws with a message with structure class name', () => {
         expect(() => {
           attributes({}, class User {});
-        }).to.throw(Error, /^You passed the structure class.*\(User\)`\./);
+        }).toThrowError(/^You passed the structure class.*\(User\)`\./);
       });
     });
 
-    context('when structure class is anonymous', () => {
+    describe('when structure class is anonymous', () => {
       it('throws with a message with generic structure name', () => {
         // It's like this because Babel gives the name _class
         // to anonymous classes and do function auto-naming,
@@ -20,7 +19,7 @@ describe('creating a structure class', () => {
 
         expect(() => {
           attributes({}, anonymousClass);
-        }).to.throw(Error, /^You passed the structure class.*\(StructureClass\)`\./);
+        }).toThrowError(/^You passed the structure class.*\(StructureClass\)`\./);
       });
     });
   });
@@ -43,13 +42,13 @@ describe('creating a structure class', () => {
     });
 
     it('has access to static methods and properties', () => {
-      expect(User.staticMethod()).to.equal('I am on a static method');
-      expect(User.staticProperty).to.equal('I am a static property');
+      expect(User.staticMethod()).toBe('I am on a static method');
+      expect(User.staticProperty).toBe('I am a static property');
     });
   });
 
   describe('using default values for attributes', () => {
-    context('when the provided default value is a function', () => {
+    describe('when the provided default value is a function', () => {
       let User;
 
       beforeEach(() => {
@@ -61,11 +60,11 @@ describe('creating a structure class', () => {
       it('defines the attribute with the default value executing the function', () => {
         const user = new User();
 
-        expect(user.age).to.equal(18);
+        expect(user.age).toBe(18);
       });
     });
 
-    context('when the function default value uses another class attribute', () => {
+    describe('when the function default value uses another class attribute', () => {
       let User;
 
       beforeEach(() => {
@@ -82,11 +81,11 @@ describe('creating a structure class', () => {
       it('defines the attribute with the default value executing the function', () => {
         const user = new User({ name: 'Jack', surname: 'Sparrow' });
 
-        expect(user.fullname).to.equal('Jack Sparrow');
+        expect(user.fullname).toBe('Jack Sparrow');
       });
     });
 
-    context('when the provided default value is a property', () => {
+    describe('when the provided default value is a property', () => {
       let User;
 
       beforeEach(() => {
@@ -98,7 +97,7 @@ describe('creating a structure class', () => {
       it('defines the attribute with the default value of the property', () => {
         const user = new User();
 
-        expect(user.age).to.equal(18);
+        expect(user.age).toBe(18);
       });
     });
   });
@@ -112,7 +111,7 @@ describe('creating a structure class', () => {
     it('breaks if there is no value for dynamic type', () => {
       expect(() => {
         require('../fixtures/BrokenCircularBook');
-      }).to.throw(Error, 'Missing dynamic type for attribute: owner');
+      }).toThrowError('Missing dynamic type for attribute: owner');
     });
   });
 });

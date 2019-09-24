@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('serialization', () => {
@@ -18,7 +17,7 @@ describe('serialization', () => {
       })(class User {});
     });
 
-    context('when all data is present', () => {
+    describe('when all data is present', () => {
       it('include all data defined on schema', () => {
         const location = new Location({
           longitude: 123,
@@ -30,7 +29,7 @@ describe('serialization', () => {
           location,
         });
 
-        expect(user.toJSON()).to.eql({
+        expect(user.toJSON()).toEqual({
           name: 'Something',
           location: {
             longitude: 123,
@@ -40,7 +39,7 @@ describe('serialization', () => {
       });
     });
 
-    context('when nested structure is missing', () => {
+    describe('when nested structure is missing', () => {
       it('does not set a key for missing structure', () => {
         const user = new User({
           name: 'Some name',
@@ -48,15 +47,13 @@ describe('serialization', () => {
 
         const serializedUser = user.toJSON();
 
-        expect(serializedUser).to.eql({
+        expect(serializedUser).toEqual({
           name: 'Some name',
         });
-
-        expect(serializedUser).to.have.all.keys(['name']);
       });
     });
 
-    context('when some attribute on nested structure is missing', () => {
+    describe('when some attribute on nested structure is missing', () => {
       it('does not set a key for missing nested attribute', () => {
         const location = new Location({
           longitude: 123,
@@ -69,14 +66,12 @@ describe('serialization', () => {
 
         const serializedUser = user.toJSON();
 
-        expect(serializedUser).to.eql({
+        expect(serializedUser).toEqual({
           name: 'Name',
           location: {
             longitude: 123,
           },
         });
-
-        expect(serializedUser.location).to.have.all.keys(['longitude']);
       });
     });
   });
@@ -90,7 +85,7 @@ describe('serialization', () => {
       CircularBook = require('../../fixtures/CircularBook');
     });
 
-    context('when all data is present', () => {
+    describe('when all data is present', () => {
       it('include all data defined on schema', () => {
         const user = new CircularUser({
           name: 'Something',
@@ -107,7 +102,7 @@ describe('serialization', () => {
           favoriteBook: new CircularBook({ name: 'The Book' }),
         });
 
-        expect(user.toJSON()).to.eql({
+        expect(user.toJSON()).toEqual({
           name: 'Something',
           friends: [
             {
@@ -124,26 +119,26 @@ describe('serialization', () => {
       });
     });
 
-    context('when nested structure is missing', () => {
+    describe('when nested structure is missing', () => {
       it('does not set a key for missing structure', () => {
         const user = new CircularUser({
           name: 'Something',
         });
 
-        expect(user.toJSON()).to.eql({
+        expect(user.toJSON()).toEqual({
           name: 'Something',
         });
       });
     });
 
-    context('when some attribute on nested structure is missing', () => {
+    describe('when some attribute on nested structure is missing', () => {
       it('does not set a key for missing nested attribute', () => {
         const user = new CircularUser({
           name: 'Something',
           favoriteBook: new CircularBook({}),
         });
 
-        expect(user.toJSON()).to.eql({
+        expect(user.toJSON()).toEqual({
           name: 'Something',
           favoriteBook: {},
         });

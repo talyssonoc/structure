@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
@@ -21,7 +20,7 @@ describe('type coercion', () => {
       })(class User {});
     });
 
-    context('when raw value is an instance of class', () => {
+    describe('when raw value is an instance of class', () => {
       let location, user;
 
       beforeEach(() => {
@@ -30,11 +29,11 @@ describe('type coercion', () => {
       });
 
       it('does not coerce', () => {
-        expect(user.location).to.equal(location);
+        expect(user.location).toBe(location);
       });
     });
 
-    context('when attributes is already in correct type', () => {
+    describe('when attributes is already in correct type', () => {
       let user;
 
       beforeEach(() => {
@@ -44,13 +43,13 @@ describe('type coercion', () => {
       });
 
       it('does not coerce', () => {
-        expect(user.location).to.be.instanceOf(Location);
-        expect(user.location.x).to.equal(1);
-        expect(user.location.y).to.equal(2);
+        expect(user.location).toBeInstanceOf(Location);
+        expect(user.location.x).toBe(1);
+        expect(user.location.y).toBe(2);
       });
     });
 
-    context('when attributes in a different type', () => {
+    describe('when attributes in a different type', () => {
       let user;
 
       beforeEach(() => {
@@ -60,38 +59,38 @@ describe('type coercion', () => {
       });
 
       it('coerces to correct type', () => {
-        expect(user.location).to.be.instanceOf(Location);
-        expect(user.location.x).to.equal(1);
-        expect(user.location.y).to.equal(2);
+        expect(user.location).toBeInstanceOf(Location);
+        expect(user.location.x).toBe(1);
+        expect(user.location.y).toBe(2);
       });
     });
 
-    context('when value is undefined', () => {
+    describe('when value is undefined', () => {
       let user;
 
       beforeEach(() => (user = new User({ location: undefined })));
 
       it('does not coerce', () => {
-        expect(user.location).to.be.undefined;
+        expect(user.location).toBeUndefined();
       });
     });
 
-    context('when value is null', () => {
+    describe('when value is null', () => {
       let user;
 
-      context('and attribute is nullable', () => {
+      describe('and attribute is nullable', () => {
         beforeEach(() => (user = new User({ destination: null })));
 
         it('assigns null', () => {
-          expect(user.destination).to.be.null;
+          expect(user.destination).toBeNull();
         });
       });
 
-      context('and attribute is not nullable', () => {
+      describe('and attribute is not nullable', () => {
         beforeEach(() => (user = new User({ location: null })));
 
         it('assigns undefined', () => {
-          expect(user.location).to.be.undefined;
+          expect(user.location).toBeUndefined();
         });
       });
     });
@@ -106,7 +105,7 @@ describe('type coercion', () => {
       CircularBook = require('../../fixtures/CircularBook');
     });
 
-    context('when there are not allowed nullable attributes', () => {
+    describe('when there are not allowed nullable attributes', () => {
       let userOne, userTwo;
 
       beforeEach(() => {
@@ -128,14 +127,14 @@ describe('type coercion', () => {
       });
 
       it('creates instance properly', () => {
-        expect(userOne).to.be.instanceOf(CircularUser);
-        expect(userOne.favoriteBook).to.be.instanceOf(CircularBook);
-        expect(userOne.favoriteBook.owner).to.be.instanceOf(CircularUser);
-        expect(userOne.nextBook).to.be.undefined;
+        expect(userOne).toBeInstanceOf(CircularUser);
+        expect(userOne.favoriteBook).toBeInstanceOf(CircularBook);
+        expect(userOne.favoriteBook.owner).toBeInstanceOf(CircularUser);
+        expect(userOne.nextBook).toBeUndefined();
 
-        expect(userTwo).to.be.instanceOf(CircularUser);
-        expect(userTwo.friends[0]).to.be.instanceOf(CircularUser);
-        expect(userTwo.nextBook).to.be.undefined;
+        expect(userTwo).toBeInstanceOf(CircularUser);
+        expect(userTwo.friends[0]).toBeInstanceOf(CircularUser);
+        expect(userTwo.nextBook).toBeUndefined();
       });
 
       it('coerces when updating the value', () => {
@@ -151,14 +150,14 @@ describe('type coercion', () => {
           owner: { name: 'New name' },
         };
 
-        expect(user.favoriteBook).to.be.instanceOf(CircularBook);
-        expect(user.favoriteBook.name).to.equal('The World of Ice & Fire');
-        expect(user.favoriteBook.owner).to.be.instanceOf(CircularUser);
-        expect(user.favoriteBook.owner.name).to.equal('New name');
+        expect(user.favoriteBook).toBeInstanceOf(CircularBook);
+        expect(user.favoriteBook.name).toBe('The World of Ice & Fire');
+        expect(user.favoriteBook.owner).toBeInstanceOf(CircularUser);
+        expect(user.favoriteBook.owner.name).toBe('New name');
       });
     });
 
-    context('when there are allowed nullable attributes', () => {
+    describe('when there are allowed nullable attributes', () => {
       let userOne, userTwo;
 
       beforeEach(() => {
@@ -167,11 +166,11 @@ describe('type coercion', () => {
       });
 
       it('creates instance properly', () => {
-        expect(userOne).to.be.instanceOf(CircularUser);
-        expect(userOne.favoriteBook).to.be.null;
+        expect(userOne).toBeInstanceOf(CircularUser);
+        expect(userOne.favoriteBook).toBeNull();
 
-        expect(userTwo).to.be.instanceOf(CircularUser);
-        expect(userTwo.favoriteBook).to.be.null;
+        expect(userTwo).toBeInstanceOf(CircularUser);
+        expect(userTwo.favoriteBook).toBeNull();
       });
     });
   });

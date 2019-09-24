@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('instantiating a structure', () => {
@@ -50,13 +49,13 @@ describe('instantiating a structure', () => {
   it('has access to instance methods', () => {
     const user = new User();
 
-    expect(user.userMethod()).to.equal('I am a user');
+    expect(user.userMethod()).toBe('I am a user');
   });
 
   it('has access to instance attributes created on constructor', () => {
     const user = new User();
 
-    expect(user.userInstanceStuff).to.equal('Stuff value');
+    expect(user.userInstanceStuff).toBe('Stuff value');
   });
 
   it('has attributes passed to constructor assigned to the object', () => {
@@ -64,7 +63,7 @@ describe('instantiating a structure', () => {
       password: 'My password',
     });
 
-    expect(user.password).to.equal('My password');
+    expect(user.password).toBe('My password');
   });
 
   it('does not mutate the attributes object passed to the constructor', () => {
@@ -72,7 +71,7 @@ describe('instantiating a structure', () => {
 
     new User(attributesObject);
 
-    expect(attributesObject).to.be.empty;
+    expect(Object.keys(attributesObject)).toHaveLength(0);
   });
 
   it('ignores invalid attributes passed to constructor', () => {
@@ -80,7 +79,7 @@ describe('instantiating a structure', () => {
       invalid: 'I will be ignored',
     });
 
-    expect(user.invalid).to.be.undefined;
+    expect(user.invalid).toBeUndefined();
   });
 
   it('reflects instance attributes to #attributes', () => {
@@ -88,50 +87,50 @@ describe('instantiating a structure', () => {
       password: 'The password',
     });
 
-    expect(user.password).to.equal('The password');
-    expect(user.attributes.password).to.equal('The password');
+    expect(user.password).toBe('The password');
+    expect(user.attributes.password).toBe('The password');
   });
 
   describe('attributes initialization', () => {
     describe('default value', () => {
-      context('when attribute default value is a static value', () => {
+      describe('when attribute default value is a static value', () => {
         it('defaults to the static value', () => {
           const user = new User();
 
-          expect(user.name).to.equal('Name');
+          expect(user.name).toBe('Name');
         });
       });
 
-      context('when attribute default value is a function', () => {
+      describe('when attribute default value is a function', () => {
         it('calls the function using the instance of the object as parameter and perform coercion', () => {
           const user = new User();
 
-          expect(user.uuid).to.equal('10');
+          expect(user.uuid).toBe('10');
         });
       });
 
-      context('when attribute dynamic default uses a static defaultable attribute', () => {
-        context('when static defaultable attribute uses default value', () => {
+      describe('when attribute dynamic default uses a static defaultable attribute', () => {
+        describe('when static defaultable attribute uses default value', () => {
           it('allows to access the value of that attribute', () => {
             const user = new User();
 
-            expect(user.nickname).to.equal('Name');
+            expect(user.nickname).toBe('Name');
           });
         });
 
-        context('when static defaultable attribute has a value passed to it', () => {
+        describe('when static defaultable attribute has a value passed to it', () => {
           it('allows to access the value of that attribute', () => {
             const user = new User({ name: 'This is my name' });
 
-            expect(user.nickname).to.equal('This is my name');
+            expect(user.nickname).toBe('This is my name');
           });
         });
 
-        context('when dynamic default uses a method that uses an attribute with default', () => {
+        describe('when dynamic default uses a method that uses an attribute with default', () => {
           it('generates the default value properly', () => {
             const user = new User();
 
-            expect(user.attrUsingMethodUsingAttr).to.equal('Method => Name');
+            expect(user.attrUsingMethodUsingAttr).toBe('Method => Name');
           });
         });
       });
@@ -139,14 +138,14 @@ describe('instantiating a structure', () => {
       it('overwrites default value with passed value', () => {
         const user = new User({ name: 'Not the default' });
 
-        expect(user.name).to.equal('Not the default');
+        expect(user.name).toBe('Not the default');
       });
     });
 
     describe('instantiating a structure with buildStrict', () => {
-      context('when object is invalid', () => {
-        context('when using default error class', () => {
-          it('throws a default error', () => {
+      describe('when object is invalid', () => {
+        describe('when using default error class', () => {
+          it('throws a default error', (done) => {
             let errorDetails = [
               {
                 message: '"password" is required',
@@ -154,16 +153,16 @@ describe('instantiating a structure', () => {
               },
             ];
 
-            expect(() => {
+            try {
               User.buildStrict();
-            })
-              .to.throw(Error, 'Invalid Attributes')
-              .with.property('details')
-              .that.deep.equals(errorDetails);
+            } catch (error) {
+              expect(error).toHaveProperty('details', errorDetails);
+              done();
+            }
           });
         });
 
-        context('when using custom error class', () => {
+        describe('when using custom error class', () => {
           let UserWithCustomError;
           let InvalidUser;
 
@@ -193,18 +192,18 @@ describe('instantiating a structure', () => {
               UserWithCustomError.buildStrict({
                 name: 'JJ',
               });
-            }).to.throw(InvalidUser, 'There is something wrong with this user');
+            }).toThrowError('There is something wrong with this user');
           });
         });
       });
 
-      context('when object is valid', () => {
+      describe('when object is valid', () => {
         it('return an intance', () => {
           const user = User.buildStrict({
             password: 'My password',
           });
 
-          expect(user.password).to.equal('My password');
+          expect(user.password).toBe('My password');
         });
       });
     });
@@ -235,16 +234,16 @@ describe('instantiating a structure with dynamic attribute types', () => {
       friends: [userOne],
     });
 
-    expect(userOne).to.be.instanceOf(CircularUser);
-    expect(userOne.favoriteBook).to.be.instanceOf(CircularBook);
-    expect(userOne.favoriteBook.owner).to.be.instanceOf(CircularUser);
-    expect(userTwo).to.be.instanceOf(CircularUser);
-    expect(userTwo.friends[0]).to.be.instanceOf(CircularUser);
+    expect(userOne).toBeInstanceOf(CircularUser);
+    expect(userOne.favoriteBook).toBeInstanceOf(CircularBook);
+    expect(userOne.favoriteBook.owner).toBeInstanceOf(CircularUser);
+    expect(userTwo).toBeInstanceOf(CircularUser);
+    expect(userTwo.friends[0]).toBeInstanceOf(CircularUser);
   });
 
   describe('with buildStrict', () => {
-    context('when object is invalid', () => {
-      it('throw an error', () => {
+    describe('when object is invalid', () => {
+      it('throw an error', (done) => {
         let errorDetails = [
           {
             message: '"pages" must be a number',
@@ -252,7 +251,7 @@ describe('instantiating a structure with dynamic attribute types', () => {
           },
         ];
 
-        expect(() => {
+        try {
           CircularUser.buildStrict({
             name: 'Circular user one',
             friends: [],
@@ -261,10 +260,10 @@ describe('instantiating a structure with dynamic attribute types', () => {
               pages: 'twenty',
             }),
           });
-        })
-          .to.throw(Error, 'Invalid Attributes')
-          .with.property('details')
-          .that.deep.equals(errorDetails);
+        } catch (error) {
+          expect(error).toHaveProperty('details', errorDetails);
+          done();
+        }
       });
     });
   });
@@ -286,7 +285,7 @@ describe('updating an instance', () => {
 
     user.name = 'New name';
 
-    expect(user.name).to.equal('New name');
+    expect(user.name).toBe('New name');
   });
 
   it('reflects new value assigned to attribute on #attributes', () => {
@@ -296,7 +295,7 @@ describe('updating an instance', () => {
 
     user.name = 'New name';
 
-    expect(user.attributes.name).to.equal('New name');
+    expect(user.attributes.name).toBe('New name');
   });
 
   it('reflects new value assigned to #attributes on instance attribute', () => {
@@ -308,13 +307,13 @@ describe('updating an instance', () => {
       name: 'New name',
     };
 
-    expect(user.name).to.equal('New name');
+    expect(user.name).toBe('New name');
   });
 
   it('does not throw if no attributes are passed when instantiating', () => {
     expect(() => {
       new User();
-    }).to.not.throw(Error);
+    }).not.toThrowError(Error);
   });
 
   it('throws if value assigned to #attributes is not an object', () => {
@@ -324,7 +323,7 @@ describe('updating an instance', () => {
 
     expect(() => {
       user.attributes = null;
-    }).to.throw(TypeError, /^#attributes can't be set to a non-object\.$/);
+    }).toThrowError(/^#attributes can't be set to a non-object\.$/);
   });
 });
 
@@ -350,9 +349,9 @@ describe('updating a structure with dynamic attribute types', () => {
       owner: user,
     });
 
-    expect(user.favoriteBook).to.be.instanceOf(CircularBook);
-    expect(user.favoriteBook.owner).to.be.instanceOf(CircularUser);
-    expect(user.favoriteBook.owner).to.equal(user);
+    expect(user.favoriteBook).toBeInstanceOf(CircularBook);
+    expect(user.favoriteBook.owner).toBeInstanceOf(CircularUser);
+    expect(user.favoriteBook.owner).toBe(user);
   });
 });
 
@@ -378,8 +377,8 @@ describe('cloning an instance', () => {
     })(class User {});
   });
 
-  context('when nothing is overwritten', () => {
-    context('when not passing overwrite object', () => {
+  describe('when nothing is overwritten', () => {
+    describe('when not passing overwrite object', () => {
       it('makes a shallow clone', () => {
         const user = new User({
           name: 'Me',
@@ -390,12 +389,12 @@ describe('cloning an instance', () => {
 
         const userClone = user.clone();
 
-        expect(userClone.name).to.equal('Me');
-        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+        expect(userClone.name).toBe('Me');
+        expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
     });
 
-    context('when passing overwrite object', () => {
+    describe('when passing overwrite object', () => {
       it('makes a shallow clone', () => {
         const user = new User({
           name: 'Me',
@@ -406,14 +405,14 @@ describe('cloning an instance', () => {
 
         const userClone = user.clone({});
 
-        expect(userClone.name).to.equal('Me');
-        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+        expect(userClone.name).toBe('Me');
+        expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
     });
   });
 
-  context('when overwritting attributes', () => {
-    context('when overwritting a primitive type attribute', () => {
+  describe('when overwritting attributes', () => {
+    describe('when overwritting a primitive type attribute', () => {
       it('overwrites it, leaving other attributes untouched', () => {
         const user = new User({
           name: 'Me',
@@ -426,11 +425,11 @@ describe('cloning an instance', () => {
           name: 'Myself',
         });
 
-        expect(userClone.name).to.equal('Myself');
-        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+        expect(userClone.name).toBe('Myself');
+        expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
 
-      context('when overwritten attribute needs coercion', () => {
+      describe('when overwritten attribute needs coercion', () => {
         it('coerces attribute', () => {
           const user = new User({
             name: 'Me',
@@ -444,13 +443,13 @@ describe('cloning an instance', () => {
             age: '123',
           });
 
-          expect(userClone.age).to.equal(123);
+          expect(userClone.age).toBe(123);
         });
       });
     });
 
-    context('when overwritting a nested structure', () => {
-      context('when passing a new instance of the nested structure', () => {
+    describe('when overwritting a nested structure', () => {
+      describe('when passing a new instance of the nested structure', () => {
         it('overwrites it, leaving other attributes untouched', () => {
           const user = new User({
             name: 'Me',
@@ -463,13 +462,13 @@ describe('cloning an instance', () => {
             favoriteBook: new Book({ name: 'The Lord of the Rings' }),
           });
 
-          expect(userClone.name).to.equal('Me');
-          expect(userClone.favoriteBook).not.to.equal(user.favoriteBook);
-          expect(userClone.favoriteBook.name).to.equal('The Lord of the Rings');
+          expect(userClone.name).toBe('Me');
+          expect(userClone.favoriteBook).not.toBe(user.favoriteBook);
+          expect(userClone.favoriteBook.name).toBe('The Lord of the Rings');
         });
       });
 
-      context('when passing the attributes of the nested structure', () => {
+      describe('when passing the attributes of the nested structure', () => {
         it('coerces attribute to a new nested structure, overwrites it, and leave other attributes untouched', () => {
           const user = new User({
             name: 'Me',
@@ -482,16 +481,16 @@ describe('cloning an instance', () => {
             favoriteBook: { name: 'The Lord of the Rings' },
           });
 
-          expect(userClone.name).to.equal('Me');
-          expect(userClone.favoriteBook).not.to.equal(user.favoriteBook);
-          expect(userClone.favoriteBook.name).to.equal('The Lord of the Rings');
+          expect(userClone.name).toBe('Me');
+          expect(userClone.favoriteBook).not.toBe(user.favoriteBook);
+          expect(userClone.favoriteBook.name).toBe('The Lord of the Rings');
         });
       });
     });
   });
 
-  context('strict mode', () => {
-    context('when overwritten attributes are valid', () => {
+  describe('strict mode', () => {
+    describe('when overwritten attributes are valid', () => {
       it('clones normally', () => {
         const user = new User({
           name: 'Me',
@@ -502,14 +501,14 @@ describe('cloning an instance', () => {
 
         const userClone = user.clone({ name: 'Me' }, { strict: true });
 
-        expect(userClone.name).to.equal('Me');
-        expect(userClone.favoriteBook).to.equal(user.favoriteBook);
+        expect(userClone.name).toBe('Me');
+        expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
     });
 
-    context('when overwritten attributes are invalid', () => {
-      context('when primitive attribute is invalid', () => {
-        it('throws an error', () => {
+    describe('when overwritten attributes are invalid', () => {
+      describe('when primitive attribute is invalid', () => {
+        it('throws an error', (done) => {
           const user = new User({
             name: 'Me',
             favoriteBook: {
@@ -524,18 +523,18 @@ describe('cloning an instance', () => {
             },
           ];
 
-          expect(() => {
+          try {
             user.clone({ name: null }, { strict: true });
-          })
-            .to.throw(Error, 'Invalid Attributes')
-            .with.property('details')
-            .that.deep.equals(errorDetails);
+          } catch (error) {
+            expect(error).toHaveProperty('details', errorDetails);
+            done();
+          }
         });
       });
 
-      context('when nested attribute is invalid', () => {
-        context('when passing a the attributes of the nested attribute', () => {
-          it('throws an error', () => {
+      describe('when nested attribute is invalid', () => {
+        describe('when passing a the attributes of the nested attribute', () => {
+          it('throws an error', (done) => {
             const user = new User({
               name: 'Me',
               favoriteBook: {
@@ -550,12 +549,12 @@ describe('cloning an instance', () => {
               },
             ];
 
-            expect(() => {
+            try {
               user.clone({ favoriteBook: {} }, { strict: true });
-            })
-              .to.throw(Error, 'Invalid Attributes')
-              .with.property('details')
-              .that.deep.equals(errorDetails);
+            } catch (error) {
+              expect(error).toHaveProperty('details', errorDetails);
+              done();
+            }
           });
         });
       });

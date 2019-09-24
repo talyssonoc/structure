@@ -18,7 +18,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User({
             isAdmin: true,
@@ -28,7 +28,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
             isAdmin: undefined,
@@ -50,7 +50,7 @@ describe('validation', () => {
     describe('required', () => {
       let User;
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         beforeEach(() => {
           User = attributes({
             isAdmin: {
@@ -69,7 +69,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         beforeEach(() => {
           User = attributes({
             isAdmin: {
@@ -88,8 +88,8 @@ describe('validation', () => {
         });
       });
 
-      context('when value is null', () => {
-        context('and attribute is nullable', () => {
+      describe('when value is null', () => {
+        describe('and attribute is nullable', () => {
           beforeEach(() => {
             User = attributes({
               isAdmin: {
@@ -107,7 +107,7 @@ describe('validation', () => {
           });
         });
 
-        context('and attribute is not nullable', () => {
+        describe('and attribute is not nullable', () => {
           beforeEach(() => {
             User = attributes({
               isAdmin: {
@@ -139,7 +139,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User();
 
@@ -160,7 +160,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is equal', () => {
+      describe('when value is equal', () => {
         it('is valid', () => {
           const user = new User({
             isAdmin: true,
@@ -170,7 +170,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is different', () => {
+      describe('when value is different', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             isAdmin: false,

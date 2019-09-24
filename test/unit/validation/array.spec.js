@@ -15,7 +15,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User({
             books: [],
@@ -25,7 +25,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
             books: undefined,
@@ -49,7 +49,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User({
             books: [],
@@ -59,7 +59,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: undefined,
@@ -83,7 +83,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User();
 
@@ -91,7 +91,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
             books: undefined,
@@ -103,7 +103,7 @@ describe('validation', () => {
     });
 
     describe('sparse array', () => {
-      context('when array can not be sparse', () => {
+      describe('when array can not be sparse', () => {
         let User;
 
         beforeEach(() => {
@@ -116,7 +116,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when all items are defined', () => {
+        describe('when all items are defined', () => {
           it('is valid', () => {
             const user = new User({
               books: ['Poetic Edda', 'Prose Edda'],
@@ -126,7 +126,7 @@ describe('validation', () => {
           });
         });
 
-        context('when some item is undefined', () => {
+        describe('when some item is undefined', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               books: ['The Lusiads', undefined],
@@ -137,7 +137,7 @@ describe('validation', () => {
         });
       });
 
-      context('when array can be sparse', () => {
+      describe('when array can be sparse', () => {
         let User;
 
         beforeEach(() => {
@@ -150,7 +150,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when all items are defined', () => {
+        describe('when all items are defined', () => {
           it('is valid', () => {
             const user = new User({
               books: ['Poetic Edda', 'Prose Edda'],
@@ -160,7 +160,7 @@ describe('validation', () => {
           });
         });
 
-        context('when some item is undefined', () => {
+        describe('when some item is undefined', () => {
           it('is valid', () => {
             const user = new User({
               books: ['The Lusiads', undefined],
@@ -193,7 +193,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when nested value is present', () => {
+      describe('when nested value is present', () => {
         it('is valid', () => {
           const user = new User({
             books: [
@@ -206,7 +206,7 @@ describe('validation', () => {
         });
       });
 
-      context('when nested value is not present', () => {
+      describe('when nested value is not present', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: [new Book({ name: 'The Hobbit' }), new Book({ name: undefined })],
@@ -224,7 +224,7 @@ describe('validation', () => {
         CircularUser = require('../../fixtures/CircularUser');
       });
 
-      context('when nested value is present', () => {
+      describe('when nested value is present', () => {
         it('is valid', () => {
           const user = new CircularUser({
             friends: [
@@ -239,7 +239,7 @@ describe('validation', () => {
         });
       });
 
-      context('when nested value is not present', () => {
+      describe('when nested value is not present', () => {
         it('is not valid and has errors set', () => {
           const user = new CircularUser({
             friends: [
@@ -269,7 +269,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when array has minimum length', () => {
+      describe('when array has minimum length', () => {
         it('is valid', () => {
           const user = new User({
             books: ['The Name of the Wind', "The Wise Man's Fear"],
@@ -279,7 +279,7 @@ describe('validation', () => {
         });
       });
 
-      context('when array has minimum length', () => {
+      describe('when array has minimum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: ['1984'],
@@ -303,7 +303,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when array has less than maximum length', () => {
+      describe('when array has less than maximum length', () => {
         it('is valid', () => {
           const user = new User({
             books: ['The Name of the Wind'],
@@ -313,7 +313,7 @@ describe('validation', () => {
         });
       });
 
-      context('when array has more than maximum length', () => {
+      describe('when array has more than maximum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: ['1984', 'The Game of Thrones', 'Dragons of Ether'],
@@ -337,7 +337,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when array has exactly the expected length', () => {
+      describe('when array has exactly the expected length', () => {
         it('is valid', () => {
           const user = new User({
             books: ['The Gunslinger', 'The Drawing of the Three'],
@@ -347,7 +347,7 @@ describe('validation', () => {
         });
       });
 
-      context('when array has less than exact length', () => {
+      describe('when array has less than exact length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: ['The Wastelands'],
@@ -357,7 +357,7 @@ describe('validation', () => {
         });
       });
 
-      context('when array has more than exact length', () => {
+      describe('when array has more than exact length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: ['Wizard and Glass', 'The Wind Through the Keyhole', 'Wolves of the Calla'],
@@ -379,7 +379,7 @@ describe('validation', () => {
           },
         })(class User {});
       });
-      context('when array is unique', () => {
+      describe('when array is unique', () => {
         it('is valid', () => {
           const user = new User({
             books: ['The Gunslinger', 'The Drawing of the Three'],
@@ -388,7 +388,7 @@ describe('validation', () => {
           assertValid(user);
         });
       });
-      context('when array is not unique', () => {
+      describe('when array is not unique', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: ['The Wastelands', 'The Wastelands'],

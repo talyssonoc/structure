@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
@@ -20,8 +19,8 @@ describe('type coercion', () => {
 
       const user = new User({ birth });
 
-      expect(user.birth).to.not.equal(new Date(birth.toString()));
-      expect(user.birth).to.eql(birth);
+      expect(user.birth).not.toEqual(new Date(birth.toString()));
+      expect(user.birth).toBe(birth);
     });
 
     it('does not coerces undefined', () => {
@@ -29,7 +28,7 @@ describe('type coercion', () => {
         birth: undefined,
       });
 
-      expect(user.birth).to.be.undefined;
+      expect(user.birth).toBeUndefined();
     });
 
     it('does not coerces null when nullable', () => {
@@ -37,7 +36,7 @@ describe('type coercion', () => {
         death: null,
       });
 
-      expect(user.death).to.be.null;
+      expect(user.death).toBeNull();
     });
 
     it('coerces string to date', () => {
@@ -45,7 +44,7 @@ describe('type coercion', () => {
         birth: 'Feb 3, 1892',
       });
 
-      expect(user.birth).to.eql(new Date('Feb 3, 1892'));
+      expect(user.birth).toEqual(new Date('Feb 3, 1892'));
     });
 
     it('coerces null to first date on Unix time', () => {
@@ -53,7 +52,7 @@ describe('type coercion', () => {
         birth: null,
       });
 
-      expect(user.birth).to.eql(new Date('1970-01-01T00:00:00Z'));
+      expect(user.birth).toEqual(new Date('1970-01-01T00:00:00Z'));
     });
   });
 });

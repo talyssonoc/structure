@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
@@ -20,9 +19,9 @@ describe('type coercion', () => {
 
       const user = new User({ age });
 
-      expect(user.age).to.not.equal(42);
-      expect(user.age).to.not.equal(new Number(42));
-      expect(user.age).to.eql(age);
+      expect(user.age).not.toBe(42);
+      expect(user.age).not.toBe(new Number(42));
+      expect(user.age).toBe(age);
     });
 
     it('does not coerces undefined', () => {
@@ -30,7 +29,7 @@ describe('type coercion', () => {
         age: undefined,
       });
 
-      expect(user.age).to.be.undefined;
+      expect(user.age).toBeUndefined();
     });
 
     it('does not coerce null when nullable', () => {
@@ -38,7 +37,7 @@ describe('type coercion', () => {
         earnings: null,
       });
 
-      expect(user.earnings).to.be.null;
+      expect(user.earnings).toBeNull();
     });
 
     it('coerces string to number', () => {
@@ -46,7 +45,7 @@ describe('type coercion', () => {
         age: '10',
       });
 
-      expect(user.age).to.equal(10);
+      expect(user.age).toBe(10);
     });
 
     it('coerces null to zero', () => {
@@ -54,7 +53,7 @@ describe('type coercion', () => {
         age: null,
       });
 
-      expect(user.age).to.equal(0);
+      expect(user.age).toBe(0);
     });
 
     it('coerces true to one', () => {
@@ -62,7 +61,7 @@ describe('type coercion', () => {
         age: true,
       });
 
-      expect(user.age).to.equal(1);
+      expect(user.age).toBe(1);
     });
 
     it('coerces false to zero', () => {
@@ -70,7 +69,7 @@ describe('type coercion', () => {
         age: false,
       });
 
-      expect(user.age).to.equal(0);
+      expect(user.age).toBe(0);
     });
 
     it('coerces date to number', () => {
@@ -80,11 +79,11 @@ describe('type coercion', () => {
         age: date,
       });
 
-      expect(user.age).to.equal(date.valueOf());
+      expect(user.age).toBe(date.valueOf());
     });
 
     describe('coercing an object to number', () => {
-      context('when the object does not implement #valueOf()', () => {
+      describe('when the object does not implement #valueOf()', () => {
         it('coerces object to NaN', () => {
           const objectWithoutValueOf = { data: 42 };
 
@@ -92,11 +91,11 @@ describe('type coercion', () => {
             age: objectWithoutValueOf,
           });
 
-          expect(Number.isNaN(user.age)).to.be.true;
+          expect(Number.isNaN(user.age)).toBe(true);
         });
       });
 
-      context('when the object implements #valueOf()', () => {
+      describe('when the object implements #valueOf()', () => {
         it('coerces object to value returned by #valueOf()', () => {
           const objectWithValueOf = {
             data: '42',
@@ -109,7 +108,7 @@ describe('type coercion', () => {
             age: objectWithValueOf,
           });
 
-          expect(user.age).to.equal(42);
+          expect(user.age).toBe(42);
         });
       });
     });

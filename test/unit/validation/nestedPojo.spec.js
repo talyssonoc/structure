@@ -21,7 +21,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User({
             lastLocation: new Location(),
@@ -31,7 +31,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
             lastLocation: undefined,
@@ -56,7 +56,7 @@ describe('validation', () => {
 
       beforeEach(() => (Location = class Location {}));
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         beforeEach(() => {
           User = attributes({
             lastLocation: {
@@ -75,7 +75,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         beforeEach(() => {
           User = attributes({
             lastLocation: {
@@ -94,8 +94,8 @@ describe('validation', () => {
         });
       });
 
-      context('when value is null', () => {
-        context('and attribute is nullable', () => {
+      describe('when value is null', () => {
+        describe('and attribute is nullable', () => {
           beforeEach(() => {
             User = attributes({
               lastLocation: {
@@ -113,7 +113,7 @@ describe('validation', () => {
           });
         });
 
-        context('and attribute is not nullable', () => {
+        describe('and attribute is not nullable', () => {
           beforeEach(() => {
             User = attributes({
               lastLocation: {
@@ -148,7 +148,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User();
 

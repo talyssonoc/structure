@@ -1,8 +1,7 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('JSON.stringify compatibility', () => {
-  context('when the structure is serialized with JSON.stringify', () => {
+  describe('when the structure is serialized with JSON.stringify', () => {
     it('calls .toJSON() method', () => {
       const Location = attributes({
         x: Number,
@@ -22,7 +21,7 @@ describe('JSON.stringify compatibility', () => {
         }),
       });
 
-      expect(JSON.parse(JSON.stringify(user))).to.eql(user.toJSON());
+      expect(JSON.parse(JSON.stringify(user))).toEqual(user.toJSON());
     });
   });
 });

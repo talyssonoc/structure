@@ -18,7 +18,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User({
             name: 'Some name',
@@ -28,7 +28,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
             name: undefined,
@@ -50,7 +50,7 @@ describe('validation', () => {
     describe('required', () => {
       let User;
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         beforeEach(() => {
           User = attributes({
             name: {
@@ -69,7 +69,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         beforeEach(() => {
           User = attributes({
             name: {
@@ -88,8 +88,8 @@ describe('validation', () => {
         });
       });
 
-      context('when value is null', () => {
-        context('and attribute is nullable', () => {
+      describe('when value is null', () => {
+        describe('and attribute is nullable', () => {
           beforeEach(() => {
             User = attributes({
               name: {
@@ -107,7 +107,7 @@ describe('validation', () => {
           });
         });
 
-        context('and attribute is not nullable', () => {
+        describe('and attribute is not nullable', () => {
           beforeEach(() => {
             User = attributes({
               name: {
@@ -139,7 +139,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
             name: undefined,
@@ -162,7 +162,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is equal', () => {
+      describe('when value is equal', () => {
         it('is valid', () => {
           const user = new User({
             name: 'Something',
@@ -172,7 +172,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is different', () => {
+      describe('when value is different', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Another thing',
@@ -196,7 +196,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is not empty', () => {
+        describe('when value is not empty', () => {
           it('is valid', () => {
             const user = new User({
               name: 'Some name',
@@ -206,7 +206,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is empty', () => {
+        describe('when value is empty', () => {
           it('is valid', () => {
             const user = new User({
               name: '',
@@ -229,7 +229,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is not empty', () => {
+        describe('when value is not empty', () => {
           it('is valid', () => {
             const user = new User({
               name: 'Some name',
@@ -239,7 +239,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is empty', () => {
+        describe('when value is empty', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               name: '',
@@ -263,7 +263,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value has minimum length', () => {
+      describe('when value has minimum length', () => {
         it('is valid', () => {
           const user = new User({
             name: 'Some name',
@@ -273,7 +273,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is shorter than minimum length', () => {
+      describe('when value is shorter than minimum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Hi',
@@ -296,7 +296,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value has maximum length', () => {
+      describe('when value has maximum length', () => {
         it('is valid', () => {
           const user = new User({
             name: 'Some',
@@ -306,7 +306,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is longer than maximum length', () => {
+      describe('when value is longer than maximum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Some name',
@@ -329,7 +329,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value has exact length', () => {
+      describe('when value has exact length', () => {
         it('is valid', () => {
           const user = new User({
             name: 'Some',
@@ -339,7 +339,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is longer than exact length', () => {
+      describe('when value is longer than exact length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Some name',
@@ -349,7 +349,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is shorter than exact length', () => {
+      describe('when value is shorter than exact length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Hi',
@@ -372,7 +372,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value matches the regex', () => {
+      describe('when value matches the regex', () => {
         it('is valid', () => {
           const user = new User({
             name: 'A1',
@@ -382,7 +382,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value does not match the regex', () => {
+      describe('when value does not match the regex', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Something',
@@ -405,7 +405,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is alphanumeric', () => {
+      describe('when value is alphanumeric', () => {
         it('is valid', () => {
           const user = new User({
             name: 'A1B2',
@@ -415,7 +415,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not alphanumeric', () => {
+      describe('when value is not alphanumeric', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'No alphanumeric $ string',
@@ -438,7 +438,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is lower cased', () => {
+      describe('when value is lower cased', () => {
         it('is valid', () => {
           const user = new User({
             name: 'abc',
@@ -448,7 +448,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value has some upper case character', () => {
+      describe('when value has some upper case character', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Abc',
@@ -471,7 +471,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is upper cased', () => {
+      describe('when value is upper cased', () => {
         it('is valid', () => {
           const user = new User({
             name: 'ABC',
@@ -481,7 +481,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value has some lower case character', () => {
+      describe('when value has some lower case character', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Abc',
@@ -504,7 +504,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is a valid email', () => {
+      describe('when value is a valid email', () => {
         it('is valid', () => {
           const user = new User({
             name: 'name@host.com',
@@ -514,7 +514,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is shorter than minimum length', () => {
+      describe('when value is shorter than minimum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             name: 'Not a valid email',
@@ -526,7 +526,7 @@ describe('validation', () => {
     });
 
     describe('guid', () => {
-      context('when validating as a generic guid', () => {
+      describe('when validating as a generic guid', () => {
         let User;
 
         beforeEach(() => {
@@ -538,7 +538,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is a valid guid', () => {
+        describe('when value is a valid guid', () => {
           it('is valid', () => {
             const user = new User({
               id: '759535af-3314-4ace-81b9-a519c29d0e17',
@@ -548,7 +548,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is not a valid guid', () => {
+        describe('when value is not a valid guid', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               id: 'Not a valid guid',
@@ -559,7 +559,7 @@ describe('validation', () => {
         });
       });
 
-      context('when validating a specific guid version', () => {
+      describe('when validating a specific guid version', () => {
         let User;
 
         beforeEach(() => {
@@ -573,7 +573,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is a valid guid', () => {
+        describe('when value is a valid guid', () => {
           it('is valid', () => {
             const uuidv4 = 'f35e1cf1-4ac9-4fbb-9c06-151dc8ff9107';
 
@@ -585,7 +585,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is not a valid guid', () => {
+        describe('when value is not a valid guid', () => {
           it('is not valid and has errors set', () => {
             const uuidv1 = 'c130564e-36d9-11e9-b210-d663bd873d93';
 

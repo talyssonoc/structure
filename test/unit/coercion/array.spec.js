@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
@@ -20,16 +19,16 @@ describe('type coercion', () => {
         books: undefined,
       });
 
-      expect(user.books).to.be.undefined;
+      expect(user.books).toBeUndefined();
     });
 
-    context('when raw value is already an array', () => {
+    describe('when raw value is already an array', () => {
       it('coerces items', () => {
         const user = new User({
           books: ['The Lord of The Rings', 1984, true],
         });
 
-        expect(user.books).to.eql(['The Lord of The Rings', '1984', 'true']);
+        expect(user.books).toEqual(['The Lord of The Rings', '1984', 'true']);
       });
 
       it('does not coerce items that are of the expected type', () => {
@@ -39,18 +38,18 @@ describe('type coercion', () => {
           books: [book],
         });
 
-        expect(user.books).to.eql([new String('A Game of Thrones')]);
-        expect(user.books[0]).to.equal(book);
+        expect(user.books).toEqual([new String('A Game of Thrones')]);
+        expect(user.books[0]).toBe(book);
       });
     });
 
-    context('when raw value is a string', () => {
+    describe('when raw value is a string', () => {
       it('uses each character as an item', () => {
         const user = new User({
           books: 'ABC',
         });
 
-        expect(user.books).to.eql(['A', 'B', 'C']);
+        expect(user.books).toEqual(['A', 'B', 'C']);
       });
 
       it('coerces empty string to empty array', () => {
@@ -58,7 +57,7 @@ describe('type coercion', () => {
           books: '',
         });
 
-        expect(user.books).to.eql([]);
+        expect(user.books).toEqual([]);
       });
 
       it('does nested coercing when expected item type is not String', () => {
@@ -73,21 +72,21 @@ describe('type coercion', () => {
           bookIds: '123',
         });
 
-        expect(library.bookIds).to.eql([1, 2, 3]);
+        expect(library.bookIds).toEqual([1, 2, 3]);
       });
     });
 
-    context('when raw value is an array-like', () => {
+    describe('when raw value is an array-like', () => {
       it('loops using #length property', () => {
         const user = new User({
           books: { 0: 'Stonehenge', 1: 1984, length: 2 },
         });
 
-        expect(user.books).to.eql(['Stonehenge', '1984']);
+        expect(user.books).toEqual(['Stonehenge', '1984']);
       });
     });
 
-    context('when raw value implements Symbol.iterator', () => {
+    describe('when raw value implements Symbol.iterator', () => {
       it('converts to array then uses each index', () => {
         const books = {
           *[Symbol.iterator]() {
@@ -99,21 +98,21 @@ describe('type coercion', () => {
 
         const user = new User({ books });
 
-        expect(user.books).to.eql(['0', '1', '2']);
+        expect(user.books).toEqual(['0', '1', '2']);
       });
     });
 
-    context('when raw value is a not iterable', () => {
+    describe('when raw value is a not iterable', () => {
       it('throws an error', () => {
         expect(() => {
           new User({
             books: 123,
           });
-        }).to.throw(TypeError, /^Value must be iterable or array-like\.$/);
+        }).toThrowError(/^Value must be iterable or array-like\.$/);
       });
     });
 
-    context('when raw value is a single numeric array', () => {
+    describe('when raw value is a single numeric array', () => {
       beforeEach(() => {
         Seat = attributes({
           seats: {
@@ -128,7 +127,7 @@ describe('type coercion', () => {
           seats: [1],
         });
 
-        expect(seat.seats).to.eql([1]);
+        expect(seat.seats).toEqual([1]);
       });
     });
   });
@@ -147,7 +146,7 @@ describe('type coercion', () => {
         books: ['Dragons of Ether', 'The Dark Tower'],
       });
 
-      expect(user.books).to.be.instanceOf(BooksCollection);
+      expect(user.books).toBeInstanceOf(BooksCollection);
     });
 
     it('coerces items', () => {
@@ -155,7 +154,7 @@ describe('type coercion', () => {
         books: ['The Lord of The Rings', 1984, true],
       });
 
-      expect(user.books).to.eql(['The Lord of The Rings', '1984', 'true']);
+      expect(user.books).toEqual(['The Lord of The Rings', '1984', 'true']);
     });
 
     it('does not coerce items that are of the expected type', () => {
@@ -165,8 +164,8 @@ describe('type coercion', () => {
         books: [book],
       });
 
-      expect(user.books).to.eql([new String('A Game of Thrones')]);
-      expect(user.books[0]).to.equal(book);
+      expect(user.books).toEqual([new String('A Game of Thrones')]);
+      expect(user.books[0]).toBe(book);
     });
   });
 });

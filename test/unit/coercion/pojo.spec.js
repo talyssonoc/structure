@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
@@ -24,7 +23,7 @@ describe('type coercion', () => {
 
       const user = new User({ location });
 
-      expect(user.location).to.equal(location);
+      expect(user.location).toBe(location);
     });
 
     it('instantiates class with raw value', () => {
@@ -32,9 +31,9 @@ describe('type coercion', () => {
         location: { x: 1, y: 2 },
       });
 
-      expect(user.location).to.be.instanceOf(Location);
-      expect(user.location.x).to.equal(1);
-      expect(user.location.y).to.equal(2);
+      expect(user.location).toBeInstanceOf(Location);
+      expect(user.location.x).toBe(1);
+      expect(user.location.y).toBe(2);
     });
 
     it('does not coerce undefined', () => {
@@ -42,7 +41,7 @@ describe('type coercion', () => {
         location: undefined,
       });
 
-      expect(user.location).to.be.undefined;
+      expect(user.location).toBeUndefined();
     });
   });
 });

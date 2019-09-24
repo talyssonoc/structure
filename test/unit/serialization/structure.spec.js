@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('serialization', () => {
@@ -12,21 +11,21 @@ describe('serialization', () => {
       })(class User {});
     });
 
-    context('when all data is present', () => {
+    describe('when all data is present', () => {
       it('include all data defined on schema', () => {
         const user = new User({
           name: 'Something',
           age: 42,
         });
 
-        expect(user.toJSON()).to.eql({
+        expect(user.toJSON()).toEqual({
           name: 'Something',
           age: 42,
         });
       });
     });
 
-    context('when some attribute is missing', () => {
+    describe('when some attribute is missing', () => {
       it('does not set a key for missing attribute', () => {
         const user = new User({
           name: 'Some name',
@@ -35,18 +34,16 @@ describe('serialization', () => {
 
         const serializedUser = user.toJSON();
 
-        expect(serializedUser).to.eql({
+        expect(serializedUser).toEqual({
           name: 'Some name',
         });
-
-        expect(serializedUser).to.have.all.keys(['name']);
       });
     });
 
-    context("when attribute's value is null", () => {
+    describe("when attribute's value is null", () => {
       let City;
 
-      context('and is not nullable', () => {
+      describe('and is not nullable', () => {
         beforeEach(() => {
           City = attributes({ name: String })(class City {});
         });
@@ -58,12 +55,11 @@ describe('serialization', () => {
 
           const serializedCity = city.toJSON();
 
-          expect(serializedCity).to.have.all.keys(['name']);
-          expect(serializedCity).to.eql({ name: '' });
+          expect(serializedCity).toEqual({ name: '' });
         });
       });
 
-      context('and is nullable', () => {
+      describe('and is nullable', () => {
         beforeEach(() => {
           City = attributes({
             name: {
@@ -78,12 +74,11 @@ describe('serialization', () => {
 
           const serializedCity = city.toJSON();
 
-          expect(serializedCity).to.have.all.keys(['name']);
-          expect(serializedCity).to.eql({ name: null });
+          expect(serializedCity).toEqual({ name: null });
         });
       });
 
-      context('and is a nullable relationship', () => {
+      describe('and is a nullable relationship', () => {
         let Country;
         let City;
 
@@ -103,7 +98,7 @@ describe('serialization', () => {
 
           const serializedCity = city.toJSON();
 
-          expect(serializedCity.country).to.be.null;
+          expect(serializedCity.country).toBeNull();
         });
       });
     });

@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
@@ -20,7 +19,7 @@ describe('type coercion', () => {
         isAdmin: undefined,
       });
 
-      expect(user.isAdmin).to.be.undefined;
+      expect(user.isAdmin).toBeUndefined();
     });
 
     it('does not coerces null when nullable', () => {
@@ -28,7 +27,7 @@ describe('type coercion', () => {
         hasAccepted: null,
       });
 
-      expect(user.hasAccepted).to.be.null;
+      expect(user.hasAccepted).toBeNull();
     });
 
     it('coerces string to boolean', () => {
@@ -36,7 +35,7 @@ describe('type coercion', () => {
         isAdmin: '10',
       });
 
-      expect(user.isAdmin).to.equal(true);
+      expect(user.isAdmin).toBe(true);
     });
 
     it('coerces empty string to false', () => {
@@ -44,7 +43,7 @@ describe('type coercion', () => {
         isAdmin: '',
       });
 
-      expect(user.isAdmin).to.equal(false);
+      expect(user.isAdmin).toBe(false);
     });
 
     it('coerces null to false', () => {
@@ -52,7 +51,7 @@ describe('type coercion', () => {
         isAdmin: null,
       });
 
-      expect(user.isAdmin).to.be.false;
+      expect(user.isAdmin).toBe(false);
     });
 
     it('coerces positive number to true', () => {
@@ -60,7 +59,7 @@ describe('type coercion', () => {
         isAdmin: 1,
       });
 
-      expect(user.isAdmin).to.be.true;
+      expect(user.isAdmin).toBe(true);
     });
 
     it('coerces negative number to true', () => {
@@ -68,7 +67,7 @@ describe('type coercion', () => {
         isAdmin: -1,
       });
 
-      expect(user.isAdmin).to.be.true;
+      expect(user.isAdmin).toBe(true);
     });
 
     it('coerces zero to false', () => {
@@ -76,7 +75,7 @@ describe('type coercion', () => {
         isAdmin: 0,
       });
 
-      expect(user.isAdmin).to.be.false;
+      expect(user.isAdmin).toBe(false);
     });
 
     it('coerces date to true', () => {
@@ -86,7 +85,7 @@ describe('type coercion', () => {
         isAdmin: date,
       });
 
-      expect(user.isAdmin).to.be.true;
+      expect(user.isAdmin).toBe(true);
     });
 
     it('coerces object to true', () => {
@@ -94,7 +93,7 @@ describe('type coercion', () => {
         isAdmin: {},
       });
 
-      expect(user.isAdmin).to.be.true;
+      expect(user.isAdmin).toBe(true);
     });
   });
 });

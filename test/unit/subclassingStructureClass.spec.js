@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../src');
 
 describe('subclassing a structure with a POJO class', () => {
@@ -39,8 +38,8 @@ describe('subclassing a structure with a POJO class', () => {
         name: 'The Admin',
       });
 
-      expect(admin).to.be.instanceOf(Admin);
-      expect(admin).to.be.instanceOf(User);
+      expect(admin).toBeInstanceOf(Admin);
+      expect(admin).toBeInstanceOf(User);
     });
 
     it('has access to class and superclass methods', () => {
@@ -48,8 +47,8 @@ describe('subclassing a structure with a POJO class', () => {
         name: 'Me',
       });
 
-      expect(admin.userMethod()).to.equal('I am a user');
-      expect(admin.adminMethod()).to.equal('I am an admin');
+      expect(admin.userMethod()).toBe('I am a user');
+      expect(admin.adminMethod()).toBe('I am an admin');
     });
 
     it('has access to class and superclass properties', () => {
@@ -61,9 +60,9 @@ describe('subclassing a structure with a POJO class', () => {
         'Admin Value'
       );
 
-      expect(admin.userStuff).to.equal('User Stuff');
-      expect(admin.userValue).to.equal('User Value');
-      expect(admin.adminValue).to.equal('Admin Value');
+      expect(admin.userStuff).toBe('User Stuff');
+      expect(admin.userValue).toBe('User Value');
+      expect(admin.adminValue).toBe('Admin Value');
     });
 
     it('has attributes passed to constructor assigned to the object', () => {
@@ -71,7 +70,7 @@ describe('subclassing a structure with a POJO class', () => {
         name: 'Me',
       });
 
-      expect(admin.name).to.equal('Me');
+      expect(admin.name).toBe('Me');
     });
 
     it('ignores invalid attributes passed to constructor', () => {
@@ -80,7 +79,7 @@ describe('subclassing a structure with a POJO class', () => {
         invalid: 'I will be ignored',
       });
 
-      expect(admin.invalid).to.be.undefined;
+      expect(admin.invalid).toBeUndefined();
     });
 
     it('reflects instance attributes to #attributes', () => {
@@ -88,8 +87,8 @@ describe('subclassing a structure with a POJO class', () => {
         name: 'Self',
       });
 
-      expect(admin.name).to.equal('Self');
-      expect(admin.attributes.name).to.equal('Self');
+      expect(admin.name).toBe('Self');
+      expect(admin.attributes.name).toBe('Self');
     });
   });
 
@@ -101,7 +100,7 @@ describe('subclassing a structure with a POJO class', () => {
 
       admin.name = 'New name';
 
-      expect(admin.name).to.equal('New name');
+      expect(admin.name).toBe('New name');
     });
 
     it('reflects new value assigned to attribute on #attributes', () => {
@@ -111,7 +110,7 @@ describe('subclassing a structure with a POJO class', () => {
 
       admin.name = 'New name';
 
-      expect(admin.attributes.name).to.equal('New name');
+      expect(admin.attributes.name).toBe('New name');
     });
 
     it('reflects new value assigned to #attributes on instance attribute', () => {
@@ -121,7 +120,7 @@ describe('subclassing a structure with a POJO class', () => {
 
       admin.attributes.name = 'New name';
 
-      expect(admin.name).to.equal('New name');
+      expect(admin.name).toBe('New name');
     });
   });
 
@@ -151,10 +150,10 @@ describe('subclassing a structure with a POJO class', () => {
     });
 
     it('has access to static methods and properties', () => {
-      expect(AdminStructure.staticMethod()).to.equal('I am on a static method');
-      expect(AdminStructure.staticProperty).to.equal('I am a static property');
-      expect(AdminStructure.staticAdminMethod()).to.equal('I am also on a static method');
-      expect(AdminStructure.staticAdminProperty).to.equal('I am also a static property');
+      expect(AdminStructure.staticMethod()).toBe('I am on a static method');
+      expect(AdminStructure.staticProperty).toBe('I am a static property');
+      expect(AdminStructure.staticAdminMethod()).toBe('I am also on a static method');
+      expect(AdminStructure.staticAdminProperty).toBe('I am also a static property');
     });
   });
 });
@@ -187,8 +186,8 @@ describe('subclassing a structure with another structure', () => {
       level: 3,
     });
 
-    expect(admin.name).to.equal('The admin');
-    expect(admin.level).to.equal(3);
+    expect(admin.name).toBe('The admin');
+    expect(admin.level).toBe(3);
   });
 
   it('is instance of class and superclass', () => {
@@ -196,25 +195,25 @@ describe('subclassing a structure with another structure', () => {
       name: 'The Admin',
     });
 
-    expect(admin).to.be.instanceOf(Admin);
-    expect(admin).to.be.instanceOf(User);
+    expect(admin).toBeInstanceOf(Admin);
+    expect(admin).toBeInstanceOf(User);
   });
 
-  context('default value', () => {
-    context('when subclass uses an attribute from superclass to generate a default value', () => {
-      context('when superclass uses default', () => {
+  describe('default value', () => {
+    describe('when subclass uses an attribute from superclass to generate a default value', () => {
+      describe('when superclass uses default', () => {
         it('allows to access it properly', () => {
           const admin = new Admin();
 
-          expect(admin.identifier).to.equal('Admin-123');
+          expect(admin.identifier).toBe('Admin-123');
         });
       });
 
-      context('when a value is passed to superclass defaultable attribute', () => {
+      describe('when a value is passed to superclass defaultable attribute', () => {
         it('allows to access it properly', () => {
           const admin = new Admin({ uuid: '321' });
 
-          expect(admin.identifier).to.equal('Admin-321');
+          expect(admin.identifier).toBe('Admin-321');
         });
       });
     });
@@ -237,7 +236,7 @@ describe('subclassing a POJO class with a structure', () => {
     Reviewer = attributes({ type: String })(class Reviewer extends Employee {});
   });
 
-  context('when structure attribute is a structure which extends a POJO', () => {
+  describe('when structure attribute is a structure which extends a POJO', () => {
     let Sector;
 
     beforeEach(() => {
@@ -253,15 +252,15 @@ describe('subclassing a POJO class with a structure', () => {
       const reviewer = new Reviewer({ type: 'reviewer' });
       const reviewingSector = new Sector({ leader: reviewer });
 
-      expect(writingSector.leader).to.be.instanceof(Writer);
-      expect(writingSector.leader.getType()).to.equal('WRITER');
+      expect(writingSector.leader).toBeInstanceOf(Writer);
+      expect(writingSector.leader.getType()).toBe('WRITER');
 
-      expect(reviewingSector.leader).to.be.instanceof(Reviewer);
-      expect(reviewingSector.leader.getType()).to.equal('REVIEWER');
+      expect(reviewingSector.leader).toBeInstanceOf(Reviewer);
+      expect(reviewingSector.leader.getType()).toBe('REVIEWER');
     });
   });
 
-  context('when a structure attribute is an array of structures which extends a POJO', () => {
+  describe('when a structure attribute is an array of structures which extends a POJO', () => {
     let Company;
 
     beforeEach(() => {
@@ -281,11 +280,11 @@ describe('subclassing a POJO class with a structure', () => {
         employees: [writer, reviewer],
       });
 
-      expect(company.employees[0]).to.be.instanceof(Writer);
-      expect(company.employees[0].getType()).to.equal('WRITER');
+      expect(company.employees[0]).toBeInstanceOf(Writer);
+      expect(company.employees[0].getType()).toBe('WRITER');
 
-      expect(company.employees[1]).to.be.instanceof(Reviewer);
-      expect(company.employees[1].getType()).to.equal('REVIEWER');
+      expect(company.employees[1]).toBeInstanceOf(Reviewer);
+      expect(company.employees[1].getType()).toBe('REVIEWER');
     });
   });
 });

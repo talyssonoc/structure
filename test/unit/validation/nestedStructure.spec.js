@@ -24,7 +24,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User({
             lastLocation: new Location(),
@@ -34,7 +34,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User({
             lastLocation: undefined,
@@ -56,7 +56,7 @@ describe('validation', () => {
         })(class Location {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         beforeEach(() => {
           User = attributes({
             lastLocation: {
@@ -75,7 +75,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         beforeEach(() => {
           User = attributes({
             lastLocation: {
@@ -94,8 +94,8 @@ describe('validation', () => {
         });
       });
 
-      context('when value is null', () => {
-        context('and attribute is nullable', () => {
+      describe('when value is null', () => {
+        describe('and attribute is nullable', () => {
           beforeEach(() => {
             User = attributes({
               lastLocation: {
@@ -113,7 +113,7 @@ describe('validation', () => {
           });
         });
 
-        context('and attribute is not nullable', () => {
+        describe('and attribute is not nullable', () => {
           beforeEach(() => {
             User = attributes({
               lastLocation: {
@@ -155,7 +155,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User();
 
@@ -168,7 +168,7 @@ describe('validation', () => {
       let Location;
       let User;
 
-      context('when nested value is present', () => {
+      describe('when nested value is present', () => {
         beforeEach(() => {
           Location = attributes({
             x: { type: Number, required: true },
@@ -189,7 +189,7 @@ describe('validation', () => {
         });
       });
 
-      context('when nested value is not present', () => {
+      describe('when nested value is not present', () => {
         beforeEach(() => {
           Location = attributes({
             x: { type: Number, required: true },
@@ -210,8 +210,8 @@ describe('validation', () => {
         });
       });
 
-      context('when nested value is null', () => {
-        context('and attribute is nullable', () => {
+      describe('when nested value is null', () => {
+        describe('and attribute is nullable', () => {
           beforeEach(() => {
             Location = attributes({
               x: { type: Number, required: true },
@@ -232,7 +232,7 @@ describe('validation', () => {
           });
         });
 
-        context('and attribute is not nullable', () => {
+        describe('and attribute is not nullable', () => {
           beforeEach(() => {
             Location = attributes({
               x: { type: Number, required: true },
@@ -266,7 +266,7 @@ describe('validation', () => {
     });
 
     describe('no validation', () => {
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new CircularUser({
             friends: [],
@@ -277,7 +277,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new CircularUser({
             favoriteBook: {},
@@ -289,7 +289,7 @@ describe('validation', () => {
     });
 
     describe('required', () => {
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new CircularUser({
             favoriteBook: {},
@@ -299,7 +299,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is invalid', () => {
           const user = new CircularUser();
 
@@ -309,7 +309,7 @@ describe('validation', () => {
     });
 
     describe('nested required', () => {
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const book = new CircularBook({
             owner: {
@@ -321,7 +321,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is invalid', () => {
           const book = new CircularBook({
             owner: new CircularUser(),

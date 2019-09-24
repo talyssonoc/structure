@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
@@ -15,6 +14,6 @@ describe('type coercion', () => {
 
     user.name = 42;
 
-    expect(user.name).to.equal('42');
+    expect(user.name).toBe('42');
   });
 });

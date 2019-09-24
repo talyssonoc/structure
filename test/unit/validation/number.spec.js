@@ -18,7 +18,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         it('is valid', () => {
           const user = new User({
             age: 42,
@@ -28,7 +28,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid with undefined', () => {
           const user = new User({
             age: undefined,
@@ -50,7 +50,7 @@ describe('validation', () => {
     describe('required', () => {
       let User;
 
-      context('when value is present', () => {
+      describe('when value is present', () => {
         beforeEach(() => {
           User = attributes({
             age: {
@@ -69,7 +69,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         beforeEach(() => {
           User = attributes({
             age: {
@@ -88,8 +88,8 @@ describe('validation', () => {
         });
       });
 
-      context('when value is null', () => {
-        context('and attribute is nullable', () => {
+      describe('when value is null', () => {
+        describe('and attribute is nullable', () => {
           beforeEach(() => {
             User = attributes({
               age: {
@@ -107,7 +107,7 @@ describe('validation', () => {
           });
         });
 
-        context('and attribute is not nullable', () => {
+        describe('and attribute is not nullable', () => {
           beforeEach(() => {
             User = attributes({
               age: {
@@ -139,7 +139,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is not present', () => {
+      describe('when value is not present', () => {
         it('is valid', () => {
           const user = new User();
 
@@ -161,7 +161,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is equal', () => {
+        describe('when value is equal', () => {
           it('is valid', () => {
             const user = new User({
               age: 2,
@@ -171,7 +171,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is different', () => {
+        describe('when value is different', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               age: 1,
@@ -197,7 +197,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is equal to referenced attribute', () => {
+        describe('when value is equal to referenced attribute', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
@@ -208,7 +208,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is equal to one of the value possibilities', () => {
+        describe('when value is equal to one of the value possibilities', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
@@ -219,7 +219,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is different from all possibilities', () => {
+        describe('when value is different from all possibilities', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               startAge: 1,
@@ -246,7 +246,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is equal to referenced attribute', () => {
+        describe('when value is equal to referenced attribute', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
@@ -257,7 +257,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is different', () => {
+        describe('when value is different', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               startAge: 1,
@@ -283,7 +283,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is equal to min', () => {
+        describe('when value is equal to min', () => {
           it('is valid', () => {
             const user = new User({
               age: 2,
@@ -293,7 +293,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is greater than min', () => {
+        describe('when value is greater than min', () => {
           it('is valid', () => {
             const user = new User({
               age: 3,
@@ -303,7 +303,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is less than min', () => {
+        describe('when value is less than min', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               age: 1,
@@ -329,7 +329,7 @@ describe('validation', () => {
           })(class User {});
         });
 
-        context('when value is equal to referenced attribute', () => {
+        describe('when value is equal to referenced attribute', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
@@ -340,7 +340,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is greater than referenced attribute', () => {
+        describe('when value is greater than referenced attribute', () => {
           it('is valid', () => {
             const user = new User({
               startAge: 2,
@@ -351,7 +351,7 @@ describe('validation', () => {
           });
         });
 
-        context('when value is less than referenced attribute', () => {
+        describe('when value is less than referenced attribute', () => {
           it('is not valid and has errors set', () => {
             const user = new User({
               startAge: 3,
@@ -376,7 +376,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is equal to greater', () => {
+      describe('when value is equal to greater', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 2,
@@ -386,7 +386,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is greater than greater', () => {
+      describe('when value is greater than greater', () => {
         it('is valid', () => {
           const user = new User({
             age: 3,
@@ -396,7 +396,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is less than greater', () => {
+      describe('when value is less than greater', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 1,
@@ -419,7 +419,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is equal to max', () => {
+      describe('when value is equal to max', () => {
         it('is valid', () => {
           const user = new User({
             age: 2,
@@ -429,7 +429,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is less than max', () => {
+      describe('when value is less than max', () => {
         it('is valid', () => {
           const user = new User({
             age: 1,
@@ -439,7 +439,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is greater than max', () => {
+      describe('when value is greater than max', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 3,
@@ -462,7 +462,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is equal to less', () => {
+      describe('when value is equal to less', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 2,
@@ -472,7 +472,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is less than less', () => {
+      describe('when value is less than less', () => {
         it('is valid', () => {
           const user = new User({
             age: 1,
@@ -482,7 +482,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is greater than less', () => {
+      describe('when value is greater than less', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 3,
@@ -505,7 +505,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is an integer', () => {
+      describe('when value is an integer', () => {
         it('is valid', () => {
           const user = new User({
             age: 42,
@@ -515,7 +515,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not an integer', () => {
+      describe('when value is not an integer', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 4.2,
@@ -538,7 +538,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value has less than precision decimal places', () => {
+      describe('when value has less than precision decimal places', () => {
         it('is valid', () => {
           const user = new User({
             age: 4.2,
@@ -548,7 +548,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value has more than precision decimal places', () => {
+      describe('when value has more than precision decimal places', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 0.042,
@@ -571,7 +571,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is multiple of given value', () => {
+      describe('when value is multiple of given value', () => {
         it('is valid', () => {
           const user = new User({
             age: 6,
@@ -581,7 +581,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is not multiple of given value', () => {
+      describe('when value is not multiple of given value', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 7,
@@ -604,7 +604,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is positive', () => {
+      describe('when value is positive', () => {
         it('is valid', () => {
           const user = new User({
             age: 1,
@@ -614,7 +614,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is zero', () => {
+      describe('when value is zero', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 0,
@@ -624,7 +624,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is negative', () => {
+      describe('when value is negative', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: -1,
@@ -647,7 +647,7 @@ describe('validation', () => {
         })(class User {});
       });
 
-      context('when value is negative', () => {
+      describe('when value is negative', () => {
         it('is valid', () => {
           const user = new User({
             age: -1,
@@ -657,7 +657,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is zero', () => {
+      describe('when value is zero', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 0,
@@ -667,7 +667,7 @@ describe('validation', () => {
         });
       });
 
-      context('when value is positive', () => {
+      describe('when value is positive', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             age: 1,
