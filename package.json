@@ -9,7 +9,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=8.16.1"
   },
   "homepage": "https://structure.js.org/",
   "repository": "https://github.com/talyssonoc/structure",
