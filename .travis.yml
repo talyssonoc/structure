@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-  - "node"
-  - "6.1"
-  - "6.0"
-  - "8.0"
+  - '10'
+  - '11'
+  - '12'
+  - 'node'
 script:
   - npm run lint
   - npm test
