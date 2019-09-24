@@ -5,10 +5,7 @@ const Initialization = require('../initialization');
 const StrictMode = require('../strictMode');
 const Errors = require('../errors');
 const { SCHEMA } = require('../symbols');
-const {
-  attributeDescriptorFor,
-  attributesDescriptorFor,
-} = require('./descriptors');
+const { attributeDescriptorFor, attributesDescriptorFor } = require('./descriptors');
 const Cloning = require('../cloning');
 
 const define = Object.defineProperty;
@@ -22,7 +19,7 @@ function attributesDecorator(schema, schemaOptions = {}) {
     const WrapperClass = new Proxy(Class, {
       construct(target, constructorArgs, newTarget) {
         const instance = Reflect.construct(target, constructorArgs, newTarget);
-        const passedAttributes = Object.assign({}, constructorArgs[0]);
+        const passedAttributes = { ...constructorArgs[0] };
 
         Initialization.initialize(schema, passedAttributes, instance);
 
@@ -31,7 +28,10 @@ function attributesDecorator(schema, schemaOptions = {}) {
     });
 
     if (WrapperClass[SCHEMA]) {
-      schema = Object.assign({}, WrapperClass[SCHEMA], schema);
+      schema = {
+        ...WrapperClass[SCHEMA],
+        ...schema,
+      };
     }
 
     schema = Schema.normalize(schema, schemaOptions);
@@ -46,13 +46,9 @@ function attributesDecorator(schema, schemaOptions = {}) {
       value: schema,
     });
 
-    define(WrapperClass.prototype, 'attributes', attributesDescriptorFor(
-      schema
-    ));
+    define(WrapperClass.prototype, 'attributes', attributesDescriptorFor(schema));
 
-    define(WrapperClass.prototype, 'validate', Validation.descriptorFor(
-      schema
-    ));
+    define(WrapperClass.prototype, 'validate', Validation.descriptorFor(schema));
 
     define(WrapperClass.prototype, 'toJSON', Serialization.descriptor);
 
@@ -61,15 +57,10 @@ function attributesDecorator(schema, schemaOptions = {}) {
       schemaOptions
     ));
 
-    define(WrapperClass.prototype, 'clone', Cloning.buildCloneDescriptorFor(
-      WrapperClass
-    ));
+    define(WrapperClass.prototype, 'clone', Cloning.buildCloneDescriptorFor(WrapperClass));
 
     Object.keys(schema).forEach((attr) => {
-      define(WrapperClass.prototype, attr, attributeDescriptorFor(
-        attr,
-        schema
-      ));
+      define(WrapperClass.prototype, attr, attributeDescriptorFor(attr, schema));
     });
 
     return WrapperClass;

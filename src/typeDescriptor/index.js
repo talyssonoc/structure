@@ -10,24 +10,12 @@ function normalizeTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
 
   validateTypeDescriptor(typeDescriptor, attributeName);
 
-  return normalizeCompleteTypeDescriptor(
-    schemaOptions,
-    typeDescriptor,
-    attributeName
-  );
+  return normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName);
 }
 
-function normalizeCompleteTypeDescriptor(
-  schemaOptions,
-  typeDescriptor,
-  attributeName
-) {
+function normalizeCompleteTypeDescriptor(schemaOptions, typeDescriptor, attributeName) {
   if (isDynamicTypeDescriptor(typeDescriptor)) {
-    typeDescriptor = addDynamicTypeGetter(
-      schemaOptions,
-      typeDescriptor,
-      attributeName
-    );
+    typeDescriptor = addDynamicTypeGetter(schemaOptions, typeDescriptor, attributeName);
   }
 
   if (isArrayType(typeDescriptor)) {
@@ -42,17 +30,15 @@ function normalizeCompleteTypeDescriptor(
 }
 
 function createNormalizedTypeDescriptor(typeDescriptor) {
-  return Object.assign({}, typeDescriptor, {
+  return {
+    ...typeDescriptor,
     coerce: Coercion.for(typeDescriptor, typeDescriptor.itemType),
     validation: Validation.forAttribute(typeDescriptor),
-  });
+  };
 }
 
 function validateTypeDescriptor(typeDescriptor, attributeName) {
-  if (
-    !isObject(typeDescriptor.type) &&
-    !isDynamicTypeDescriptor(typeDescriptor)
-  ) {
+  if (!isObject(typeDescriptor.type) && !isDynamicTypeDescriptor(typeDescriptor)) {
     throw Errors.invalidType(attributeName);
   }
 }
