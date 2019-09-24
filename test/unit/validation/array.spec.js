@@ -279,7 +279,7 @@ describe('validation', () => {
         });
       });
 
-      describe('when array has minimum length', () => {
+      describe('when array does not have minimum length', () => {
         it('is not valid and has errors set', () => {
           const user = new User({
             books: ['1984'],

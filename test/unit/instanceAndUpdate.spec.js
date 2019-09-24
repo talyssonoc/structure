@@ -192,7 +192,7 @@ describe('instantiating a structure', () => {
               UserWithCustomError.buildStrict({
                 name: 'JJ',
               });
-            }).toThrowError('There is something wrong with this user');
+            }).toThrow('There is something wrong with this user');
           });
         });
       });
@@ -313,7 +313,7 @@ describe('updating an instance', () => {
   it('does not throw if no attributes are passed when instantiating', () => {
     expect(() => {
       new User();
-    }).not.toThrowError(Error);
+    }).not.toThrow(Error);
   });
 
   it('throws if value assigned to #attributes is not an object', () => {
@@ -323,7 +323,7 @@ describe('updating an instance', () => {
 
     expect(() => {
       user.attributes = null;
-    }).toThrowError(/^#attributes can't be set to a non-object\.$/);
+    }).toThrow(/^#attributes can't be set to a non-object\.$/);
   });
 });
 

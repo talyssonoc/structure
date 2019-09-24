@@ -6,7 +6,7 @@ describe('creating a structure class', () => {
       it('throws with a message with structure class name', () => {
         expect(() => {
           attributes({}, class User {});
-        }).toThrowError(/^You passed the structure class.*\(User\)`\./);
+        }).toThrow(/^You passed the structure class.*\(User\)`\./);
       });
     });
 
@@ -19,7 +19,7 @@ describe('creating a structure class', () => {
 
         expect(() => {
           attributes({}, anonymousClass);
-        }).toThrowError(/^You passed the structure class.*\(StructureClass\)`\./);
+        }).toThrow(/^You passed the structure class.*\(StructureClass\)`\./);
       });
     });
   });
@@ -111,7 +111,7 @@ describe('creating a structure class', () => {
     it('breaks if there is no value for dynamic type', () => {
       expect(() => {
         require('../fixtures/BrokenCircularBook');
-      }).toThrowError('Missing dynamic type for attribute: owner');
+      }).toThrow('Missing dynamic type for attribute: owner');
     });
   });
 });

@@ -30,7 +30,7 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalize(schema);
-        }).toThrowError(
+        }).toThrow(
           /^Attribute type must be a constructor or the name of a dynamic type: name\.$/
         );
       });
@@ -46,7 +46,7 @@ describe('schema normalization', () => {
 
         expect(() => {
           normalize(schema);
-        }).toThrowError(
+        }).toThrow(
           /^Attribute type must be a constructor or the name of a dynamic type: name\.$/
         );
       });

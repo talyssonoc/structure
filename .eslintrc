@@ -2,10 +2,10 @@
   "env": {
     "node": true,
     "es6": true,
-    "mocha": true
+    "jest/globals": true
   },
-  "extends": ["eslint:recommended", "prettier"],
-  "plugins": ["mocha"],
+  "extends": ["eslint:recommended", "plugin:jest/recommended", "prettier"],
+  "plugins": ["jest"],
   "parserOptions": {
     "ecmaVersion": 2018
   },
@@ -19,8 +19,11 @@
       "always",
       { "avoidQuotes": true, "avoidExplicitReturnArrows": true }
     ],
-    "mocha/no-exclusive-tests": "error",
-    "mocha/no-skipped-tests": "error",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "always"]
   }
