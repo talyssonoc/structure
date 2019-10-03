@@ -34,7 +34,11 @@ function attributesDecorator(schema, schemaOptions = {}) {
       };
     }
 
-    schema = Schema.normalize(schema, schemaOptions);
+    schema = Schema.normalize({
+      schema,
+      schemaOptions,
+      wrappedClass: Class,
+    });
 
     define(WrapperClass, SCHEMA, {
       value: schema,

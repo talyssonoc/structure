@@ -1,13 +1,19 @@
 const { normalize } = require('../../../src/schema');
 
 describe('schema normalization', () => {
+  let wrappedClass;
+
+  beforeEach(() => {
+    wrappedClass = class WrappedClass {};
+  });
+
   describe('when passed attribute is the type itself', () => {
     it('normalizes to an object with the type field being equal to the passed type', () => {
       const schema = {
         name: String,
       };
 
-      expect(normalize(schema).name.type).toBe(String);
+      expect(normalize({ schema, wrappedClass }).name.type).toBe(String);
     });
   });
 
@@ -18,7 +24,7 @@ describe('schema normalization', () => {
           name: { type: String },
         };
 
-        expect(normalize(schema).name.type).toBe(String);
+        expect(normalize({ schema, wrappedClass }).name.type).toBe(String);
       });
     });
   });
@@ -29,10 +35,8 @@ describe('schema normalization', () => {
         const schema = { name: true };
 
         expect(() => {
-          normalize(schema);
-        }).toThrow(
-          /^Attribute type must be a constructor or the name of a dynamic type: name\.$/
-        );
+          normalize({ schema, wrappedClass });
+        }).toThrow(/^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
       });
     });
 
@@ -45,10 +49,8 @@ describe('schema normalization', () => {
         };
 
         expect(() => {
-          normalize(schema);
-        }).toThrow(
-          /^Attribute type must be a constructor or the name of a dynamic type: name\.$/
-        );
+          normalize({ schema, wrappedClass });
+        }).toThrow(/^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
       });
     });
   });
@@ -63,7 +65,7 @@ describe('schema normalization', () => {
           },
         };
 
-        expect(normalize(schema).name.itemType.type).toEqual(String);
+        expect(normalize({ schema, wrappedClass }).name.itemType.type).toEqual(String);
       });
     });
 
@@ -76,7 +78,7 @@ describe('schema normalization', () => {
           },
         };
 
-        expect(normalize(schema).name.itemType.type).toEqual(String);
+        expect(normalize({ schema, wrappedClass }).name.itemType.type).toEqual(String);
       });
     });
   });

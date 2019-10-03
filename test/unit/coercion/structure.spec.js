@@ -96,7 +96,7 @@ describe('type coercion', () => {
     });
   });
 
-  describe.only('Structure class with dynamic attribute types', () => {
+  describe('Structure class with dynamic attribute types', () => {
     let CircularUser;
     let CircularBook;
 

@@ -132,7 +132,7 @@ describe('type coercion', () => {
     });
   });
 
-  describe.skip('Array from dynamic type', () => {
+  describe('Array from dynamic type', () => {
     let CircularUser;
     let BooksCollection;
 

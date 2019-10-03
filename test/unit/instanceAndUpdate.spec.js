@@ -210,7 +210,7 @@ describe('instantiating a structure', () => {
   });
 });
 
-describe.skip('instantiating a structure with dynamic attribute types', () => {
+describe('instantiating a structure with dynamic attribute types', () => {
   let CircularUser;
   let CircularBook;
 
@@ -246,7 +246,7 @@ describe.skip('instantiating a structure with dynamic attribute types', () => {
       it('throw an error', (done) => {
         let errorDetails = [
           {
-            message: '"pages" must be a number',
+            message: '"favoriteBook.pages" must be a number',
             path: ['favoriteBook', 'pages'],
           },
         ];
@@ -327,7 +327,7 @@ describe('updating an instance', () => {
   });
 });
 
-describe.skip('updating a structure with dynamic attribute types', () => {
+describe('updating a structure with dynamic attribute types', () => {
   let CircularUser;
   let CircularBook;
 

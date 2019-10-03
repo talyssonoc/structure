@@ -1,5 +1,7 @@
 const joi = require('@hapi/joi');
 
+const { IDENTIFIER } = require('../symbols');
+
 const validations = [
   require('./string'),
   require('./number'),
@@ -7,7 +9,7 @@ const validations = [
   require('./date'),
 ];
 
-const nestedValidation = require('./nested');
+const NestedValidation = require('./nested');
 const arrayValidation = require('./array');
 
 const {
@@ -26,7 +28,7 @@ exports.forAttribute = function validationForAttribute(typeDescriptor) {
   const validation = validations.find((v) => v.type === typeDescriptor.type);
 
   if (!validation) {
-    return nestedValidation(typeDescriptor);
+    return NestedValidation.forType(typeDescriptor);
   }
 
   return validation.createJoiSchema(typeDescriptor);
@@ -47,11 +49,20 @@ exports.forSchema = function validationForSchema(schema) {
     schemaValidation[attributeName] = schema[attributeName].validation;
   });
 
-  const joiValidation = joi.object().keys(schemaValidation);
+  const joiValidation = joi
+    .object()
+    .keys(schemaValidation)
+    .id(schema[IDENTIFIER]);
 
   return {
+    joiValidation,
     validate(structure) {
-      const { error } = joiValidation.validate(structure, validatorOptions);
+      const validationWithDynamicLinks = NestedValidation.resolveDynamicLinks({
+        schema,
+        joiValidation,
+      });
+
+      const { error } = validationWithDynamicLinks.validate(structure, validatorOptions);
 
       if (error) {
         return error.details.map(mapDetail);

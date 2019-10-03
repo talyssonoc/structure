@@ -3,4 +3,5 @@ module.exports = {
   ATTRIBUTES: Symbol('attributes'),
   VALIDATE: Symbol('validate'),
   INITIALIZE: Symbol('initialize'),
+  IDENTIFIER: Symbol('identifier'),
 };

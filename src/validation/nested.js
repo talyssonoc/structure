@@ -1,8 +1,8 @@
 const joi = require('@hapi/joi');
-const { SCHEMA } = require('../symbols');
+const { SCHEMA, VALIDATE } = require('../symbols');
 const { requiredOption } = require('./utils');
 
-module.exports = function nestedValidation(typeDescriptor) {
+exports.forType = function nestedValidationForType(typeDescriptor) {
   if (typeDescriptor.dynamicType) {
     return validationToDynamicType(typeDescriptor);
   }
@@ -18,11 +18,7 @@ module.exports = function nestedValidation(typeDescriptor) {
 };
 
 function validationToDynamicType(typeDescriptor) {
-  let joiSchema = joi.lazy(() => {
-    const typeSchema = typeDescriptor.getType()[SCHEMA];
-
-    return getNestedValidations(typeSchema);
-  });
+  let joiSchema = joi.link(`#${typeDescriptor.type}`);
 
   joiSchema = requiredOption(typeDescriptor, {
     initial: joiSchema,
@@ -45,3 +41,23 @@ function getNestedValidations(typeSchema) {
 
   return joiSchema;
 }
+
+exports.resolveDynamicLinks = function resolveDynamicLinks({ schema, joiValidation }) {
+  return Object.keys(schema).reduce((joiValidation, attributeName) => {
+    const attributeDescriptor = schema[attributeName];
+
+    if (!attributeDescriptor.dynamicType) {
+      return joiValidation;
+    }
+
+    const type = attributeDescriptor.getType();
+
+    if (!type[SCHEMA]) {
+      return joiValidation;
+    }
+
+    const attributeValidation = type[SCHEMA][VALIDATE];
+
+    return joiValidation.shared(attributeValidation.joiValidation);
+  }, joiValidation);
+};

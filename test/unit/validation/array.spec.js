@@ -217,7 +217,7 @@ describe('validation', () => {
       });
     });
 
-    describe.skip('nested validation with dynamic attribute types', () => {
+    describe('nested validation with dynamic attribute types', () => {
       let CircularUser;
 
       beforeEach(() => {

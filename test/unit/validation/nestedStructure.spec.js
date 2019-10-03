@@ -256,7 +256,7 @@ describe('validation', () => {
     });
   });
 
-  describe.skip('Nested with structure class with dynamic attribute types', () => {
+  describe('Nested with structure class with dynamic attribute types', () => {
     let CircularUser;
     let CircularBook;
 

@@ -102,7 +102,7 @@ describe('creating a structure class', () => {
     });
   });
 
-  describe.skip('when using dynamic attribute types', () => {
+  describe('when using dynamic attribute types', () => {
     it('allows to use dynamic values without breaking', () => {
       require('../fixtures/CircularUser');
       require('../fixtures/CircularBook');

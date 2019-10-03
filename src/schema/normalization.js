@@ -1,10 +1,14 @@
 const Validation = require('../validation');
 const Initialization = require('../initialization');
 const TypeDescriptor = require('../typeDescriptor');
-const { VALIDATE, INITIALIZE } = require('../symbols');
+const { VALIDATE, INITIALIZE, IDENTIFIER } = require('../symbols');
 
-module.exports = function normalizeSchema(rawSchema, schemaOptions) {
+module.exports = function normalizeSchema({ schema: rawSchema, schemaOptions, wrappedClass }) {
   const schema = Object.create(null);
+
+  Object.defineProperty(schema, IDENTIFIER, {
+    value: wrappedClass.name,
+  });
 
   Object.keys(rawSchema).forEach((attributeName) => {
     schema[attributeName] = TypeDescriptor.normalize(
