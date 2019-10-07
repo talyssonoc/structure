@@ -1,17 +1,17 @@
-const AttributeDescriptors = require('./attributeDescriptors');
+const AttributeDefinitions = require('./AttributeDefinitions');
 const Initialization = require('../initialization');
 
 class Schema {
-  static for({ attributesDescriptors, wrappedClass, options }) {
-    return new Schema({
-      attributeDescriptors: AttributeDescriptors.for(attributesDescriptors),
+  static for({ attributesDefinitions, wrappedClass, options }) {
+    return new this({
+      attributesDefinitions: AttributeDefinitions.for(attributesDefinitions),
       wrappedClass,
       options,
     });
   }
 
-  constructor({ attributeDescriptors, wrappedClass, options }) {
-    this.attributeDescriptors = attributeDescriptors;
+  constructor({ attributesDefinitions, wrappedClass, options }) {
+    this.attributesDefinitions = attributesDefinitions;
     this.wrappedClass = wrappedClass;
     this.options = options;
 

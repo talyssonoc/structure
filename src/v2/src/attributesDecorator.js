@@ -1,11 +1,11 @@
 const Schema = require('./schema');
 const Symbols = require('./symbols');
 
-module.exports = function attributes(attributesDescriptors, options = {}) {
+module.exports = function attributes(attributesDefinitions, options = {}) {
   return function decorator(Class) {
     const schema = Schema.for({
       wrappedClass: Class,
-      attributesDescriptors,
+      attributesDefinitions,
       options,
     });
 

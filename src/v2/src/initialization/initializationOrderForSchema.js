@@ -4,20 +4,19 @@ module.exports = function initializationOrderForSchema(schema) {
   const staticInitializations = [];
   const derivedInitializations = [];
 
-  console.log(schema.attributeDescriptors[0].constructor);
-  schema.attributeDescriptors.forEach((attrDescriptor) => {
-    if (isStaticInitialization(attrDescriptor)) {
-      staticInitializations.push([attrDescriptor.name, staticInitialization]);
+  schema.attributesDefinitions.forEach((attrDefinition) => {
+    if (isStaticInitialization(attrDefinition)) {
+      staticInitializations.push([attrDefinition.name, staticInitialization]);
     } else {
-      derivedInitializations.push([attrDescriptor.name, derivedInitialization]);
+      derivedInitializations.push([attrDefinition.name, derivedInitialization]);
     }
   });
 
   return [...staticInitializations, ...derivedInitializations];
 };
 
-const isStaticInitialization = (attrDescriptor) => !isFunction(attrDescriptor.default);
+const isStaticInitialization = (attrDefinition) => !isFunction(attrDefinition.default);
 
-const staticInitialization = (attrDescriptor) => attrDescriptor.default;
+const staticInitialization = (attrDefinition) => attrDefinition.default;
 
-const derivedInitialization = (attrDescriptor, instance) => attrDescriptor.default(instance);
+const derivedInitialization = (attrDefinition, instance) => attrDefinition.default(instance);

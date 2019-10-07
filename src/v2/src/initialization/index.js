@@ -12,7 +12,7 @@ exports.for = function initializationForSchema(schema) {
 
       for (let i = 0; i < initializationOrder.length; i++) {
         const [attrName, attrInitializer] = initializationOrder[i];
-        const attrDescriptor = schema.attributeDescriptors[attrName];
+        const attrDefinition = schema.attributesDefinitions[attrName];
         const attrPassedValue = attributes[attrName];
 
         // will coerce through setters
@@ -20,7 +20,7 @@ exports.for = function initializationForSchema(schema) {
           instance,
           attrPassedValue,
           attrInitializer,
-          attrDescriptor
+          attrDefinition
         );
       }
 
@@ -29,10 +29,10 @@ exports.for = function initializationForSchema(schema) {
   };
 };
 
-const initializedValue = (instance, attrPassedValue, attrInitializer, attrDescriptor) => {
+const initializedValue = (instance, attrPassedValue, attrInitializer, attrDefinition) => {
   if (attrPassedValue !== undefined) {
     return attrPassedValue;
   }
 
-  return attrInitializer(attrDescriptor, instance);
+  return attrInitializer(attrDefinition, instance);
 };
