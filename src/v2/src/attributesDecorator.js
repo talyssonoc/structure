@@ -1,11 +1,16 @@
 const Schema = require('./schema');
-const Symbols = require('./symbols');
+const Descriptors = require('./descriptors');
+const Errors = require('../../errors');
 
-module.exports = function attributes(attributesDefinitions, options = {}) {
+module.exports = function attributes(attributeDefinitions, options = {}) {
+  if (typeof options !== 'object') {
+    throw Errors.classAsSecondParam(options);
+  }
+
   return function decorator(Class) {
     const schema = Schema.for({
       wrappedClass: Class,
-      attributesDefinitions,
+      attributeDefinitions,
       options,
     });
 
@@ -21,9 +26,9 @@ module.exports = function attributes(attributesDefinitions, options = {}) {
       },
     });
 
-    Object.defineProperty(StructureClass, Symbols.SCHEMA, {
-      value: schema,
-    });
+    const descriptors = new Descriptors(schema, StructureClass);
+
+    descriptors.setDescriptors();
 
     return StructureClass;
   };

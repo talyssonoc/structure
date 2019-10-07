@@ -10,9 +10,28 @@ class AttributeDefinition {
     });
   }
 
+  static compare(definitionA, definitionB) {
+    if (definitionA.dynamicDefault === definitionB.dynamicDefault) {
+      return 0;
+    }
+
+    if (definitionA.dynamicDefault) {
+      return 1;
+    }
+
+    return -1;
+  }
+
   constructor({ name, options }) {
     this.name = name;
     this.options = options;
+    this.dynamicDefault = isFunction(options.default);
+
+    if (this.dynamicDefault) {
+      this.initialize = options.default;
+    } else {
+      this.initialize = () => options.default;
+    }
   }
 }
 

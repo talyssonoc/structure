@@ -9,5 +9,5 @@ const User = attributes({
   },
 })(class User {});
 
-// console.log(User[SCHEMA]);
-console.log(new User({ name: 'Name' }));
+const user = new User({ name: 'Name', age: 2 });
+// console.log(user.name, user.age, user.attributes);

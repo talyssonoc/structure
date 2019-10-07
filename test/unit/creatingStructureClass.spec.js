@@ -1,4 +1,4 @@
-const { attributes } = require('../../src');
+const { attributes } = require('../../src/v2/src');
 
 describe('creating a structure class', () => {
   describe('structure class is passed as the second parameter', () => {

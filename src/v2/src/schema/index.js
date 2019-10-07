@@ -2,16 +2,16 @@ const AttributeDefinitions = require('./AttributeDefinitions');
 const Initialization = require('../initialization');
 
 class Schema {
-  static for({ attributesDefinitions, wrappedClass, options }) {
+  static for({ attributeDefinitions, wrappedClass, options }) {
     return new this({
-      attributesDefinitions: AttributeDefinitions.for(attributesDefinitions),
+      attributeDefinitions: AttributeDefinitions.for(attributeDefinitions),
       wrappedClass,
       options,
     });
   }
 
-  constructor({ attributesDefinitions, wrappedClass, options }) {
-    this.attributesDefinitions = attributesDefinitions;
+  constructor({ attributeDefinitions, wrappedClass, options }) {
+    this.attributeDefinitions = attributeDefinitions;
     this.wrappedClass = wrappedClass;
     this.options = options;
 
