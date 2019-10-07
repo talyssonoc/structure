@@ -1,4 +1,4 @@
-const { attributes } = require('../../../src');
+const { attributes } = require('../../../src/v2/src');
 
 describe('type coercion', () => {
   describe('Date', () => {

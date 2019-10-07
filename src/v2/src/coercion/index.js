@@ -20,7 +20,7 @@ exports.for = function coercionFor(typeDefinition, itemTypeDefinition) {
 };
 
 function getCoercion(typeDefinition) {
-  const coercion = types.find((c) => c.type === typeDefinition.type);
+  const coercion = types.find((c) => c.type === typeDefinition.options.type);
 
   if (coercion) {
     return coercion;

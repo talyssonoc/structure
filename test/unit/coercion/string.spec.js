@@ -1,4 +1,4 @@
-const { attributes } = require('../../../src');
+const { attributes } = require('../../../src/v2/src');
 
 describe('type coercion', () => {
   describe('String', () => {
@@ -38,7 +38,7 @@ describe('type coercion', () => {
           name: 10,
         });
 
-        expect(user.name).toBe('10');
+        expect(user.name).toEqual('10');
       });
 
       it('coerces float to string', () => {
@@ -46,7 +46,7 @@ describe('type coercion', () => {
           name: 10.42,
         });
 
-        expect(user.name).toBe('10.42');
+        expect(user.name).toEqual('10.42');
       });
 
       it('coerces null to empty string', () => {
@@ -62,7 +62,7 @@ describe('type coercion', () => {
           name: false,
         });
 
-        expect(user.name).toBe('false');
+        expect(user.name).toEqual('false');
       });
 
       it('coerces date to string', () => {
@@ -72,7 +72,7 @@ describe('type coercion', () => {
           name: date,
         });
 
-        expect(user.name).toBe(date.toString());
+        expect(user.name).toEqual(date.toString());
       });
     });
 
@@ -108,7 +108,7 @@ describe('type coercion', () => {
           fatherName: 10,
         });
 
-        expect(user.fatherName).toBe('10');
+        expect(user.fatherName).toEqual('10');
       });
 
       it('coerces float to string', () => {
@@ -116,7 +116,7 @@ describe('type coercion', () => {
           fatherName: 10.42,
         });
 
-        expect(user.fatherName).toBe('10.42');
+        expect(user.fatherName).toEqual('10.42');
       });
 
       it('coerces boolean to string', () => {
@@ -124,7 +124,7 @@ describe('type coercion', () => {
           fatherName: false,
         });
 
-        expect(user.fatherName).toBe('false');
+        expect(user.fatherName).toEqual('false');
       });
 
       it('coerces date to string', () => {
@@ -134,7 +134,7 @@ describe('type coercion', () => {
           fatherName: date,
         });
 
-        expect(user.fatherName).toBe(date.toString());
+        expect(user.fatherName).toEqual(date.toString());
       });
     });
 
@@ -147,7 +147,7 @@ describe('type coercion', () => {
             name: objectWithoutToString,
           });
 
-          expect(user.name).toBe('[object Object]');
+          expect(user.name).toEqual('[object Object]');
         });
       });
 
@@ -164,7 +164,7 @@ describe('type coercion', () => {
             name: objectWithToString,
           });
 
-          expect(user.name).toBe('42');
+          expect(user.name).toEqual('42');
         });
       });
     });
