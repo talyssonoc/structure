@@ -1,18 +1,18 @@
 const AttributeDefinition = require('./AttributeDefinition');
 
 class AttributeDefinitions extends Array {
-  static for(attributeDefinitions) {
+  static for(attributeDefinitions, { schema }) {
     attributeDefinitions = Object.keys(attributeDefinitions).map((attributeName) => ({
       name: attributeName,
       options: attributeDefinitions[attributeName],
     }));
 
-    return new this(attributeDefinitions);
+    return new this(attributeDefinitions, { schema });
   }
 
-  constructor(attributeDefinitions) {
+  constructor(attributeDefinitions, { schema }) {
     attributeDefinitions = attributeDefinitions
-      .map(({ name, options }) => AttributeDefinition.for(name, options))
+      .map(({ name, options }) => AttributeDefinition.for(name, options, schema))
       .sort(AttributeDefinition.compare);
 
     super(...attributeDefinitions);

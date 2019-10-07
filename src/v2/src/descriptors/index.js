@@ -1,4 +1,6 @@
+const { isObject } = require('lodash');
 const { SCHEMA, ATTRIBUTES } = require('../symbols');
+const Errors = require('../../../errors');
 const { defineProperty } = Object;
 
 class Descriptors {
@@ -26,6 +28,10 @@ class Descriptors {
       },
 
       set(newAttributes) {
+        if (!isObject(newAttributes)) {
+          throw Errors.nonObjectAttributes();
+        }
+
         defineProperty(this, ATTRIBUTES, {
           configurable: true,
           value: newAttributes,
@@ -45,13 +51,16 @@ class Descriptors {
   }
 
   attributeDescriptor(attrDefinition) {
+    const { schema } = this;
+    const { name } = attrDefinition;
+
     return {
       get() {
-        return this.attributes[attrDefinition.name];
+        return this.attributes[name];
       },
 
       set(value) {
-        this.attributes[attrDefinition.name] = value; //this.schema[attributeName].coerce(value);
+        this.attributes[name] = schema.attributeDefinitions[name].coerce(value);
       },
     };
   }

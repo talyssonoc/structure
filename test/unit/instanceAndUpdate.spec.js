@@ -1,4 +1,4 @@
-const { attributes } = require('../../src');
+const { attributes } = require('../../src/v2/src');
 
 describe('instantiating a structure', () => {
   let User;
@@ -49,13 +49,13 @@ describe('instantiating a structure', () => {
   it('has access to instance methods', () => {
     const user = new User();
 
-    expect(user.userMethod()).toBe('I am a user');
+    expect(user.userMethod()).toEqual('I am a user');
   });
 
   it('has access to instance attributes created on constructor', () => {
     const user = new User();
 
-    expect(user.userInstanceStuff).toBe('Stuff value');
+    expect(user.userInstanceStuff).toEqual('Stuff value');
   });
 
   it('has attributes passed to constructor assigned to the object', () => {
@@ -63,7 +63,7 @@ describe('instantiating a structure', () => {
       password: 'My password',
     });
 
-    expect(user.password).toBe('My password');
+    expect(user.password).toEqual('My password');
   });
 
   it('does not mutate the attributes object passed to the constructor', () => {
@@ -87,8 +87,8 @@ describe('instantiating a structure', () => {
       password: 'The password',
     });
 
-    expect(user.password).toBe('The password');
-    expect(user.attributes.password).toBe('The password');
+    expect(user.password).toEqual('The password');
+    expect(user.attributes.password).toEqual('The password');
   });
 
   describe('attributes initialization', () => {
@@ -97,7 +97,7 @@ describe('instantiating a structure', () => {
         it('defaults to the static value', () => {
           const user = new User();
 
-          expect(user.name).toBe('Name');
+          expect(user.name).toEqual('Name');
         });
       });
 
@@ -105,7 +105,7 @@ describe('instantiating a structure', () => {
         it('calls the function using the instance of the object as parameter and perform coercion', () => {
           const user = new User();
 
-          expect(user.uuid).toBe('10');
+          expect(user.uuid).toEqual('10');
         });
       });
 
@@ -114,7 +114,7 @@ describe('instantiating a structure', () => {
           it('allows to access the value of that attribute', () => {
             const user = new User();
 
-            expect(user.nickname).toBe('Name');
+            expect(user.nickname).toEqual('Name');
           });
         });
 
@@ -122,7 +122,7 @@ describe('instantiating a structure', () => {
           it('allows to access the value of that attribute', () => {
             const user = new User({ name: 'This is my name' });
 
-            expect(user.nickname).toBe('This is my name');
+            expect(user.nickname).toEqual('This is my name');
           });
         });
 
@@ -130,7 +130,7 @@ describe('instantiating a structure', () => {
           it('generates the default value properly', () => {
             const user = new User();
 
-            expect(user.attrUsingMethodUsingAttr).toBe('Method => Name');
+            expect(user.attrUsingMethodUsingAttr).toEqual('Method => Name');
           });
         });
       });
@@ -138,7 +138,7 @@ describe('instantiating a structure', () => {
       it('overwrites default value with passed value', () => {
         const user = new User({ name: 'Not the default' });
 
-        expect(user.name).toBe('Not the default');
+        expect(user.name).toEqual('Not the default');
       });
     });
 
@@ -203,7 +203,7 @@ describe('instantiating a structure', () => {
             password: 'My password',
           });
 
-          expect(user.password).toBe('My password');
+          expect(user.password).toEqual('My password');
         });
       });
     });
@@ -285,7 +285,7 @@ describe('updating an instance', () => {
 
     user.name = 'New name';
 
-    expect(user.name).toBe('New name');
+    expect(user.name).toEqual('New name');
   });
 
   it('reflects new value assigned to attribute on #attributes', () => {
@@ -295,7 +295,7 @@ describe('updating an instance', () => {
 
     user.name = 'New name';
 
-    expect(user.attributes.name).toBe('New name');
+    expect(user.attributes.name).toEqual('New name');
   });
 
   it('reflects new value assigned to #attributes on instance attribute', () => {
@@ -307,7 +307,7 @@ describe('updating an instance', () => {
       name: 'New name',
     };
 
-    expect(user.name).toBe('New name');
+    expect(user.name).toEqual('New name');
   });
 
   it('does not throw if no attributes are passed when instantiating', () => {
@@ -389,7 +389,7 @@ describe('cloning an instance', () => {
 
         const userClone = user.clone();
 
-        expect(userClone.name).toBe('Me');
+        expect(userClone.name).toEqual('Me');
         expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
     });
@@ -405,7 +405,7 @@ describe('cloning an instance', () => {
 
         const userClone = user.clone({});
 
-        expect(userClone.name).toBe('Me');
+        expect(userClone.name).toEqual('Me');
         expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
     });
@@ -425,7 +425,7 @@ describe('cloning an instance', () => {
           name: 'Myself',
         });
 
-        expect(userClone.name).toBe('Myself');
+        expect(userClone.name).toEqual('Myself');
         expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
 
@@ -443,7 +443,7 @@ describe('cloning an instance', () => {
             age: '123',
           });
 
-          expect(userClone.age).toBe(123);
+          expect(userClone.age).toEqual(123);
         });
       });
     });
@@ -462,9 +462,9 @@ describe('cloning an instance', () => {
             favoriteBook: new Book({ name: 'The Lord of the Rings' }),
           });
 
-          expect(userClone.name).toBe('Me');
+          expect(userClone.name).toEqual('Me');
           expect(userClone.favoriteBook).not.toBe(user.favoriteBook);
-          expect(userClone.favoriteBook.name).toBe('The Lord of the Rings');
+          expect(userClone.favoriteBook.name).toEqual('The Lord of the Rings');
         });
       });
 
@@ -481,9 +481,9 @@ describe('cloning an instance', () => {
             favoriteBook: { name: 'The Lord of the Rings' },
           });
 
-          expect(userClone.name).toBe('Me');
+          expect(userClone.name).toEqual('Me');
           expect(userClone.favoriteBook).not.toBe(user.favoriteBook);
-          expect(userClone.favoriteBook.name).toBe('The Lord of the Rings');
+          expect(userClone.favoriteBook.name).toEqual('The Lord of the Rings');
         });
       });
     });
@@ -501,7 +501,7 @@ describe('cloning an instance', () => {
 
         const userClone = user.clone({ name: 'Me' }, { strict: true });
 
-        expect(userClone.name).toBe('Me');
+        expect(userClone.name).toEqual('Me');
         expect(userClone.favoriteBook).toBe(user.favoriteBook);
       });
     });

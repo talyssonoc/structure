@@ -1,12 +1,14 @@
 const { isFunction, isString } = require('lodash');
+const Coercion = require('../../coercion');
 
 class AttributeDefinition {
-  static for(name, options) {
+  static for(name, options, schema) {
     options = makeComplete(options);
 
     return new this({
       name,
       options,
+      schema,
     });
   }
 
@@ -22,16 +24,32 @@ class AttributeDefinition {
     return -1;
   }
 
-  constructor({ name, options }) {
+  constructor({ name, options, schema }) {
     this.name = name;
     this.options = options;
     this.dynamicDefault = isFunction(options.default);
+    this.isDynamicType = isString(options.type);
+    this.schema = schema;
 
     if (this.dynamicDefault) {
       this.initialize = options.default;
     } else {
       this.initialize = () => options.default;
     }
+
+    this.coercion = Coercion.for(this);
+  }
+
+  resolveType() {
+    if (this.isDynamicType) {
+      return this.schema.dynamicTypeFor(this.options.type);
+    }
+
+    return this.options.type;
+  }
+
+  coerce(newValue) {
+    return this.coercion.coerce(newValue);
   }
 }
 
