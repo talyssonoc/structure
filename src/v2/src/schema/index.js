@@ -1,8 +1,43 @@
 const AttributeDefinitions = require('./AttributeDefinitions');
 const Initialization = require('../initialization');
+const { SCHEMA } = require('../symbols');
 
 class Schema {
   static for({ attributeDefinitions, wrappedClass, options }) {
+    const parentSchema = wrappedClass[SCHEMA];
+
+    if (parentSchema) {
+      return this.extend(parentSchema, {
+        attributeDefinitions,
+        wrappedClass,
+        options,
+      });
+    }
+
+    return new this({
+      attributeDefinitions,
+      wrappedClass,
+      options,
+    });
+  }
+
+  static extend(parentSchema, { attributeDefinitions, wrappedClass, options }) {
+    const parentAttributes = parentSchema.attributeDefinitions.byKey();
+
+    attributeDefinitions = {
+      ...parentAttributes,
+      ...attributeDefinitions,
+    };
+
+    options = {
+      ...parentSchema.options,
+      ...options,
+      dynamics: {
+        ...parentSchema.dynamics,
+        ...options.dynamics,
+      },
+    };
+
     return new this({
       attributeDefinitions,
       wrappedClass,

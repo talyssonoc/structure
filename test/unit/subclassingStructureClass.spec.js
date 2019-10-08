@@ -1,4 +1,4 @@
-const { attributes } = require('../../src');
+const { attributes } = require('../../src/v2/src');
 
 describe('subclassing a structure with a POJO class', () => {
   let User;

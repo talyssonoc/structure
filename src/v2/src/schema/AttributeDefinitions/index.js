@@ -21,6 +21,16 @@ class AttributeDefinitions extends Array {
       this[attributeDefinition.name] = attributeDefinition;
     }
   }
+
+  byKey() {
+    return this.reduce(
+      (attributeDefinitions, attrDefinition) => ({
+        ...attributeDefinitions,
+        [attrDefinition.name]: this[attrDefinition.name],
+      }),
+      {}
+    );
+  }
 }
 
 module.exports = AttributeDefinitions;

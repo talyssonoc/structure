@@ -3,6 +3,10 @@ const Coercion = require('../../coercion');
 
 class AttributeDefinition {
   static for(name, options, schema) {
+    if (options.__isAttributeDefinition) {
+      return options;
+    }
+
     options = makeComplete(options);
 
     return new this({
@@ -25,6 +29,9 @@ class AttributeDefinition {
   }
 
   constructor({ name, options, schema }) {
+    // used to extend schemas when subclassing structures
+    this.__isAttributeDefinition = true;
+
     this.name = name;
     this.options = options;
     this.dynamicDefault = isFunction(options.default);
