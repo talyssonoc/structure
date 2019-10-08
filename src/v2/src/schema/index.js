@@ -1,7 +1,7 @@
 const AttributeDefinitions = require('./AttributeDefinitions');
 const Initialization = require('../initialization');
-const StrictMode = require('../strictMode');
 const Validation = require('../validation');
+const Serialization = require('../serialization');
 const { SCHEMA } = require('../symbols');
 
 class Schema {
@@ -54,8 +54,8 @@ class Schema {
     this.identifier = wrappedClass.name;
 
     this.initialization = Initialization.for(this);
-    this.strictMode = StrictMode.for(this);
     this.validation = Validation.for(this);
+    this.serialize = Serialization.serialize;
   }
 
   initializeInstance(instance, { attributes }) {
