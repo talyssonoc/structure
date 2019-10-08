@@ -1,4 +1,4 @@
-const { attributes } = require('../../../src');
+const { attributes } = require('../../../src/');
 const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {

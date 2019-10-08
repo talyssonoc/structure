@@ -67,6 +67,10 @@ class AttributeDefinition {
     return Boolean(this.resolveType()[SCHEMA]);
   }
 
+  get itemsAreStructures() {
+    return this.isArrayType && this.itemTypeDefinition.isNestedSchema;
+  }
+
   coerce(newValue) {
     return this.coercion.coerce(newValue);
   }

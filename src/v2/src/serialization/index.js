@@ -27,16 +27,16 @@ function serializeStructure(structure) {
   return serializedStructure;
 }
 
-function serializeAttribute(attribute, attributeDefinition) {
-  if (attributeDefinition.isArrayType) {
-    return attribute.map(serialize);
+function serializeAttribute(attributeValue, attributeDefinition) {
+  if (attributeDefinition.itemsAreStructures) {
+    return attributeValue.map(serialize);
   }
 
   if (attributeDefinition.isNestedSchema) {
-    return serialize(attribute);
+    return serialize(attributeValue);
   }
 
-  return attribute;
+  return attributeValue;
 }
 
 exports.serialize = serialize;
