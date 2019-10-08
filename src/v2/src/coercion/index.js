@@ -9,18 +9,18 @@ const types = [
   require('./coercions/date'),
 ];
 
-exports.for = function coercionFor(typeDefinition) {
-  const coercion = getCoercion(typeDefinition);
+exports.for = function coercionFor(attributeDefinition) {
+  const coercion = getCoercion(attributeDefinition);
 
-  return Coercion.create(coercion, typeDefinition);
+  return Coercion.create(coercion, attributeDefinition);
 };
 
-function getCoercion(typeDefinition) {
-  if (typeDefinition.isArrayType) {
+function getCoercion(attributeDefinition) {
+  if (attributeDefinition.isArrayType) {
     return arrayCoercion;
   }
 
-  const coercion = types.find((c) => c.type === typeDefinition.options.type);
+  const coercion = types.find((c) => c.type === attributeDefinition.options.type);
 
   if (coercion) {
     return coercion;

@@ -38,8 +38,8 @@ function extractItems(iterable) {
   return iterable;
 }
 
-function createInstance(typeDefinition) {
-  const type = typeDefinition.resolveType();
+function createInstance(attributeDefinition) {
+  const type = attributeDefinition.resolveType();
   return new type();
 }
 

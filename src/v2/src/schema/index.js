@@ -1,6 +1,7 @@
 const AttributeDefinitions = require('./AttributeDefinitions');
 const Initialization = require('../initialization');
 const StrictMode = require('../strictMode');
+const Validation = require('../validation');
 const { SCHEMA } = require('../symbols');
 
 class Schema {
@@ -50,9 +51,11 @@ class Schema {
     this.attributeDefinitions = AttributeDefinitions.for(attributeDefinitions, { schema: this });
     this.wrappedClass = wrappedClass;
     this.options = options;
+    this.identifier = wrappedClass.name;
 
     this.initialization = Initialization.for(this);
     this.strictMode = StrictMode.for(this);
+    this.validation = Validation.for(this);
   }
 
   initializeInstance(instance, { attributes }) {
@@ -61,6 +64,20 @@ class Schema {
 
   dynamicTypeFor(typeIdentifier) {
     return this.options.dynamics[typeIdentifier];
+  }
+
+  validateAttributes(attributes) {
+    if (attributes[SCHEMA]) {
+      attributes = attributes.toJSON();
+    }
+
+    return this.validation.validate(attributes);
+  }
+
+  validateInstance(instance) {
+    const attributes = instance.toJSON();
+
+    return this.validation.validate(attributes);
   }
 }
 

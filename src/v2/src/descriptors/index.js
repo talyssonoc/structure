@@ -14,6 +14,7 @@ class Descriptors {
     this.setBuildStrict();
     this.setAttributesGetterAndSetter();
     this.setEachAttributeGetterAndSetter();
+    this.setValidation();
   }
 
   setSchema() {
@@ -70,6 +71,22 @@ class Descriptors {
         this.attributes[name] = schema.attributeDefinitions[name].coerce(value);
       },
     };
+  }
+
+  setValidation() {
+    const { schema, StructureClass } = this;
+
+    defineProperty(StructureClass, 'validate', {
+      value(attributes) {
+        return schema.validateAttributes(attributes);
+      },
+    });
+
+    defineProperty(StructureClass.prototype, 'validate', {
+      value() {
+        return schema.validateInstance(this);
+      },
+    });
   }
 }
 

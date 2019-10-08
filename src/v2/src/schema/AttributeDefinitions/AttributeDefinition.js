@@ -1,5 +1,6 @@
 const { isFunction, isString } = require('lodash');
 const Coercion = require('../../coercion');
+const Validation = require('../../validation');
 
 class AttributeDefinition {
   static for(name, options, schema) {
@@ -50,6 +51,7 @@ class AttributeDefinition {
     }
 
     this.coercion = Coercion.for(this);
+    this.validation = Validation.forAttribute(this);
   }
 
   resolveType() {
