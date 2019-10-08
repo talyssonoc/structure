@@ -1,5 +1,5 @@
 const { attributes } = require('./src');
-const { SCHEMA } = require('./src/symbols');
+// const { SCHEMA } = require('./src/symbols');
 
 const User = attributes({
   name: String,
@@ -10,4 +10,4 @@ const User = attributes({
 })(class User {});
 
 const user = new User({ name: 'Name', age: 2 });
-// console.log(user.name, user.age, user.attributes);
+console.log(user.name, user.age, user.attributes);

@@ -1,5 +1,5 @@
 const joi = require('@hapi/joi');
-const { SCHEMA, VALIDATE } = require('../../symbols');
+const { SCHEMA } = require('../../symbols');
 const { requiredOption } = require('./utils');
 
 exports.forType = function nestedValidationForType(attributeDefinition) {
