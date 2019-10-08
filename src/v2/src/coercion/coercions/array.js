@@ -1,29 +1,33 @@
 const Errors = require('../../../../errors');
 
-module.exports = function arrayCoercionFor(attributeDefinition, itemTypeDefinition) {
-  return function coerceArray(rawValue) {
+module.exports = {
+  isCoerced: () => false, // always tries to coerce array types
+  nullValue() {
+    throw Errors.arrayOrIterable();
+  },
+  coerce(rawValue, attributeDefinition) {
     if (rawValue === undefined) {
       return;
     }
 
-    validateIfIterable(rawValue);
+    assertIterable(rawValue);
 
     const items = extractItems(rawValue);
 
     const instance = createInstance(attributeDefinition);
 
-    return fillInstance(instance, items, itemTypeDefinition);
-  };
+    return fillInstance(instance, items, attributeDefinition);
+  },
 };
 
-function validateIfIterable(value) {
+function assertIterable(value) {
   if (!isIterable(value)) {
     throw Errors.arrayOrIterable();
   }
 }
 
 function isIterable(value) {
-  return value != null && (value.length != null || value[Symbol.iterator]);
+  return value !== undefined && (value.length != null || value[Symbol.iterator]);
 }
 
 function extractItems(iterable) {
@@ -39,14 +43,10 @@ function createInstance(typeDefinition) {
   return new type();
 }
 
-function fillInstance(instance, items, itemTypeDefinition) {
+function fillInstance(instance, items, attributeDefinition) {
   for (let i = 0; i < items.length; i++) {
-    instance.push(coerceItem(itemTypeDefinition, items[i]));
+    instance.push(attributeDefinition.itemTypeDefinition.coerce(items[i]));
   }
 
   return instance;
-}
-
-function coerceItem(itemTypeDefinition, item) {
-  return itemTypeDefinition.coerce(item);
 }

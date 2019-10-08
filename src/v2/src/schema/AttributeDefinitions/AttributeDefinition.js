@@ -28,8 +28,13 @@ class AttributeDefinition {
     this.name = name;
     this.options = options;
     this.dynamicDefault = isFunction(options.default);
-    this.isDynamicType = isString(options.type);
+    this.hasDynamicType = isString(options.type);
     this.schema = schema;
+
+    if (options.itemType) {
+      this.isArrayType = true;
+      this.itemTypeDefinition = AttributeDefinition.for('item', options.itemType, schema);
+    }
 
     if (this.dynamicDefault) {
       this.initialize = options.default;
@@ -41,7 +46,7 @@ class AttributeDefinition {
   }
 
   resolveType() {
-    if (this.isDynamicType) {
+    if (this.hasDynamicType) {
       return this.schema.dynamicTypeFor(this.options.type);
     }
 
