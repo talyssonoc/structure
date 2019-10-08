@@ -1,6 +1,7 @@
 const { isFunction, isString } = require('lodash');
 const Coercion = require('../../coercion');
 const Validation = require('../../validation');
+const Errors = require('../../errors');
 const { SCHEMA } = require('../../symbols');
 
 class AttributeDefinition {
@@ -10,6 +11,9 @@ class AttributeDefinition {
     }
 
     options = makeComplete(options);
+
+    this.assertValidType(name, options);
+    this.assertDynamicExists(name, options, schema);
 
     return new this({
       name,
@@ -30,6 +34,24 @@ class AttributeDefinition {
     return -1;
   }
 
+  static assertDynamicExists(name, options, schema) {
+    if (!hasDynamicType(options)) {
+      return;
+    }
+
+    if (!schema.hasDynamicTypeFor(options.type)) {
+      throw Errors.missingDynamicType(name);
+    }
+  }
+
+  static assertValidType(name, options) {
+    if (hasDynamicType(options) || hasStaticType(options)) {
+      return;
+    }
+
+    throw Errors.invalidType(name);
+  }
+
   constructor({ name, options, schema }) {
     // used to extend schemas when subclassing structures
     this.__isAttributeDefinition = true;
@@ -37,7 +59,7 @@ class AttributeDefinition {
     this.name = name;
     this.options = options;
     this.dynamicDefault = isFunction(options.default);
-    this.hasDynamicType = isString(options.type);
+    this.hasDynamicType = hasDynamicType(options);
     this.schema = schema;
 
     if (options.itemType) {
@@ -97,5 +119,8 @@ const makeComplete = (options) => {
 };
 
 const isShorthand = (options) => isFunction(options) || isString(options);
+
+const hasStaticType = (options) => isFunction(options.type);
+const hasDynamicType = (options) => isString(options.type);
 
 module.exports = AttributeDefinition;

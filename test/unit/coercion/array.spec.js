@@ -1,4 +1,4 @@
-const { attributes } = require('../../../src/v2/src');
+const { attributes } = require('../../../src');
 
 describe('type coercion', () => {
   describe('Array', () => {
@@ -103,12 +103,60 @@ describe('type coercion', () => {
     });
 
     describe('when raw value is a not iterable', () => {
-      it('throws an error', () => {
-        expect(() => {
-          new User({
-            books: 123,
+      describe('when it is not null', () => {
+        it('throws an error', () => {
+          expect(() => {
+            new User({
+              books: 123,
+            });
+          }).toThrow(/^Value must be iterable or array-like\.$/);
+        });
+      });
+
+      describe('when it is null', () => {
+        describe('when array is nullable', () => {
+          let User;
+
+          beforeEach(() => {
+            User = attributes({
+              books: {
+                type: Array,
+                itemType: String,
+                nullable: true,
+              },
+            })(class User {});
           });
-        }).toThrow(/^Value must be iterable or array-like\.$/);
+
+          it('keeps as null', () => {
+            const user = new User({
+              books: null,
+            });
+
+            expect(user.books).toBeNull();
+          });
+        });
+
+        describe('when array is not nullable', () => {
+          let User;
+
+          beforeEach(() => {
+            User = attributes({
+              books: {
+                type: Array,
+                itemType: String,
+                nullable: false,
+              },
+            })(class User {});
+          });
+
+          it('throws an error', () => {
+            expect(() => {
+              new User({
+                books: null,
+              });
+            }).toThrow(/^Value must be iterable or array-like\.$/);
+          });
+        });
       });
     });
 
@@ -130,42 +178,42 @@ describe('type coercion', () => {
         expect(seat.seats).toEqual([1]);
       });
     });
-  });
 
-  describe('Array from dynamic type', () => {
-    let CircularUser;
-    let BooksCollection;
+    describe('Array from dynamic type', () => {
+      let CircularUser;
+      let BooksCollection;
 
-    beforeEach(() => {
-      CircularUser = require('../../fixtures/CircularUser');
-      BooksCollection = require('../../fixtures/BooksCollection');
-    });
-
-    it('coerces collection', () => {
-      const user = new CircularUser({
-        books: ['Dragons of Ether', 'The Dark Tower'],
+      beforeEach(() => {
+        CircularUser = require('../../fixtures/CircularUser');
+        BooksCollection = require('../../fixtures/BooksCollection');
       });
 
-      expect(user.books).toBeInstanceOf(BooksCollection);
-    });
+      it('coerces collection', () => {
+        const user = new CircularUser({
+          books: ['Dragons of Ether', 'The Dark Tower'],
+        });
 
-    it('coerces items', () => {
-      const user = new CircularUser({
-        books: ['The Lord of The Rings', 1984, true],
+        expect(user.books).toBeInstanceOf(BooksCollection);
       });
 
-      expect(user.books).toEqual(['The Lord of The Rings', '1984', 'true']);
-    });
+      it('coerces items', () => {
+        const user = new CircularUser({
+          books: ['The Lord of The Rings', 1984, true],
+        });
 
-    it('does not coerce items that are of the expected type', () => {
-      const book = new String('A Game of Thrones');
-
-      const user = new CircularUser({
-        books: [book],
+        expect(user.books).toEqual(['The Lord of The Rings', '1984', 'true']);
       });
 
-      expect(user.books).toEqual([new String('A Game of Thrones')]);
-      expect(user.books[0]).toBe(book);
+      it('does not coerce items that are of the expected type', () => {
+        const book = new String('A Game of Thrones');
+
+        const user = new CircularUser({
+          books: [book],
+        });
+
+        expect(user.books).toEqual([new String('A Game of Thrones')]);
+        expect(user.books[0]).toBe(book);
+      });
     });
   });
 });

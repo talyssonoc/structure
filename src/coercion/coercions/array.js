@@ -1,4 +1,4 @@
-const Errors = require('../../../../errors');
+const Errors = require('../../errors');
 
 module.exports = {
   isCoerced: () => false, // always tries to coerce array types
@@ -6,10 +6,6 @@ module.exports = {
     throw Errors.arrayOrIterable();
   },
   coerce(rawValue, attributeDefinition) {
-    if (rawValue === undefined) {
-      return;
-    }
-
     assertIterable(rawValue);
 
     const items = extractItems(rawValue);

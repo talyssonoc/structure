@@ -1,4 +1,4 @@
-const { attributes } = require('../../src/v2/src');
+const { attributes } = require('../../src');
 
 describe('creating a structure class', () => {
   describe('structure class is passed as the second parameter', () => {
@@ -98,6 +98,28 @@ describe('creating a structure class', () => {
         const user = new User();
 
         expect(user.age).toBe(18);
+      });
+    });
+  });
+
+  describe('when type is not valid', () => {
+    describe('when shorthand notation is not a constructor nor a dynamic type name', () => {
+      it('throws an error', () => {
+        expect(() => {
+          attributes({
+            name: true,
+          })(class User {});
+        }).toThrow(/^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
+      });
+    });
+
+    describe('when complete notation is not a constructor nor a dynamic type name', () => {
+      it('throws an error', () => {
+        expect(() => {
+          attributes({
+            name: { type: true },
+          })(class User {});
+        }).toThrow(/^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
       });
     });
   });

@@ -1,6 +1,6 @@
 const { isObject } = require('lodash');
 const { SCHEMA, ATTRIBUTES } = require('../symbols');
-const Errors = require('../../../errors');
+const Errors = require('../errors');
 const StrictMode = require('../strictMode');
 const Cloning = require('../cloning');
 const { defineProperty } = Object;

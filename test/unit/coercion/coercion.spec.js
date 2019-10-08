@@ -1,6 +1,6 @@
-const Coercion = require('../../../src/v2/src/coercion/coercion');
-const CoercionNumber = require('../../../src/v2/src/coercion/coercions/number');
-const CoercionDate = require('../../../src/v2/src/coercion/coercions/date');
+const Coercion = require('../../../src/coercion/coercion');
+const CoercionNumber = require('../../../src/coercion/coercions/number');
+const CoercionDate = require('../../../src/coercion/coercions/date');
 
 describe('Coercion', () => {
   describe('.create', () => {

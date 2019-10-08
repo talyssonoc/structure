@@ -1,6 +1,6 @@
 const Schema = require('./schema');
 const Descriptors = require('./descriptors');
-const Errors = require('../../errors');
+const Errors = require('./errors');
 
 module.exports = function attributes(attributeDefinitions, options = {}) {
   if (typeof options !== 'object') {

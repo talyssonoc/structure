@@ -1,7 +1,6 @@
-exports.buildCloneDescriptorFor = function buildCloneDescriptorFor(StructureClass) {
+exports.for = function cloneFor(StructureClass) {
   return {
-    configurable: true,
-    value: function clone(overwrites = {}, options = {}) {
+    clone(overwrites = {}, options = {}) {
       const { strict } = options;
 
       const newAttributes = {

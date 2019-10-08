@@ -1,4 +1,4 @@
-const { attributes } = require('../../src/v2/src');
+const { attributes } = require('../../src');
 
 describe('instantiating a structure', () => {
   let User;
