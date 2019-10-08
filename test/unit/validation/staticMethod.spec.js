@@ -1,4 +1,4 @@
-const { attributes } = require('../../../src');
+const { attributes } = require('../../../src/v2/src');
 
 describe('validation', () => {
   describe('Using structure static method', () => {

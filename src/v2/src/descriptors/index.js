@@ -1,6 +1,7 @@
 const { isObject } = require('lodash');
 const { SCHEMA, ATTRIBUTES } = require('../symbols');
 const Errors = require('../../../errors');
+const StrictMode = require('../strictMode');
 const { defineProperty } = Object;
 
 class Descriptors {
@@ -14,17 +15,25 @@ class Descriptors {
     this.setBuildStrict();
     this.setAttributesGetterAndSetter();
     this.setEachAttributeGetterAndSetter();
+    this.setValidation();
+    this.setSerialization();
   }
 
   setSchema() {
     defineProperty(this.StructureClass, SCHEMA, {
       value: this.schema,
     });
+
+    defineProperty(this.StructureClass.prototype, SCHEMA, {
+      value: this.schema,
+    });
   }
 
   setBuildStrict() {
+    const strictMode = StrictMode.for(this.schema, this.StructureClass);
+
     defineProperty(this.StructureClass, 'buildStrict', {
-      value: this.schema.strictMode.buildStrict,
+      value: strictMode.buildStrict,
     });
   }
 
@@ -70,6 +79,32 @@ class Descriptors {
         this.attributes[name] = schema.attributeDefinitions[name].coerce(value);
       },
     };
+  }
+
+  setValidation() {
+    const { schema, StructureClass } = this;
+
+    defineProperty(StructureClass, 'validate', {
+      value(attributes) {
+        return schema.validateAttributes(attributes);
+      },
+    });
+
+    defineProperty(StructureClass.prototype, 'validate', {
+      value() {
+        return schema.validateInstance(this);
+      },
+    });
+  }
+
+  setSerialization() {
+    const { schema, StructureClass } = this;
+
+    defineProperty(StructureClass.prototype, 'toJSON', {
+      value() {
+        return schema.serialize(this);
+      },
+    });
   }
 }
 

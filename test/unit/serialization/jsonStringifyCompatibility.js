@@ -1,4 +1,4 @@
-const { attributes } = require('../../../src');
+const { attributes } = require('../../../src/v2/src');
 
 describe('JSON.stringify compatibility', () => {
   describe('when the structure is serialized with JSON.stringify', () => {
