@@ -1,11 +1,9 @@
 const Errors = require('../../../errors');
 const DefaultValidationError = require('../../../errors/DefaultValidationError');
 
-exports.for = (schema) => {
+exports.for = (schema, StructureClass) => {
   const StructureValidationError =
     schema.options.strictValidationErrorClass || DefaultValidationError;
-
-  const StructureClass = schema.wrappedClass;
 
   return {
     buildStrict(...constructorArgs) {

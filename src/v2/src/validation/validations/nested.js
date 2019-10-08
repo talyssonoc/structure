@@ -46,7 +46,7 @@ function getNestedValidations(typeSchema) {
 }
 
 exports.resolveDynamicLinks = function resolveDynamicLinks({ schema, joiValidation }) {
-  return schema.attributeDefinition.reduce((joiValidation, attributeDefinition) => {
+  return schema.attributeDefinitions.reduce((joiValidation, attributeDefinition) => {
     if (!attributeDefinition.hasDynamicType) {
       return joiValidation;
     }

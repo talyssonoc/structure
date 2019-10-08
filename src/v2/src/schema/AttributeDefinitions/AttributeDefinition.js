@@ -1,6 +1,7 @@
 const { isFunction, isString } = require('lodash');
 const Coercion = require('../../coercion');
 const Validation = require('../../validation');
+const { SCHEMA } = require('../../symbols');
 
 class AttributeDefinition {
   static for(name, options, schema) {
@@ -62,8 +63,24 @@ class AttributeDefinition {
     return this.options.type;
   }
 
+  get isNestedSchema() {
+    return Boolean(this.resolveType()[SCHEMA]);
+  }
+
   coerce(newValue) {
     return this.coercion.coerce(newValue);
+  }
+
+  shouldSerialize(attributeValue) {
+    return this.isValuePresent(attributeValue) || this.isValueNullable(attributeValue);
+  }
+
+  isValuePresent(attributeValue) {
+    return attributeValue != null;
+  }
+
+  isValueNullable(attributeValue) {
+    return attributeValue !== undefined && this.options.nullable;
   }
 }
 
