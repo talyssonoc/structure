@@ -2,6 +2,7 @@ const { isObject } = require('lodash');
 const { SCHEMA, ATTRIBUTES } = require('../symbols');
 const Errors = require('../../../errors');
 const StrictMode = require('../strictMode');
+const Cloning = require('../cloning');
 const { defineProperty } = Object;
 
 class Descriptors {
@@ -17,6 +18,7 @@ class Descriptors {
     this.setEachAttributeGetterAndSetter();
     this.setValidation();
     this.setSerialization();
+    this.setCloning();
   }
 
   setSchema() {
@@ -104,6 +106,16 @@ class Descriptors {
       value() {
         return schema.serialize(this);
       },
+    });
+  }
+
+  setCloning() {
+    const { StructureClass } = this;
+
+    const cloning = Cloning.for(StructureClass);
+
+    defineProperty(StructureClass.prototype, 'clone', {
+      value: cloning.clone,
     });
   }
 }
