@@ -11,6 +11,7 @@ class Descriptors {
 
   setDescriptors() {
     this.setSchema();
+    this.setBuildStrict();
     this.setAttributesGetterAndSetter();
     this.setEachAttributeGetterAndSetter();
   }
@@ -18,6 +19,12 @@ class Descriptors {
   setSchema() {
     defineProperty(this.StructureClass, SCHEMA, {
       value: this.schema,
+    });
+  }
+
+  setBuildStrict() {
+    defineProperty(this.StructureClass, 'buildStrict', {
+      value: this.schema.strictMode.buildStrict,
     });
   }
 

@@ -1,5 +1,6 @@
 const AttributeDefinitions = require('./AttributeDefinitions');
 const Initialization = require('../initialization');
+const StrictMode = require('../strictMode');
 const { SCHEMA } = require('../symbols');
 
 class Schema {
@@ -51,6 +52,7 @@ class Schema {
     this.options = options;
 
     this.initialization = Initialization.for(this);
+    this.strictMode = StrictMode.for(this);
   }
 
   initializeInstance(instance, { attributes }) {
