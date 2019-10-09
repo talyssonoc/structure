@@ -1,22 +1,24 @@
 const { isFunction } = require('lodash');
 
-exports.create = (coercion, attributeDefinition) => ({
-  coerce(value) {
-    if (value === undefined) {
-      return;
-    }
+exports.create = function createCoercionFor(coercion, attributeDefinition) {
+  return {
+    coerce(value) {
+      if (value === undefined) {
+        return;
+      }
 
-    if (value === null) {
-      return getNullableValue(coercion, attributeDefinition);
-    }
+      if (value === null) {
+        return getNullableValue(coercion, attributeDefinition);
+      }
 
-    if (coercion.isCoerced(value, attributeDefinition)) {
-      return value;
-    }
+      if (coercion.isCoerced(value, attributeDefinition)) {
+        return value;
+      }
 
-    return coercion.coerce(value, attributeDefinition);
-  },
-});
+      return coercion.coerce(value, attributeDefinition);
+    },
+  };
+};
 
 const getNullableValue = (coercion, attributeDefinition) =>
   needsNullableInitialization(attributeDefinition) ? getNullValue(coercion) : null;

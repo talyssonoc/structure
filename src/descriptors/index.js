@@ -77,13 +77,13 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
 
   function setValidation() {
     defineProperty(StructureClass, 'validate', {
-      value(attributes) {
+      value: function validate(attributes) {
         return schema.validateAttributes(attributes);
       },
     });
 
     defineProperty(StructureClass.prototype, 'validate', {
-      value() {
+      value: function validate() {
         return schema.validateInstance(this);
       },
     });
@@ -91,7 +91,7 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
 
   function setSerialization() {
     defineProperty(StructureClass.prototype, 'toJSON', {
-      value() {
+      value: function toJSON() {
         return schema.serialize(this);
       },
     });

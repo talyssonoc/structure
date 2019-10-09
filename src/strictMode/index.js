@@ -1,7 +1,7 @@
 const Errors = require('../errors');
 const DefaultValidationError = require('../errors/DefaultValidationError');
 
-exports.for = (schema, StructureClass) => {
+exports.for = function strictModeFor(schema, StructureClass) {
   const StructureValidationError =
     schema.options.strictValidationErrorClass || DefaultValidationError;
 
