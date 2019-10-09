@@ -5,42 +5,35 @@ const StrictMode = require('../strictMode');
 const Cloning = require('../cloning');
 const { defineProperty } = Object;
 
-class Descriptors {
-  constructor(schema, StructureClass) {
-    this.schema = schema;
-    this.StructureClass = StructureClass;
-  }
+exports.addTo = function addDescriptorsTo(schema, StructureClass) {
+  setSchema();
+  setBuildStrict();
+  setAttributesGetterAndSetter();
+  setEachAttributeGetterAndSetter();
+  setValidation();
+  setSerialization();
+  setCloning();
 
-  setDescriptors() {
-    this.setSchema();
-    this.setBuildStrict();
-    this.setAttributesGetterAndSetter();
-    this.setEachAttributeGetterAndSetter();
-    this.setValidation();
-    this.setSerialization();
-    this.setCloning();
-  }
-
-  setSchema() {
-    defineProperty(this.StructureClass, SCHEMA, {
-      value: this.schema,
+  function setSchema() {
+    defineProperty(StructureClass, SCHEMA, {
+      value: schema,
     });
 
-    defineProperty(this.StructureClass.prototype, SCHEMA, {
-      value: this.schema,
+    defineProperty(StructureClass.prototype, SCHEMA, {
+      value: schema,
     });
   }
 
-  setBuildStrict() {
-    const strictMode = StrictMode.for(this.schema, this.StructureClass);
+  function setBuildStrict() {
+    const strictMode = StrictMode.for(schema, StructureClass);
 
-    defineProperty(this.StructureClass, 'buildStrict', {
+    defineProperty(StructureClass, 'buildStrict', {
       value: strictMode.buildStrict,
     });
   }
 
-  setAttributesGetterAndSetter() {
-    defineProperty(this.StructureClass.prototype, 'attributes', {
+  function setAttributesGetterAndSetter() {
+    defineProperty(StructureClass.prototype, 'attributes', {
       get() {
         return this[ATTRIBUTES];
       },
@@ -58,18 +51,17 @@ class Descriptors {
     });
   }
 
-  setEachAttributeGetterAndSetter() {
-    this.schema.attributeDefinitions.forEach((attrDefinition) => {
+  function setEachAttributeGetterAndSetter() {
+    schema.attributeDefinitions.forEach((attrDefinition) => {
       defineProperty(
-        this.StructureClass.prototype,
+        StructureClass.prototype,
         attrDefinition.name,
-        this.attributeDescriptor(attrDefinition)
+        attributeDescriptor(attrDefinition)
       );
     });
   }
 
-  attributeDescriptor(attrDefinition) {
-    const { schema } = this;
+  function attributeDescriptor(attrDefinition) {
     const { name } = attrDefinition;
 
     return {
@@ -83,9 +75,7 @@ class Descriptors {
     };
   }
 
-  setValidation() {
-    const { schema, StructureClass } = this;
-
+  function setValidation() {
     defineProperty(StructureClass, 'validate', {
       value(attributes) {
         return schema.validateAttributes(attributes);
@@ -99,9 +89,7 @@ class Descriptors {
     });
   }
 
-  setSerialization() {
-    const { schema, StructureClass } = this;
-
+  function setSerialization() {
     defineProperty(StructureClass.prototype, 'toJSON', {
       value() {
         return schema.serialize(this);
@@ -109,15 +97,11 @@ class Descriptors {
     });
   }
 
-  setCloning() {
-    const { StructureClass } = this;
-
+  function setCloning() {
     const cloning = Cloning.for(StructureClass);
 
     defineProperty(StructureClass.prototype, 'clone', {
       value: cloning.clone,
     });
   }
-}
-
-module.exports = Descriptors;
+};

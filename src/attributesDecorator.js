@@ -26,9 +26,7 @@ module.exports = function attributes(attributeDefinitions, options = {}) {
       },
     });
 
-    const descriptors = new Descriptors(schema, StructureClass);
-
-    descriptors.setDescriptors();
+    Descriptors.addTo(schema, StructureClass);
 
     return StructureClass;
   };
