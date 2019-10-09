@@ -7,7 +7,11 @@ const { SCHEMA } = require('../../symbols');
 class AttributeDefinition {
   static for(name, options, schema) {
     if (options.__isAttributeDefinition) {
-      return options;
+      return new this({
+        name,
+        options: options.options,
+        schema,
+      });
     }
 
     options = makeComplete(options);
