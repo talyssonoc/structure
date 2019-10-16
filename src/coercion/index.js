@@ -1,26 +1,26 @@
-const arrayCoercionFor = require('./array');
-const genericCoercionFor = require('./generic');
+const arrayCoercion = require('./coercions/array');
+const genericCoercionFor = require('./coercions/generic');
 const Coercion = require('./coercion');
 
 const types = [
-  require('./string'),
-  require('./number'),
-  require('./boolean'),
-  require('./date'),
+  require('./coercions/string'),
+  require('./coercions/number'),
+  require('./coercions/boolean'),
+  require('./coercions/date'),
 ];
 
-exports.for = function coercionFor(typeDescriptor, itemTypeDescriptor) {
-  if (itemTypeDescriptor) {
-    return arrayCoercionFor(typeDescriptor, itemTypeDescriptor);
-  }
+exports.for = function coercionFor(attributeDefinition) {
+  const coercion = getCoercion(attributeDefinition);
 
-  const coercion = getCoercion(typeDescriptor);
-
-  return Coercion.execute(coercion, typeDescriptor);
+  return Coercion.create(coercion, attributeDefinition);
 };
 
-function getCoercion(typeDescriptor) {
-  const coercion = types.find((c) => c.type === typeDescriptor.type);
+function getCoercion(attributeDefinition) {
+  if (attributeDefinition.isArrayType) {
+    return arrayCoercion;
+  }
+
+  const coercion = types.find((c) => c.type === attributeDefinition.options.type);
 
   if (coercion) {
     return coercion;

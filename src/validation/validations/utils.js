@@ -1,27 +1,28 @@
 const joi = require('@hapi/joi');
 const { isPlainObject, isFunction } = require('lodash');
 
-exports.mapToJoi = function mapToJoi(typeDescriptor, { initial, mappings }) {
+exports.mapToJoi = function mapToJoi(attributeDefinition, { initial, mappings }) {
   let joiSchema = mappings.reduce((joiSchema, [optionName, joiMethod, passValueToJoi]) => {
-    const attributeDescriptor = typeDescriptor[optionName];
-    if (attributeDescriptor === undefined) {
+    const optionValue = attributeDefinition.options[optionName];
+
+    if (optionValue === undefined) {
       return joiSchema;
     }
 
-    if (shouldPassValueToJoi(passValueToJoi, attributeDescriptor)) {
-      return joiSchema[joiMethod](attributeDescriptor);
+    if (shouldPassValueToJoi(passValueToJoi, optionValue)) {
+      return joiSchema[joiMethod](optionValue);
     }
 
     return joiSchema[joiMethod]();
   }, initial);
 
-  joiSchema = requiredOption(typeDescriptor, { initial: joiSchema });
+  joiSchema = requiredOption(attributeDefinition, { initial: joiSchema });
 
   return joiSchema;
 };
 
-function shouldPassValueToJoi(passValueToJoi, attributeDescriptor) {
-  return passValueToJoi && (!isFunction(passValueToJoi) || passValueToJoi(attributeDescriptor));
+function shouldPassValueToJoi(passValueToJoi, optionValue) {
+  return passValueToJoi && (!isFunction(passValueToJoi) || passValueToJoi(optionValue));
 }
 
 function mapValueOrReference(valueOrReference) {
@@ -33,24 +34,24 @@ function mapValueOrReference(valueOrReference) {
 }
 
 exports.mapToJoiWithReference = function mapToJoiWithReference(
-  typeDescriptor,
+  attributeDefinition,
   { initial, mappings }
 ) {
   return mappings.reduce((joiSchema, [optionName, joiMethod]) => {
-    let attributeDescriptor = typeDescriptor[optionName];
+    let optionValue = attributeDefinition.options[optionName];
 
-    if (attributeDescriptor === undefined) {
+    if (optionValue === undefined) {
       return joiSchema;
     }
 
-    attributeDescriptor = mapValueOrReference(attributeDescriptor);
+    optionValue = mapValueOrReference(optionValue);
 
-    return joiSchema[joiMethod](attributeDescriptor);
+    return joiSchema[joiMethod](optionValue);
   }, initial);
 };
 
-exports.equalOption = function equalOption(typeDescriptor, { initial }) {
-  let possibilities = typeDescriptor.equal;
+exports.equalOption = function equalOption(attributeDefinition, { initial }) {
+  let possibilities = attributeDefinition.options.equal;
 
   if (possibilities === undefined) {
     return initial;
@@ -65,12 +66,12 @@ exports.equalOption = function equalOption(typeDescriptor, { initial }) {
   return initial.equal(...possibilities);
 };
 
-function requiredOption(typeDescriptor, { initial }) {
-  if (typeDescriptor.nullable) {
+function requiredOption(attributeDefinition, { initial }) {
+  if (attributeDefinition.options.nullable) {
     initial = initial.allow(null);
   }
 
-  if (typeDescriptor.required) {
+  if (attributeDefinition.options.required) {
     initial = initial.required();
   }
 

@@ -5,15 +5,15 @@ module.exports = {
   type: Date,
   joiMappings: [],
   valueOrRefOptions: [['min', 'min'], ['max', 'max']],
-  createJoiSchema(typeDescriptor) {
-    let joiSchema = mapToJoiWithReference(typeDescriptor, {
+  createJoiSchema(attributeDefinition) {
+    let joiSchema = mapToJoiWithReference(attributeDefinition, {
       initial: joi.date(),
       mappings: this.valueOrRefOptions,
     });
 
-    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
+    joiSchema = equalOption(attributeDefinition, { initial: joiSchema });
 
-    return mapToJoi(typeDescriptor, {
+    return mapToJoi(attributeDefinition, {
       initial: joiSchema,
       mappings: this.joiMappings,
     });

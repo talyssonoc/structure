@@ -10,4 +10,5 @@ const Book = attributes(
   }
 )(class Book {});
 
+/* istanbul ignore next */
 module.exports = Book;

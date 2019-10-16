@@ -4,10 +4,10 @@ const { mapToJoi, equalOption } = require('./utils');
 module.exports = {
   type: Boolean,
   joiMappings: [],
-  createJoiSchema(typeDescriptor) {
-    let joiSchema = equalOption(typeDescriptor, { initial: joi.boolean() });
+  createJoiSchema(attributeDefinition) {
+    let joiSchema = equalOption(attributeDefinition, { initial: joi.boolean() });
 
-    return mapToJoi(typeDescriptor, {
+    return mapToJoi(attributeDefinition, {
       initial: joiSchema,
       mappings: this.joiMappings,
     });

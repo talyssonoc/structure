@@ -8,13 +8,16 @@ const joiMappings = [
   ['unique', 'unique'],
 ];
 
-module.exports = function arrayValidation(typeDescriptor, itemTypeDescriptor) {
-  let joiSchema = joi.array().items(itemTypeDescriptor.validation);
-  const canBeSparse = typeDescriptor.sparse === undefined || typeDescriptor.sparse;
+module.exports = function arrayValidation(attributeDefinition) {
+  let joiSchema = joi.array().items(attributeDefinition.itemTypeDefinition.validation);
+
+  const { sparse } = attributeDefinition.options;
+
+  const canBeSparse = sparse === undefined || sparse;
 
   joiSchema = joiSchema.sparse(canBeSparse);
 
-  joiSchema = mapToJoi(typeDescriptor, {
+  joiSchema = mapToJoi(attributeDefinition, {
     initial: joiSchema,
     mappings: joiMappings,
   });

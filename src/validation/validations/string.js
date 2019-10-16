@@ -18,7 +18,7 @@ module.exports = {
   createJoiSchema(typeDescriptor) {
     let joiSchema = joi.string();
 
-    if (typeDescriptor.empty) {
+    if (typeDescriptor.options.empty) {
       joiSchema = joiSchema.allow('');
     }
 

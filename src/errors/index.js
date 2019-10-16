@@ -4,11 +4,9 @@ exports.classAsSecondParam = (ErroneousPassedClass) =>
       'StructureClass'})\`.`
   );
 
-exports.nonObjectAttributes = () =>
-  new TypeError("#attributes can't be set to a non-object.");
+exports.nonObjectAttributes = () => new TypeError("#attributes can't be set to a non-object.");
 
-exports.arrayOrIterable = () =>
-  new TypeError('Value must be iterable or array-like.');
+exports.arrayOrIterable = () => new TypeError('Value must be iterable or array-like.');
 
 exports.missingDynamicType = (attributeName) =>
   new Error(`Missing dynamic type for attribute: ${attributeName}.`);

@@ -102,6 +102,28 @@ describe('creating a structure class', () => {
     });
   });
 
+  describe('when type is not valid', () => {
+    describe('when shorthand notation is not a constructor nor a dynamic type name', () => {
+      it('throws an error', () => {
+        expect(() => {
+          attributes({
+            name: true,
+          })(class User {});
+        }).toThrow(/^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
+      });
+    });
+
+    describe('when complete notation is not a constructor nor a dynamic type name', () => {
+      it('throws an error', () => {
+        expect(() => {
+          attributes({
+            name: { type: true },
+          })(class User {});
+        }).toThrow(/^Attribute type must be a constructor or the name of a dynamic type: name\.$/);
+      });
+    });
+  });
+
   describe('when using dynamic attribute types', () => {
     it('allows to use dynamic values without breaking', () => {
       require('../fixtures/CircularUser');
