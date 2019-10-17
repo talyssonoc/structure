@@ -1,13 +1,13 @@
 engines:
   eslint:
     enabled: true
-    channel: "eslint-3"
+    channel: 'eslint-3'
 
 ratings:
   paths:
-  - src/**
+    - packages/structure/src/**
 
 exclude_paths:
-- benchmark/**/*
-- dist/**/*
-- test/**/*
+  - benchmark/**/*
+  - packages/structure/dist/**/*
+  - packages/structure/test/**/*

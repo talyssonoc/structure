@@ -1,4 +1,4 @@
-const { attributes } = require('../src');
+const { attributes } = require('../packages/structure/src');
 
 const User = attributes({
   name: String,
@@ -17,8 +17,8 @@ const Product = attributes({
   }
 })(class Product { });
 
-const CircularUser = require('../test/fixtures/CircularUser');
-const CircularBook = require('../test/fixtures/CircularBook');
+const CircularUser = require('../packages/structure/test/fixtures/CircularUser');
+const CircularBook = require('../packages/structure/test/fixtures/CircularBook');
 
 exports.name = 'Instantiation';
 
