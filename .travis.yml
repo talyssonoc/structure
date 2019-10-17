@@ -5,8 +5,20 @@ node_js:
   - '11'
   - '12'
   - 'node'
+
+addons:
+  apt:
+    packages:
+      - xvfb
+
+install:
+  - yarn
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+
 before_script:
   - yarn test:browser:build
+
 script:
   - yarn lint
   - yarn test
