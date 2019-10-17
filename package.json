@@ -30,7 +30,9 @@
   ],
   "scripts": {
     "test": "jest",
-    "test:browser": "karma start test/karma.conf.js",
+    "test:browser:build": "webpack --config test/webpack.pretest.js",
+    "test:browser:run": "jest --config=test/jest.browser.js",
+    "test:browser": "npm run test:browser:build && npm run test:browser:run",
     "build": "webpack",
     "coverage": "jest --coverage",
     "lint": "eslint {src,test,benchmark}/**/*.js",
@@ -44,30 +46,20 @@
     "lodash": "^4.16.4"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.8",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-es2015": "^6.18.0",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@jest-runner/electron": "^2.0.2",
+    "babel-loader": "^8.0.6",
     "benchmark": "^2.1.2",
-    "coveralls": "^2.11.15",
+    "coveralls": "^3.0.7",
+    "electron": "^6.0.12",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-jest": "^22.17.0",
     "jest": "^24.9.0",
-    "joi-browser": "^10.0.6",
-    "karma": "^1.3.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-mocha": "^1.3.0",
-    "karma-mocha-reporter": "^2.2.1",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.1",
     "prettier": "^1.18.2",
-    "proxy-polyfill": "^0.1.6",
-    "webpack": "^1.13.3"
-  },
-  "jest": {
-    "transform": {}
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   }
 }
