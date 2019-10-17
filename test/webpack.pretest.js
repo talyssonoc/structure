@@ -8,7 +8,6 @@ Object.assign(webpackConfig, {
     ...webpackConfig.output,
     path: path.join(__dirname, '..', 'distTest'),
   },
-  stats: 'errors-only',
 });
 
 module.exports = webpackConfig;

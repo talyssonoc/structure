@@ -5,8 +5,10 @@ node_js:
   - '11'
   - '12'
   - 'node'
+before_script:
+  - yarn test:browser:build
 script:
   - yarn lint
   - yarn test
-  - yarn test:browser
+  - yarn test:browser:run
   - yarn run coveralls
