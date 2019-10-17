@@ -36,7 +36,7 @@
     "coverage": "jest --coverage",
     "build": "webpack",
     "prepublish": "yarn run build",
-    "coveralls": "yarn run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "lint": "eslint {src,test,benchmark}/**/*.js",
     "format": "prettier --write {src,test}/**/*.js"
   },
