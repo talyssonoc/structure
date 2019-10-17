@@ -15,6 +15,7 @@
     "test:browser:build": "lerna run test:browser:build --stream -- --colors",
     "test:browser:run": "lerna run test:browser:run --stream -- --colors",
     "test:browser": "lerna run test:browser --stream -- --colors",
+    "coveralls": "lerna run coveralls --stream",
     "lint": "lerna run lint --stream",
     "format": "lerna run format --stream",
     "benchmark": "node benchmark/benchmark.js"

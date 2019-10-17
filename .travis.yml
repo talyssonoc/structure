@@ -23,4 +23,4 @@ script:
   - yarn lint
   - yarn test
   - yarn test:browser:run
-  - yarn run coveralls
+  - yarn coveralls
