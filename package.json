@@ -1,65 +1,33 @@
 {
   "name": "structure",
   "version": "2.0.0-alpha",
-  "description": "A simple schema/attributes library built on top of modern JavaScript",
-  "main": "src/index.js",
-  "browser": "dist/structure.js",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=8.16.1"
-  },
-  "homepage": "https://structure.js.org/",
-  "repository": "https://github.com/talyssonoc/structure",
-  "bugs": "https://github.com/talyssonoc/structure/issues",
+  "main": "index.js",
+  "repository": "git@github.com:talyssonoc/structure.git",
   "author": "Talysson <talyssonoc@gmail.com>",
-  "contributors": [
-    "Fernando <me@fleury.io>",
-    "Wender Freese <wender.jean@gmail.com>"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "license": "MIT",
-  "keywords": [
-    "entity",
-    "model",
-    "domain"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "test": "jest",
-    "test:browser:build": "webpack --config test/webpack.pretest.js",
-    "test:browser:run": "jest --config=test/jest.browser.js",
-    "test:browser": "npm run test:browser:build && npm run test:browser:run",
-    "build": "webpack",
-    "coverage": "jest --coverage",
-    "lint": "eslint {src,test,benchmark}/**/*.js",
-    "benchmark": "node benchmark/benchmark.js",
-    "prepublish": "npm run build",
-    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "format": "prettier --write {src,test}/**/*.js"
-  },
-  "dependencies": {
-    "@hapi/joi": "^16.1.4",
-    "lodash": "^4.16.4"
+    "build": "lerna run build --stream",
+    "test": "lerna run test --stream -- --colors",
+    "test:browser:build": "lerna run test:browser:build --stream -- --colors",
+    "test:browser:run": "lerna run test:browser:run --stream -- --colors",
+    "test:browser": "lerna run test:browser --stream -- --colors",
+    "coverage": "lerna run coverage --stream -- --colors",
+    "coveralls": "lerna run coveralls --stream",
+    "lint": "lerna run lint --stream",
+    "format": "lerna run format --stream",
+    "benchmark": "node benchmark/benchmark.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-    "@babel/preset-env": "^7.6.3",
-    "@jest-runner/electron": "^2.0.2",
-    "babel-loader": "^8.0.6",
     "benchmark": "^2.1.2",
-    "coveralls": "^3.0.7",
-    "electron": "^6.0.12",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-jest": "^22.17.0",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "lerna": "^3.18.1",
+    "prettier": "^1.18.2"
   }
 }

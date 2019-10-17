@@ -1,4 +1,4 @@
-const { attributes } = require('../src');
+const { attributes } = require('../packages/structure/src');
 
 const Book = attributes({
   year: Number
@@ -26,7 +26,7 @@ const User = attributes({
   }
 })(class User { });
 
-const CircularUser = require('../test/fixtures/CircularUser');
+const CircularUser = require('../packages/structure/test/fixtures/CircularUser');
 
 exports.name = 'Coercion';
 
