@@ -52,7 +52,7 @@
     "@jest-runner/electron": "^2.0.2",
     "babel-loader": "^8.0.6",
     "benchmark": "^2.1.2",
-    "coveralls": "^2.11.15",
+    "coveralls": "^3.0.7",
     "electron": "^6.0.12",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
