@@ -5,6 +5,12 @@
   "main": "index.js",
   "author": "Talysson <talyssonoc@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "structure": "2.0.0-alpha"
+  },
   "peerDependencies": {
     "jest": "^24.0.0"
   }
