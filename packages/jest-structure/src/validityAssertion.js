@@ -1,6 +1,6 @@
 module.exports = function createValidityAssertion(name, { pass, passName, failName }) {
-  return function(structure) {
-    //TODO: ensure no expected is passed
+  return function(structure, expected) {
+    this.utils.ensureNoExpected(expected);
 
     const { valid, errors } = structure.validate();
 
