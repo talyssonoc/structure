@@ -29,7 +29,7 @@
     "domain"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest --config=test/jest.node.js",
     "test:browser:build": "webpack --config test/webpack.pretest.js",
     "test:browser:run": "jest --config=test/jest.browser.js",
     "test:browser": "yarn run test:browser:build && yarn run test:browser:run",
@@ -52,6 +52,7 @@
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.7",
     "electron": "^6.0.12",
+    "jest-structure": "2.0.0-alpha",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   }
