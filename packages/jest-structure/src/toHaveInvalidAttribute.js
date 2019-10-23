@@ -6,7 +6,17 @@ const errorMessagesHint = 'errorMessages';
 
 module.exports = function toHaveInvalidAttribute(structure, attributePath, expectedErrorMessages) {
   if (this.isNot) {
-    throw new Error(`${matcherName} should not be used with .not.`);
+    throw new Error(`${matcherName} must not be used with .not`);
+  }
+
+  if (!attributePath || !attributePath.length) {
+    const hint = this.utils.matcherHint(matcherName, exampleName, attributePathHint, {
+      secondArgument: `[${errorMessagesHint}]`,
+    });
+
+    throw new Error(
+      `${matcherName} must not be called without the attribute path\n` + `Example: ${hint}`
+    );
   }
 
   const invalidityCheck = checkInvalid.call(this, structure);
