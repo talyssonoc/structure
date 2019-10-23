@@ -48,7 +48,7 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
     };
   }
 
-  const errorMessages = attributeErrors.map((error) => error.message);
+  const errorMessages = orderByExpected(attributeErrors, expectedErrorMessages);
 
   return {
     pass: this.equals(errorMessages, expectedErrorMessages),
@@ -69,4 +69,17 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
       );
     },
   };
+};
+
+const orderByExpected = (attributeErrors, expectedErrorMessages) => {
+  const errorMessages = attributeErrors.map((error) => error.message);
+
+  expectedErrorMessages = expectedErrorMessages.sample || expectedErrorMessages;
+
+  const equalMessages = expectedErrorMessages.filter((message) => errorMessages.includes(message));
+  const differentMessages = errorMessages.filter(
+    (message) => !expectedErrorMessages.includes(message)
+  );
+
+  return [...equalMessages, ...differentMessages];
 };
