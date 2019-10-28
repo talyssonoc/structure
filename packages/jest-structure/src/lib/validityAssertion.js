@@ -2,7 +2,7 @@ module.exports = function createValidityAssertion(name, { pass, passName, failNa
   return function(structure, expected) {
     this.utils.ensureNoExpected(expected);
 
-    const { valid, errors } = structure.validate();
+    const { valid } = structure.validate();
 
     const options = {
       isNot: this.isNot,
@@ -15,7 +15,6 @@ module.exports = function createValidityAssertion(name, { pass, passName, failNa
         '\n\n' +
         `Expected: to be ${this.utils.EXPECTED_COLOR(this.isNot ? failName : passName)}\n` +
         `Received: is ${this.utils.RECEIVED_COLOR(this.isNot ? passName : failName)}`,
-      meta: { errors },
     };
   };
 };

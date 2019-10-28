@@ -287,4 +287,40 @@ describe('jest-structure', () => {
       });
     });
   });
+
+  describe('toHaveInvalidAttributes', () => {
+    it('can not be used with .not', () => {
+      const user = new User();
+
+      expect(() => {
+        expect(user).not.toHaveInvalidAttributes([]);
+      }).toThrowErrorMatchingSnapshot();
+    });
+
+    it('can not be called without the array of expected errors', () => {
+      const user = new User();
+
+      expect(() => {
+        expect(user).toHaveInvalidAttributes();
+      }).toThrowErrorMatchingSnapshot();
+    });
+
+    it('can not be called with empty array of expected errors', () => {
+      const user = new User();
+
+      expect(() => {
+        expect(user).toHaveInvalidAttributes([]);
+      }).toThrowErrorMatchingSnapshot();
+    });
+
+    describe('when structure is valid', () => {
+      it('fails', () => {
+        const user = new User({ name: 'abc', age: 42 });
+
+        expect(() => {
+          expect(user).toHaveInvalidAttributes([{ path: ['name'] }]);
+        }).toThrowErrorMatchingSnapshot();
+      });
+    });
+  });
 });

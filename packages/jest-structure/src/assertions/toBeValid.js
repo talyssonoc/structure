@@ -1,4 +1,4 @@
-const createValidityAssertion = require('./validityAssertion');
+const createValidityAssertion = require('../lib/validityAssertion');
 
 module.exports = createValidityAssertion('toBeValid', {
   pass: (valid) => valid,

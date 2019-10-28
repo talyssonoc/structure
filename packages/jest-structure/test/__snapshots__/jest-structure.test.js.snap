@@ -41,7 +41,7 @@ Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2
 exports[`jest-structure toHaveInvalidAttribute can not be used with .not 1`] = `"toHaveInvalidAttribute must not be used with .not"`;
 
 exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed fails for valid structures 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoBeInValid[2m()[22m
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32merrorMessages[39m[2m)[22m
 
 Expected: to be [32minvalid[39m
 Received: is [31mvalid[39m"
@@ -94,7 +94,7 @@ Received name error messages: [31m[\\"\\\\\\"name\\\\\\" must only contain alph
 `;
 
 exports[`jest-structure toHaveInvalidAttribute when only attribute path is passed fails for valid structures 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoBeInValid[2m()[22m
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m)[22m
 
 Expected: to be [32minvalid[39m
 Received: is [31mvalid[39m"
@@ -105,4 +105,23 @@ exports[`jest-structure toHaveInvalidAttribute when only attribute path is passe
 
 Expected: name to be [32minvalid[39m
 Received: name is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes can not be called with empty array of expected errors 1`] = `
+"toHaveInvalidAttributes must not be called without the expected errros
+Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes can not be called without the array of expected errors 1`] = `
+"toHaveInvalidAttributes must not be called without the expected errros
+Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes can not be used with .not 1`] = `"toHaveInvalidAttributes must not be used with .not"`;
+
+exports[`jest-structure toHaveInvalidAttributes when structure is valid fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
 `;

@@ -1,4 +1,5 @@
 const checkInvalid = require('./toBeInvalid');
+const { failNoNegative } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttribute';
 const exampleName = 'structure';
 const attributePathHint = 'attributePath';
@@ -6,26 +7,42 @@ const errorMessagesHint = 'errorMessages';
 
 module.exports = function toHaveInvalidAttribute(structure, attributePath, expectedErrorMessages) {
   if (this.isNot) {
-    throw new Error(`${matcherName} must not be used with .not`);
+    return failNoNegative(matcherName);
   }
 
   if (!attributePath || !attributePath.length) {
-    const hint = this.utils.matcherHint(matcherName, exampleName, attributePathHint, {
-      secondArgument: `[${errorMessagesHint}]`,
-    });
+    return {
+      pass: false,
+      message: () => {
+        const hint = this.utils.matcherHint(matcherName, exampleName, attributePathHint, {
+          secondArgument: `[${errorMessagesHint}]`,
+        });
 
-    throw new Error(
-      `${matcherName} must not be called without the attribute path\n` + `Example: ${hint}`
-    );
+        return (
+          `${matcherName} must not be called without the attribute path\n` + `Example: ${hint}`
+        );
+      },
+    };
   }
 
-  const invalidityCheck = checkInvalid.call(this, structure);
+  const { valid, errors } = structure.validate();
 
-  if (!invalidityCheck.pass) {
-    return invalidityCheck;
+  if (valid) {
+    return {
+      pass: false,
+      message: () => {
+        const hint = this.utils.matcherHint(matcherName, exampleName, attributePathHint, {
+          secondArgument: expectedErrorMessages ? errorMessagesHint : '',
+        });
+
+        return (
+          `${hint}\n\n` +
+          `Expected: to be ${this.utils.EXPECTED_COLOR('invalid')}\n` +
+          `Received: is ${this.utils.RECEIVED_COLOR('valid')}`
+        );
+      },
+    };
   }
-
-  const { errors } = invalidityCheck.meta;
 
   const attributeErrors = errors.filter((error) => this.equals(error.path, attributePath));
 
