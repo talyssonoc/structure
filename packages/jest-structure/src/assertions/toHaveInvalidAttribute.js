@@ -30,7 +30,7 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
 
   const joinedAttributeName = attributePath.join('.');
 
-  if (!expectedErrorMessages || !attributeErrors.length) {
+  if (isExpectedAttributeValid(expectedErrorMessages, attributeErrors)) {
     return {
       pass: Boolean(attributeErrors.length),
       message: () =>
@@ -65,4 +65,5 @@ const usageHint = (context) =>
     secondArgument: errorMessagesHint,
   });
 
-// const isExpectedAttributeValid = (expected)
+const isExpectedAttributeValid = (expectedErrorMessages, attributeErrors) =>
+  !(expectedErrorMessages && attributeErrors.length);
