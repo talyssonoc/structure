@@ -1,4 +1,5 @@
 const { sortMessagesByExpected } = require('../lib/sorting');
+const { isValidPath } = require('../lib/attributePath');
 const { failNoNegative } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttribute';
 const exampleName = 'structure';
@@ -10,7 +11,7 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
     return failNoNegative(matcherName);
   }
 
-  if (!attributePath || !attributePath.length) {
+  if (!isValidPath(attributePath)) {
     return {
       pass: false,
       message: () => {

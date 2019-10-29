@@ -1,8 +1,9 @@
 const { sortMessagesByExpected } = require('../lib/sorting');
+const { isValidPath } = require('../lib/attributePath');
 const { failNoNegative } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttributes';
 const exampleName = 'structure';
-const expectedErrorsHint = 'expectedErrors';
+const expectedErrorsHint = '[{ path (required), messages (optional) }]';
 
 module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
   if (this.isNot) {
@@ -12,12 +13,9 @@ module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
   if (!expectedErrors || !expectedErrors.length) {
     return {
       pass: false,
-      message: () => {
-        const hint = this.utils.matcherHint(matcherName, exampleName, expectedErrorsHint);
-        return (
-          `${matcherName} must not be called without the expected errros\n` + `Example: ${hint}`
-        );
-      },
+      message: () =>
+        `${matcherName} must not be called without the expected errros\n` +
+        `Example: ${usageHint(this)}`,
     };
   }
 
@@ -26,20 +24,15 @@ module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
   if (valid) {
     return {
       pass: false,
-      message: () => {
-        const hint = this.utils.matcherHint(matcherName, exampleName, expectedErrorsHint);
-
-        return (
-          `${hint}\n\n` +
-          `Expected: to be ${this.utils.EXPECTED_COLOR('invalid')}\n` +
-          `Received: is ${this.utils.RECEIVED_COLOR('valid')}`
-        );
-      },
+      message: () =>
+        `${usageHint(this)}\n\n` +
+        `Expected: to be ${this.utils.EXPECTED_COLOR('invalid')}\n` +
+        `Received: is ${this.utils.RECEIVED_COLOR('valid')}`,
     };
   }
 
-  if (!expectedErrors.every(hasPath)) {
-    return failNoPath();
+  if (!expectedErrors.every(errorHasPath)) {
+    return failNoPath(this);
   }
 
   const errorsForComparison = sortByExpected(errors, expectedErrors, this);
@@ -104,8 +97,14 @@ const groupByPath = (errors, context) =>
     return [...grouped, newGroup];
   }, []);
 
-const hasPath = (expectedError) => Boolean(expectedError.path && expectedError.path.length);
-const failNoPath = () => ({
+const usageHint = (context) =>
+  context.utils.matcherHint(matcherName, exampleName, expectedErrorsHint);
+
+const errorHasPath = (error) => isValidPath(error.path);
+
+const failNoPath = (context) => ({
   pass: false,
-  message: () => `${matcherName} must not be used with empty or absent attribute path`,
+  message: () =>
+    `${matcherName} must not be called without the attribute paths\n` +
+    `Example: ${usageHint(context)}`,
 });
