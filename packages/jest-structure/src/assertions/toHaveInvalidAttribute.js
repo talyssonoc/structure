@@ -4,7 +4,7 @@ const { failNoNegative, failWrongValidity } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttribute';
 const exampleName = 'structure';
 const attributePathHint = 'attributePath';
-const errorMessagesHint = 'errorMessages';
+const errorMessagesHint = '[errorMessages]';
 
 module.exports = function toHaveInvalidAttribute(structure, attributePath, expectedErrorMessages) {
   if (this.isNot) {
@@ -12,18 +12,7 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
   }
 
   if (!isValidPath(attributePath)) {
-    return {
-      pass: false,
-      message: () => {
-        const hint = this.utils.matcherHint(matcherName, exampleName, attributePathHint, {
-          secondArgument: `[${errorMessagesHint}]`,
-        });
-
-        return (
-          `${matcherName} must not be called without the attribute path\n` + `Example: ${hint}`
-        );
-      },
-    };
+    return failInvalidUsage(this, 'must not be called without the attribute path');
   }
 
   const { valid, errors } = structure.validate();
@@ -44,17 +33,9 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
   if (!expectedErrorMessages || !attributeErrors.length) {
     return {
       pass: Boolean(attributeErrors.length),
-      message: () => {
-        const hint = this.utils.matcherHint(matcherName, exampleName, attributePathHint, {
-          secondArgument: expectedErrorMessages ? errorMessagesHint : '',
-        });
-
-        return (
-          `${hint}\n\n` +
-          `Expected: ${joinedAttributeName} to be ${this.utils.EXPECTED_COLOR('invalid')}\n` +
-          `Received: ${joinedAttributeName} is ${this.utils.RECEIVED_COLOR('valid')}`
-        );
-      },
+      message: () =>
+        `Expected: ${joinedAttributeName} to be ${this.utils.EXPECTED_COLOR('invalid')}\n` +
+        `Received: ${joinedAttributeName} is ${this.utils.RECEIVED_COLOR('valid')}`,
     };
   }
 
@@ -63,21 +44,25 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
 
   return {
     pass: this.equals(errorMessages, expectedErrorMessages),
-    message: () => {
-      const hint = this.utils.matcherHint(matcherName, exampleName, attributePathHint, {
-        secondArgument: errorMessagesHint,
-      });
-
-      return (
-        `${hint}\n\n` +
-        this.utils.printDiffOrStringify(
-          expectedErrorMessages,
-          errorMessages,
-          `Expected ${joinedAttributeName} error messages`,
-          `Received ${joinedAttributeName} error messages`,
-          this.expand
-        )
-      );
-    },
+    message: () =>
+      this.utils.printDiffOrStringify(
+        expectedErrorMessages,
+        errorMessages,
+        `Expected ${joinedAttributeName} error messages`,
+        `Received ${joinedAttributeName} error messages`,
+        this.expand
+      ),
   };
 };
+
+const failInvalidUsage = (context, message) => ({
+  pass: false,
+  message: () => `${matcherName} ${message}\n` + `Example: ${usageHint(context)}`,
+});
+
+const usageHint = (context) =>
+  context.utils.matcherHint(matcherName, exampleName, attributePathHint, {
+    secondArgument: errorMessagesHint,
+  });
+
+// const isExpectedAttributeValid = (expected)

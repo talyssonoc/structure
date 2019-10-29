@@ -38,16 +38,12 @@ Received: is [31mvalid[39m"
 `;
 
 exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is not the invalid one fails  1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32merrorMessages[39m[2m)[22m
-
-Expected: age to be [32minvalid[39m
+"Expected: age to be [32minvalid[39m
 Received: age is [31mvalid[39m"
 `;
 
 exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when the expected errors are a subset of the actual errors fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32merrorMessages[39m[2m)[22m
-
-[32m- Expected name error messages[39m
+"[32m- Expected name error messages[39m
 [31m+ Received name error messages[39m
 
 [2m  Array [[22m
@@ -57,9 +53,7 @@ exports[`jest-structure toHaveInvalidAttribute when attribute path and error mes
 `;
 
 exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when the expected errors are a superset of the actual errors fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32merrorMessages[39m[2m)[22m
-
-[32m- Expected name error messages[39m
+"[32m- Expected name error messages[39m
 [31m+ Received name error messages[39m
 
 [2m  Array [[22m
@@ -70,16 +64,12 @@ exports[`jest-structure toHaveInvalidAttribute when attribute path and error mes
 `;
 
 exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when using arrayContaining when arrayContaining has an intersection with the errors + other different errors fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32merrorMessages[39m[2m)[22m
-
-Expected name error messages: [32mArrayContaining [\\"\\\\\\"name\\\\\\" is not from this planet\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m
+"Expected name error messages: [32mArrayContaining [\\"\\\\\\"name\\\\\\" is not from this planet\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m
 Received name error messages: [31m[\\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\", \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\"][39m"
 `;
 
 exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when using arrayContaining when arrayContaining is a superset of the errors fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32merrorMessages[39m[2m)[22m
-
-Expected name error messages: [32mArrayContaining [\\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\", \\"\\\\\\"name\\\\\\" is not from this planet\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m
+"Expected name error messages: [32mArrayContaining [\\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\", \\"\\\\\\"name\\\\\\" is not from this planet\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m
 Received name error messages: [31m[\\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m"
 `;
 
@@ -89,9 +79,7 @@ Received: is [31mvalid[39m"
 `;
 
 exports[`jest-structure toHaveInvalidAttribute when only attribute path is passed when the attribute is not the invalid one fails  1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m)[22m
-
-Expected: name to be [32minvalid[39m
+"Expected: name to be [32minvalid[39m
 Received: name is [31mvalid[39m"
 `;
 
