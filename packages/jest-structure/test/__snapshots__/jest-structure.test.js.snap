@@ -119,9 +119,234 @@ Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[
 
 exports[`jest-structure toHaveInvalidAttributes can not be used with .not 1`] = `"toHaveInvalidAttributes must not be used with .not"`;
 
-exports[`jest-structure toHaveInvalidAttributes when structure is valid fails 1`] = `
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some fails for valid structures 1`] = `
 "[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
 
 Expected: to be [32minvalid[39m
 Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when attribute is invalid but messages array is empty fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,8 +1,11 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": Array [],[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[39m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[31m+     ],[39m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[2m    Object {[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing attributes and messages fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,9 +1,10 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing attributes fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -2,6 +2,14 @@[39m
+[2m    Object {[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"age\\\\\\" must be a positive number\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"age\\",[39m
+[31m+     ],[39m
+[31m+   },[39m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing messages fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,9 +1,10 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when only paths are passed fails for valid structures 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when only paths are passed when none of the passed attributes are invalid fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[39m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[31m+     ],[39m
+[2m      \\"path\\": Array [[22m
+[32m-       \\"age\\",[39m
+[31m+       \\"name\\",[39m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when only paths are passed when only some of the passed attributes are invalid fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"path\\": Array [[22m
+[32m-       \\"age\\",[39m
+[32m-     ],[39m
+[32m-   },[39m
+[32m-   Object {[39m
+[32m-     \\"path\\": Array [[39m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed fails for valid structures 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when attribute is invalid but messages array is empty fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": Array [],[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[39m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[31m+     ],[39m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing attributes and messages fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[31m+     ],[39m
+[31m+   },[39m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"age\\\\\\" must be a positive number\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"age\\",[39m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing attributes fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -5,6 +5,14 @@[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"age\\\\\\" must be a positive number\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"age\\",[39m
+[31m+     ],[39m
+[31m+   },[39m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing messages fails 1`] = `
+"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m
+
+[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,9 +1,10 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m"
 `;

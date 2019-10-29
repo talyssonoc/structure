@@ -1,4 +1,4 @@
-const checkInvalid = require('./toBeInvalid');
+const { sortMessagesByExpected } = require('../lib/sorting');
 const { failNoNegative } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttribute';
 const exampleName = 'structure';
@@ -65,7 +65,8 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
     };
   }
 
-  const errorMessages = orderByExpected(attributeErrors, expectedErrorMessages);
+  const validationErrorMessages = attributeErrors.map((error) => error.message);
+  const errorMessages = sortMessagesByExpected(validationErrorMessages, expectedErrorMessages);
 
   return {
     pass: this.equals(errorMessages, expectedErrorMessages),
@@ -86,17 +87,4 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
       );
     },
   };
-};
-
-const orderByExpected = (attributeErrors, expectedErrorMessages) => {
-  const errorMessages = attributeErrors.map((error) => error.message);
-
-  expectedErrorMessages = expectedErrorMessages.sample || expectedErrorMessages;
-
-  const equalMessages = expectedErrorMessages.filter((message) => errorMessages.includes(message));
-  const differentMessages = errorMessages.filter(
-    (message) => !expectedErrorMessages.includes(message)
-  );
-
-  return [...equalMessages, ...differentMessages];
 };

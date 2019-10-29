@@ -177,7 +177,7 @@ describe('jest-structure', () => {
           });
         });
 
-        describe('when the errors are passed in a order different from the one returned by validate()', () => {
+        describe('when the errors are passed in an order different from the returned by validate()', () => {
           it('succeeds', () => {
             const user = new User({ name: '$', age: 42 });
 
@@ -313,13 +313,241 @@ describe('jest-structure', () => {
       }).toThrowErrorMatchingSnapshot();
     });
 
-    describe('when structure is valid', () => {
-      it('fails', () => {
+    describe('when only paths are passed', () => {
+      it('fails for valid structures', () => {
         const user = new User({ name: 'abc', age: 42 });
 
         expect(() => {
           expect(user).toHaveInvalidAttributes([{ path: ['name'] }]);
         }).toThrowErrorMatchingSnapshot();
+      });
+
+      describe('when all the passed attributes are invalid', () => {
+        describe('when attributes are passed in the same order returned by validate', () => {
+          it('succeeds', () => {
+            const user = new User({ name: '$', age: -42 });
+
+            expect(user).toHaveInvalidAttributes([{ path: ['name'] }, { path: ['age'] }]);
+          });
+        });
+
+        describe('when attributes are passed in an order different from the returned by validate', () => {
+          it('succeeds', () => {
+            const user = new User({ name: '$', age: -42 });
+
+            expect(user).toHaveInvalidAttributes([{ path: ['age'] }, { path: ['name'] }]);
+          });
+        });
+      });
+
+      describe('when only some of the passed attributes are invalid', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: 42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([{ path: ['age'] }, { path: ['name'] }]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when none of the passed attributes are invalid', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: 42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([{ path: ['age'] }]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+    });
+
+    describe('when paths and messages are passed', () => {
+      it('fails for valid structures', () => {
+        const user = new User({ name: 'abc', age: 42 });
+
+        expect(() => {
+          expect(user).toHaveInvalidAttributes([
+            { path: ['name'], messages: ['something wrong is not right'] },
+          ]);
+        }).toThrowErrorMatchingSnapshot();
+      });
+
+      describe('when attribute is invalid and messages are right', () => {
+        describe('when messages are passed in the same order returned by validate', () => {
+          it('succeeds', () => {
+            const user = new User({ name: '$', age: 42 });
+
+            expect(user).toHaveInvalidAttributes([
+              {
+                path: ['name'],
+                messages: [
+                  '"name" length must be at least 2 characters long',
+                  '"name" must only contain alpha-numeric characters',
+                ],
+              },
+            ]);
+          });
+        });
+
+        describe('when messages are passed in a order different from the returned by validate', () => {
+          it('succeeds', () => {
+            const user = new User({ name: '$', age: 42 });
+
+            expect(user).toHaveInvalidAttributes([
+              {
+                path: ['name'],
+                messages: [
+                  '"name" must only contain alpha-numeric characters',
+                  '"name" length must be at least 2 characters long',
+                ],
+              },
+            ]);
+          });
+        });
+      });
+
+      describe('when attribute is invalid but messages array is empty', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: 42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([{ path: ['name'], messages: [] }]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when there are missing attributes', () => {
+        it('fails', () => {
+          const user = new User({ name: 'A', age: -42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              { path: ['name'], messages: ['"name" length must be at least 2 characters long'] },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when there are missing messages', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: 42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              { path: ['name'], messages: ['"name" length must be at least 2 characters long'] },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when there are missing attributes and messages', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: -42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              { path: ['name'], messages: ['"name" length must be at least 2 characters long'] },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+    });
+
+    describe('when messages are passed only for some', () => {
+      it('fails for valid structures', () => {
+        const user = new User({ name: 'abc', age: 42 });
+
+        expect(() => {
+          expect(user).toHaveInvalidAttributes([
+            { path: ['name'], messages: ['something wrong is not right'] },
+            { path: ['age'] },
+          ]);
+        }).toThrowErrorMatchingSnapshot();
+      });
+
+      describe('when attribute is invalid and messages are right', () => {
+        describe('when messages are passed in the same order returned by validate', () => {
+          it('succeeds', () => {
+            const user = new User({ name: '$', age: -42 });
+
+            expect(user).toHaveInvalidAttributes([
+              {
+                path: ['name'],
+                messages: [
+                  '"name" length must be at least 2 characters long',
+                  '"name" must only contain alpha-numeric characters',
+                ],
+              },
+              { path: ['age'] },
+            ]);
+          });
+        });
+
+        describe('when messages are passed in a order different from the returned by validate', () => {
+          it('succeeds', () => {
+            const user = new User({ name: '$', age: -42 });
+
+            expect(user).toHaveInvalidAttributes([
+              {
+                path: ['name'],
+                messages: [
+                  '"name" must only contain alpha-numeric characters',
+                  '"name" length must be at least 2 characters long',
+                ],
+              },
+              { path: ['age'] },
+            ]);
+          });
+        });
+      });
+
+      describe('when attribute is invalid but messages array is empty', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: -42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              { path: ['name'], messages: [] },
+              { path: ['age'] },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when there are missing attributes', () => {
+        it('fails', () => {
+          const user = new User({ name: 'A', age: -42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([{ path: ['name'] }]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when there are missing messages', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: -42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              { path: ['name'], messages: ['"name" length must be at least 2 characters long'] },
+              { path: ['age'] },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when there are missing attributes and messages', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: -42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              { path: ['name'], messages: ['"name" length must be at least 2 characters long'] },
+              { path: ['age'] },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
       });
     });
   });
