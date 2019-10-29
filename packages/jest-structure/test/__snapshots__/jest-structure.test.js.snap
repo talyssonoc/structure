@@ -106,9 +106,7 @@ Received: is [31mvalid[39m"
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when attribute is invalid but messages array is empty fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [33m@@ -1,8 +1,11 @@[39m
@@ -127,9 +125,7 @@ exports[`jest-structure toHaveInvalidAttributes when messages are passed only fo
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing attributes and messages fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [2m  Array [[22m
@@ -160,9 +156,7 @@ exports[`jest-structure toHaveInvalidAttributes when messages are passed only fo
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing attributes fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [33m@@ -2,6 +2,14 @@[39m
@@ -183,9 +177,7 @@ exports[`jest-structure toHaveInvalidAttributes when messages are passed only fo
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing messages fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [33m@@ -1,9 +1,10 @@[39m
@@ -207,9 +199,7 @@ Received: is [31mvalid[39m"
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when only paths are passed when none of the passed attributes are invalid fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [2m  Array [[22m
@@ -227,9 +217,7 @@ exports[`jest-structure toHaveInvalidAttributes when only paths are passed when 
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when only paths are passed when only some of the passed attributes are invalid fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [2m  Array [[22m
@@ -252,9 +240,7 @@ Received: is [31mvalid[39m"
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when attribute is invalid but messages array is empty fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [2m  Array [[22m
@@ -272,9 +258,7 @@ exports[`jest-structure toHaveInvalidAttributes when paths and messages are pass
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing attributes and messages fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [2m  Array [[22m
@@ -299,9 +283,7 @@ exports[`jest-structure toHaveInvalidAttributes when paths and messages are pass
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing attributes fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [33m@@ -5,6 +5,14 @@[39m
@@ -322,9 +304,7 @@ exports[`jest-structure toHaveInvalidAttributes when paths and messages are pass
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing messages fails 1`] = `
-"[2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m
-
-[32m- Expected errors[39m
+"[32m- Expected errors[39m
 [31m+ Received errors[39m
 
 [33m@@ -1,9 +1,10 @@[39m

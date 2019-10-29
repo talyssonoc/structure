@@ -9,4 +9,8 @@ module.exports = {
       `Expected: to be ${context.utils.EXPECTED_COLOR(context.isNot ? failName : passName)}\n` +
       `Received: is ${context.utils.RECEIVED_COLOR(context.isNot ? passName : failName)}`,
   }),
+  failInvalidUsage: (matcherName, usageHint, message) => ({
+    pass: false,
+    message: () => `${matcherName} ${message}\n` + `Example: ${usageHint}`,
+  }),
 };

@@ -1,6 +1,6 @@
-const { sortMessagesByExpected } = require('../lib/sorting');
-const { isValidPath } = require('../lib/attributePath');
-const { failNoNegative, failWrongValidity } = require('../lib/errors');
+const { sortErrorsByExpected } = require('../lib/sorting');
+const { areExpectedErrorsPathsValid } = require('../lib/attributePath');
+const { failInvalidUsage, failNoNegative, failWrongValidity } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttributes';
 const exampleName = 'structure';
 const expectedErrorsHint = '[{ path (required), messages (optional) }]';
@@ -10,13 +10,12 @@ module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
     return failNoNegative(matcherName);
   }
 
-  if (!expectedErrors || !expectedErrors.length) {
-    return {
-      pass: false,
-      message: () =>
-        `${matcherName} must not be called without the expected errros\n` +
-        `Example: ${usageHint(this)}`,
-    };
+  if (!areExpectedErrorsPresent(expectedErrors)) {
+    return failInvalidUsage(
+      matcherName,
+      usageHint(this),
+      'must not be called without the expected errros'
+    );
   }
 
   const { valid, errors } = structure.validate();
@@ -30,76 +29,29 @@ module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
     });
   }
 
-  if (!expectedErrors.every(errorHasPath)) {
+  if (!areExpectedErrorsPathsValid(expectedErrors)) {
     return failNoPath(this);
   }
 
-  const errorsForComparison = sortByExpected(errors, expectedErrors, this);
+  const errorsForComparison = sortErrorsByExpected(errors, expectedErrors, this);
 
   return {
     pass: this.equals(errorsForComparison, expectedErrors),
-    message: () => {
-      const hint = this.utils.matcherHint(matcherName, exampleName, expectedErrorsHint);
-
-      return (
-        `${hint}\n\n` +
-        this.utils.printDiffOrStringify(
-          expectedErrors,
-          errorsForComparison,
-          `Expected errors`,
-          `Received errors`,
-          this.expand
-        )
-      );
-    },
+    message: () =>
+      this.utils.printDiffOrStringify(
+        expectedErrors,
+        errorsForComparison,
+        `Expected errors`,
+        `Received errors`,
+        this.expand
+      ),
   };
 };
 
-const sortByExpected = (errors, expectedErrors, context) => {
-  const groupedErrors = groupByPath(errors, context);
-
-  const equalErrors = expectedErrors
-    .filter((error) =>
-      groupedErrors.find((groupedError) => context.equals(groupedError.path, error.path))
-    )
-    .map((expectedError) => {
-      const error = groupedErrors.find((error) => context.equals(expectedError.path, error.path));
-
-      if (expectedError.messages) {
-        return {
-          ...error,
-          messages: sortMessagesByExpected(error.messages, expectedError.messages),
-        };
-      }
-
-      return { path: error.path };
-    });
-
-  const differentErrors = groupedErrors.filter(
-    (groupedError) => !expectedErrors.find((error) => context.equals(groupedError.path, error.path))
-  );
-
-  return [...equalErrors, ...differentErrors];
-};
-
-const groupByPath = (errors, context) =>
-  errors.reduce((grouped, error) => {
-    const group = grouped.find((group) => context.equals(group.path, error.path));
-
-    if (group) {
-      group.messages.push(error.message);
-      return grouped;
-    }
-
-    const newGroup = { path: error.path, messages: [error.message] };
-
-    return [...grouped, newGroup];
-  }, []);
+const areExpectedErrorsPresent = (expectedErrors) => expectedErrors && expectedErrors.length;
 
 const usageHint = (context) =>
   context.utils.matcherHint(matcherName, exampleName, expectedErrorsHint);
-
-const errorHasPath = (error) => isValidPath(error.path);
 
 const failNoPath = (context) => ({
   pass: false,

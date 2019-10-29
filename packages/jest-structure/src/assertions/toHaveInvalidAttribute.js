@@ -1,6 +1,6 @@
 const { sortMessagesByExpected } = require('../lib/sorting');
 const { isValidPath } = require('../lib/attributePath');
-const { failNoNegative, failWrongValidity } = require('../lib/errors');
+const { failInvalidUsage, failNoNegative, failWrongValidity } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttribute';
 const exampleName = 'structure';
 const attributePathHint = 'attributePath';
@@ -12,7 +12,11 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
   }
 
   if (!isValidPath(attributePath)) {
-    return failInvalidUsage(this, 'must not be called without the attribute path');
+    return failInvalidUsage(
+      matcherName,
+      usageHint(this),
+      'must not be called without the attribute path'
+    );
   }
 
   const { valid, errors } = structure.validate();
@@ -54,11 +58,6 @@ module.exports = function toHaveInvalidAttribute(structure, attributePath, expec
       ),
   };
 };
-
-const failInvalidUsage = (context, message) => ({
-  pass: false,
-  message: () => `${matcherName} ${message}\n` + `Example: ${usageHint(context)}`,
-});
 
 const usageHint = (context) =>
   context.utils.matcherHint(matcherName, exampleName, attributePathHint, {
