@@ -1,6 +1,6 @@
 const createValidityAssertion = require('../lib/validityAssertion');
 
-module.exports = createValidityAssertion('toBeInValid', {
+module.exports = createValidityAssertion({
   pass: (valid) => !valid,
   passName: 'invalid',
   failName: 'valid',

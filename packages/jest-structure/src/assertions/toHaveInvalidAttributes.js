@@ -1,6 +1,6 @@
 const { sortMessagesByExpected } = require('../lib/sorting');
 const { isValidPath } = require('../lib/attributePath');
-const { failNoNegative } = require('../lib/errors');
+const { failNoNegative, failWrongValidity } = require('../lib/errors');
 const matcherName = 'toHaveInvalidAttributes';
 const exampleName = 'structure';
 const expectedErrorsHint = '[{ path (required), messages (optional) }]';
@@ -22,13 +22,12 @@ module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
   const { valid, errors } = structure.validate();
 
   if (valid) {
-    return {
+    return failWrongValidity({
       pass: false,
-      message: () =>
-        `${usageHint(this)}\n\n` +
-        `Expected: to be ${this.utils.EXPECTED_COLOR('invalid')}\n` +
-        `Received: is ${this.utils.RECEIVED_COLOR('valid')}`,
-    };
+      passName: 'invalid',
+      failName: 'valid',
+      context: this,
+    });
   }
 
   if (!expectedErrors.every(errorHasPath)) {
