@@ -21,7 +21,7 @@ describe('validation', () => {
             books: [],
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -31,7 +31,7 @@ describe('validation', () => {
             books: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -55,7 +55,7 @@ describe('validation', () => {
             books: [],
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -87,7 +87,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -97,7 +97,7 @@ describe('validation', () => {
             books: undefined,
           });
 
-          assertValid(user, 'books');
+          expect(user).toBeValid();
         });
       });
     });
@@ -122,7 +122,7 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda'],
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -156,7 +156,7 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda'],
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -166,7 +166,7 @@ describe('validation', () => {
               books: ['The Lusiads', undefined],
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
       });
@@ -202,7 +202,7 @@ describe('validation', () => {
             ],
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -235,7 +235,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -275,7 +275,7 @@ describe('validation', () => {
             books: ['The Name of the Wind', "The Wise Man's Fear"],
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -309,7 +309,7 @@ describe('validation', () => {
             books: ['The Name of the Wind'],
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -343,7 +343,7 @@ describe('validation', () => {
             books: ['The Gunslinger', 'The Drawing of the Three'],
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -385,7 +385,7 @@ describe('validation', () => {
             books: ['The Gunslinger', 'The Drawing of the Three'],
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
       describe('when array is not unique', () => {

@@ -49,7 +49,7 @@ describe('validation', () => {
           level: 3,
         });
 
-        assertValid(admin);
+        expect(admin).toBeValid();
       });
     });
 
@@ -75,7 +75,7 @@ describe('validation', () => {
         it('is valid', () => {
           const car = new Car({ name: null });
 
-          assertValid(car);
+          expect(car).toBeValid();
         });
       });
 

@@ -1,10 +1,3 @@
-exports.assertValid = function assertValid(structure) {
-  const { valid, errors } = structure.validate();
-
-  expect(valid).toBe(true);
-  expect(errors).toBeUndefined();
-};
-
 exports.assertInvalid = function assertInvalid(structure, path) {
   const { valid, errors } = structure.validate();
 

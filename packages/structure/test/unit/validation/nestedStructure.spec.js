@@ -30,7 +30,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -40,7 +40,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -71,7 +71,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -109,7 +109,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ lastLocation: null });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -159,7 +159,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -185,7 +185,7 @@ describe('validation', () => {
             lastLocation: new Location({ x: 1, y: 2 }),
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -228,7 +228,7 @@ describe('validation', () => {
               lastLocation: new Location({ x: 1, y: null }),
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -273,7 +273,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -283,7 +283,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -295,7 +295,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -317,7 +317,7 @@ describe('validation', () => {
             },
           });
 
-          assertValid(book);
+          expect(book).toBeValid();
         });
       });
 

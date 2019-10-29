@@ -24,7 +24,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -34,7 +34,7 @@ describe('validation', () => {
             name: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
 
         it('is valid with null when nullable', () => {
@@ -42,7 +42,7 @@ describe('validation', () => {
             fatherName: null,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -65,7 +65,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -103,7 +103,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ name: null });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -145,7 +145,7 @@ describe('validation', () => {
             name: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -168,7 +168,7 @@ describe('validation', () => {
             name: 'Something',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -202,7 +202,7 @@ describe('validation', () => {
               name: 'Some name',
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -212,7 +212,7 @@ describe('validation', () => {
               name: '',
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
       });
@@ -235,7 +235,7 @@ describe('validation', () => {
               name: 'Some name',
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -269,7 +269,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -302,7 +302,7 @@ describe('validation', () => {
             name: 'Some',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -335,7 +335,7 @@ describe('validation', () => {
             name: 'Some',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -378,7 +378,7 @@ describe('validation', () => {
             name: 'A1',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -411,7 +411,7 @@ describe('validation', () => {
             name: 'A1B2',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -444,7 +444,7 @@ describe('validation', () => {
             name: 'abc',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -477,7 +477,7 @@ describe('validation', () => {
             name: 'ABC',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -510,7 +510,7 @@ describe('validation', () => {
             name: 'name@host.com',
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -544,7 +544,7 @@ describe('validation', () => {
               id: '759535af-3314-4ace-81b9-a519c29d0e17',
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -581,7 +581,7 @@ describe('validation', () => {
               id: uuidv4,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 

@@ -24,7 +24,7 @@ describe('validation', () => {
             age: 42,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -34,7 +34,7 @@ describe('validation', () => {
             age: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
 
         it('is valid with null when nullable', () => {
@@ -42,7 +42,7 @@ describe('validation', () => {
             earnings: null,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -65,7 +65,7 @@ describe('validation', () => {
             age: 42,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -103,7 +103,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ age: null });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -143,7 +143,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -167,7 +167,7 @@ describe('validation', () => {
               age: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -204,7 +204,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -215,7 +215,7 @@ describe('validation', () => {
               currentAge: 3,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -253,7 +253,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -289,7 +289,7 @@ describe('validation', () => {
               age: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -299,7 +299,7 @@ describe('validation', () => {
               age: 3,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -336,7 +336,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -347,7 +347,7 @@ describe('validation', () => {
               currentAge: 3,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -392,7 +392,7 @@ describe('validation', () => {
             age: 3,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -425,7 +425,7 @@ describe('validation', () => {
             age: 2,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -435,7 +435,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -478,7 +478,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -511,7 +511,7 @@ describe('validation', () => {
             age: 42,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -544,7 +544,7 @@ describe('validation', () => {
             age: 4.2,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -577,7 +577,7 @@ describe('validation', () => {
             age: 6,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -610,7 +610,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -653,7 +653,7 @@ describe('validation', () => {
             age: -1,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 

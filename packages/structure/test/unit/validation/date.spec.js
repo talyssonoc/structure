@@ -24,7 +24,7 @@ describe('validation', () => {
             birth: new Date(),
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -34,7 +34,7 @@ describe('validation', () => {
             birth: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
 
         it('is valid with null when nullable', () => {
@@ -42,7 +42,7 @@ describe('validation', () => {
             death: null,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -65,7 +65,7 @@ describe('validation', () => {
             birth: new Date(),
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -103,7 +103,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ birth: null });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -143,7 +143,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
     });
@@ -171,7 +171,7 @@ describe('validation', () => {
             birth: nowCopy,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
@@ -214,7 +214,7 @@ describe('validation', () => {
               birth: before,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -260,7 +260,7 @@ describe('validation', () => {
               updatedAt: now,
             });
 
-            assertValid(user);
+            expect(user).toBeValid();
           });
         });
 
@@ -301,7 +301,7 @@ describe('validation', () => {
             birth: after,
           });
 
-          assertValid(user);
+          expect(user).toBeValid();
         });
       });
 
