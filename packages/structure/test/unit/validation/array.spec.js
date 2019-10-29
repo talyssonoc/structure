@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Array', () => {
@@ -65,7 +64,7 @@ describe('validation', () => {
             books: undefined,
           });
 
-          assertInvalid(user, ['books']);
+          expect(user).toHaveInvalidAttribute(['books'], ['"books" is required']);
         });
       });
     });
@@ -132,7 +131,10 @@ describe('validation', () => {
               books: ['The Lusiads', undefined],
             });
 
-            assertInvalid(user, ['books', 1]);
+            expect(user).toHaveInvalidAttribute(
+              ['books', 1],
+              ['"books[1]" must not be a sparse array item']
+            );
           });
         });
       });
@@ -212,7 +214,10 @@ describe('validation', () => {
             books: [new Book({ name: 'The Hobbit' }), new Book({ name: undefined })],
           });
 
-          assertInvalid(user, ['books', 1, 'name']);
+          expect(user).toHaveInvalidAttribute(
+            ['books', 1, 'name'],
+            ['"books[1].name" is required']
+          );
         });
       });
     });
@@ -251,7 +256,10 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          assertInvalid(user, ['friends', 1, 'favoriteBook']);
+          expect(user).toHaveInvalidAttribute(
+            ['friends', 1, 'favoriteBook'],
+            ['"friends[1].favoriteBook" is required']
+          );
         });
       });
     });
@@ -285,7 +293,7 @@ describe('validation', () => {
             books: ['1984'],
           });
 
-          assertInvalid(user, ['books']);
+          expect(user).toHaveInvalidAttribute(['books'], ['"books" must contain at least 2 items']);
         });
       });
     });
@@ -319,7 +327,10 @@ describe('validation', () => {
             books: ['1984', 'The Game of Thrones', 'Dragons of Ether'],
           });
 
-          assertInvalid(user, ['books']);
+          expect(user).toHaveInvalidAttribute(
+            ['books'],
+            ['"books" must contain less than or equal to 2 items']
+          );
         });
       });
     });
@@ -353,7 +364,7 @@ describe('validation', () => {
             books: ['The Wastelands'],
           });
 
-          assertInvalid(user, ['books']);
+          expect(user).toHaveInvalidAttribute(['books'], ['"books" must contain 2 items']);
         });
       });
 
@@ -363,7 +374,7 @@ describe('validation', () => {
             books: ['Wizard and Glass', 'The Wind Through the Keyhole', 'Wolves of the Calla'],
           });
 
-          assertInvalid(user, ['books']);
+          expect(user).toHaveInvalidAttribute(['books'], ['"books" must contain 2 items']);
         });
       });
     });
@@ -394,7 +405,10 @@ describe('validation', () => {
             books: ['The Wastelands', 'The Wastelands'],
           });
 
-          assertInvalid(user, ['books', 1]);
+          expect(user).toHaveInvalidAttribute(
+            ['books', 1],
+            ['"books[1]" contains a duplicate value']
+          );
         });
       });
     });
