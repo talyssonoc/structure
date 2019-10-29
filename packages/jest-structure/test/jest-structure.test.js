@@ -1,5 +1,5 @@
 const { attributes } = require('structure');
-require('../auto');
+require('../extend-expect');
 
 describe('jest-structure', () => {
   let User;
@@ -313,6 +313,14 @@ describe('jest-structure', () => {
       }).toThrowErrorMatchingSnapshot();
     });
 
+    it('can not be called with no path', () => {
+      const user = new User({ name: '$', age: -42 });
+
+      expect(() => {
+        expect(user).toHaveInvalidAttributes([{ path: [] }, { path: ['age'] }]);
+      }).toThrowErrorMatchingSnapshot();
+    });
+
     describe('when only paths are passed', () => {
       it('fails for valid structures', () => {
         const user = new User({ name: 'abc', age: 42 });
@@ -539,7 +547,7 @@ describe('jest-structure', () => {
 
       describe('when there are missing attributes and messages', () => {
         it('fails', () => {
-          const user = new User({ name: '$', age: -42 });
+          const user = new User({ name: '$', age: -42, favoriteBook: {} });
 
           expect(() => {
             expect(user).toHaveInvalidAttributes([

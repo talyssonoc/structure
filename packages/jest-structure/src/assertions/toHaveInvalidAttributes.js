@@ -38,6 +38,10 @@ module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
     };
   }
 
+  if (!expectedErrors.every(hasPath)) {
+    return failNoPath();
+  }
+
   const errorsForComparison = sortByExpected(errors, expectedErrors, this);
 
   return {
@@ -99,3 +103,9 @@ const groupByPath = (errors, context) =>
 
     return [...grouped, newGroup];
   }, []);
+
+const hasPath = (expectedError) => Boolean(expectedError.path && expectedError.path.length);
+const failNoPath = () => ({
+  pass: false,
+  message: () => `${matcherName} must not be used with empty or absent attribute path`,
+});

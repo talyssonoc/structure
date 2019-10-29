@@ -112,6 +112,8 @@ exports[`jest-structure toHaveInvalidAttributes can not be called with empty arr
 Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m"
 `;
 
+exports[`jest-structure toHaveInvalidAttributes can not be called with no path 1`] = `"toHaveInvalidAttributes must not be used with empty or absent attribute path"`;
+
 exports[`jest-structure toHaveInvalidAttributes can not be called without the array of expected errors 1`] = `
 "toHaveInvalidAttributes must not be called without the expected errros
 Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32mexpectedErrors[39m[2m)[22m"
@@ -153,7 +155,6 @@ exports[`jest-structure toHaveInvalidAttributes when messages are passed only fo
 [32m- Expected errors[39m
 [31m+ Received errors[39m
 
-[33m@@ -1,9 +1,10 @@[39m
 [2m  Array [[22m
 [2m    Object {[22m
 [2m      \\"messages\\": Array [[22m
@@ -163,7 +164,22 @@ exports[`jest-structure toHaveInvalidAttributes when messages are passed only fo
 [2m      \\"path\\": Array [[22m
 [2m        \\"name\\",[22m
 [2m      ],[22m
-[2m    },[22m"
+[2m    },[22m
+[2m    Object {[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"age\\",[22m
+[31m+     ],[39m
+[31m+   },[39m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"favoriteBook.name\\\\\\" is required\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"favoriteBook\\",[39m
+[31m+       \\"name\\",[39m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
 `;
 
 exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing attributes fails 1`] = `
