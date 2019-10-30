@@ -23,7 +23,7 @@ describe('validation', () => {
             isAdmin: true,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -33,7 +33,7 @@ describe('validation', () => {
             isAdmin: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -41,7 +41,7 @@ describe('validation', () => {
             hasAccepted: null,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -64,7 +64,7 @@ describe('validation', () => {
             isAdmin: true,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -102,7 +102,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ isAdmin: null });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -142,7 +142,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -165,7 +165,7 @@ describe('validation', () => {
             isAdmin: true,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 

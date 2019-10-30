@@ -20,7 +20,7 @@ describe('validation', () => {
             books: [],
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -30,7 +30,7 @@ describe('validation', () => {
             books: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -54,7 +54,7 @@ describe('validation', () => {
             books: [],
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -86,7 +86,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -96,7 +96,7 @@ describe('validation', () => {
             books: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -121,7 +121,7 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda'],
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -158,7 +158,7 @@ describe('validation', () => {
               books: ['Poetic Edda', 'Prose Edda'],
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -168,7 +168,7 @@ describe('validation', () => {
               books: ['The Lusiads', undefined],
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
       });
@@ -204,7 +204,7 @@ describe('validation', () => {
             ],
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -240,7 +240,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -283,7 +283,7 @@ describe('validation', () => {
             books: ['The Name of the Wind', "The Wise Man's Fear"],
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -317,7 +317,7 @@ describe('validation', () => {
             books: ['The Name of the Wind'],
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -354,7 +354,7 @@ describe('validation', () => {
             books: ['The Gunslinger', 'The Drawing of the Three'],
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -396,7 +396,7 @@ describe('validation', () => {
             books: ['The Gunslinger', 'The Drawing of the Three'],
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
       describe('when array is not unique', () => {

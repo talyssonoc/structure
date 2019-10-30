@@ -29,7 +29,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -39,7 +39,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -70,7 +70,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -108,7 +108,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ lastLocation: null });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -158,7 +158,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -184,7 +184,7 @@ describe('validation', () => {
             lastLocation: new Location({ x: 1, y: 2 }),
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -230,7 +230,7 @@ describe('validation', () => {
               lastLocation: new Location({ x: 1, y: null }),
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -278,7 +278,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -288,7 +288,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -300,7 +300,7 @@ describe('validation', () => {
             favoriteBook: {},
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -322,7 +322,7 @@ describe('validation', () => {
             },
           });
 
-          expect(book).toBeValid();
+          expect(book).toBeValidStructure();
         });
       });
 

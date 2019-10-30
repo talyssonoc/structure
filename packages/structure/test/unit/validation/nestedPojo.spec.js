@@ -26,7 +26,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -36,7 +36,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -44,7 +44,7 @@ describe('validation', () => {
             nextLocation: null,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -70,7 +70,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -108,7 +108,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ lastLocation: null });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -151,7 +151,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });

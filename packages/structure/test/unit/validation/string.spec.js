@@ -23,7 +23,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -33,7 +33,7 @@ describe('validation', () => {
             name: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -41,7 +41,7 @@ describe('validation', () => {
             fatherName: null,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -64,7 +64,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -102,7 +102,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ name: null });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -144,7 +144,7 @@ describe('validation', () => {
             name: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -167,7 +167,7 @@ describe('validation', () => {
             name: 'Something',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -201,7 +201,7 @@ describe('validation', () => {
               name: 'Some name',
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -211,7 +211,7 @@ describe('validation', () => {
               name: '',
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
       });
@@ -234,7 +234,7 @@ describe('validation', () => {
               name: 'Some name',
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -268,7 +268,7 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -304,7 +304,7 @@ describe('validation', () => {
             name: 'Some',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -340,7 +340,7 @@ describe('validation', () => {
             name: 'Some',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -389,7 +389,7 @@ describe('validation', () => {
             name: 'A1',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -425,7 +425,7 @@ describe('validation', () => {
             name: 'A1B2',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -461,7 +461,7 @@ describe('validation', () => {
             name: 'abc',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -497,7 +497,7 @@ describe('validation', () => {
             name: 'ABC',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -533,7 +533,7 @@ describe('validation', () => {
             name: 'name@host.com',
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -567,7 +567,7 @@ describe('validation', () => {
               id: '759535af-3314-4ace-81b9-a519c29d0e17',
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -604,7 +604,7 @@ describe('validation', () => {
               id: uuidv4,
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 

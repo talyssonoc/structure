@@ -32,14 +32,14 @@ describe('jest-structure', () => {
     it('suceeds for valid structures', () => {
       const user = new User({ name: 'abc', age: 42 });
 
-      expect(user).toBeValid();
+      expect(user).toBeValidStructure();
     });
 
     it('fails for invalid structures', () => {
       const user = new User();
 
       expect(() => {
-        expect(user).toBeValid();
+        expect(user).toBeValidStructure();
       }).toThrowErrorMatchingSnapshot();
     });
 
@@ -47,14 +47,14 @@ describe('jest-structure', () => {
       it('succeeds for invalid structures', () => {
         const user = new User();
 
-        expect(user).not.toBeValid();
+        expect(user).not.toBeValidStructure();
       });
 
       it('fails for valid structures', () => {
         const user = new User({ name: 'abc', age: 42 });
 
         expect(() => {
-          expect(user).not.toBeValid();
+          expect(user).not.toBeValidStructure();
         }).toThrowErrorMatchingSnapshot();
       });
     });
@@ -64,14 +64,14 @@ describe('jest-structure', () => {
     it('suceeds for invalid structures', () => {
       const user = new User();
 
-      expect(user).toBeInvalid();
+      expect(user).toBeInvalidStructure();
     });
 
     it('fails for valid structures', () => {
       const user = new User({ name: 'abc', age: 42 });
 
       expect(() => {
-        expect(user).toBeInvalid();
+        expect(user).toBeInvalidStructure();
       }).toThrowErrorMatchingSnapshot();
     });
 
@@ -79,14 +79,14 @@ describe('jest-structure', () => {
       it('succeeds for valid structures', () => {
         const user = new User({ name: 'abc', age: 42 });
 
-        expect(user).not.toBeInvalid();
+        expect(user).not.toBeInvalidStructure();
       });
 
       it('fails for invalid structures', () => {
         const user = new User();
 
         expect(() => {
-          expect(user).not.toBeInvalid();
+          expect(user).not.toBeInvalidStructure();
         }).toThrowErrorMatchingSnapshot();
       });
     });

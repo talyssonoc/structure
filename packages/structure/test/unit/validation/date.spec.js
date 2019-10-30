@@ -23,7 +23,7 @@ describe('validation', () => {
             birth: new Date(),
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -33,7 +33,7 @@ describe('validation', () => {
             birth: undefined,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -41,7 +41,7 @@ describe('validation', () => {
             death: null,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -64,7 +64,7 @@ describe('validation', () => {
             birth: new Date(),
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -102,7 +102,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ birth: null });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -142,7 +142,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -170,7 +170,7 @@ describe('validation', () => {
             birth: nowCopy,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -216,7 +216,7 @@ describe('validation', () => {
               birth: before,
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -265,7 +265,7 @@ describe('validation', () => {
               updatedAt: now,
             });
 
-            expect(user).toBeValid();
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -309,7 +309,7 @@ describe('validation', () => {
             birth: after,
           });
 
-          expect(user).toBeValid();
+          expect(user).toBeValidStructure();
         });
       });
 
