@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Number', () => {
@@ -24,7 +23,7 @@ describe('validation', () => {
             age: 42,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -34,7 +33,7 @@ describe('validation', () => {
             age: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -42,7 +41,7 @@ describe('validation', () => {
             earnings: null,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -65,7 +64,7 @@ describe('validation', () => {
             age: 42,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -84,7 +83,7 @@ describe('validation', () => {
             age: undefined,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" is required']);
         });
       });
 
@@ -103,7 +102,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ age: null });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -121,7 +120,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ age: null });
 
-            assertInvalid(user, ['age']);
+            expect(user).toHaveInvalidAttribute(['age'], ['"age" is required']);
           });
         });
       });
@@ -143,7 +142,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -167,7 +166,7 @@ describe('validation', () => {
               age: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -177,7 +176,7 @@ describe('validation', () => {
               age: 1,
             });
 
-            assertInvalid(user, ['age']);
+            expect(user).toHaveInvalidAttribute(['age'], ['"age" must be [2]']);
           });
         });
       });
@@ -204,7 +203,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -215,7 +214,7 @@ describe('validation', () => {
               currentAge: 3,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -226,7 +225,10 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertInvalid(user, ['currentAge']);
+            expect(user).toHaveInvalidAttribute(
+              ['currentAge'],
+              ['"currentAge" must be one of [3, ref:startAge]']
+            );
           });
         });
       });
@@ -253,7 +255,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -264,7 +266,10 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertInvalid(user, ['currentAge']);
+            expect(user).toHaveInvalidAttribute(
+              ['currentAge'],
+              ['"currentAge" must be [ref:startAge]']
+            );
           });
         });
       });
@@ -289,7 +294,7 @@ describe('validation', () => {
               age: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -299,7 +304,7 @@ describe('validation', () => {
               age: 3,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -309,7 +314,10 @@ describe('validation', () => {
               age: 1,
             });
 
-            assertInvalid(user, ['age']);
+            expect(user).toHaveInvalidAttribute(
+              ['age'],
+              ['"age" must be larger than or equal to 2']
+            );
           });
         });
       });
@@ -336,7 +344,7 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -347,7 +355,7 @@ describe('validation', () => {
               currentAge: 3,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -358,7 +366,10 @@ describe('validation', () => {
               currentAge: 2,
             });
 
-            assertInvalid(user, ['currentAge']);
+            expect(user).toHaveInvalidAttribute(
+              ['currentAge'],
+              ['"currentAge" must be larger than or equal to ref:startAge']
+            );
           });
         });
       });
@@ -382,7 +393,7 @@ describe('validation', () => {
             age: 2,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be greater than 2']);
         });
       });
 
@@ -392,7 +403,7 @@ describe('validation', () => {
             age: 3,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -402,7 +413,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be greater than 2']);
         });
       });
     });
@@ -425,7 +436,7 @@ describe('validation', () => {
             age: 2,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -435,7 +446,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -445,7 +456,7 @@ describe('validation', () => {
             age: 3,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be less than or equal to 2']);
         });
       });
     });
@@ -468,7 +479,7 @@ describe('validation', () => {
             age: 2,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be less than 2']);
         });
       });
 
@@ -478,7 +489,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -488,7 +499,7 @@ describe('validation', () => {
             age: 3,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be less than 2']);
         });
       });
     });
@@ -511,7 +522,7 @@ describe('validation', () => {
             age: 42,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -521,7 +532,7 @@ describe('validation', () => {
             age: 4.2,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be an integer']);
         });
       });
     });
@@ -544,7 +555,7 @@ describe('validation', () => {
             age: 4.2,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -554,7 +565,10 @@ describe('validation', () => {
             age: 0.042,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(
+            ['age'],
+            ['"age" must have no more than 2 decimal places']
+          );
         });
       });
     });
@@ -577,7 +591,7 @@ describe('validation', () => {
             age: 6,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -587,7 +601,7 @@ describe('validation', () => {
             age: 7,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be a multiple of 3']);
         });
       });
     });
@@ -610,7 +624,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -620,7 +634,7 @@ describe('validation', () => {
             age: 0,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be a positive number']);
         });
       });
 
@@ -630,7 +644,7 @@ describe('validation', () => {
             age: -1,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be a positive number']);
         });
       });
     });
@@ -653,7 +667,7 @@ describe('validation', () => {
             age: -1,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -663,7 +677,7 @@ describe('validation', () => {
             age: 0,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be a negative number']);
         });
       });
 
@@ -673,7 +687,7 @@ describe('validation', () => {
             age: 1,
           });
 
-          assertInvalid(user, ['age']);
+          expect(user).toHaveInvalidAttribute(['age'], ['"age" must be a negative number']);
         });
       });
     });

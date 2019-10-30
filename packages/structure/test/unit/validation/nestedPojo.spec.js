@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with POJO class', () => {
@@ -27,7 +26,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -37,7 +36,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -45,7 +44,7 @@ describe('validation', () => {
             nextLocation: null,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -71,7 +70,7 @@ describe('validation', () => {
             lastLocation: new Location(),
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -90,7 +89,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          assertInvalid(user, ['lastLocation']);
+          expect(user).toHaveInvalidAttribute(['lastLocation'], ['"lastLocation" is required']);
         });
       });
 
@@ -109,7 +108,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ lastLocation: null });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -127,7 +126,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ lastLocation: null });
 
-            assertInvalid(user, ['lastLocation']);
+            expect(user).toHaveInvalidAttribute(['lastLocation'], ['"lastLocation" is required']);
           });
         });
       });
@@ -152,7 +151,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });

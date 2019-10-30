@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Boolean', () => {
@@ -24,7 +23,7 @@ describe('validation', () => {
             isAdmin: true,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -34,7 +33,7 @@ describe('validation', () => {
             isAdmin: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -42,7 +41,7 @@ describe('validation', () => {
             hasAccepted: null,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -65,7 +64,7 @@ describe('validation', () => {
             isAdmin: true,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -84,7 +83,7 @@ describe('validation', () => {
             isAdmin: undefined,
           });
 
-          assertInvalid(user, ['isAdmin']);
+          expect(user).toHaveInvalidAttribute(['isAdmin'], ['"isAdmin" is required']);
         });
       });
 
@@ -103,7 +102,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ isAdmin: null });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -121,7 +120,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ isAdmin: null });
 
-            assertInvalid(user, ['isAdmin']);
+            expect(user).toHaveInvalidAttribute(['isAdmin'], ['"isAdmin" is required']);
           });
         });
       });
@@ -143,7 +142,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -166,7 +165,7 @@ describe('validation', () => {
             isAdmin: true,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -176,7 +175,7 @@ describe('validation', () => {
             isAdmin: false,
           });
 
-          assertInvalid(user, ['isAdmin']);
+          expect(user).toHaveInvalidAttribute(['isAdmin'], ['"isAdmin" must be [true]']);
         });
       });
     });

@@ -1,0 +1,358 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jest-structure toBeInvalid .not fails for invalid structures 1`] = `
+"Expected: to be [32mvalid[39m
+Received: is [31minvalid[39m"
+`;
+
+exports[`jest-structure toBeInvalid fails for valid structures 1`] = `
+"Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toBeValid .not fails for valid structures 1`] = `
+"Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toBeValid fails for invalid structures 1`] = `
+"Expected: to be [32mvalid[39m
+Received: is [31minvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute can not be called with empty attribute path 1`] = `
+"toHaveInvalidAttribute must not be called without the attribute path
+Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32m[errorMessages][39m[2m)[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute can not be called without attribute path 1`] = `
+"toHaveInvalidAttribute must not be called without the attribute path
+Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttribute[2m([22m[32mattributePath[39m[2m, [22m[32m[errorMessages][39m[2m)[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute can not be used with .not 1`] = `"toHaveInvalidAttribute must not be used with .not"`;
+
+exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed fails for valid structures 1`] = `
+"Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is not the invalid one fails  1`] = `
+"Expected: age to be [32minvalid[39m
+Received: age is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when the expected errors are a subset of the actual errors fails 1`] = `
+"[32m- Expected name error messages[39m
+[31m+ Received name error messages[39m
+
+[2m  Array [[22m
+[2m    \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+   \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when the expected errors are a superset of the actual errors fails 1`] = `
+"[32m- Expected name error messages[39m
+[31m+ Received name error messages[39m
+
+[2m  Array [[22m
+[2m    \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[22m
+[32m-   \\"\\\\\\"name\\\\\\" is not from this planet\\",[39m
+[2m    \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when using arrayContaining when arrayContaining has an intersection with the errors + other different errors fails 1`] = `
+"Expected name error messages: [32mArrayContaining [\\"\\\\\\"name\\\\\\" is not from this planet\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m
+Received name error messages: [31m[\\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\", \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\"][39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute when attribute path and error messages are passed when the attribute is the only one invalid when using arrayContaining when arrayContaining is a superset of the errors fails 1`] = `
+"Expected name error messages: [32mArrayContaining [\\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\", \\"\\\\\\"name\\\\\\" is not from this planet\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m
+Received name error messages: [31m[\\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\", \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\"][39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute when only attribute path is passed fails for valid structures 1`] = `
+"Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttribute when only attribute path is passed when the attribute is not the invalid one fails  1`] = `
+"Expected: name to be [32minvalid[39m
+Received: name is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes can not be called with empty array of expected errors 1`] = `
+"toHaveInvalidAttributes must not be called without the expected errros
+Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes can not be called with no path 1`] = `
+"toHaveInvalidAttributes must not be called without the attribute paths
+Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes can not be called without the array of expected errors 1`] = `
+"toHaveInvalidAttributes must not be called without the expected errros
+Example: [2mexpect([22m[31mstructure[39m[2m).[22mtoHaveInvalidAttributes[2m([22m[32m[{ path (required), messages (optional) }][39m[2m)[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes can not be used with .not 1`] = `"toHaveInvalidAttributes must not be used with .not"`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some fails for valid structures 1`] = `
+"Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when attribute is invalid but messages array is empty fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,8 +1,11 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": Array [],[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[39m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[31m+     ],[39m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[2m    Object {[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing attributes and messages fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[2m    Object {[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"age\\",[22m
+[31m+     ],[39m
+[31m+   },[39m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"favoriteBook.name\\\\\\" is required\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"favoriteBook\\",[39m
+[31m+       \\"name\\",[39m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing attributes fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -2,6 +2,14 @@[39m
+[2m    Object {[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"age\\\\\\" must be a positive number\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"age\\",[39m
+[31m+     ],[39m
+[31m+   },[39m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when messages are passed only for some when there are missing messages fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,9 +1,10 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when only paths are passed fails for valid structures 1`] = `
+"Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when only paths are passed when none of the passed attributes are invalid fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[39m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[31m+     ],[39m
+[2m      \\"path\\": Array [[22m
+[32m-       \\"age\\",[39m
+[31m+       \\"name\\",[39m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when only paths are passed when only some of the passed attributes are invalid fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"path\\": Array [[22m
+[32m-       \\"age\\",[39m
+[32m-     ],[39m
+[32m-   },[39m
+[32m-   Object {[39m
+[32m-     \\"path\\": Array [[39m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed fails for valid structures 1`] = `
+"Expected: to be [32minvalid[39m
+Received: is [31mvalid[39m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when attribute is invalid but messages array is empty fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": Array [],[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[39m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[31m+     ],[39m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing attributes and messages fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[31m+     ],[39m
+[31m+   },[39m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"age\\\\\\" must be a positive number\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"age\\",[39m
+[2m      ],[22m
+[2m    },[22m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing attributes fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -5,6 +5,14 @@[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m
+[31m+   Object {[39m
+[31m+     \\"messages\\": Array [[39m
+[31m+       \\"\\\\\\"age\\\\\\" must be a positive number\\",[39m
+[31m+     ],[39m
+[31m+     \\"path\\": Array [[39m
+[31m+       \\"age\\",[39m
+[31m+     ],[39m
+[31m+   },[39m
+[2m  ][22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when paths and messages are passed when there are missing messages fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,9 +1,10 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[2m      \\"messages\\": Array [[22m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when using arrayContaining when arrayContaining has an intersection with the errors + other different errors fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,10 +1,10 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": ArrayContaining [[39m
+[32m-       \\"\\\\\\"name\\\\\\" is not from this planet\\",[39m
+[31m+     \\"messages\\": Array [[39m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when using arrayContaining when arrayContaining is a superset of the errors fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,10 +1,9 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": ArrayContaining [[39m
+[31m+     \\"messages\\": Array [[39m
+[2m        \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[22m
+[32m-       \\"\\\\\\"name\\\\\\" is not from this planet\\",[39m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m"
+`;

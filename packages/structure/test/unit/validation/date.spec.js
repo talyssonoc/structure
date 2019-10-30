@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Date', () => {
@@ -24,7 +23,7 @@ describe('validation', () => {
             birth: new Date(),
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -34,7 +33,7 @@ describe('validation', () => {
             birth: undefined,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
 
         it('is valid with null when nullable', () => {
@@ -42,7 +41,7 @@ describe('validation', () => {
             death: null,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -65,7 +64,7 @@ describe('validation', () => {
             birth: new Date(),
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -84,7 +83,7 @@ describe('validation', () => {
             birth: undefined,
           });
 
-          assertInvalid(user, ['birth']);
+          expect(user).toHaveInvalidAttribute(['birth'], ['"birth" is required']);
         });
       });
 
@@ -103,7 +102,7 @@ describe('validation', () => {
           it('is valid', () => {
             const user = new User({ birth: null });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -121,7 +120,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ birth: null });
 
-            assertInvalid(user, ['birth']);
+            expect(user).toHaveInvalidAttribute(['birth'], ['"birth" is required']);
           });
         });
       });
@@ -143,7 +142,7 @@ describe('validation', () => {
         it('is valid', () => {
           const user = new User();
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
     });
@@ -171,7 +170,7 @@ describe('validation', () => {
             birth: nowCopy,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -183,7 +182,10 @@ describe('validation', () => {
             birth: otherTime,
           });
 
-          assertInvalid(user, ['birth']);
+          expect(user).toHaveInvalidAttribute(
+            ['birth'],
+            [expect.stringContaining('"birth" must be')]
+          );
         });
       });
     });
@@ -214,7 +216,7 @@ describe('validation', () => {
               birth: before,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -226,7 +228,10 @@ describe('validation', () => {
               birth: after,
             });
 
-            assertInvalid(user, ['birth']);
+            expect(user).toHaveInvalidAttribute(
+              ['birth'],
+              [expect.stringContaining('"birth" must be less than or equal to')]
+            );
           });
         });
       });
@@ -260,7 +265,7 @@ describe('validation', () => {
               updatedAt: now,
             });
 
-            assertValid(user);
+            expect(user).toBeValidStructure();
           });
         });
 
@@ -273,7 +278,10 @@ describe('validation', () => {
               updatedAt: now,
             });
 
-            assertInvalid(user, ['createdAt']);
+            expect(user).toHaveInvalidAttribute(
+              ['createdAt'],
+              ['"createdAt" must be less than or equal to "ref:updatedAt"']
+            );
           });
         });
       });
@@ -301,7 +309,7 @@ describe('validation', () => {
             birth: after,
           });
 
-          assertValid(user);
+          expect(user).toBeValidStructure();
         });
       });
 
@@ -313,7 +321,10 @@ describe('validation', () => {
             birth: before,
           });
 
-          assertInvalid(user, ['birth']);
+          expect(user).toHaveInvalidAttribute(
+            ['birth'],
+            [expect.stringContaining('"birth" must be larger than or equal to')]
+          );
         });
       });
     });
