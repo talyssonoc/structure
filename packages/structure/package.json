@@ -33,10 +33,10 @@
     "test:browser:build": "webpack --config test/webpack.pretest.js",
     "test:browser:run": "jest --config=test/jest.browser.js",
     "test:browser": "yarn run test:browser:build && yarn run test:browser:run",
-    "coverage": "jest --coverage",
+    "coverage": "yarn test --coverage",
     "build": "webpack",
     "prepublish": "yarn run build",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "coveralls": "yarn run coverage --coverageReporters=text-lcov | coveralls",
     "lint": "eslint {src,test,benchmark}/**/*.js",
     "format": "prettier --write {src,test}/**/*.js"
   },
