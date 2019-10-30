@@ -558,5 +558,59 @@ describe('jest-structure', () => {
         });
       });
     });
+
+    describe('when using arrayContaining', () => {
+      describe('when arrayContaining is a subset of the errors', () => {
+        it('succeeds', () => {
+          const user = new User({ name: '$', age: 42 });
+
+          expect(user).toHaveInvalidAttributes([
+            {
+              path: ['name'],
+              messages: expect.arrayContaining([
+                '"name" length must be at least 2 characters long',
+              ]),
+            },
+          ]);
+        });
+      });
+
+      describe('when arrayContaining is a superset of the errors', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: 42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              {
+                path: ['name'],
+                messages: expect.arrayContaining([
+                  '"name" must only contain alpha-numeric characters',
+                  '"name" is not from this planet',
+                  '"name" length must be at least 2 characters long',
+                ]),
+              },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+
+      describe('when arrayContaining has an intersection with the errors + other different errors', () => {
+        it('fails', () => {
+          const user = new User({ name: '$', age: 42 });
+
+          expect(() => {
+            expect(user).toHaveInvalidAttributes([
+              {
+                path: ['name'],
+                messages: expect.arrayContaining([
+                  '"name" is not from this planet',
+                  '"name" length must be at least 2 characters long',
+                ]),
+              },
+            ]);
+          }).toThrowErrorMatchingSnapshot();
+        });
+      });
+    });
   });
 });

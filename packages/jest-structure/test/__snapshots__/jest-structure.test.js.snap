@@ -319,3 +319,40 @@ exports[`jest-structure toHaveInvalidAttributes when paths and messages are pass
 [2m      ],[22m
 [2m    },[22m"
 `;
+
+exports[`jest-structure toHaveInvalidAttributes when using arrayContaining when arrayContaining has an intersection with the errors + other different errors fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,10 +1,10 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": ArrayContaining [[39m
+[32m-       \\"\\\\\\"name\\\\\\" is not from this planet\\",[39m
+[31m+     \\"messages\\": Array [[39m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[31m+       \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[39m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m
+[2m    },[22m"
+`;
+
+exports[`jest-structure toHaveInvalidAttributes when using arrayContaining when arrayContaining is a superset of the errors fails 1`] = `
+"[32m- Expected errors[39m
+[31m+ Received errors[39m
+
+[33m@@ -1,10 +1,9 @@[39m
+[2m  Array [[22m
+[2m    Object {[22m
+[32m-     \\"messages\\": ArrayContaining [[39m
+[31m+     \\"messages\\": Array [[39m
+[2m        \\"\\\\\\"name\\\\\\" must only contain alpha-numeric characters\\",[22m
+[32m-       \\"\\\\\\"name\\\\\\" is not from this planet\\",[39m
+[2m        \\"\\\\\\"name\\\\\\" length must be at least 2 characters long\\",[22m
+[2m      ],[22m
+[2m      \\"path\\": Array [[22m
+[2m        \\"name\\",[22m
+[2m      ],[22m"
+`;
