@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('structure subclass', () => {
@@ -28,7 +27,7 @@ describe('validation', () => {
           level: 3,
         });
 
-        assertInvalid(admin, ['name']);
+        expect(admin).toHaveInvalidAttribute(['name'], ['"name" is required']);
       });
     });
 
@@ -38,7 +37,7 @@ describe('validation', () => {
           name: 'The admin',
         });
 
-        assertInvalid(admin, ['level']);
+        expect(admin).toHaveInvalidAttribute(['level'], ['"level" is required']);
       });
     });
 
@@ -97,7 +96,7 @@ describe('validation', () => {
         it('is not valid and has errors set', () => {
           const car = new Car({ name: null });
 
-          assertInvalid(car, ['name']);
+          expect(car).toHaveInvalidAttribute(['name'], ['"name" is required']);
         });
       });
     });

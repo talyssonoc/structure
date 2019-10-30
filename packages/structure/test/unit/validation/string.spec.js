@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('String', () => {
@@ -84,7 +83,7 @@ describe('validation', () => {
             name: undefined,
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(['name'], ['"name" is required']);
         });
       });
 
@@ -121,7 +120,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ name: null });
 
-            assertInvalid(user, ['name']);
+            expect(user).toHaveInvalidAttribute(['name'], ['"name" is required']);
           });
         });
       });
@@ -178,7 +177,7 @@ describe('validation', () => {
             name: 'Another thing',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(['name'], ['"name" must be [Something]']);
         });
       });
     });
@@ -245,7 +244,7 @@ describe('validation', () => {
               name: '',
             });
 
-            assertInvalid(user, ['name']);
+            expect(user).toHaveInvalidAttribute(['name'], ['"name" is not allowed to be empty']);
           });
         });
       });
@@ -279,7 +278,10 @@ describe('validation', () => {
             name: 'Hi',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" length must be at least 3 characters long']
+          );
         });
       });
     });
@@ -312,7 +314,10 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" length must be less than or equal to 4 characters long']
+          );
         });
       });
     });
@@ -345,7 +350,10 @@ describe('validation', () => {
             name: 'Some name',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" length must be 4 characters long']
+          );
         });
       });
 
@@ -355,7 +363,10 @@ describe('validation', () => {
             name: 'Hi',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" length must be 4 characters long']
+          );
         });
       });
     });
@@ -388,7 +399,10 @@ describe('validation', () => {
             name: 'Something',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" with value "Something" fails to match the required pattern: /\\w\\d/']
+          );
         });
       });
     });
@@ -421,7 +435,10 @@ describe('validation', () => {
             name: 'No alphanumeric $ string',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" must only contain alpha-numeric characters']
+          );
         });
       });
     });
@@ -454,7 +471,10 @@ describe('validation', () => {
             name: 'Abc',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" must only contain lowercase characters']
+          );
         });
       });
     });
@@ -487,7 +507,10 @@ describe('validation', () => {
             name: 'Abc',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(
+            ['name'],
+            ['"name" must only contain uppercase characters']
+          );
         });
       });
     });
@@ -520,7 +543,7 @@ describe('validation', () => {
             name: 'Not a valid email',
           });
 
-          assertInvalid(user, ['name']);
+          expect(user).toHaveInvalidAttribute(['name'], ['"name" must be a valid email']);
         });
       });
     });
@@ -554,7 +577,7 @@ describe('validation', () => {
               id: 'Not a valid guid',
             });
 
-            assertInvalid(user, ['id']);
+            expect(user).toHaveInvalidAttribute(['id'], ['"id" must be a valid GUID']);
           });
         });
       });
@@ -593,7 +616,7 @@ describe('validation', () => {
               id: uuidv1,
             });
 
-            assertInvalid(user, ['id']);
+            expect(user).toHaveInvalidAttribute(['id'], ['"id" must be a valid GUID']);
           });
         });
       });

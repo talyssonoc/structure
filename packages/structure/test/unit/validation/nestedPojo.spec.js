@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with POJO class', () => {
@@ -90,7 +89,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          assertInvalid(user, ['lastLocation']);
+          expect(user).toHaveInvalidAttribute(['lastLocation'], ['"lastLocation" is required']);
         });
       });
 
@@ -127,7 +126,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ lastLocation: null });
 
-            assertInvalid(user, ['lastLocation']);
+            expect(user).toHaveInvalidAttribute(['lastLocation'], ['"lastLocation" is required']);
           });
         });
       });

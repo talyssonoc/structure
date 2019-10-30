@@ -1,5 +1,4 @@
 const { attributes } = require('../../../src');
-const { assertValid, assertInvalid } = require('../../support/validationMatchers');
 
 describe('validation', () => {
   describe('Nested with structure class', () => {
@@ -90,7 +89,7 @@ describe('validation', () => {
             lastLocation: undefined,
           });
 
-          assertInvalid(user, ['lastLocation']);
+          expect(user).toHaveInvalidAttribute(['lastLocation'], ['"lastLocation" is required']);
         });
       });
 
@@ -127,7 +126,7 @@ describe('validation', () => {
           it('is not valid and has errors set', () => {
             const user = new User({ lastLocation: null });
 
-            assertInvalid(user, ['lastLocation']);
+            expect(user).toHaveInvalidAttribute(['lastLocation'], ['"lastLocation" is required']);
           });
         });
       });
@@ -206,7 +205,10 @@ describe('validation', () => {
             lastLocation: new Location({ x: 1, y: undefined }),
           });
 
-          assertInvalid(user, ['lastLocation', 'y']);
+          expect(user).toHaveInvalidAttribute(
+            ['lastLocation', 'y'],
+            ['"lastLocation.y" is required']
+          );
         });
       });
 
@@ -249,7 +251,10 @@ describe('validation', () => {
               lastLocation: new Location({ x: 1, y: null }),
             });
 
-            assertInvalid(user, ['lastLocation', 'y']);
+            expect(user).toHaveInvalidAttribute(
+              ['lastLocation', 'y'],
+              ['"lastLocation.y" is required']
+            );
           });
         });
       });
@@ -303,7 +308,7 @@ describe('validation', () => {
         it('is invalid', () => {
           const user = new CircularUser();
 
-          assertInvalid(user, ['favoriteBook']);
+          expect(user).toHaveInvalidAttribute(['favoriteBook'], ['"favoriteBook" is required']);
         });
       });
     });
@@ -327,7 +332,10 @@ describe('validation', () => {
             owner: new CircularUser(),
           });
 
-          assertInvalid(book, ['owner', 'favoriteBook']);
+          expect(book).toHaveInvalidAttribute(
+            ['owner', 'favoriteBook'],
+            ['"owner.favoriteBook" is required']
+          );
         });
       });
     });
