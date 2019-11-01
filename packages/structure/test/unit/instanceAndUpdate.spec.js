@@ -25,6 +25,15 @@ describe('instantiating a structure', () => {
         type: String,
         default: (instance) => instance.someMethod(),
       },
+      nullableWithoutDefault: {
+        type: String,
+        nullable: true,
+      },
+      nullableWithDefault: {
+        type: String,
+        default: 'The Default',
+        nullable: true,
+      },
     })(
       class User {
         constructor() {
@@ -93,19 +102,39 @@ describe('instantiating a structure', () => {
 
   describe('attributes initialization', () => {
     describe('default value', () => {
-      describe('when attribute default value is a static value', () => {
-        it('defaults to the static value', () => {
-          const user = new User();
+      describe('when attribute is non-nullable and has static default', () => {
+        describe('when passed value is undefined', () => {
+          it('defaults to the static value', () => {
+            const user = new User();
 
-          expect(user.name).toEqual('Name');
+            expect(user.name).toEqual('Name');
+          });
+        });
+
+        describe('when passed value is null', () => {
+          it('defaults to the static value', () => {
+            const user = new User({ name: null });
+
+            expect(user.name).toEqual('Name');
+          });
         });
       });
 
-      describe('when attribute default value is a function', () => {
-        it('calls the function using the instance of the object as parameter and perform coercion', () => {
-          const user = new User();
+      describe('when attribute is non-nullable and default value is a function', () => {
+        describe('when passed value is undefined', () => {
+          it('calls the function using the instance of the object as parameter and perform coercion', () => {
+            const user = new User();
 
-          expect(user.uuid).toEqual('10');
+            expect(user.uuid).toEqual('10');
+          });
+        });
+
+        describe('when passed value is null', () => {
+          it('calls the function using the instance of the object as parameter and perform coercion', () => {
+            const user = new User({ uuid: null });
+
+            expect(user.uuid).toEqual('10');
+          });
         });
       });
 
@@ -131,6 +160,42 @@ describe('instantiating a structure', () => {
             const user = new User();
 
             expect(user.attrUsingMethodUsingAttr).toEqual('Method => Name');
+          });
+        });
+      });
+
+      describe('when attribute is nullable and has a default', () => {
+        describe('when passed value is undefined', () => {
+          it('uses default', () => {
+            const user = new User({});
+
+            expect(user.nullableWithDefault).toEqual('The Default');
+          });
+        });
+
+        describe('when passed value is null', () => {
+          it('leaves it as null', () => {
+            const user = new User({ nullableWithDefault: null });
+
+            expect(user.nullableWithDefault).toBeNull();
+          });
+        });
+      });
+
+      describe('when attribute is nullable and has no default', () => {
+        describe('when passed value is undefined', () => {
+          it('leaves it as undefined', () => {
+            const user = new User({});
+
+            expect(user.nullableWithoutDefault).toEqual(undefined);
+          });
+        });
+
+        describe('when passed value is null', () => {
+          it('leaves it as null', () => {
+            const user = new User({ nullableWithoutDefault: null });
+
+            expect(user.nullableWithoutDefault).toBeNull();
           });
         });
       });

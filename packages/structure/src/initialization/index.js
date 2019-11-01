@@ -13,18 +13,10 @@ exports.for = function initializationForSchema(schema) {
         const attrPassedValue = attributes[attrDefinition.name];
 
         // will coerce through setters
-        instance[attrDefinition.name] = initializedValue(instance, attrPassedValue, attrDefinition);
+        instance[attrDefinition.name] = attrDefinition.initialize(instance, attrPassedValue);
       }
 
       return instance;
     },
   };
-};
-
-const initializedValue = (instance, attrPassedValue, attrDefinition) => {
-  if (attrPassedValue !== undefined) {
-    return attrPassedValue;
-  }
-
-  return attrDefinition.initialize(instance);
 };

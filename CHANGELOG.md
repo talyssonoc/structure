@@ -1,3 +1,8 @@
+## 2.0.0-alpha
+Breaking changes:
+
+* Non-nullable attributes with value null will use default value
+
 ## 1.8.0 - 2019-09-16
 Enhancements:
 * Add `unique` validation to arrays

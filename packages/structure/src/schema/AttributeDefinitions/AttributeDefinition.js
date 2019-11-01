@@ -27,11 +27,11 @@ class AttributeDefinition {
   }
 
   static compare(definitionA, definitionB) {
-    if (definitionA.dynamicDefault === definitionB.dynamicDefault) {
+    if (definitionA.isDynamicDefault === definitionB.isDynamicDefault) {
       return 0;
     }
 
-    if (definitionA.dynamicDefault) {
+    if (definitionA.isDynamicDefault) {
       return 1;
     }
 
@@ -62,19 +62,14 @@ class AttributeDefinition {
 
     this.name = name;
     this.options = options;
-    this.dynamicDefault = isFunction(options.default);
+    this.hasDefault = 'default' in options;
+    this.isDynamicDefault = isFunction(options.default);
     this.hasDynamicType = hasDynamicType(options);
     this.schema = schema;
 
     if (options.itemType) {
       this.isArrayType = true;
       this.itemTypeDefinition = AttributeDefinition.for('item', options.itemType, schema);
-    }
-
-    if (this.dynamicDefault) {
-      this.initialize = options.default;
-    } else {
-      this.initialize = () => options.default;
     }
 
     this.coercion = Coercion.for(this);
@@ -111,6 +106,29 @@ class AttributeDefinition {
 
   isValueNullable(attributeValue) {
     return attributeValue !== undefined && this.options.nullable;
+  }
+
+  initialize(instance, attributeValue) {
+    if (this.shouldInitializeToDefault(attributeValue)) {
+      return this.defaultValueFor(instance);
+    }
+
+    return attributeValue;
+  }
+
+  defaultValueFor(instance) {
+    if (this.isDynamicDefault) {
+      return this.options.default(instance);
+    }
+
+    return this.options.default;
+  }
+
+  shouldInitializeToDefault(attributeValue) {
+    const isUndefined = attributeValue === undefined;
+    const isDefaultableNull = !this.options.nullable && attributeValue === null;
+
+    return this.hasDefault && (isUndefined || isDefaultableNull);
   }
 }
 
