@@ -27,11 +27,11 @@ class AttributeDefinition {
   }
 
   static compare(definitionA, definitionB) {
-    if (definitionA.hasDynamicDefault === definitionB.hasDynamicDefault) {
+    if (definitionA.isDynamicDefault === definitionB.isDynamicDefault) {
       return 0;
     }
 
-    if (definitionA.hasDynamicDefault) {
+    if (definitionA.isDynamicDefault) {
       return 1;
     }
 
@@ -62,7 +62,8 @@ class AttributeDefinition {
 
     this.name = name;
     this.options = options;
-    this.hasDynamicDefault = isFunction(options.default);
+    this.hasDefault = 'default' in options;
+    this.isDynamicDefault = isFunction(options.default);
     this.hasDynamicType = hasDynamicType(options);
     this.schema = schema;
 
@@ -116,7 +117,7 @@ class AttributeDefinition {
   }
 
   defaultValueFor(instance) {
-    if (this.hasDynamicDefault) {
+    if (this.isDynamicDefault) {
       return this.options.default(instance);
     }
 
@@ -124,11 +125,10 @@ class AttributeDefinition {
   }
 
   shouldInitializeToDefault(attributeValue) {
-    const hasDefault = 'default' in this.options;
     const isUndefined = attributeValue === undefined;
     const isDefaultableNull = !this.options.nullable && attributeValue === null;
 
-    return hasDefault && (isUndefined || isDefaultableNull);
+    return this.hasDefault && (isUndefined || isDefaultableNull);
   }
 }
 
