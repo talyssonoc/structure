@@ -130,7 +130,7 @@ describe('instantiating a structure', () => {
         });
 
         describe('when passed value is null', () => {
-          it('calls the function using the instance of the object as parameter and perform coercionl', () => {
+          it('calls the function using the instance of the object as parameter and perform coercion', () => {
             const user = new User({ uuid: null });
 
             expect(user.uuid).toEqual('10');
