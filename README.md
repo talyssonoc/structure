@@ -2,8 +2,8 @@
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
-[![npm](https://img.shields.io/npm/v/structure.svg?style=flat)](https://www.npmjs.com/package/structure) [![Build Status](https://travis-ci.org/talyssonoc/structure.svg?branch=master)](https://travis-ci.org/talyssonoc/structure) [![Coverage Status](https://coveralls.io/repos/github/talyssonoc/structure/badge.svg?branch=master)](https://coveralls.io/github/talyssonoc/structure?branch=master) [![Code Climate](https://codeclimate.com/github/talyssonoc/structure/badges/gpa.svg)](https://codeclimate.com/github/talyssonoc/structure) [![JS.ORG](https://img.shields.io/badge/js.org-structure-ffb400.svg?style=flat)](https://js.org/)
----
+## [![npm](https://img.shields.io/npm/v/structure.svg?style=flat)](https://www.npmjs.com/package/structure) [![Build Status](https://travis-ci.org/talyssonoc/structure.svg?branch=master)](https://travis-ci.org/talyssonoc/structure) [![Coverage Status](https://coveralls.io/repos/github/talyssonoc/structure/badge.svg?branch=master)](https://coveralls.io/github/talyssonoc/structure?branch=master) [![Code Climate](https://codeclimate.com/github/talyssonoc/structure/badges/gpa.svg)](https://codeclimate.com/github/talyssonoc/structure) [![JS.ORG](https://img.shields.io/badge/js.org-structure-ffb400.svg?style=flat)](https://js.org/)
+
 Structure provides a simple interface which allows you to add attributes to your ES6 classes based on a schema, with validations and type coercion.
 
 ## Use cases
@@ -18,7 +18,7 @@ You can use Structure for a lot of different cases, including:
 
 Structure was inspired by Ruby's [Virtus](https://github.com/solnic/virtus).
 
-What Structure is __not__:
+What Structure is **not**:
 
 - It's not a database abstraction
 - It's not a MVC framework (but it can be used to domain entities)
@@ -39,19 +39,21 @@ const User = attributes({
   name: String,
   age: {
     type: Number,
-    default: 18
+    default: 18,
   },
-  birthday: Date
-})(class User {
-  greet() {
-    return `Hello ${this.name}`;
+  birthday: Date,
+})(
+  class User {
+    greet() {
+      return `Hello ${this.name}`;
+    }
   }
-});
+);
 
 /* The attributes "wraps" the Class, still providing access to its methods: */
 
 const user = new User({
-  name: 'John Foo'
+  name: 'John Foo',
 });
 
 user.name; // 'John Foo'
