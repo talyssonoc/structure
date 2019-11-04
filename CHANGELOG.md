@@ -16,7 +16,7 @@ Breaking changes:
 - Joi is updated to v16
   - Attribute path in validation _errors_ is an array instead of a string
   - Attribute path in validation _messages_ contains the whole path joined by '.'
-- It's required that the name used for dynamic imports be always the same as the name of the type
+- It's required that the name used for dynamic imports be always the same as the name of the type or to use custom identifiers
 - Non-nullable attributes with value null will use default value
 
 ## 1.8.0 - 2019-09-16

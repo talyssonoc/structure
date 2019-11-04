@@ -51,7 +51,7 @@ class Schema {
     this.options = options;
     this.attributeDefinitions = AttributeDefinitions.for(attributeDefinitions, { schema: this });
     this.wrappedClass = wrappedClass;
-    this.identifier = wrappedClass.name;
+    this.identifier = options.identifier || wrappedClass.name;
 
     this.initialization = Initialization.for(this);
     this.validation = Validation.for(this);
