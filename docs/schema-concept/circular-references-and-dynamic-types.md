@@ -84,7 +84,7 @@ const User = attributes(
 
 ### Custom identifier
 
-If for some reason you can't rely in the class name, be it because you're using a compiler that strip class names or create a dynamic one, you can explicitly set one.
+If for some reason you can't rely on the class name, be it because you're using a compiler that strips class names or creates a dynamic one, you can explicitly set an indentifier.
 
 To do that, in the second argument of the `attributes` function (e.g. the options) you should add a `identifier` key and set it to be the string with the identifier of that type and then use that custom value everywhere this type is needed dynamically:
 
@@ -105,7 +105,7 @@ const User = attributes(
 
 ### Concrete type definition inside `dynamics`
 
-It's important that the `require` has to be done **inside** the function when the dynamic type if a `require` is needed:
+For the cases where the dynamic type is in a different file, it's important that the `require` be called **inside** the function that returns the dynamic type, **not** in the top level of your file:
 
 ```js
 const Book = attributes(
