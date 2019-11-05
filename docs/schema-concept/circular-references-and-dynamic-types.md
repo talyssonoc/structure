@@ -60,7 +60,7 @@ The type's identifier has to be same everywhere it's used, and can be defined in
 
 ### Inferred identifier
 
-The identifier can be inferred based in the class that is wrapped by the `attributes` function. In backend scenarios this will be the most common case:
+The identifier can be inferred based on the class that is wrapped by the `attributes` function. In backend scenarios this will be the most common case:
 
 ```js
 const User = attributes(
