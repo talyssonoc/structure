@@ -56,7 +56,7 @@ const Book = attributes(
 
 ## Dynamic type identifier
 
-The identifier of the type has to be same everywhere it's used, and can be defined in two ways:
+The type's identifier has to be same everywhere it's used, and can be defined in two ways:
 
 ### Inferred identifier
 
@@ -86,7 +86,7 @@ const User = attributes(
 
 If for some reason you can't rely on the class name, be it because you're using a compiler that strips class names or creates a dynamic one, you can explicitly set an indentifier.
 
-To do that, in the second argument of the `attributes` function (e.g. the options) you should add a `identifier` key and set it to be the string with the identifier of that type and then use that custom value everywhere this type is needed dynamically:
+To do that, in the second argument of the `attributes` function (e.g. the options) you should add a `identifier` key and set it to be the string with the type's identifier and then use that custom value everywhere this type is dynamically needed:
 
 ```js
 const User = attributes(
@@ -105,7 +105,7 @@ const User = attributes(
 
 ### Concrete type definition inside `dynamics`
 
-For the cases where the dynamic type is in a different file, it's important that the `require` be called **inside** the function that returns the dynamic type, **not** in the top level of your file:
+For the cases where the dynamic type is in a different file, it's important to call the `require` **inside** the function that returns the dynamic type, **not** in the top level of your file:
 
 ```js
 const Book = attributes(
