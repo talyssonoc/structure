@@ -125,15 +125,24 @@ describe('creating a structure class', () => {
   });
 
   describe('when using dynamic attribute types', () => {
-    it('allows to use dynamic values without breaking', () => {
+    it('allows to use dynamic values', () => {
       require('../fixtures/CircularUser');
       require('../fixtures/CircularBook');
     });
 
-    it('breaks if there is no value for dynamic type', () => {
-      expect(() => {
-        require('../fixtures/BrokenCircularBook');
-      }).toThrow('Missing dynamic type for attribute: owner');
+    describe('when using custom identifiers', () => {
+      it('allows to use dynamic types', () => {
+        require('../fixtures/CircularUserCustomIdentifier');
+        require('../fixtures/CircularBookCustomIdentifier');
+      });
+    });
+
+    describe('when some dynamic type is missing value', () => {
+      it('breaks', () => {
+        expect(() => {
+          require('../fixtures/BrokenCircularBook');
+        }).toThrow('Missing dynamic type for attribute: owner');
+      });
     });
   });
 });

@@ -262,80 +262,162 @@ describe('validation', () => {
   });
 
   describe('Nested with structure class with dynamic attribute types', () => {
-    let CircularUser;
-    let CircularBook;
+    describe('when using inferred identifiers', () => {
+      let CircularUser;
+      let CircularBook;
 
-    beforeEach(() => {
-      CircularUser = require('../../fixtures/CircularUser');
-      CircularBook = require('../../fixtures/CircularBook');
+      beforeEach(() => {
+        CircularUser = require('../../fixtures/CircularUser');
+        CircularBook = require('../../fixtures/CircularBook');
+      });
+
+      describe('no validation', () => {
+        describe('when value is present', () => {
+          it('is valid', () => {
+            const user = new CircularUser({
+              friends: [],
+              favoriteBook: {},
+            });
+
+            expect(user).toBeValidStructure();
+          });
+        });
+
+        describe('when value is not present', () => {
+          it('is valid', () => {
+            const user = new CircularUser({
+              favoriteBook: {},
+            });
+
+            expect(user).toBeValidStructure();
+          });
+        });
+      });
+
+      describe('required', () => {
+        describe('when value is present', () => {
+          it('is valid', () => {
+            const user = new CircularUser({
+              favoriteBook: {},
+            });
+
+            expect(user).toBeValidStructure();
+          });
+        });
+
+        describe('when value is not present', () => {
+          it('is invalid', () => {
+            const user = new CircularUser();
+
+            expect(user).toHaveInvalidAttribute(['favoriteBook'], ['"favoriteBook" is required']);
+          });
+        });
+      });
+
+      describe('nested required', () => {
+        describe('when value is present', () => {
+          it('is valid', () => {
+            const book = new CircularBook({
+              owner: {
+                favoriteBook: new CircularBook(),
+              },
+            });
+
+            expect(book).toBeValidStructure();
+          });
+        });
+
+        describe('when value is not present', () => {
+          it('is invalid', () => {
+            const book = new CircularBook({
+              owner: new CircularUser(),
+            });
+
+            expect(book).toHaveInvalidAttribute(
+              ['owner', 'favoriteBook'],
+              ['"owner.favoriteBook" is required']
+            );
+          });
+        });
+      });
     });
 
-    describe('no validation', () => {
-      describe('when value is present', () => {
-        it('is valid', () => {
-          const user = new CircularUser({
-            friends: [],
-            favoriteBook: {},
-          });
+    describe('when using custom identifiers', () => {
+      let CircularUser;
+      let CircularBook;
 
-          expect(user).toBeValidStructure();
+      beforeEach(() => {
+        CircularUser = require('../../fixtures/CircularUserCustomIdentifier');
+        CircularBook = require('../../fixtures/CircularBookCustomIdentifier');
+      });
+
+      describe('no validation', () => {
+        describe('when value is present', () => {
+          it('is valid', () => {
+            const user = new CircularUser({
+              friends: [],
+              favoriteBook: {},
+            });
+
+            expect(user).toBeValidStructure();
+          });
+        });
+
+        describe('when value is not present', () => {
+          it('is valid', () => {
+            const user = new CircularUser({
+              favoriteBook: {},
+            });
+
+            expect(user).toBeValidStructure();
+          });
         });
       });
 
-      describe('when value is not present', () => {
-        it('is valid', () => {
-          const user = new CircularUser({
-            favoriteBook: {},
+      describe('required', () => {
+        describe('when value is present', () => {
+          it('is valid', () => {
+            const user = new CircularUser({
+              favoriteBook: {},
+            });
+
+            expect(user).toBeValidStructure();
           });
-
-          expect(user).toBeValidStructure();
         });
-      });
-    });
 
-    describe('required', () => {
-      describe('when value is present', () => {
-        it('is valid', () => {
-          const user = new CircularUser({
-            favoriteBook: {},
+        describe('when value is not present', () => {
+          it('is invalid', () => {
+            const user = new CircularUser();
+
+            expect(user).toHaveInvalidAttribute(['favoriteBook'], ['"favoriteBook" is required']);
           });
-
-          expect(user).toBeValidStructure();
-        });
-      });
-
-      describe('when value is not present', () => {
-        it('is invalid', () => {
-          const user = new CircularUser();
-
-          expect(user).toHaveInvalidAttribute(['favoriteBook'], ['"favoriteBook" is required']);
-        });
-      });
-    });
-
-    describe('nested required', () => {
-      describe('when value is present', () => {
-        it('is valid', () => {
-          const book = new CircularBook({
-            owner: {
-              favoriteBook: new CircularBook(),
-            },
-          });
-
-          expect(book).toBeValidStructure();
         });
       });
 
-      describe('when value is not present', () => {
-        it('is invalid', () => {
-          const book = new CircularBook({
-            owner: new CircularUser(),
-          });
+      describe('nested required', () => {
+        describe('when value is present', () => {
+          it('is valid', () => {
+            const book = new CircularBook({
+              owner: {
+                favoriteBook: new CircularBook(),
+              },
+            });
 
-          expect(book).toHaveInvalidAttribute(
-            ['owner', 'favoriteBook'],
-            ['"owner.favoriteBook" is required']
-          );
+            expect(book).toBeValidStructure();
+          });
+        });
+
+        describe('when value is not present', () => {
+          it('is invalid', () => {
+            const book = new CircularBook({
+              owner: new CircularUser(),
+            });
+
+            expect(book).toHaveInvalidAttribute(
+              ['owner', 'favoriteBook'],
+              ['"owner.favoriteBook" is required']
+            );
+          });
         });
       });
     });
