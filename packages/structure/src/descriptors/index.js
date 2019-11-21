@@ -3,12 +3,14 @@ const { SCHEMA, ATTRIBUTES } = require('../symbols');
 const Errors = require('../errors');
 const StrictMode = require('../strictMode');
 const Cloning = require('../cloning');
-const { defineProperty } = Object;
+const Attributes = require('../attributes');
+const { defineProperty, defineProperties } = Object;
 
 exports.addTo = function addDescriptorsTo(schema, StructureClass) {
   setSchema();
   setBuildStrict();
   setAttributesGetterAndSetter();
+  setGenericAttributeGetterAndSetter();
   setEachAttributeGetterAndSetter();
   setValidation();
   setSerialization();
@@ -43,10 +45,31 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
           throw Errors.nonObjectAttributes();
         }
 
-        defineProperty(this, ATTRIBUTES, {
-          configurable: true,
-          value: newAttributes,
-        });
+        const coercedAttributes = schema.coerce(newAttributes);
+
+        Attributes.setInInstance(this, coercedAttributes);
+      },
+    });
+  }
+
+  function setGenericAttributeGetterAndSetter() {
+    defineProperties(StructureClass.prototype, {
+      get: {
+        value: function get(attributeName) {
+          return this.attributes[attributeName];
+        },
+      },
+      set: {
+        value: function set(attributeName, attributeValue) {
+          const attributeDefinition = schema.attributeDefinitions[attributeName];
+
+          if (!attributeDefinition) {
+            throw Errors.inexistentAttribute(attributeName);
+          }
+
+          const coercedValue = attributeDefinition.coerce(attributeValue);
+          this.attributes[attributeName] = coercedValue;
+        },
       },
     });
   }
@@ -56,23 +79,38 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
       defineProperty(
         StructureClass.prototype,
         attrDefinition.name,
-        attributeDescriptor(attrDefinition)
+        attributeDescriptorFor(attrDefinition)
       );
     });
   }
 
-  function attributeDescriptor(attrDefinition) {
+  function attributeDescriptorFor(attrDefinition) {
     const { name } = attrDefinition;
 
-    return {
-      get() {
-        return this.attributes[name];
-      },
+    const originalAttributeDescriptor = Object.getOwnPropertyDescriptor(
+      StructureClass.prototype,
+      name
+    );
 
-      set(value) {
-        this.attributes[name] = schema.attributeDefinitions[name].coerce(value);
-      },
+    const attributeDescriptor = {
+      ...originalAttributeDescriptor,
+      enumerable: false,
+      configurable: true,
     };
+
+    if (!attributeDescriptor.get) {
+      attributeDescriptor.get = function get() {
+        return this.get(name);
+      };
+    }
+
+    if (!attributeDescriptor.set) {
+      attributeDescriptor.set = function set(value) {
+        this.set(name, value);
+      };
+    }
+
+    return attributeDescriptor;
   }
 
   function setValidation() {
