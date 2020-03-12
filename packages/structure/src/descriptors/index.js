@@ -87,32 +87,14 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
   function attributeDescriptorFor(attrDefinition) {
     const { name } = attrDefinition;
 
-    const originalAttributeDescriptor = findAttributeDescriptor(name);
+    const attributeDescriptor = findAttributeDescriptor(name);
 
-    const attributeDescriptor = {
-      ...originalAttributeDescriptor,
-      enumerable: false,
-      configurable: true,
-    };
-
-    if (!attributeDescriptor.get || attributeDescriptor.get[DEFAULT_ACCESSOR]) {
-      function get() {
-        return this.get(name);
-      }
-
-      get[DEFAULT_ACCESSOR] = true;
-
-      attributeDescriptor.get = get;
+    if (isDefaultAccessor(attributeDescriptor.get)) {
+      attributeDescriptor.get = defaultGetterFor(name);
     }
 
-    if (!attributeDescriptor.set || attributeDescriptor.set[DEFAULT_ACCESSOR]) {
-      function set(value) {
-        this.set(name, value);
-      }
-
-      set[DEFAULT_ACCESSOR] = true;
-
-      attributeDescriptor.set = set;
+    if (isDefaultAccessor(attributeDescriptor.set)) {
+      attributeDescriptor.set = defaultSetterFor(name);
     }
 
     return attributeDescriptor;
@@ -148,6 +130,30 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
     });
   }
 
+  function defaultGetterFor(name) {
+    function get() {
+      return this.get(name);
+    }
+
+    get[DEFAULT_ACCESSOR] = true;
+
+    return get;
+  }
+
+  function defaultSetterFor(name) {
+    function set(value) {
+      this.set(name, value);
+    }
+
+    set[DEFAULT_ACCESSOR] = true;
+
+    return set;
+  }
+
+  function isDefaultAccessor(accessor) {
+    return !accessor || accessor[DEFAULT_ACCESSOR];
+  }
+
   function findAttributeDescriptor(propertyName) {
     let proto = StructureClass.prototype;
 
@@ -155,7 +161,11 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
       const attributeDescriptor = Object.getOwnPropertyDescriptor(proto, propertyName);
 
       if (attributeDescriptor) {
-        return attributeDescriptor;
+        return {
+          ...attributeDescriptor,
+          enumerable: false,
+          configurable: true,
+        };
       }
 
       proto = proto.__proto__;
