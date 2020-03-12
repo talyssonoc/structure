@@ -1,5 +1,5 @@
 const { isObject } = require('lodash');
-const { SCHEMA, ATTRIBUTES } = require('../symbols');
+const { SCHEMA, ATTRIBUTES, DEFAULT_ACCESSOR } = require('../symbols');
 const Errors = require('../errors');
 const StrictMode = require('../strictMode');
 const Cloning = require('../cloning');
@@ -87,10 +87,7 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
   function attributeDescriptorFor(attrDefinition) {
     const { name } = attrDefinition;
 
-    const originalAttributeDescriptor = Object.getOwnPropertyDescriptor(
-      StructureClass.prototype,
-      name
-    );
+    const originalAttributeDescriptor = findAttributeDescriptor(name);
 
     const attributeDescriptor = {
       ...originalAttributeDescriptor,
@@ -98,16 +95,24 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
       configurable: true,
     };
 
-    if (!attributeDescriptor.get) {
-      attributeDescriptor.get = function get() {
+    if (!attributeDescriptor.get || attributeDescriptor.get[DEFAULT_ACCESSOR]) {
+      function get() {
         return this.get(name);
-      };
+      }
+
+      get[DEFAULT_ACCESSOR] = true;
+
+      attributeDescriptor.get = get;
     }
 
-    if (!attributeDescriptor.set) {
-      attributeDescriptor.set = function set(value) {
+    if (!attributeDescriptor.set || attributeDescriptor.set[DEFAULT_ACCESSOR]) {
+      function set(value) {
         this.set(name, value);
-      };
+      }
+
+      set[DEFAULT_ACCESSOR] = true;
+
+      attributeDescriptor.set = set;
     }
 
     return attributeDescriptor;
@@ -141,5 +146,21 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
     defineProperty(StructureClass.prototype, 'clone', {
       value: cloning.clone,
     });
+  }
+
+  function findAttributeDescriptor(propertyName) {
+    let proto = StructureClass.prototype;
+
+    while (proto !== Object.prototype) {
+      const attributeDescriptor = Object.getOwnPropertyDescriptor(proto, propertyName);
+
+      if (attributeDescriptor) {
+        return attributeDescriptor;
+      }
+
+      proto = proto.__proto__;
+    }
+
+    return {};
   }
 };
