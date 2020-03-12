@@ -83,6 +83,18 @@ class Schema {
 
     return this.validation.validate(attributes);
   }
+
+  coerce(newAttributes) {
+    const attributes = Object.create(null);
+
+    for (const attributeDefinition of this.attributeDefinitions) {
+      const { name } = attributeDefinition;
+      const value = newAttributes[name];
+      attributes[name] = attributeDefinition.coerce(value);
+    }
+
+    return attributes;
+  }
 }
 
 module.exports = Schema;

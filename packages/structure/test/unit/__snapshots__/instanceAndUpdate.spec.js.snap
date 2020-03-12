@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`instantiating a structure custom setters and getters when tries to set an attribute that does not exist fails and throws an error 1`] = `"NOPE is not an attribute of this structure"`;

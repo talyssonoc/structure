@@ -169,7 +169,14 @@ describe('subclassing a structure with another structure', () => {
         type: String,
         default: () => 123,
       },
-    })(class User {});
+      age: Number,
+    })(
+      class User {
+        set age(newAge) {
+          this.set('age', Math.abs(newAge));
+        }
+      }
+    );
 
     Admin = attributes({
       level: Number,
@@ -218,22 +225,36 @@ describe('subclassing a structure with another structure', () => {
       });
     });
   });
+
+  describe('custom accessor in parent class', () => {
+    it("won't override the custom accessor from the superclass with the default one from the subclass", () => {
+      const admin = new Admin({ age: -1 });
+
+      expect(admin.age).toEqual(1);
+    });
+  });
 });
 
 describe('subclassing a POJO class with a structure', () => {
   let Employee;
   let Writer;
   let Reviewer;
+  let SuperEmployee;
 
   beforeEach(() => {
     Employee = class Employee {
       getType() {
         return this.type.toUpperCase();
       }
+
+      get company() {
+        return 'ACME';
+      }
     };
 
     Writer = attributes({ type: String })(class Writer extends Employee {});
     Reviewer = attributes({ type: String })(class Reviewer extends Employee {});
+    SuperEmployee = attributes({ company: String })(class SuperEmployee extends Employee {});
   });
 
   describe('when structure attribute is a structure which extends a POJO', () => {
@@ -285,6 +306,14 @@ describe('subclassing a POJO class with a structure', () => {
 
       expect(company.employees[1]).toBeInstanceOf(Reviewer);
       expect(company.employees[1].getType()).toBe('REVIEWER');
+    });
+  });
+
+  describe('custom accessor in parent class', () => {
+    it("won't override the custom accessor from the superclass with the default one from the subclass", () => {
+      const superEmployee = new SuperEmployee({ company: 'Monster Inc.' });
+
+      expect(superEmployee.company).toEqual('ACME');
     });
   });
 });

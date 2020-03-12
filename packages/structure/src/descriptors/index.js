@@ -1,14 +1,16 @@
 const { isObject } = require('lodash');
-const { SCHEMA, ATTRIBUTES } = require('../symbols');
+const { SCHEMA, ATTRIBUTES, DEFAULT_ACCESSOR } = require('../symbols');
 const Errors = require('../errors');
 const StrictMode = require('../strictMode');
 const Cloning = require('../cloning');
-const { defineProperty } = Object;
+const Attributes = require('../attributes');
+const { defineProperty, defineProperties } = Object;
 
 exports.addTo = function addDescriptorsTo(schema, StructureClass) {
   setSchema();
   setBuildStrict();
   setAttributesGetterAndSetter();
+  setGenericAttributeGetterAndSetter();
   setEachAttributeGetterAndSetter();
   setValidation();
   setSerialization();
@@ -43,10 +45,31 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
           throw Errors.nonObjectAttributes();
         }
 
-        defineProperty(this, ATTRIBUTES, {
-          configurable: true,
-          value: newAttributes,
-        });
+        const coercedAttributes = schema.coerce(newAttributes);
+
+        Attributes.setInInstance(this, coercedAttributes);
+      },
+    });
+  }
+
+  function setGenericAttributeGetterAndSetter() {
+    defineProperties(StructureClass.prototype, {
+      get: {
+        value: function get(attributeName) {
+          return this.attributes[attributeName];
+        },
+      },
+      set: {
+        value: function set(attributeName, attributeValue) {
+          const attributeDefinition = schema.attributeDefinitions[attributeName];
+
+          if (!attributeDefinition) {
+            throw Errors.inexistentAttribute(attributeName);
+          }
+
+          const coercedValue = attributeDefinition.coerce(attributeValue);
+          this.attributes[attributeName] = coercedValue;
+        },
       },
     });
   }
@@ -56,23 +79,25 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
       defineProperty(
         StructureClass.prototype,
         attrDefinition.name,
-        attributeDescriptor(attrDefinition)
+        attributeDescriptorFor(attrDefinition)
       );
     });
   }
 
-  function attributeDescriptor(attrDefinition) {
+  function attributeDescriptorFor(attrDefinition) {
     const { name } = attrDefinition;
 
-    return {
-      get() {
-        return this.attributes[name];
-      },
+    const attributeDescriptor = findAttributeDescriptor(name);
 
-      set(value) {
-        this.attributes[name] = schema.attributeDefinitions[name].coerce(value);
-      },
-    };
+    if (isDefaultAccessor(attributeDescriptor.get)) {
+      attributeDescriptor.get = defaultGetterFor(name);
+    }
+
+    if (isDefaultAccessor(attributeDescriptor.set)) {
+      attributeDescriptor.set = defaultSetterFor(name);
+    }
+
+    return attributeDescriptor;
   }
 
   function setValidation() {
@@ -103,5 +128,49 @@ exports.addTo = function addDescriptorsTo(schema, StructureClass) {
     defineProperty(StructureClass.prototype, 'clone', {
       value: cloning.clone,
     });
+  }
+
+  function defaultGetterFor(name) {
+    function get() {
+      return this.get(name);
+    }
+
+    get[DEFAULT_ACCESSOR] = true;
+
+    return get;
+  }
+
+  function defaultSetterFor(name) {
+    function set(value) {
+      this.set(name, value);
+    }
+
+    set[DEFAULT_ACCESSOR] = true;
+
+    return set;
+  }
+
+  function isDefaultAccessor(accessor) {
+    return !accessor || accessor[DEFAULT_ACCESSOR];
+  }
+
+  function findAttributeDescriptor(propertyName) {
+    let proto = StructureClass.prototype;
+
+    while (proto !== Object.prototype) {
+      const attributeDescriptor = Object.getOwnPropertyDescriptor(proto, propertyName);
+
+      if (attributeDescriptor) {
+        return {
+          ...attributeDescriptor,
+          enumerable: false,
+          configurable: true,
+        };
+      }
+
+      proto = proto.__proto__;
+    }
+
+    return {};
   }
 };

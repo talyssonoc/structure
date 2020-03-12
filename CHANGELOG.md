@@ -10,6 +10,7 @@ Refactors:
 Enhancements
 
 - Implement jest-structure assertions
+- It's possible to set custom getters e setters directly in the structure class
 
 Breaking changes:
 
@@ -18,6 +19,7 @@ Breaking changes:
   - Attribute path in validation _messages_ contains the whole path joined by '.'
   - The name used for the dynamic import should aways be the same as the name of its type or else a custom identifier must be used
 - Non-nullable attributes with value null will use default value the same way undefined does
+- Structure classes now have two methods to generically set and get the value of the attributes, `.get(attributeName)` and `.set(attributeName, attributeValue)`
 
 ## 1.8.0 - 2019-09-16
 

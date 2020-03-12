@@ -18,3 +18,6 @@ exports.invalidType = (attributeName) =>
 
 exports.invalidAttributes = (errors, StructureValidationError) =>
   new StructureValidationError(errors);
+
+exports.inexistentAttribute = (attributeName) =>
+  new Error(`${attributeName} is not an attribute of this structure`);

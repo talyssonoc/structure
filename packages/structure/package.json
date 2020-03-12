@@ -37,7 +37,7 @@
     "build": "webpack",
     "prepublish": "yarn run build",
     "coveralls": "yarn run coverage --coverageReporters=text-lcov | coveralls",
-    "lint": "eslint {src,test,benchmark}/**/*.js",
+    "lint": "eslint {src,test}/**/*.js",
     "format": "prettier --write {src,test}/**/*.js"
   },
   "dependencies": {

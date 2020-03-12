@@ -1,15 +1,11 @@
-const { ATTRIBUTES } = require('../symbols');
+const Attributes = require('../attributes');
 
 exports.for = function initializationForSchema(schema) {
   return {
     initialize(instance, { attributes }) {
-      Object.defineProperty(instance, ATTRIBUTES, {
-        configurable: true,
-        value: Object.create(null),
-      });
+      Attributes.setInInstance(instance, Object.create(null));
 
-      for (let i = 0; i < schema.attributeDefinitions.length; i++) {
-        const attrDefinition = schema.attributeDefinitions[i];
+      for (let attrDefinition of schema.attributeDefinitions) {
         const attrPassedValue = attributes[attrDefinition.name];
 
         // will coerce through setters

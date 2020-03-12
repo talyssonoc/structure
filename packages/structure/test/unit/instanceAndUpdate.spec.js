@@ -21,6 +21,9 @@ describe('instantiating a structure', () => {
         type: String,
         default: (instance) => instance.getUuid(),
       },
+      attrWithCustomSetter: String,
+      attrWithCustomGetter: String,
+      attrWithCustomSetterAndGetter: String,
       attrUsingMethodUsingAttr: {
         type: String,
         default: (instance) => instance.someMethod(),
@@ -50,6 +53,22 @@ describe('instantiating a structure', () => {
 
         someMethod() {
           return `Method => ${this.name}`;
+        }
+
+        set attrWithCustomSetter(value) {
+          this.set('attrWithCustomSetter', value);
+        }
+
+        get attrWithCustomGetter() {
+          return this.get('attrWithCustomGetter');
+        }
+
+        set attrWithCustomSetterAndGetter(value) {
+          this.set('attrWithCustomSetterAndGetter', `${value}...`);
+        }
+
+        get attrWithCustomSetterAndGetter() {
+          return `-> ${this.get('attrWithCustomSetterAndGetter')}`;
         }
       }
     );
@@ -273,6 +292,62 @@ describe('instantiating a structure', () => {
       });
     });
   });
+
+  describe('custom setters and getters', () => {
+    describe('when attribute that has a custom setter is set', () => {
+      it('calls custom setter', () => {
+        const user = new User({ attrWithCustomSetter: 'abc' });
+
+        expect(user.attrWithCustomSetter).toBe('abc');
+      });
+
+      it('does coercion to the set value', () => {
+        const user = new User({ attrWithCustomSetter: 42 });
+
+        expect(user.attrWithCustomSetter).toBe('42');
+      });
+    });
+
+    describe('when attribute that has a custom getter is requested', () => {
+      it('calls custom getter', () => {
+        const user = new User({ attrWithCustomGetter: 'abc' });
+
+        expect(user.attrWithCustomGetter).toBe('abc');
+      });
+    });
+
+    describe('when attribute has custom setter and getter', () => {
+      it('calls setter when setting', () => {
+        const user = new User({ attrWithCustomSetterAndGetter: 'a' });
+
+        expect(user.attributes.attrWithCustomSetterAndGetter).toEqual('a...');
+      });
+
+      it('calls getter when getting', () => {
+        const user = new User({ attrWithCustomSetterAndGetter: 'a' });
+
+        expect(user.attrWithCustomSetterAndGetter).toEqual('-> a...');
+      });
+    });
+
+    describe('when tries to set an attribute that does not exist', () => {
+      it('fails and throws an error', () => {
+        const User = attributes({
+          name: String,
+        })(
+          class User {
+            set name(value) {
+              this.set('NOPE', `> ${value}`);
+            }
+          }
+        );
+
+        expect(() => {
+          new User({ name: 'hmm...' });
+        }).toThrowErrorMatchingSnapshot();
+      });
+    });
+  });
 });
 
 describe('instantiating a structure with dynamic attribute types', () => {
@@ -340,7 +415,15 @@ describe('updating an instance', () => {
   beforeEach(() => {
     User = attributes({
       name: String,
-    })(class User {});
+      age: Number,
+      nickname: String,
+    })(
+      class User {
+        set nickname(newNickname) {
+          this.set('nickname', `> ${newNickname} <`);
+        }
+      }
+    );
   });
 
   it('updates instance attribute value when assigned a new value', () => {
@@ -363,16 +446,18 @@ describe('updating an instance', () => {
     expect(user.attributes.name).toEqual('New name');
   });
 
-  it('reflects new value assigned to #attributes on instance attribute', () => {
+  it('reflects and coerces new values assigned to #attributes on instance attribute', () => {
     const user = new User({
       name: 'My name',
     });
 
     user.attributes = {
       name: 'New name',
+      age: '123',
     };
 
-    expect(user.name).toEqual('New name');
+    expect(user.name).toBe('New name');
+    expect(user.age).toBe(123);
   });
 
   it('does not throw if no attributes are passed when instantiating', () => {
@@ -389,6 +474,14 @@ describe('updating an instance', () => {
     expect(() => {
       user.attributes = null;
     }).toThrow(/^#attributes can't be set to a non-object\.$/);
+  });
+
+  it('uses custom setter', () => {
+    const user = new User({});
+
+    user.nickname = 'ABC';
+
+    expect(user.nickname).toBe('> ABC <');
   });
 });
 
