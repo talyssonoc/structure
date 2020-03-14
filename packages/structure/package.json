@@ -41,7 +41,7 @@
     "format": "prettier --write {src,test}/**/*.js"
   },
   "dependencies": {
-    "@hapi/joi": "^16.1.4",
+    "@hapi/joi": "^16.1.8",
     "lodash": "^4.16.4"
   },
   "devDependencies": {
