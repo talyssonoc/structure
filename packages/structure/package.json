@@ -9,7 +9,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=8.16.1"
+    "node": ">=10.13.0"
   },
   "homepage": "https://structure.js.org/",
   "repository": "https://github.com/talyssonoc/structure",
@@ -51,7 +51,7 @@
     "@jest-runner/electron": "^2.0.2",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.7",
-    "electron": "^6.0.12",
+    "electron": "^8.1.1",
     "jest-structure": "2.0.0-alpha.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
