@@ -24,6 +24,7 @@
 - [Strict mode](strict-mode.md)
 - [Cloning an instance](cloning.md)
 - [Serialization](serialization.md)
+- [Changelog](../CHANGELOG.md)
 - [Contributing](../contributing.md)
 - [License](../license.md)
 - [GitHub](https://github.com/talyssonoc/structure)
