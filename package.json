@@ -1,9 +1,4 @@
 {
-  "name": "structure",
-  "version": "2.0.0-alpha",
-  "main": "index.js",
-  "repository": "git@github.com:talyssonoc/structure.git",
-  "author": "Talysson <talyssonoc@gmail.com>",
   "license": "MIT",
   "private": true,
   "workspaces": [
