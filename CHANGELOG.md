@@ -1,3 +1,7 @@
+## 2.0.0-alpha.1 - 2020-03-19
+
+- Add symlinks to md files to packages/structure
+
 ## 2.0.0-alpha.0 - 2020-03-19
 
 Refactors:
