@@ -8,11 +8,14 @@
   "scripts": {
     "test": "jest"
   },
+  "engines": {
+    "node": ">=10.13.0"
+  },
   "devDependencies": {
     "structure": "2.0.0-alpha.0"
   },
   "peerDependencies": {
-    "jest": "^24.0.0"
+    "jest": "^25.1.0"
   },
   "dependencies": {}
 }

@@ -126,14 +126,18 @@ describe('creating a structure class', () => {
 
   describe('when using dynamic attribute types', () => {
     it('allows to use dynamic values', () => {
-      require('../fixtures/CircularUser');
-      require('../fixtures/CircularBook');
+      expect(() => {
+        require('../fixtures/CircularUser');
+        require('../fixtures/CircularBook');
+      }).not.toThrow();
     });
 
     describe('when using custom identifiers', () => {
       it('allows to use dynamic types', () => {
-        require('../fixtures/CircularUserCustomIdentifier');
-        require('../fixtures/CircularBookCustomIdentifier');
+        expect(() => {
+          require('../fixtures/CircularUserCustomIdentifier');
+          require('../fixtures/CircularBookCustomIdentifier');
+        }).not.toThrow();
       });
     });
 

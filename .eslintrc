@@ -24,6 +24,8 @@
     "jest/no-identical-title": "error",
     "jest/prefer-to-have-length": "warn",
     "jest/valid-expect": "error",
+    "jest/no-test-callback": "off",
+    "jest/no-try-expect": "off",
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "always"]
   }
