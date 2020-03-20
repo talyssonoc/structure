@@ -16,17 +16,11 @@ You can use Structure for a lot of different cases, including:
 - Map pure objects and JSON to your application classes
 - Add attributes to classes that you can't change the class hierarchy
 
-Structure was inspired by Ruby's [Virtus](https://github.com/solnic/virtus).
-
 What Structure is **not**:
 
 - It's not a database abstraction
-- It's not a MVC framework (but it can be used to domain entities)
+- It's not a Model of a MVC framework
 - It's not an attempt to simulate classic inheritance in JavaScript
-
-## Getting started
-
-`npm install --save structure`
 
 ## Usage
 
@@ -60,18 +54,6 @@ user.name; // 'John Foo'
 user.greet(); // 'Hello John Foo'
 ```
 
-## Support and compatibility
-
-Structure is built on top of modern JavaScript, using new features like [Proxy](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy), [Reflect](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Reflect) and [Symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol). That being so, there are some things regarding compatibility you should consider when using Structure.
-
-### Node
-
-Node has only implemented all the used features at version 10, so for using Structure for a backend application you'll need Node 10 or later.
-
-### Browser
-
-We have a [UMD version](https://github.com/talyssonoc/structure/blob/master/dist/structure.js) for usage in browsers. Right now the tests are ran both in Node (using the original code) and in Electron (using the UMD version) and the whole test suite passes for both cases. Since we use modern JavaScript features inside the lib (like [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)), older browsers may not support it. Polyfilling them may be an option but it's not oficially supported.
-
 ## BattleCry generators
 
 There are configurable [BattleCry](https://github.com/pedsmoreira/battlecry) generators ready to be downloaded and help scaffolding schema:
@@ -84,6 +66,6 @@ cry g schema user name age:int:required cars:string[] favoriteBook:book friends:
 
 Run `cry --help` to check more info about the generators available;
 
-## [Contributing](contributing.md)
+## [Contributing](../../contributing.md)
 
-## [LICENSE](license.md)
+## [LICENSE](../../license.md)

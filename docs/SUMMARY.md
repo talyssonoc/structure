@@ -1,6 +1,6 @@
 # Table of contents
 
-- [Introduction](../packages/structure/README.md)
+- [Introduction](/)
 - [Schema concept](schema-concept/README.md)
   - [Shorthand and complete type descriptor](schema-concept/shorthand-and-complete-type-descriptor.md)
   - [Circular reference](schema-concept/circular-references-and-dynamic-types.md)
@@ -24,7 +24,8 @@
 - [Strict mode](strict-mode.md)
 - [Cloning an instance](cloning.md)
 - [Serialization](serialization.md)
-- [Changelog](../packages/structure/CHANGELOG.md)
-- [Contributing](../packages/structure/contributing.md)
-- [License](../packages/structure/license.md)
+- [Support and compatibility](support.md)
+- [Changelog](../CHANGELOG.md)
+- [Contributing](../contributing.md)
+- [License](../license.md)
 - [GitHub](https://github.com/talyssonoc/structure)
