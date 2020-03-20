@@ -1,6 +1,5 @@
 # Table of contents
 
-- [Introduction](/)
 - [Schema concept](schema-concept/README.md)
   - [Shorthand and complete type descriptor](schema-concept/shorthand-and-complete-type-descriptor.md)
   - [Circular reference](schema-concept/circular-references-and-dynamic-types.md)
