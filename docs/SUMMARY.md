@@ -1,6 +1,5 @@
 # Table of contents
 
-- [Introduction](../README.md)
 - [Schema concept](schema-concept/README.md)
   - [Shorthand and complete type descriptor](schema-concept/shorthand-and-complete-type-descriptor.md)
   - [Circular reference](schema-concept/circular-references-and-dynamic-types.md)
@@ -24,6 +23,7 @@
 - [Strict mode](strict-mode.md)
 - [Cloning an instance](cloning.md)
 - [Serialization](serialization.md)
+- [Support and compatibility](support.md)
 - [Changelog](../CHANGELOG.md)
 - [Contributing](../contributing.md)
 - [License](../license.md)
