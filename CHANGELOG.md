@@ -1,3 +1,7 @@
+## 2.0.0-alpha.3 - 2020-03-20
+
+- Reorganize md files
+
 ## 2.0.0-alpha.2 - 2020-03-19
 
 - Invert symlinks
