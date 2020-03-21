@@ -23,6 +23,7 @@
 - [Strict mode](strict-mode.md)
 - [Cloning an instance](cloning.md)
 - [Serialization](serialization.md)
+- [Testing](testing.md)
 - [Support and compatibility](support.md)
 - [Changelog](../CHANGELOG.md)
 - [Contributing](../contributing.md)

@@ -1,28 +1,6 @@
-# jest-structure
+# Testing
 
-Custom [Jest](https://www.npmjs.com/package/jest) matchers to test [Structure](https://www.npmjs.com/package/structure) instances.
-
-## Example usage
-
-```js
-expect(user).toBeValidStructure();
-
-expect(user).toBeInvalidStructure();
-
-expect(user).toHaveInvalidAttribute(['name']);
-
-expect(user).toHaveInvalidAttribute(['name'], ['"name" is required']);
-
-expect(user).toHaveInvalidAttribute(['name'], expect.arrayContaining(['"name" is required']));
-
-expect(user).toHaveInvalidAttributes([
-  { path: ['name'], messages: expect.arrayContaining(['"name" is required']) },
-  {
-    path: ['age'],
-    messages: ['"age" must be larger than or equal to 2', '"age" must be a positive number'],
-  },
-]);
-```
+If you use Jest, Structe has a Jest extension called [`jest-structure`](https://www.npmjs.com/package/jest-structure) that provides assertions to make it easy to test intances.
 
 ## Installation
 
