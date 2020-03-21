@@ -1,6 +1,6 @@
 # Observations
 
-__Important: Structure only does coercion during object creation, so mutating an array (using push, for example) won't coerce the new item:__
+**Important: Structure only does coercion during object creation, so mutating an array \(using push, for example\) won't coerce the new item:**
 
 ```javascript
 const Library = attributes({
@@ -19,5 +19,5 @@ library.books; // ['1984'] => coerced number to string
 library.books.push(42);
 
 library.books; // ['1984', 42] => new item was not coerced
-
 ```
+
