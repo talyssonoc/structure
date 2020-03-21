@@ -8,16 +8,16 @@ Validations require you to use the complete type descriptor:
 const User = attributes({
   name: {
     type: String,
-    minLength: 10
+    minLength: 10,
   },
   age: {
     type: Number,
-    required: true
-  }
-})(class User { });
+    required: true,
+  },
+})(class User {});
 
 const user = new User({
-  name: 'John'
+  name: 'John',
 });
 
 const { valid, errors } = user.validate();
@@ -31,8 +31,8 @@ errors; /*
 */
 
 const validUser = new User({
-  name: 'This is my name',
-  age: 25
+  name: 'This is my name',
+  age: 25,
 });
 
 const validation = validUser.validate();
@@ -41,10 +41,10 @@ validation.valid; // true
 validation.errors; // undefined, because `valid` is true
 ```
 
-Structure has a set of built-in validations built on top of the awesome [joi](https://www.npmjs.com/package/joi) package:
+Structure has a set of built-in validations built on top of the awesome [joi](https://www.npmjs.com/package/@hapi/joi) package:
 
 **Observations**
 
-Validations marked with __*__ accept a value, an [attribute reference](attribute-reference.md), or an array of values and attribute references mixed.
+Validations marked with **\*** accept a value, an [attribute reference](attribute-reference.md), or an array of values and attribute references mixed.
 
-Validations marked with __**__ accept a value or an [attribute reference](attribute-reference.md).
+Validations marked with **\*\*** accept a value or an [attribute reference](attribute-reference.md).
