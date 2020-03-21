@@ -1,3 +1,7 @@
+## 2.0.0-alpha.4 - 2020-03-21
+
+- Publish only src folder for jest-structure
+
 ## 2.0.0-alpha.3 - 2020-03-20
 
 - Reorganize md files

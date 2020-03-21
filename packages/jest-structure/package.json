@@ -1,6 +1,6 @@
 {
   "name": "jest-structure",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.4",
   "description": "Jest assertions to use with Structure",
   "main": "index.js",
   "author": "Talysson <talyssonoc@gmail.com>",
@@ -8,11 +8,14 @@
   "scripts": {
     "test": "jest"
   },
+  "files": [
+    "src"
+  ],
   "engines": {
     "node": ">=10.13.0"
   },
   "devDependencies": {
-    "structure": "2.0.0-alpha.3"
+    "structure": "2.0.0-alpha.4"
   },
   "peerDependencies": {
     "jest": "^25.1.0"
