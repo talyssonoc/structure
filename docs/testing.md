@@ -1,28 +1,6 @@
-# jest-structure
+# Testing
 
-Custom [Jest](https://www.npmjs.com/package/jest) matchers to test [Structure](https://www.npmjs.com/package/structure) instances.
-
-## Example usage
-
-```js
-expect(user).toBeValidStructure();
-
-expect(user).toBeInvalidStructure();
-
-expect(user).toHaveInvalidAttribute(['name']);
-
-expect(user).toHaveInvalidAttribute(['name'], ['"name" is required']);
-
-expect(user).toHaveInvalidAttribute(['name'], expect.arrayContaining(['"name" is required']));
-
-expect(user).toHaveInvalidAttributes([
-  { path: ['name'], messages: expect.arrayContaining(['"name" is required']) },
-  {
-    path: ['age'],
-    messages: ['"age" must be larger than or equal to 2', '"age" must be a positive number'],
-  },
-]);
-```
+If you use Jest, Structe has a Jest extension called [`jest-structure`](https://www.npmjs.com/package/jest-structure) that provides assertions to make it easy to test intances.
 
 ## Installation
 
@@ -92,7 +70,7 @@ const validUser = new User({ name: 'Me' });
 expect(validUser).toBeInvalidStructure(); // fails
 ```
 
-### `toHaveInvalidAttribute(path, messages)`
+## `toHaveInvalidAttribute(path, messages)`
 
 This matcher allows you to assert that a _single attribute_ of the structure is invalid, optionally passing the array of error messages for that attribute:
 
@@ -123,7 +101,7 @@ expect(user).toHaveInvalidAttribute(['name'], expect.arrayContaining(['"name" is
 expect(user).toHaveInvalidAttribute(['name'], [expect.stringContaining('required')]);
 ```
 
-### `toHaveInvalidAttributes([ { path, messages } ])`
+## `toHaveInvalidAttributes([ { path, messages } ])`
 
 This matcher allows you to assert that _multiple attributes_ of the structure are invalid, optionally passing the array of error messages for each attribute:
 
