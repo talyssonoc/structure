@@ -92,7 +92,7 @@ const validUser = new User({ name: 'Me' });
 expect(validUser).toBeInvalidStructure(); // fails
 ```
 
-## `toHaveInvalidAttribute(path, messages)`
+### `toHaveInvalidAttribute(path, messages)`
 
 This matcher allows you to assert that a _single attribute_ of the structure is invalid, optionally passing the array of error messages for that attribute:
 
@@ -123,7 +123,7 @@ expect(user).toHaveInvalidAttribute(['name'], expect.arrayContaining(['"name" is
 expect(user).toHaveInvalidAttribute(['name'], [expect.stringContaining('required')]);
 ```
 
-## `toHaveInvalidAttributes([ { path, messages } ])`
+### `toHaveInvalidAttributes([ { path, messages } ])`
 
 This matcher allows you to assert that _multiple attributes_ of the structure are invalid, optionally passing the array of error messages for each attribute:
 
