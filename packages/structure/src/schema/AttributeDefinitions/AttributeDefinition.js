@@ -1,4 +1,4 @@
-const { isFunction, isString } = require('lodash');
+const { isFunction, isString, isUndefined } = require('lodash');
 const Coercion = require('../../coercion');
 const Validation = require('../../validation');
 const Errors = require('../../errors');
@@ -61,7 +61,7 @@ class AttributeDefinition {
     this.__isAttributeDefinition = true;
 
     this.name = name;
-    this.options = options;
+    options = this.options = applyDefaultOptions(options, schema);
     this.hasDefault = 'default' in options;
     this.isDynamicDefault = isFunction(options.default);
     this.hasDynamicType = hasDynamicType(options);
@@ -139,6 +139,16 @@ const makeComplete = (options) => {
 
   return { type: options };
 };
+
+const applyDefaultOptions = (options, schema) => {
+  return {
+    ...options,
+    coercion: inheritOptionFromSchema(options.coercion, schema.options.coercion),
+  };
+};
+
+const inheritOptionFromSchema = (option, schemaOption) =>
+  !isUndefined(option) ? option : schemaOption;
 
 const isShorthand = (options) => isFunction(options) || isString(options);
 
