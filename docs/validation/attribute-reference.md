@@ -8,14 +8,14 @@ const User = attributes({
   password: String,
   passwordConfirmation: {
     type: String,
-    equal: { attr: 'password' }
-  }
-})(class User { });
+    equal: { attr: 'password' },
+  },
+})(class User {});
 
 const user = new User({
   name: 'Gandalf',
   password: 'safestpasswordever',
-  passwordConfirmation: 'notthatsafetho'
+  passwordConfirmation: 'notthatsafetho',
 });
 
 const { valid, errors } = user.validate();
@@ -24,9 +24,8 @@ valid; // false
 errors; /* [
   {
     message: '"passwordConfirmation" must be one of [ref:password]',
-    path: 'passwordConfirmation'
+    path: ['passwordConfirmation']
   }
 ]
 */
-
 ```
