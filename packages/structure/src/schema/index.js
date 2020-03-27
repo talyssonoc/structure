@@ -48,7 +48,7 @@ class Schema {
   }
 
   constructor({ attributeDefinitions, wrappedClass, options }) {
-    this.options = options;
+    this.options = applyDefaultOptions(options);
     this.attributeDefinitions = AttributeDefinitions.for(attributeDefinitions, { schema: this });
     this.wrappedClass = wrappedClass;
     this.identifier = options.identifier || wrappedClass.name;
@@ -96,5 +96,14 @@ class Schema {
     return attributes;
   }
 }
+
+const defaultOptions = {
+  coercion: true,
+};
+
+const applyDefaultOptions = (options) => ({
+  ...defaultOptions,
+  ...options,
+});
 
 module.exports = Schema;

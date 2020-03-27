@@ -10,6 +10,10 @@ const types = [
 ];
 
 exports.for = function coercionFor(attributeDefinition) {
+  if (!attributeDefinition.options.coercion) {
+    return Coercion.disabled;
+  }
+
   const coercion = getCoercion(attributeDefinition);
 
   return Coercion.create(coercion, attributeDefinition);

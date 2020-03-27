@@ -20,6 +20,10 @@ exports.create = function createCoercionFor(coercion, attributeDefinition) {
   };
 };
 
+exports.disabled = {
+  coerce: (value) => value,
+};
+
 const getNullableValue = (coercion, attributeDefinition) =>
   needsNullableInitialization(attributeDefinition) ? getNullValue(coercion) : null;
 
