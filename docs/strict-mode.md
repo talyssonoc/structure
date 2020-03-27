@@ -18,8 +18,8 @@ const user = User.buildStrict({
 
 // Error: Invalid Attributes
 // details: [
-//   { message: '"name" is required', path: 'name' },
-//   { message: '"age" must be a number', path: 'age' }
+//   { message: '"name" is required', path: ['name'] },
+//   { message: '"age" must be a number', path: ['age'] }
 // ]
 ```
 
@@ -59,8 +59,8 @@ const book = Book.buildStrict({
 
 // InvalidBookError: Wait, this book is not right
 // code: 'INVALID_BOOK'
-// details: [
-//   { message: '"name" is required', path: 'name' },
-//   { message: '"year" must be a number', path: 'year' }
+// errors: [
+//   { message: '"name" is required', path: ['name'] },
+//   { message: '"year" must be a number', path: ['year'] }
 // ]
 ```

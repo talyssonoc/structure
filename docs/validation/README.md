@@ -25,8 +25,8 @@ const { valid, errors } = user.validate();
 valid; // false
 errors; /*
 [
-  { message: '"name" length must be at least 10 characters long', path: 'name' },
-  { message: '"age" is required', path: 'age' }
+  { message: '"name" length must be at least 10 characters long', path: ['name'] },
+  { message: '"age" is required', path: ['age'] }
 ]
 */
 

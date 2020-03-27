@@ -6,26 +6,26 @@ Structure will validate nested values, including array items validations and nes
 const Book = attributes({
   name: {
     type: String,
-    required: true
-  }
-})(class Book { });
+    required: true,
+  },
+})(class Book {});
 
 const User = attributes({
   initials: {
     type: String,
-    minLength: 2
+    minLength: 2,
   },
   favoriteBook: Book,
   books: {
     type: Array,
-    itemType: Book
-  }
-})(class User { });
+    itemType: Book,
+  },
+})(class User {});
 
 const user = new User({
   initials: 'A',
   favoriteBook: new Book(),
-  books: [new Book()]
+  books: [new Book()],
 });
 
 const { valid, errors } = user.validate();
@@ -33,9 +33,9 @@ const { valid, errors } = user.validate();
 valid; // false
 errors; /*
 [
-  { message: '"initials" length must be at least 2 characters long', path: 'initials' },
-  { message: '"name" is required', path: 'favoriteBook.name' },
-  { message: '"name" is required', path: 'books.0.name' }
+  { message: '"initials" length must be at least 2 characters long', path: ['initials'] },
+  { message: '"favoriteBook.name" is required', path: ['favoriteBook', 'name'] },
+  { message: '"books[0].name" is required', path: ['books', 0, 'name'] }
 ]
 */
 ```

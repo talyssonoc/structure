@@ -6,17 +6,17 @@ In addition to the _instance_ `validate()` method, Structure also adds a _static
 const User = attributes({
   name: {
     type: String,
-    minLength: 10
+    minLength: 10,
   },
   age: {
     type: Number,
-    required: true
-  }
-})(class User { });
+    required: true,
+  },
+})(class User {});
 
 // Using a raw object
 const rawData = {
-  name: 'John'
+  name: 'John',
 };
 
 const { valid, errors } = User.validate(rawData);
@@ -24,14 +24,14 @@ const { valid, errors } = User.validate(rawData);
 valid; // false
 errors; /*
 [
-  { message: '"name" length must be at least 10 characters long', path: 'name' },
-  { message: '"age" is required', path: 'age' }
+  { message: '"name" length must be at least 10 characters long', path: ['name'] },
+  { message: '"age" is required', path: ['age'] }
 ]
 */
 
 // Using a structure instance
 const user = new User({
-  name: 'Some long name'
+  name: 'Some long name',
 });
 
 const validation = User.validate(user);
@@ -39,7 +39,7 @@ const validation = User.validate(user);
 validation.valid; // false
 validation.errors; /*
 [
-  { message: '"age" is required', path: 'age' }
+  { message: '"age" is required', path: ['age'] }
 ]
 */
 ```
