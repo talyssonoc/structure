@@ -15,16 +15,16 @@ module.exports = {
     ['email', 'email'],
     ['guid', 'guid', isPlainObject],
   ],
-  createJoiSchema(typeDescriptor) {
+  createJoiSchema(attributeDefinition) {
     let joiSchema = joi.string();
 
-    if (typeDescriptor.options.empty) {
+    if (attributeDefinition.options.empty) {
       joiSchema = joiSchema.allow('');
     }
 
-    joiSchema = equalOption(typeDescriptor, { initial: joiSchema });
+    joiSchema = equalOption(attributeDefinition, { initial: joiSchema });
 
-    return mapToJoi(typeDescriptor, {
+    return mapToJoi(attributeDefinition, {
       initial: joiSchema,
       mappings: this.joiMappings,
     });
