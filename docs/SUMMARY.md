@@ -25,6 +25,7 @@
 - [Serialization](serialization.md)
 - [Testing](testing.md)
 - [Battlecry generators](battlecry-generators.md)
+- [Migrating from v1](migrating-from-v1.md)
 - [Support and compatibility](support.md)
 - [Changelog](../CHANGELOG.md)
 - [Contributing](../contributing.md)

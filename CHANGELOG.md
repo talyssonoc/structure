@@ -1,7 +1,32 @@
-## Unreleased
+## 2.0.0 - 2020-03-31
 
+Refactors:
+
+- The whole part of schemas and attribute definitions was refactored
+- Tests are now run by Jest (and Electron for browser tests)
+- Prettier was added
+- Move to mono-repo
+
+Enhancements
+
+- Implement jest-structure assertions
+- It's possible to set custom getters e setters directly in the structure class
 - Allows to disable coercion
+
+Breaking changes:
+
+- Joi is updated to v16
+  - Attribute path in validation _errors_ is an array instead of a string
+  - Attribute path in validation _messages_ contains the whole path joined by '.'
+  - The name used for the dynamic import should aways be the same as the name of its type or else a custom identifier must be used
+- Non-nullable attributes with value null will use default value the same way undefined does
+- Structure classes now have two methods to generically set and get the value of the attributes, `.get(attributeName)` and `.set(attributeName, attributeValue)`
+- Minimum Node version is now 10
+
+Docs:
+
 - Rename the term `type descriptor` to `attribute definition` in the docs and in the code
+- Reorganize and add more specific pages to docs
 
 ## 2.0.0-alpha.4 - 2020-03-21
 
