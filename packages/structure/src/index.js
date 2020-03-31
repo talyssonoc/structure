@@ -1,0 +1,1 @@
+exports.attributes = require('./attributesDecorator');

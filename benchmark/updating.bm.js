@@ -1,4 +1,4 @@
-const { attributes } = require('../src');
+const { attributes } = require('../packages/structure/src');
 
 const Book = attributes({
   name: String

@@ -73,6 +73,6 @@ const clonedUser = user.clone(
 
 // Error: Invalid Attributes
 // details: [
-//   { message: '"name" is required', path: 'name' }
+//   { message: '"name" is required', path: ['name'] }
 // ]
 ```

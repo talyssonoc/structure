@@ -1,10 +1,25 @@
 language: node_js
 node_js:
-  - "node"
-  - "6.1"
-  - "6.0"
-  - "8.0"
+  - '10'
+  - '11'
+  - '12'
+  - 'node'
+
+addons:
+  apt:
+    packages:
+      - xvfb
+
+install:
+  - yarn
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+
+before_script:
+  - yarn test:browser:build
+
 script:
-  - npm run lint
-  - npm test
-  - npm run coveralls
+  - yarn lint
+  - yarn test
+  - yarn test:browser:run
+  - yarn coveralls

@@ -1,0 +1,59 @@
+{
+  "name": "structure",
+  "version": "2.0.0",
+  "description": "A simple schema/attributes library built on top of modern JavaScript",
+  "main": "src/index.js",
+  "browser": "dist/structure.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "homepage": "https://structure.js.org/",
+  "repository": "https://github.com/talyssonoc/structure",
+  "bugs": "https://github.com/talyssonoc/structure/issues",
+  "author": "Talysson <talyssonoc@gmail.com>",
+  "contributors": [
+    "Fernando <me@fleury.io>",
+    "Wender Freese <wender.jean@gmail.com>"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "MIT",
+  "keywords": [
+    "entity",
+    "model",
+    "domain"
+  ],
+  "scripts": {
+    "test": "jest --config=test/jest.node.js",
+    "test:browser:build": "webpack --config test/webpack.pretest.js",
+    "test:browser:run": "jest --config=test/jest.browser.js",
+    "test:browser": "yarn run test:browser:build && yarn run test:browser:run",
+    "coverage": "yarn test --coverage",
+    "build": "webpack",
+    "prepublish": "yarn run build",
+    "coveralls": "yarn run coverage --coverageReporters=text-lcov | coveralls",
+    "lint": "eslint {src,test}/**/*.js",
+    "format": "prettier --write {src,test}/**/*.js"
+  },
+  "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "lodash": "^4.16.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@jest-runner/electron": "^2.0.2",
+    "babel-loader": "^8.0.6",
+    "coveralls": "^3.0.7",
+    "electron": "^8.1.1",
+    "jest-structure": "2.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  }
+}

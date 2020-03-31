@@ -2,7 +2,7 @@ const Benchmark = require('benchmark');
 const suites = require('./suites');
 
 suites.forEach((suiteData) => {
-  var suite = new Benchmark.Suite(suiteData.name);
+  let suite = new Benchmark.Suite(suiteData.name);
 
   suite = suiteData.cases.reduce((s, c) => {
     return s.add(c.name, c.fn);

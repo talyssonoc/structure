@@ -1,3 +1,3 @@
 structure:
-  readme: README.md
+  readme: packages/structure/README.md
   summary: docs/SUMMARY.md

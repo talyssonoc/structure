@@ -1,0 +1,24 @@
+{
+  "name": "jest-structure",
+  "version": "2.0.0",
+  "description": "Jest assertions to use with Structure",
+  "main": "index.js",
+  "author": "Talysson <talyssonoc@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "devDependencies": {
+    "structure": "2.0.0"
+  },
+  "peerDependencies": {
+    "jest": "^25.1.0"
+  },
+  "dependencies": {}
+}
