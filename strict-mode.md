@@ -2,7 +2,7 @@
 
 To instantiate a structure that automatically throws an error if that is invalid, you can use the buildStrict function.
 
-```js
+```javascript
 const { attributes } = require('structure');
 const User = attributes({
   name: {
@@ -29,7 +29,7 @@ Normally `buildStrict` will throw a default `Error` when attributes are invalid 
 
 The value of `strictValidationErrorClass` should be a class that accepts an array of erros in the constructor.
 
-```js
+```javascript
 const { attributes } = require('structure');
 
 class InvalidBookError extends Error {
@@ -64,3 +64,4 @@ const book = Book.buildStrict({
 //   { message: '"year" must be a number', path: ['year'] }
 // ]
 ```
+

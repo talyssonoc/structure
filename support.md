@@ -8,4 +8,5 @@ Node has only implemented all the used features at version 10, so to use Structu
 
 ## Browser
 
-We have a UMD version for usage in browsers. Right now the tests are ran both in Node (using the original code) and in Electron (using the UMD version) and the whole test suite passes for both cases. Since we use modern JavaScript features inside the lib (like [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)), older browsers may not support it. Polyfilling them may be an option but it's not oficially supported.
+We have a UMD version for usage in browsers. Right now the tests are ran both in Node \(using the original code\) and in Electron \(using the UMD version\) and the whole test suite passes for both cases. Since we use modern JavaScript features inside the lib \(like [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)\), older browsers may not support it. Polyfilling them may be an option but it's not oficially supported.
+

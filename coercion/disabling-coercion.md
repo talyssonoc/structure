@@ -4,7 +4,7 @@ You can disable coercion for a whole structure or for attributes individually us
 
 ## Disabling for the whole structure
 
-```js
+```javascript
 const User = attributes(
   {
     name: String,
@@ -33,7 +33,7 @@ errors; /*
 
 ## Disabling for specific attributes
 
-```js
+```javascript
 const User = attributes({
   name: { type: String, coercion: false },
   age: Number,
@@ -58,7 +58,7 @@ errors; /*
 
 If you define the `coercion` option both for the structure _and_ for an attribute, the structure one will apply for the whole schema except the specific attributes that overwrite it:
 
-```js
+```javascript
 const User = attributes(
   {
     name: { type: String, coercion: true },
@@ -83,3 +83,4 @@ errors; /*
 ]
 */
 ```
+

@@ -1,12 +1,12 @@
-# Migrating from v1 to v2
+# Migrating from v1
 
-Migrating an app that uses Structure v1 to use Structure v2 requires some changes in the way validation errors are expected to be returned, default fallback of null values and upgrading Node (if you use a version lower than v10.13.0)
+Migrating an app that uses Structure v1 to use Structure v2 requires some changes in the way validation errors are expected to be returned, default fallback of null values and upgrading Node \(if you use a version lower than v10.13.0\)
 
 ## Validation errors
 
 In v1, validations used to be like this:
 
-```js
+```javascript
 const Book = attributes({
   name: {
     type: String,
@@ -44,11 +44,11 @@ errors; /*
 */
 ```
 
-Notice that the message used to contain only the name of the attribute (so if it's nested it will only show the attribute name of the nested structure) and the path is a string that use a dot `.` to represent that it's a nested attribute.
+Notice that the message used to contain only the name of the attribute \(so if it's nested it will only show the attribute name of the nested structure\) and the path is a string that use a dot `.` to represent that it's a nested attribute.
 
 If your app relies on the content of the message or the path, you'll have to consider that it's now returned like this:
 
-```js
+```javascript
 const Book = attributes({
   name: {
     type: String,
@@ -86,7 +86,7 @@ errors; /*
 */
 ```
 
-In v2 the message contains the whole path for the attribute (using dot `.` to represent it's a nested attribute) and the path is not an array.
+In v2 the message contains the whole path for the attribute \(using dot `.` to represent it's a nested attribute\) and the path is not an array.
 
 So if your apps relies in the content of the message you'll probably have to do some parsing of this message now. And if it relies in the path to be a string, you can use [`path.join('.')`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join).
 
@@ -103,3 +103,4 @@ So if any of your structures declare methods with these names you'll have to cha
 ## Upgrade Node
 
 The minimum Node LTS supported by Structure is now v10.13.0 which is the lowest active [LTS](https://nodejs.org/en/about/releases/).
+

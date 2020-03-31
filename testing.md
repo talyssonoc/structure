@@ -6,7 +6,7 @@ If you use Jest, Structure has a Jest extension called [`jest-structure`](https:
 
 jest-structure is available in npm, so you can install it with npm or yarn as a development dependency:
 
-```sh
+```bash
 npm install --save-dev jest-structure
 
 # or
@@ -20,7 +20,7 @@ After installing, you need to tell Jest to use jest-structure, this can be done 
 
 By importing and manually adding it to Jest:
 
-```js
+```javascript
 import jestStructure from 'jest-structure';
 
 expect.extend(jestStructure);
@@ -28,7 +28,7 @@ expect.extend(jestStructure);
 
 Or by allowing jest-structure to add itself to Jest matchers:
 
-```js
+```javascript
 import 'jest-structure/extend-expect';
 ```
 
@@ -40,7 +40,7 @@ Both ways can be done in a [setup file](https://jestjs.io/docs/en/configuration#
 
 This matcher passes if the structure is _valid_:
 
-```js
+```javascript
 const User = attributes({
   name: { type: String, required: true },
 })(class User {});
@@ -58,7 +58,7 @@ expect(invalidUser).toBeValidStructure(); // fails
 
 This matcher passes if the structure is _invalid_:
 
-```js
+```javascript
 const User = attributes({
   name: { type: String, required: true },
 })(class User {});
@@ -76,7 +76,7 @@ expect(validUser).toBeInvalidStructure(); // fails
 
 This matcher allows you to assert that a _single attribute_ of the structure is invalid, optionally passing the array of error messages for that attribute:
 
-```js
+```javascript
 const User = attributes({
   name: { type: String, required: true },
   age: { type: Number, required: true },
@@ -107,7 +107,7 @@ expect(user).toHaveInvalidAttribute(['name'], [expect.stringContaining('required
 
 This matcher allows you to assert that _multiple attributes_ of the structure are invalid, optionally passing the array of error messages for each attribute:
 
-```js
+```javascript
 const User = attributes({
   name: { type: String, required: true },
   age: { type: Number, required: true },
@@ -140,3 +140,4 @@ expect(user).toHaveInvalidAttributes([
   { path: ['name'], messages: [expect.stringContaining('required')] },
 ]);
 ```
+
