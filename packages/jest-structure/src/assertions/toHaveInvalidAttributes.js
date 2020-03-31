@@ -41,8 +41,8 @@ module.exports = function toHaveInvalidAttributes(structure, expectedErrors) {
       this.utils.printDiffOrStringify(
         expectedErrors,
         errorsForComparison,
-        `Expected errors`,
-        `Received errors`,
+        'Expected errors',
+        'Received errors',
         this.expand
       ),
   };
