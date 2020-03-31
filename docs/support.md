@@ -4,7 +4,7 @@ Structure is built on top of modern JavaScript, using new features like [Proxy](
 
 ## Node
 
-Node has only implemented all the used features at version 10, so for using Structure for a backend application you'll need Node 10 or later.
+Node has only implemented all the used features at version 10, so to use Structure for a backend application you'll need Node 10 or later.
 
 ## Browser
 

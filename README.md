@@ -2,12 +2,14 @@
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
-Structure provides a simple interface which allows you to add attributes to your ES6 classes based on a schema, with validations and type coercion.
+Structure provides a simple interface which allows you to add attributes to your classes based on a schema, with validations and type coercion.
 
 ## Packages
 
 - [Structure](packages/structure)
 - [jest-structure](packages/jest-structure)
+
+## [Documentation](https://structure.js.org/v/structure-2/)
 
 ## Example Structure usage
 

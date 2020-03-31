@@ -1,6 +1,6 @@
 # Testing
 
-If you use Jest, Structe has a Jest extension called [`jest-structure`](https://www.npmjs.com/package/jest-structure) that provides assertions to make it easy to test intances.
+If you use Jest, Structure has a Jest extension called [`jest-structure`](https://www.npmjs.com/package/jest-structure) that provides assertions to make it easy to test intances.
 
 ## Installation
 
@@ -18,7 +18,7 @@ yarn --dev add jest-structure
 
 After installing, you need to tell Jest to use jest-structure, this can be done in two ways:
 
-1. By importing and manually adding it to Jest (in a [setup file](https://jestjs.io/docs/en/configuration#setupfilesafterenv-array) or directly in the top of your test file):
+By importing and manually adding it to Jest:
 
 ```js
 import jestStructure from 'jest-structure';
@@ -26,11 +26,13 @@ import jestStructure from 'jest-structure';
 expect.extend(jestStructure);
 ```
 
-2. By allowing jest-structure to add itself to Jest matchers:
+Or by allowing jest-structure to add itself to Jest matchers:
 
 ```js
 import 'jest-structure/extend-expect';
 ```
+
+Both ways can be done in a [setup file](https://jestjs.io/docs/en/configuration#setupfilesafterenv-array) or directly at the top of your test file
 
 ## Matchers
 

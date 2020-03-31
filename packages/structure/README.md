@@ -22,7 +22,9 @@ What Structure is **not**:
 - It's not a Model of a MVC framework
 - It's not an attempt to simulate classic inheritance in JavaScript
 
-## Usage
+## [Documentation](https://structure.js.org/v/structure-2/)
+
+## Example usage
 
 For each attribute on your schema, a getter and a setter will be created into the given class. It'll also auto-assign those attributes passed to the constructor.
 
@@ -53,18 +55,6 @@ const user = new User({
 user.name; // 'John Foo'
 user.greet(); // 'Hello John Foo'
 ```
-
-## BattleCry generators
-
-There are configurable [BattleCry](https://github.com/pedsmoreira/battlecry) generators ready to be downloaded and help scaffolding schema:
-
-```sh
-npm install -g battlecry
-cry download generator talyssonoc/structure
-cry g schema user name age:int:required cars:string[] favoriteBook:book friends:user[]:default :updateAge
-```
-
-Run `cry --help` to check more info about the generators available;
 
 ## [Contributing](../../contributing.md)
 

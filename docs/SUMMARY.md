@@ -1,7 +1,7 @@
 # Table of contents
 
 - [Schema concept](schema-concept/README.md)
-  - [Shorthand and complete type descriptor](schema-concept/shorthand-and-complete-type-descriptor.md)
+  - [Shorthand and complete attribute definition](schema-concept/shorthand-and-complete-attribute-definition.md)
   - [Circular reference](schema-concept/circular-references-and-dynamic-types.md)
   - [Nullable attributes](schema-concept/nullable-attributes.md)
 - [Custom setters and getters](custom-setters-and-getters.md)
@@ -24,6 +24,7 @@
 - [Cloning an instance](cloning.md)
 - [Serialization](serialization.md)
 - [Testing](testing.md)
+- [Battlecry generators](battlecry-generators.md)
 - [Support and compatibility](support.md)
 - [Changelog](../CHANGELOG.md)
 - [Contributing](../contributing.md)

@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Allows to disable coercion
+- Rename the term `type descriptor` to `attribute definition` in the docs and in the code
 
 ## 2.0.0-alpha.4 - 2020-03-21
 
