@@ -4,7 +4,7 @@ Contributions are always welcome! When contributing to Structure we ask you to f
 
 ## Code of conduct
 
-In short: _Be nice_. Pay attention to the fact that Structure is free software, don't be rude with the contributors or with people with questions and we'll be more than glad on helping you. Destructive criticism and demanding will be ignored.
+In short: _Be nice_. Pay attention to the fact that Structure is free software, don't be rude with the contributors or with people with questions and we'll be more than glad to help you. Destructive criticism and demanding will be ignored.
 
 ## Opening issues
 
