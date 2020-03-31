@@ -1,4 +1,4 @@
-# <a href="https://structure.js.org/v/structure-2/"><img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300"></a>
+# <a href="https://structure.js.org/"><img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300"></a>
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
@@ -9,7 +9,7 @@ Structure provides a simple interface which allows you to add attributes to your
 - [Structure](packages/structure)
 - [jest-structure](packages/jest-structure)
 
-## [Documentation](https://structure.js.org/v/structure-2/)
+## [Documentation](https://structure.js.org/)
 
 ## Example Structure usage
 

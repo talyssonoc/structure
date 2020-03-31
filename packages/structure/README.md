@@ -1,4 +1,4 @@
-# <a href="https://structure.js.org/v/structure-2/"><img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300"></a>
+# <a href="https://structure.js.org/"><img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300"></a>
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
@@ -22,7 +22,7 @@ What Structure is **not**:
 - It's not a Model of a MVC framework
 - It's not an attempt to simulate classic inheritance in JavaScript
 
-## [Documentation](https://structure.js.org/v/structure-2/)
+## [Documentation](https://structure.js.org/)
 
 ## Example usage
 
