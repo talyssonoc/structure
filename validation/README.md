@@ -1,6 +1,6 @@
 # Validation
 
-A `validate()` method will be added to the prototype of structures, this method will validate the structure based on its schema. The method will return an object with the property `valid` (with the value `true` if it's valid, and `false` if invalid). If `valid` is `false` the returned object will also have a property `errors`, with an array of validation errors.
+A `validate()` method will be added to the prototype of structures, this method will validate the structure based on its schema. The method will return an object with the property `valid` \(with the value `true` if it's valid, and `false` if invalid\). If `valid` is `false` the returned object will also have a property `errors`, with an array of validation errors.
 
 Validations require you to use the complete type descriptor:
 
@@ -31,7 +31,7 @@ errors; /*
 */
 
 const validUser = new User({
-  name: 'This is my name',
+  name: 'This is my name',
   age: 25
 });
 
@@ -45,6 +45,7 @@ Structure has a set of built-in validations built on top of the awesome [joi](ht
 
 **Observations**
 
-Validations marked with __*__ accept a value, an [attribute reference](attribute-reference.md), or an array of values and attribute references mixed.
+Validations marked with **\*** accept a value, an [attribute reference](attribute-reference.md), or an array of values and attribute references mixed.
 
-Validations marked with __**__ accept a value or an [attribute reference](attribute-reference.md).
+Validations marked with **\*\*** accept a value or an [attribute reference](attribute-reference.md).
+
