@@ -45,4 +45,4 @@ module.exports = function validationForSchema(schema) {
   };
 };
 
-const mapDetail = ({ message, path }) => ({ message, path });
+const mapDetail = ({ message, path, type }) => ({ message, path, type });

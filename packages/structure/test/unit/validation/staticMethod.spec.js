@@ -50,7 +50,9 @@ describe('validation', () => {
         expect(errors).toBeInstanceOf(Array);
         expect(errors).toHaveLength(2);
         expect(errors[0].path).toEqual(['name']);
+        expect(errors[0].type).toEqual('any.required');
         expect(errors[1].path).toEqual(['age']);
+        expect(errors[1].type).toEqual('number.min');
       });
     });
 
@@ -72,6 +74,7 @@ describe('validation', () => {
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
           expect(errors[0].path).toEqual(['name']);
+          expect(errors[0].type).toEqual('string.base');
         });
       });
     });
@@ -104,6 +107,7 @@ describe('validation', () => {
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
           expect(errors[0].path).toEqual(['favoriteBook', 'name']);
+          expect(errors[0].type).toEqual('any.required');
         });
       });
 
@@ -136,6 +140,7 @@ describe('validation', () => {
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
           expect(errors[0].path).toEqual(['user', 'name']);
+          expect(errors[0].type).toEqual('string.base');
         });
       });
     });
@@ -167,7 +172,9 @@ describe('validation', () => {
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(2);
           expect(errors[0].path).toEqual(['name']);
+          expect(errors[0].type).toEqual('any.required');
           expect(errors[1].path).toEqual(['age']);
+          expect(errors[1].type).toEqual('number.min');
         });
       });
 
@@ -204,6 +211,7 @@ describe('validation', () => {
           expect(errors).toBeInstanceOf(Array);
           expect(errors).toHaveLength(1);
           expect(errors[0].path).toEqual(['user', 'name']);
+          expect(errors[0].type).toEqual('any.required');
         });
       });
     });
