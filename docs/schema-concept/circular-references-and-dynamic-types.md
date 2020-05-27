@@ -112,7 +112,7 @@ const User = attributes(
 
 ## Concrete type definition inside `dynamics`
 
-For the cases where the dynamic type is in a different file, it's important that the actual type to be resolved **inside** the function with the identifier. Let's break it down in two cases:
+For the cases where the dynamic type is in a different file, it's important that the actual needs type to be resolved **inside** the function with the identifier. Let's break it down in two cases:
 
 ### With CommonJS modules
 
