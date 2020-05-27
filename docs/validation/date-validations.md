@@ -1,10 +1,10 @@
 # Date validations
 
-* `required`: can't be undefined \(default: `false`\)
-* `equal`: **\*** equal to passed value
-* `min`: **\*\*** must be after passed date
-* `max` **\*\*** must be before passed date
-* `nullable`: accepts null \(default: `false`\)
+- `required`: can't be undefined (default: `false`)
+- `equal`: __*__ equal to passed value
+- `min`: __**__ must be after passed date
+- `max` __**__ must be before passed date
+- `nullable`: accepts null (default: `false`)
 
 ```javascript
 const Product = attributes({
@@ -22,4 +22,3 @@ const Product = attributes({
   }
 })(class Product { });
 ```
-

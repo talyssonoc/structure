@@ -2,9 +2,9 @@
 
 It's said to be primitive type coercion when it tries to coerce values to `String`, `Number` or `Boolean` types.
 
-For those types we basically use the type as a function \(without using `new`\), with a subtle difference: When coercing `null` to `String`, it'll coerce to empty string instead of the string `'null'` \(unless when the attribute is [nullable](../schema-concept/nullable-attributes.md)\). For example:
+For those types we basically use the type as a function (without using `new`), with a subtle difference: When coercing `null` to `String`, it'll coerce to empty string instead of the string `'null'` (unless when the attribute is [nullable](../schema-concept/nullable-attributes.md)). For example:
 
-```javascript
+```js
 const User = attributes({
   name: String,
   age: Number,
@@ -31,4 +31,3 @@ userTwo.name; // '' => coerced `null` to empty string
 userTwo.age; // 100 => coerced string to number
 userTwo.isAdmin; // undefined => it'll never coerce `undefined`
 ```
-

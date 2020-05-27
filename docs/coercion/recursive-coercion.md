@@ -25,4 +25,3 @@ const user = new User({
 user.favoriteBook; // Book { name: 'The Silmarillion' } => coerced plain object to Book
 user.books; // BooksCollection [ Book { name: '1984' } ] => coerced array to BooksCollection and plain object to Book
 ```
-
