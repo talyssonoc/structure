@@ -81,8 +81,8 @@ describe('serialization', () => {
     let CircularBook;
 
     beforeEach(() => {
-      CircularUser = require('../../fixtures/CircularUser');
-      CircularBook = require('../../fixtures/CircularBook');
+      CircularUser = require('../../fixtures/CircularUser').User;
+      CircularBook = require('../../fixtures/CircularBook').Book;
     });
 
     describe('when all data is present', () => {

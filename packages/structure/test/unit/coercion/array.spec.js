@@ -184,7 +184,7 @@ describe('type coercion', () => {
       let BooksCollection;
 
       beforeEach(() => {
-        CircularUser = require('../../fixtures/CircularUser');
+        CircularUser = require('../../fixtures/CircularUser').User;
         BooksCollection = require('../../fixtures/BooksCollection');
       });
 
