@@ -1,4 +1,5 @@
 const { attributes } = require('../../src');
+const UserModule = require('./CircularUser');
 
 const Book = attributes(
   {
@@ -11,10 +12,10 @@ const Book = attributes(
   },
   {
     dynamics: {
-      User: () => require('./CircularUser'),
+      User: () => UserModule.User,
       Book: () => Book,
     },
   }
 )(class Book {});
 
-module.exports = Book;
+exports.Book = Book;

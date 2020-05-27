@@ -267,8 +267,8 @@ describe('validation', () => {
       let CircularBook;
 
       beforeEach(() => {
-        CircularUser = require('../../fixtures/CircularUser');
-        CircularBook = require('../../fixtures/CircularBook');
+        CircularUser = require('../../fixtures/CircularUser').User;
+        CircularBook = require('../../fixtures/CircularBook').Book;
       });
 
       describe('no validation', () => {
@@ -347,8 +347,8 @@ describe('validation', () => {
       let CircularBook;
 
       beforeEach(() => {
-        CircularUser = require('../../fixtures/CircularUserCustomIdentifier');
-        CircularBook = require('../../fixtures/CircularBookCustomIdentifier');
+        CircularUser = require('../../fixtures/CircularUserCustomIdentifier').User;
+        CircularBook = require('../../fixtures/CircularBookCustomIdentifier').Book;
       });
 
       describe('no validation', () => {

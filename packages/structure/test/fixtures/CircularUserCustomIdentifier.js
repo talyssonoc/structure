@@ -1,4 +1,5 @@
 const { attributes } = require('../../src');
+const BookModule = require('./CircularBookCustomIdentifier');
 
 const User = attributes(
   {
@@ -17,9 +18,9 @@ const User = attributes(
     identifier: 'UserEntity',
     dynamics: {
       UserEntity: () => User,
-      BookEntity: () => require('./CircularBookCustomIdentifier'),
+      BookEntity: () => BookModule.Book,
     },
   }
 )(class User {});
 
-module.exports = User;
+exports.User = User;

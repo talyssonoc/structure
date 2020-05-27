@@ -101,8 +101,8 @@ describe('type coercion', () => {
     let CircularBook;
 
     beforeEach(() => {
-      CircularUser = require('../../fixtures/CircularUser');
-      CircularBook = require('../../fixtures/CircularBook');
+      CircularUser = require('../../fixtures/CircularUser').User;
+      CircularBook = require('../../fixtures/CircularBook').Book;
     });
 
     describe('when there are not allowed nullable attributes', () => {

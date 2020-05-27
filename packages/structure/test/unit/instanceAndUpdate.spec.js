@@ -355,8 +355,8 @@ describe('instantiating a structure with dynamic attribute types', () => {
   let CircularBook;
 
   beforeEach(() => {
-    CircularUser = require('../fixtures/CircularUser');
-    CircularBook = require('../fixtures/CircularBook');
+    CircularUser = require('../fixtures/CircularUser').User;
+    CircularBook = require('../fixtures/CircularBook').Book;
   });
 
   it('creates instance properly', () => {
@@ -490,8 +490,8 @@ describe('updating a structure with dynamic attribute types', () => {
   let CircularBook;
 
   beforeEach(() => {
-    CircularUser = require('../fixtures/CircularUser');
-    CircularBook = require('../fixtures/CircularBook');
+    CircularUser = require('../fixtures/CircularUser').User;
+    CircularBook = require('../fixtures/CircularBook').Book;
   });
 
   it('updates instance attribute when assigned a new value', () => {

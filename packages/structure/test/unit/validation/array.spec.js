@@ -226,7 +226,7 @@ describe('validation', () => {
       let CircularUser;
 
       beforeEach(() => {
-        CircularUser = require('../../fixtures/CircularUser');
+        CircularUser = require('../../fixtures/CircularUser').User;
       });
 
       describe('when nested value is present', () => {

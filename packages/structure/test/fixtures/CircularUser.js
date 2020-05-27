@@ -1,4 +1,6 @@
 const { attributes } = require('../../src');
+const BookModule = require('./CircularBook');
+const BooksCollection = require('./BooksCollection');
 
 const User = attributes(
   {
@@ -23,10 +25,10 @@ const User = attributes(
   {
     dynamics: {
       User: () => User,
-      Book: () => require('./CircularBook'),
-      BooksCollection: () => require('./BooksCollection'),
+      Book: () => BookModule.Book,
+      BooksCollection: () => BooksCollection,
     },
   }
 )(class User {});
 
-module.exports = User;
+exports.User = User;
