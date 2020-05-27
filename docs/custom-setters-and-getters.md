@@ -4,7 +4,7 @@ Sometimes it may be necessary to have custom setters and/or getters for some att
 
 It's important to notice that you **should not** try to access the attribute directly inside its getter or to set it directly inside its setter because it will cause infinite recursion, this is default JavaScript behavior. To access an attribute value inside its getter you should use `this.get(attributeName)`, and to set the value of an attribute a setter you should use `this.set(attributeName, attributeValue)`:
 
-```javascript
+```js
 const User = attributes({
   firstName: String,
   lastName: String,
@@ -42,7 +42,7 @@ user.fullName; // -> Connor MacLeod
 
 Custom setters and getters are also inherited, be your superclass a pure JavaScript class or another structure:
 
-```javascript
+```js
 class Person {
   // If Person was a structure instead of a pure class, that would work too
   get name() {
@@ -61,9 +61,9 @@ user.name; // -> The person
 
 **Important**
 
-JavaScript nativelly won't let you inherit only one of the accessors \(the getter or the setter\) if you define the other accessor in a subclass:
+JavaScript nativelly won't let you inherit only one of the accessors (the getter or the setter) if you define the other accessor in a subclass:
 
-```javascript
+```js
 class Person {
   get name() {
     return 'Person';
@@ -84,4 +84,3 @@ user.name; // -> The user
 It happens because _once you define one of the accessors in a subclass_, all the accessors for the same attribute inherited from the superclass will be ignored.
 
 While it's a weird behavior, Structure will follow the same functionality so the Structure classes inheritance work the same way of pure JavaScript classes, avoiding inconsistencies.
-

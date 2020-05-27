@@ -4,9 +4,9 @@ It's possible to obtain a serialized object of a Structure using the method `toJ
 
 **Important:**
 
-* Be aware that `toJSON()` will return an object, not the JSON in form of a string like `JSON.stringify()` does
-* Refer to the [Date\#toJSON](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON) specification to see how dates will be serialized by `JSON.stringify`
-* Refer to [Dealing with nullable attributes](schema-concept/nullable-attributes.md#nullability-and-serialization) to check how `nullables` are going to be returned on **Serialization**
+- Be aware that `toJSON()` will return an object, not the JSON in form of a string like `JSON.stringify()` does
+- Refer to the [Date#toJSON](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON) specification to see how dates will be serialized by `JSON.stringify`
+- Refer to [Dealing with nullable attributes](schema-concept/nullable-attributes.md#nullability-and-serialization) to check how `nullables` are going to be returned on **Serialization**
 
 ```javascript
 const Book = attributes({
@@ -43,4 +43,3 @@ user.toJSON(); /* {
 
 JSON.stringify(user)); // {"name":"John Something","birth":"1990-10-10T03:00:00.000Z","books":[{"name":"The name of the wind"},{"name":"Stonehenge"}]}
 ```
-

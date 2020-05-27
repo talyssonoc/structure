@@ -1,4 +1,4 @@
-# Arrays coercion
+# Arrays and Array subclasses
 
 It's also possible to coerce values to `Array` or some other class that extends `Array`. On these circumstances Structure will use the `itemType` value of the attribute definition on the schema to coerce the items as well. Note that, when coercing arrays, it'll always create a new instance of the type and then push each item of the passed value to the new instance:
 
@@ -29,7 +29,7 @@ The passed raw value have to be non-null and have a `length` attribute or implem
 
 ## Observations
 
-Structure only does array **items** coercion during instantiation, so mutating an array \(using push, for example\) won't coerce the new item:
+Structure only does array **items** coercion during instantiation, so mutating an array (using push, for example) won't coerce the new item:
 
 ```javascript
 const Library = attributes({
@@ -49,4 +49,3 @@ library.books.push(42);
 
 library.books; // ['1984', 42] => new item was not coerced
 ```
-

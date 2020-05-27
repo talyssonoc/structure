@@ -8,7 +8,7 @@ In short: _Be nice_. Pay attention to the fact that Structure is free software, 
 
 ## Opening issues
 
-When opening an issue be descriptive about the bug or the feature suggestion, don't simply paste the error message on the issue title or description. Also, **provide code to simulate the bug**, we need to know the exact circumstances in which the bug occurs. Again, follow our [code of conduct](contributing.md#code-of-conduct).
+When opening an issue be descriptive about the bug or the feature suggestion, don't simply paste the error message on the issue title or description. Also, **provide code to simulate the bug**, we need to know the exact circumstances in which the bug occurs. Again, follow our [code of conduct](#code-of-conduct).
 
 ## Pull requests
 
@@ -23,4 +23,3 @@ When opening a pull request to Structure, follow this steps:
 7. Write a complete description about the bug or the feature the pull request is about.
 
 Be aware that we keep **100% of code coverage**, any change that makes the code coverage less than 100% covered will be requested to write more tests.
-

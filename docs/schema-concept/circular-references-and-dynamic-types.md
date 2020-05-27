@@ -1,4 +1,4 @@
-# Circular reference
+# Circular references and dynamic types
 
 Sometimes we may need to have a type reference itself in its attributes, or have two types that reference eachother in separate files, it can be a complication because it's not possible to do this using the type definitions like we did before. For cases like this we can use a feature called "dynamic types".
 
@@ -62,7 +62,7 @@ The type's identifier has to be same everywhere it's used, and can be defined in
 
 The identifier can be inferred based on the class that is wrapped by the `attributes` function. In backend scenarios this will be the most common case:
 
-```javascript
+```js
 const User = attributes(
   {
     name: String,
@@ -86,9 +86,9 @@ const User = attributes(
 
 If for some reason you can't rely on the class name, be it because you're using a compiler that strips class names or creates a dynamic one, you can explicitly set an indentifier.
 
-To do that, in the second argument of the `attributes` function \(e.g. the options\) you should add a `identifier` key and set it to be the string with the type's identifier and then use that custom value everywhere this type is dynamically needed:
+To do that, in the second argument of the `attributes` function (e.g. the options) you should add a `identifier` key and set it to be the string with the type's identifier and then use that custom value everywhere this type is dynamically needed:
 
-```javascript
+```js
 const User = attributes(
   {
     name: String,
@@ -107,7 +107,7 @@ const User = attributes(
 
 For the cases where the dynamic type is in a different file, it's important to call the `require` **inside** the function that returns the dynamic type, **not** in the top level of your file:
 
-```javascript
+```js
 const Book = attributes(
   {
     name: String,
@@ -123,4 +123,3 @@ const Book = attributes(
   }
 )(class Book {});
 ```
-

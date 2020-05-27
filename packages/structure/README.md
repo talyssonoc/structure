@@ -1,4 +1,4 @@
-# Introduction
+# <a href="https://structure.js.org/"><img src="https://raw.githubusercontent.com/talyssonoc/structure/master/structure.jpg" width="300"></a>
 
 ## A simple schema/attributes library built on top of modern JavaScript
 
@@ -10,17 +10,17 @@ Structure provides a simple interface which allows you to add attributes to your
 
 You can use Structure for a lot of different cases, including:
 
-* Domain entities and value objects
-* Model business rules
-* Validation and coercion of request data
-* Map pure objects and JSON to your application classes
-* Add attributes to classes that you can't change the class hierarchy
+- Domain entities and value objects
+- Model business rules
+- Validation and coercion of request data
+- Map pure objects and JSON to your application classes
+- Add attributes to classes that you can't change the class hierarchy
 
 What Structure is **not**:
 
-* It's not a database abstraction
-* It's not a Model of a MVC framework
-* It's not an attempt to simulate classic inheritance in JavaScript
+- It's not a database abstraction
+- It's not a Model of a MVC framework
+- It's not an attempt to simulate classic inheritance in JavaScript
 
 ## [Documentation](https://structure.js.org/)
 
@@ -28,7 +28,7 @@ What Structure is **not**:
 
 For each attribute on your schema, a getter and a setter will be created into the given class. It'll also auto-assign those attributes passed to the constructor.
 
-```javascript
+```js
 const { attributes } = require('structure');
 
 const User = attributes({
@@ -59,4 +59,3 @@ user.greet(); // 'Hello John Foo'
 ## [Contributing](../../contributing.md)
 
 ## [LICENSE](../../license.md)
-

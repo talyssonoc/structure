@@ -31,7 +31,7 @@ userB.attributes; // { name: 'Some string', nickname: 'Some other string' }
 
 ## Coercion
 
-Non-nullable values will fallback to their null-equivalent values. More details about it can be found at the [coercion](https://github.com/talyssonoc/structure/tree/3f527c1185c866a03a33d3ac10d0ef4c32d1f050/docs/schema-concept/coercion/README.md) section. Nullable attributes will remain `null` as described in the section above.
+Non-nullable values will fallback to their null-equivalent values. More details about it can be found at the [coercion](coercion/README.md) section. Nullable attributes will remain `null` as described in the section above.
 
 ```javascript
 /*
@@ -156,5 +156,4 @@ user.toJSON(); // { nickname: null }
 
 **Important:**
 
-* Notice that by not using the `nullable` option the **default** value for **String** is an empty string, which means that you need to accept empty strings to make your schema valid.
-
+- Notice that by not using the `nullable` option the **default** value for **String** is an empty string, which means that you need to accept empty strings to make your schema valid.
