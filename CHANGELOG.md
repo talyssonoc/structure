@@ -1,3 +1,9 @@
+## 2.0.1 - 2020-06-15
+
+Fix:
+
+- Fix deep nested dynamic types validation [[#132](https://github.com/talyssonoc/structure/issues/132)]
+
 ## 2.0.0 - 2020-03-31
 
 Refactors:

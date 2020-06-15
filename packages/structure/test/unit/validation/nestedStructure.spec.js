@@ -421,5 +421,101 @@ describe('validation', () => {
         });
       });
     });
+
+    describe('when nesting is deep', () => {
+      it('validates properly with manual validation', () => {
+        const Vehicle = attributes({
+          year: {
+            type: Number,
+            required: true,
+          },
+        })(class Vehicle {});
+
+        const UserPersonalInformation = attributes(
+          {
+            name: String,
+            vehicle: 'Vehicle',
+          },
+          {
+            dynamics: {
+              Vehicle: () => Vehicle,
+            },
+          }
+        )(class UserPersonalInformation {});
+
+        const AutoRiskProfile = attributes(
+          {
+            userPersonalInformation: {
+              type: 'UserPersonalInformation',
+              required: true,
+            },
+          },
+          {
+            dynamics: {
+              UserPersonalInformation: () => UserPersonalInformation,
+            },
+          }
+        )(class AutoRiskProfile {});
+
+        expect(() => {
+          const autoRiskProfile = new AutoRiskProfile({
+            userPersonalInformation: new UserPersonalInformation({
+              name: 'a',
+              vehicle: new Vehicle({
+                year: 2018,
+              }),
+            }),
+          });
+
+          autoRiskProfile.validate();
+        }).not.toThrow();
+      });
+
+      it('validates properly with strict mode', () => {
+        const Vehicle = attributes({
+          year: {
+            type: Number,
+            required: true,
+          },
+        })(class Vehicle {});
+
+        const UserPersonalInformation = attributes(
+          {
+            name: String,
+            vehicle: 'Vehicle',
+          },
+          {
+            dynamics: {
+              Vehicle: () => Vehicle,
+            },
+          }
+        )(class UserPersonalInformation {});
+
+        const AutoRiskProfile = attributes(
+          {
+            userPersonalInformation: {
+              type: 'UserPersonalInformation',
+              required: true,
+            },
+          },
+          {
+            dynamics: {
+              UserPersonalInformation: () => UserPersonalInformation,
+            },
+          }
+        )(class AutoRiskProfile {});
+
+        expect(() => {
+          AutoRiskProfile.buildStrict({
+            userPersonalInformation: new UserPersonalInformation({
+              name: 'a',
+              vehicle: new Vehicle({
+                year: 2018,
+              }),
+            }),
+          });
+        }).not.toThrow();
+      });
+    });
   });
 });

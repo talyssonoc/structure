@@ -45,20 +45,32 @@ function getNestedValidations(typeSchema) {
   return joiSchema;
 }
 
-exports.resolveDynamicLinks = function resolveDynamicLinks({ schema, joiValidation }) {
+const resolveDynamicLinks = function resolveDynamicLinks({ schema, joiValidation }) {
   return schema.attributeDefinitions.reduce((joiValidation, attributeDefinition) => {
     if (!attributeDefinition.hasDynamicType) {
       return joiValidation;
     }
 
     const type = attributeDefinition.resolveType();
+    const nestedSchema = type[SCHEMA];
 
-    if (!type[SCHEMA]) {
+    // warning: uses Joi internals
+    // https://github.com/hapijs/joi/blob/v16.1.8/lib/types/any.js#L72 ⤵
+    // https://github.com/hapijs/joi/blob/v16.1.8/lib/base.js#L699 ⤵
+    // https://github.com/hapijs/joi/blob/v16.1.8/lib/modify.js#L149
+    if (!nestedSchema || joiValidation._ids._get(nestedSchema.identifier)) {
       return joiValidation;
     }
 
-    const attributeValidation = type[SCHEMA].validation;
+    const attributeValidation = nestedSchema.validation;
 
-    return joiValidation.shared(attributeValidation.joiValidation);
+    const sharedValidation = joiValidation.shared(attributeValidation.joiValidation);
+
+    return resolveDynamicLinks({
+      schema: nestedSchema,
+      joiValidation: sharedValidation,
+    });
   }, joiValidation);
 };
+
+exports.resolveDynamicLinks = resolveDynamicLinks;
