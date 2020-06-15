@@ -1,3 +1,9 @@
+## 2.0.1 - 2020-06-15
+
+Fix:
+
+- Fix deep nested dynamic types validation
+
 ## 2.0.0 - 2020-03-31
 
 Refactors:
