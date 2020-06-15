@@ -234,6 +234,7 @@ describe('instantiating a structure', () => {
               {
                 message: '"password" is required',
                 path: ['password'],
+                type: 'any.required',
               },
             ];
 
@@ -388,6 +389,7 @@ describe('instantiating a structure with dynamic attribute types', () => {
           {
             message: '"favoriteBook.pages" must be a number',
             path: ['favoriteBook', 'pages'],
+            type: 'number.base',
           },
         ];
 
@@ -678,6 +680,7 @@ describe('cloning an instance', () => {
             {
               message: '"name" is required',
               path: ['name'],
+              type: 'any.required',
             },
           ];
 
@@ -704,6 +707,7 @@ describe('cloning an instance', () => {
               {
                 message: '"favoriteBook.name" is required',
                 path: ['favoriteBook', 'name'],
+                type: 'any.required',
               },
             ];
 
