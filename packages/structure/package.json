@@ -51,7 +51,7 @@
     "@jest-runner/electron": "^3.0.0",
     "babel-loader": "^8.1.0",
     "coveralls": "^3.1.0",
-    "electron": "^9.0.0",
+    "electron": "^15.5.5",
     "jest-structure": "2.0.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
